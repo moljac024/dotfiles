@@ -15,6 +15,7 @@ link () {
 }
 
 # Link the shell configs
+link src/shell/.shell_paths $HOME/.shell_paths
 link src/shell/.profile $HOME/.profile
 link src/shell/.bash_profile $HOME/.bash_profile
 link src/shell/.bashrc $HOME/.bashrc

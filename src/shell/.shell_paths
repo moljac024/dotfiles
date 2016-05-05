@@ -1,0 +1,21 @@
+#------------------------------
+# Paths
+#------------------------------
+
+# Add locally compiled files
+export PATH=$HOME/.local/bin:$PATH
+
+# Make homebrew apps have precedent
+#export PATH=/usr/local/bin:$PATH
+
+# Add node to path
+export PATH=$HOME/.node/versions/current/bin:$PATH
+
+# Add anaconda to path
+export PATH=$HOME/Apps/Anaconda/anaconda/bin:$PATH
+
+# Add home binaries to path (systems should do this already)
+export PATH=$HOME/bin:$PATH
+
+# Psql on OS X
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin

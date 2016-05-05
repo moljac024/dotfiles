@@ -1,0 +1,39 @@
+[user]
+	name = Bojan Matić
+	email = matic.bojan@gmail.com
+[core]
+	editor = vim
+	excludesfile = /Users/bojanmatic/.gitignore_global
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+[alias]
+	d = difftool
+	u = fetch --all --prune
+	f = fetch --all --prune
+	p = push origin --all
+	br = branch
+	ci = commit
+	co = checkout
+	st = status
+	ff = merge --ff-only
+	gg = log --all --graph --oneline --decorate --color
+[branch]
+	autosetuprebase = always
+[color]
+	ui = true
+	status = auto
+	branch = auto
+[push]
+	default = simple
+[credential]
+	helper = osxkeychain
+[gui]
+	fontui = -family \".SF NS Text\" -size 16 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family Monaco -size 14 -weight normal -slant roman -underline 0 -overstrike 0

@@ -25,9 +25,8 @@ link src/shell/.bash.mine $HOME/.bash.mine
 link src/git/.gitconfig $HOME/.gitconfig
 link src/git/.gitignore_global $HOME/.gitignore_global
 
-# Link tmux configs
+# Link tmux config
 link src/tmux/.tmux.conf $HOME/.tmux.conf
-link src/tmux/.tmuxinator $HOME/.tmuxinator
 
 # Link spacemacs
 link src/misc/.spacemacs $HOME/.spacemacs

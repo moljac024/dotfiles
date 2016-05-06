@@ -134,6 +134,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OS X
     alias ls='ls -FG'
+    alias brew-update='brew update && brew upgrade'
     whoishoggingport () {
         lsof -n -iTCP:$1 | grep LISTEN
     }

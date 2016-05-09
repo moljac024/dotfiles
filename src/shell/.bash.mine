@@ -96,6 +96,18 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 fi
 
+if [ -d $HOME/.bash_completions ]; then
+    for f in $HOME/.bash_completions/*
+    do
+        if [ -f $f ]; then
+            echo "Sourcing $f"
+            source $f
+        else
+            echo "Skipping $f"
+        fi
+    done
+fi
+
 # Oh-my-git prompt
 # IMPORTANT: This has to come after setting custom PS1
 source $HOME/.oh-my-git/prompt.sh

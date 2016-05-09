@@ -100,10 +100,7 @@ if [ -d $HOME/.bash_completions ]; then
     for f in $HOME/.bash_completions/*
     do
         if [ -f $f ]; then
-            echo "Sourcing $f"
             source $f
-        else
-            echo "Skipping $f"
         fi
     done
 fi

@@ -19,8 +19,10 @@ gnutls
 gobject-introspection
 harfbuzz
 haskell-stack
+htop
 icu4c
 imagemagick
+irssi
 ispell
 jpeg
 lame
@@ -35,6 +37,7 @@ libtasn1
 libtiff
 libtool
 midnight-commander
+mongodb
 ncdu
 nettle
 nginx

@@ -143,7 +143,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OS X
     alias ls='ls -FG'
-    alias brew-update='brew update && brew upgrade'
+
     whoishoggingport () {
         lsof -n -iTCP:$1 | grep LISTEN
     }
@@ -160,7 +160,7 @@ alias http-server="python -m SimpleHTTPServer"
 alias npm-exec='PATH=$(npm bin):$PATH'
 
 # TODO: Add a check if nvim is available on path, and only then do the alias:
-alias vim='nvim'
+# alias vim='nvim'
 
 # Xorg aliases:
 alias gta='gitk --all'
@@ -187,12 +187,5 @@ export EDITOR='vim'
 # Disable terminal flow control (C-s and C-q)
 stty stop undef
 stty start undef
-
-# # Android SDK
-# export ANDROID_HOME='~/Library/Android/sdk'
-#
-# # Gradle
-# export GRADLE_HOME='~/Apps/gradle/current'
-# export PATH=$GRADLE_HOME/bin:$PATH
 
 # -------

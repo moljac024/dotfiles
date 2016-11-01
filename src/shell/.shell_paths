@@ -3,22 +3,29 @@
 #------------------------------
 
 # Make homebrew apps have precedent
-#export PATH=/usr/local/bin:$PATH
+# export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 
-# Add anaconda to path
+# Anaconda
 export PATH=$PATH:$HOME/Apps/Anaconda/anaconda/bin
 
-# Add node to path
+# Node
 export PATH=$HOME/.node/versions/current/bin:$PATH
 
 # Psql on OS X
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.5/bin
 
-# Add locally compiled files
+# Locally compiled files
 export PATH=$HOME/.local/bin:$PATH
 
-# Add home binaries to path (systems should do this already)
+# Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
 
 # Add elm
 export PATH=$HOME/.elmversions/current/node_modules/.bin:$PATH
+
+# Fix Tk on OS X Sierra
+# export PATH=/System/Library/Frameworks/Tk.framework/Versions/8.4/Resources/Wish.app/Contents/MacOS:$PATH
+
+# Android
+export ANDROID_HOME=~/Library/Android/sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools

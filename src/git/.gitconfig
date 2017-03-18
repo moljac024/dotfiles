@@ -3,7 +3,7 @@
 	email = matic.bojan@gmail.com
 [core]
 	editor = vim
-	excludesfile = /Users/bojanmatic/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [diff]
 	tool = vimdiff
 [difftool]

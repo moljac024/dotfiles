@@ -32,8 +32,8 @@
 	branch = auto
 [push]
 	default = simple
-[credential]
-	helper = osxkeychain
+#[credential]
+	#helper = osxkeychain
 [gui]
 	fontui = -family \".SF NS Text\" -size 16 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family Monaco -size 14 -weight normal -slant roman -underline 0 -overstrike 0

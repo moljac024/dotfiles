@@ -33,3 +33,14 @@ link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
 
 # Link spacemacs
 link src/misc/.spacemacs $HOME/.spacemacs
+
+
+# Install rbenv and rbenv-build
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+
+# Install pyenv
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+
+# Install oh-my-git
+git clone https://github.com/arialdomartini/oh-my-git.git ~/.oh-my-git

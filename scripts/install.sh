@@ -14,6 +14,17 @@ link () {
     ln -s "$original_fullpath" "$path"
 }
 
+
+git_clone () {
+    repo=$1
+    location=$2
+    location_fullpath="$(cd "$(dirname "$location")"; pwd)/$(basename "$location")"
+
+    if [ ! -d "$location_fullpath" ]; then
+        git clone "$repo" "$location_fullpath"
+    fi
+}
+
 # Link the shell configs
 link src/shell/.shell_paths $HOME/.shell_paths
 link src/shell/.profile $HOME/.profile
@@ -34,13 +45,19 @@ link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
 # Link spacemacs
 link src/misc/.spacemacs $HOME/.spacemacs
 
+# Link vim
+mkdir -p $HOME/.vim/autoload
+link src/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
+link src/vim/vimrc $HOME/.vim/vimrc
+link src/vim/vimrc $HOME/.vimrc
+
 
 # Install rbenv and rbenv-build
-git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+git_clone https://github.com/rbenv/rbenv.git $HOME/.rbenv
+git_clone https://github.com/rbenv/ruby-build.git $HOME/.rbenv/plugins/ruby-build
 
 # Install pyenv
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+git_clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
 # Install oh-my-git
-git clone https://github.com/arialdomartini/oh-my-git.git ~/.oh-my-git
+git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git

@@ -54,6 +54,7 @@ link src/vim/vimrc $HOME/.vimrc
 
 # Install rbenv and rbenv-build
 git_clone https://github.com/rbenv/rbenv.git $HOME/.rbenv
+mkdir -p $HOME/.rbenv/plugins
 git_clone https://github.com/rbenv/ruby-build.git $HOME/.rbenv/plugins/ruby-build
 
 # Install pyenv

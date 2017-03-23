@@ -17,6 +17,7 @@ Plug 'chriskempson/base16-vim'
 " Editing
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
+Plug 'editorconfig/editorconfig-vim'
 
 " Movement
 Plug 'easymotion/vim-easymotion'

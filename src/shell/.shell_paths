@@ -14,18 +14,6 @@ export PATH=$HOME/bin:$PATH
 # Add elm
 export PATH=$HOME/.elmversions/current/node_modules/.bin:$PATH
 
-# OS X specific
-
-# Make homebrew apps have precedent
-# export PATH=/usr/local/sbin:/usr/local/bin:$PATH
-
-# Psql on OS X
-# export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.5/bin
-
-# Android
-# export ANDROID_HOME=~/Library/Android/sdk
-# export PATH=${PATH}:${ANDROID_HOME}/tools
-
 # Rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
@@ -34,3 +22,20 @@ eval "$(rbenv init -)"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+
+# OS X specific
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # Make homebrew apps have precedent
+  export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+
+  # Make homebrew apps have precedent
+  # export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+
+  # Psql on OS X
+  # export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/9.5/bin
+
+  # Android
+  # export ANDROID_HOME=~/Library/Android/sdk
+  # export PATH=${PATH}:${ANDROID_HOME}/tools
+fi
+

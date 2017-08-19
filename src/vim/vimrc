@@ -5,10 +5,11 @@
 call plug#begin($HOME . '/.vim/plugged') " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 
 " Basics
-Plug 'matchit.zip'
+Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-vinegar'
 
 " Themes/colors
 Plug 'altercation/vim-colors-solarized'
@@ -43,7 +44,15 @@ Plug 'mhinz/vim-startify'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/syntastic'
-Plug 'kien/ctrlp.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'danro/rename.vim'
+
+" Searching
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'eugen0329/vim-esearch'
+Plug 'wincent/ferret'
+
 
 call plug#end() " Initialize plugin system
 
@@ -76,9 +85,9 @@ else
         let s:uname = substitute(system("uname -s"), '\n', '', '')
         if s:uname == "Darwin"
             " Do Mac stuff here
-            if $USER != 'root'
-                set clipboard=unnamed
-            endif
+            " if $USER != 'root'
+            "     set clipboard=unnamed
+            " endif
         else
             " Do linux stuff here
             set clipboard=unnamedplus
@@ -199,7 +208,7 @@ endif
 " Solarized colors
 "let g:solarized_termcolors=16 " For use with solarized terminal color palette
 if has("gui_running")
-    "colorscheme solarized
+    colorscheme solarized
 else
     "colorscheme solarized
 endif
@@ -308,7 +317,7 @@ nnoremap Y y$
 nnoremap <leader>k :bw<cr>
 
 " Paste from system clipboard
-nnoremap <leader>p "+gP<cr>
+" nnoremap <leader>p "+gP<cr>
 
 " Clear highlight from search
 nnoremap <return> :silent noh<cr>
@@ -412,11 +421,18 @@ autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
 " Jump to last known position in file
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-" Use ag instead of grep, if available
-if executable("ag")
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
+
 
 """"""""""""""""""""""""""""""""""""""""""""""
 " Keybinds
@@ -426,13 +442,14 @@ endif
 "let g:AutoPairShortcutToggle = '' " why doesn't this work?
 
 " CtrlP
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:ctrlp_map = '<c-f>'
 " Working path mode
 let g:ctrlp_working_path_mode = 'ra'
 " Don't clear cache on exit
 let g:ctrlp_clear_cache_on_exit=0
 " Add additional root markers
-let g:ctrlp_root_markers = ['composer.json', 'package.json']
+" let g:ctrlp_root_markers = ['composer.json', 'package.json']
 
 " Ignore these files and directories
 let g:ctrlp_custom_ignore = {
@@ -447,3 +464,9 @@ let g:SuperTabDefaultCompletionType = "<C-X><C-O>" " omnicomplete
 let g:SuperTabDefaultCompletionType = "context" " smartass
 let g:SuperTabClosePreviewOnPopupClose = 1
 
+" JSX works on .js files too
+let g:jsx_ext_required = 0
+
+" Netrw
+" let g:netrw_banner = 0 " No useless banner
+" let g:netrw_liststyle = 3 " Tree view

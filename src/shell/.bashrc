@@ -8,3 +8,5 @@ if [ -f $HOME/.bash.mine ]; then
   source $HOME/.bash.mine
 fi
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

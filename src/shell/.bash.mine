@@ -107,14 +107,14 @@ fi
 
 # Oh-my-git prompt
 # IMPORTANT: This has to come after setting custom PS1
-source $HOME/.oh-my-git/prompt.sh
+# source $HOME/.oh-my-git/prompt.sh
 # Virtualenv prompt play nice with oh-my-git
-VIRTUAL_ENV_DISABLE_PROMPT=true
-function omg_prompt_callback() {
-    if [ -n "${VIRTUAL_ENV}" ]; then
-        echo "\e[0;31m(`basename ${VIRTUAL_ENV}`)\e[0m "
-    fi
-}
+# VIRTUAL_ENV_DISABLE_PROMPT=true
+# function omg_prompt_callback() {
+#     if [ -n "${VIRTUAL_ENV}" ]; then
+#         echo "\e[0;31m(`basename ${VIRTUAL_ENV}`)\e[0m "
+#     fi
+# }
 
 #------------------------------
 # Bash options

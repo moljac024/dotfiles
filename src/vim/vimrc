@@ -317,7 +317,7 @@ nnoremap Y y$
 nnoremap <leader>k :bw<cr>
 
 " Paste from system clipboard
-" nnoremap <leader>p "+gP<cr>
+nnoremap <leader>p "+gP<cr>
 
 " Clear highlight from search
 nnoremap <return> :silent noh<cr>

@@ -44,6 +44,7 @@ link src/git/.gitignore_global $HOME/.gitignore_global
 
 # Link tmux config
 link src/tmux/.tmux.conf $HOME/.tmux.conf
+
 # Link the tmuxinator bash completion script
 mkdir -p $HOME/.bash_completions
 link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
@@ -56,6 +57,10 @@ mkdir -p $HOME/.vim/autoload
 link src/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
 link src/vim/vimrc $HOME/.vim/vimrc
 link src/vim/vimrc $HOME/.vimrc
+
+# i3 window manager
+mkdir -p $HOME/.config
+link src/i3 $HOME/.config/i3
 
 
 # Install rbenv and rbenv-build

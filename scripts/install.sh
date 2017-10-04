@@ -26,11 +26,17 @@ git_clone () {
 }
 
 # Link the shell configs
-link src/shell/.shell_paths $HOME/.shell_paths
-link src/shell/.profile $HOME/.profile
+link src/shell/.bash.paths $HOME/.bash.paths
 link src/shell/.bash_profile $HOME/.bash_profile
-link src/shell/.bashrc $HOME/.bashrc
 link src/shell/.bash.mine $HOME/.bash.mine
+
+cat >> $HOME/.bashrc <<EOF
+# Source custom bash config
+if [ -f $HOME/.bash.mine ]; then
+  source $HOME/.bash.mine
+fi
+EOF
+
 
 # Link the git config
 link src/git/.gitconfig $HOME/.gitconfig

@@ -62,6 +62,9 @@ link src/vim/vimrc $HOME/.vimrc
 mkdir -p $HOME/.config
 link src/i3 $HOME/.config/i3
 
+# XMonad baby
+link src/xmonad $HOME/.xmonad
+
 
 # Install rbenv and rbenv-build
 git_clone https://github.com/rbenv/rbenv.git $HOME/.rbenv

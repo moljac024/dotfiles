@@ -201,5 +201,6 @@ bindsym $mod+button3 floating toggle
 bindsym $mod+f exec --no-startup-id thunar
 
 # Auto start apps
+exec --no-startup-id dunst  # Minimalistic notification manager
 exec --no-startup-id nitrogen --restore  # Restore wallpaper
 exec --no-startup-id nm-applet  # Network manager applet

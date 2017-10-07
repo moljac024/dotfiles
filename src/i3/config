@@ -79,7 +79,7 @@ bindsym $mod+b split h
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -197,6 +197,8 @@ bindsym --whole-window $mod+button2 kill
 bindsym button3 floating toggle
 bindsym $mod+button3 floating toggle
 
+# App shortcuts
+bindsym $mod+f exec --no-startup-id thunar
 
 # Auto start apps
 exec --no-startup-id nitrogen --restore  # Restore wallpaper

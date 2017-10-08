@@ -27,21 +27,15 @@ font pango:DejaVu Sans Mono 12
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-# Default layout is stacking
+# Default layout is stacking, tile only on demand
 workspace_layout stacking
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
 # kill focused window
 bindsym $mod+q kill
 bindsym $alt+F4 kill
-
-# Log out
-bindsym $mod+Shift+q exec xfce4-session-logout
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -164,11 +158,21 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        tray_output primary
+        tray_output eDP-1-1
 }
 
+# Should focus follow mouse movement
 focus_follows_mouse no
+# If a window is activated, e.g., via google-chrome www.google.com, it may
+# request to take focus. Since this may not preferable, different reactions can
+# be configured.
+# smart: This is the default behavior. If the window requesting focus is on an active workspace, it will receive the focus. Otherwise, the urgency hint will be set.
+# urgent: The window will always be marked urgent, but the focus will not be stolen.
+# focus: The window will always be focused and not be marked urgent.
+# none: The window will neither be focused, nor be marked urgent.
+focus_on_window_activation urgent
 
+# Alt-tab (need to install i3-alt-tab)
 bindsym $alt+Tab exec /home/bojan/bin/i3-alt-tab --next
 bindsym $alt+Shift+Tab exec /home/bojan/bin/i3-alt-tab --prev
 bindsym $mod+Tab exec /home/bojan/bin/i3-alt-tab --next
@@ -198,9 +202,11 @@ bindsym button3 floating toggle
 bindsym $mod+button3 floating toggle
 
 # App shortcuts
-bindsym $mod+f exec --no-startup-id thunar
+bindsym $mod+Return exec i3-sensible-terminal  #  terminal
+bindsym $mod+f exec --no-startup-id thunar  # file manager
 
 # Auto start apps
-exec --no-startup-id dunst  # Minimalistic notification manager
+exec --no-startup-id xrandr --output eDP-1-1 --auto --primary --output HDMI-1-2 --auto --right-of eDP-1-1  # Set up monitors
 exec --no-startup-id nitrogen --restore  # Restore wallpaper
+exec --no-startup-id dunst -config ~/.config/i3/dunstrc  # Minimalistic notification manager
 exec --no-startup-id nm-applet  # Network manager applet

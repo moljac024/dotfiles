@@ -149,6 +149,7 @@ export LANG=en_US.UTF-8
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     # Linux
     alias ls='ls --color=auto --group-directories-first --sort=extension'
+    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade"'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OS X
     alias ls='ls -FG'

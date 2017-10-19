@@ -130,7 +130,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""
 
 set encoding=utf-8 " Default encoding utf-8
-set title " Update terminal title
+" set title " Update terminal title
 set shortmess=at " Be less verbose
 set hidden " Enable multiple buffers open
 set scrolloff=3 " Maintain more context around cursor when scrolling

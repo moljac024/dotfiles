@@ -10,7 +10,10 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
+set $super Mod4
 set $alt Mod1
+set $ctrl Control
+set $shift Shift
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -36,6 +39,9 @@ floating_modifier $mod
 # kill focused window
 bindsym $mod+q kill
 bindsym $alt+F4 kill
+
+# Force kill window
+bindsym $mod+Shift+q exec --no-startup-id xkill
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -65,6 +71,9 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# Switch between the current and previously focused workspace
+bindsym $mod+Tab workspace back_and_forth
 
 # split in horizontal orientation
 bindsym $mod+b split h
@@ -175,8 +184,6 @@ focus_on_window_activation urgent
 # Alt-tab (need to install i3-alt-tab)
 bindsym $alt+Tab exec /home/bojan/bin/i3-alt-tab --next
 bindsym $alt+Shift+Tab exec /home/bojan/bin/i3-alt-tab --prev
-bindsym $mod+Tab exec /home/bojan/bin/i3-alt-tab --next
-bindsym $mod+Shift+Tab exec /home/bojan/bin/i3-alt-tab --prev
 
 # for_window [class="^Steam$"] floating enable
 for_window [class="^Steam$" title="^Friends$"] floating enable
@@ -202,11 +209,15 @@ bindsym button3 floating toggle
 bindsym $mod+button3 floating toggle
 
 # App shortcuts
-bindsym $mod+Return exec i3-sensible-terminal  #  terminal
+#bindsym $mod+Return exec i3-sensible-terminal  #  terminal
+bindsym $mod+Return exec xfce4-terminal #  terminal
 bindsym $mod+f exec --no-startup-id thunar  # file manager
+bindsym $alt+Shift+3 exec --no-startup-id xfce4-screenshooter -f -s ~/Pictures/Screenshots
+bindsym $alt+Shift+4 exec --no-startup-id screenshot-part
 
 # Auto start apps
 exec --no-startup-id xrandr --output eDP-1-1 --auto --primary --output HDMI-1-2 --auto --right-of eDP-1-1  # Set up monitors
+exec --no-startup-id setxkbmap -layout us -option ctrl:nocaps  # Make caps-lock a second control
 exec --no-startup-id nitrogen --restore  # Restore wallpaper
 exec --no-startup-id dunst -config ~/.config/i3/dunstrc  # Minimalistic notification manager
 exec --no-startup-id nm-applet  # Network manager applet

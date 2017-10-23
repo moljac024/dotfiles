@@ -214,6 +214,8 @@ bindsym $mod+Return exec xfce4-terminal #  terminal
 bindsym $mod+f exec --no-startup-id thunar  # file manager
 bindsym $alt+Shift+3 exec --no-startup-id xfce4-screenshooter -f -s ~/Pictures/Screenshots
 bindsym $alt+Shift+4 exec --no-startup-id screenshot-part
+bindsym $ctrl+Shift+3 exec --no-startup-id xfce4-screenshooter -f -s ~/Pictures/Screenshots
+bindsym $ctrl+Shift+4 exec --no-startup-id screenshot-part
 
 # Auto start apps
 exec --no-startup-id xrandr --output eDP-1-1 --auto --primary --output HDMI-1-2 --auto --right-of eDP-1-1  # Set up monitors

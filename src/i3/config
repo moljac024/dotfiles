@@ -220,6 +220,7 @@ bindsym $ctrl+Shift+4 exec --no-startup-id screenshot-part
 # Auto start apps
 exec --no-startup-id xrandr --output eDP-1-1 --auto --primary --output HDMI-1-2 --auto --right-of eDP-1-1  # Set up monitors
 exec --no-startup-id setxkbmap -layout us -option ctrl:nocaps  # Make caps-lock a second control
+exec --no-startup-id setxkbmap -layout us,rs -variant ,latin -option grp:lalt_lshift_toggle,ctrl:nocaps  # Make caps-lock a second control and set up kb layouts
 exec --no-startup-id nitrogen --restore  # Restore wallpaper
 exec --no-startup-id dunst -config ~/.config/i3/dunstrc  # Minimalistic notification manager
 exec --no-startup-id nm-applet  # Network manager applet

@@ -47,6 +47,9 @@ Plug 'scrooloose/syntastic'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'danro/rename.vim'
 
+" Files
+Plug 'scrooloose/nerdtree'
+
 " Searching
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -479,6 +482,13 @@ let g:SuperTabClosePreviewOnPopupClose = 1
 
 " JSX works on .js files too
 let g:jsx_ext_required = 0
+
+" NERDTree
+" Toggle NERDTree
+map <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+" Close vim if only NERDTree is open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Netrw
 " let g:netrw_banner = 0 " No useless banner

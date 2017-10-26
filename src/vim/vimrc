@@ -73,7 +73,7 @@ endif
 
 " Font size on mac
 if has("gui_macvim") || has("gui_vimr")
-   set guifont=Monaco:h16
+   set guifont=FiraCode:h24
 endif
 
 " Sync with system clipboard
@@ -224,7 +224,11 @@ if has("gui_running") " Options for when GUI is present (gVim)
     set mousehide " Hide mouse when user starts typing
     if has("gui_gtk2") " Options for when GUI is gtk2 (Linux)
         "set guifont=Deja\ Vu\ Sans\ Mono\ 12
-        set guifont=Monospace\ 12
+        set guifont=Monospace\ 18
+    endif
+    if has("gui_gtk3") " Options for when GUI is gtk2 (Linux)
+        "set guifont=Deja\ Vu\ Sans\ Mono\ 12
+        set guifont=Monospace\ 18
     endif
 endif
 

@@ -36,7 +36,6 @@ values."
      syntax-checking
      version-control
      restclient
-     eyebrowse
      spacemacs-layouts
      html
      javascript

@@ -327,7 +327,7 @@ nnoremap <leader>k :bw<cr>
 nnoremap <leader>p "+gP<cr>
 
 " Clear highlight from search
-nnoremap <return> :silent noh<cr>
+nnoremap <leader>c :silent noh<cr>
 
 " Split window
 nnoremap <leader>swh :topleft  vnew<cr>

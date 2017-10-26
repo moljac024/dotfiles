@@ -407,7 +407,9 @@ nnoremap <c-b> :silent CtrlPBuffer<cr>
 inoremap <c-b> <esc>:silent CtrlPBuffer<cr>
 
 " Open file explorer
-nnoremap <leader>f :silent CtrlP<cr>
+nnoremap <leader>p :silent CtrlP<cr>
+nnoremap <c-p> :silent CtrlP<cr>
+inoremap <c-p> <esc>:silent CtrlP<cr>
 
 " Undo tree
 nnoremap <leader>u :silent UndotreeToggle<cr>

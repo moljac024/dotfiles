@@ -178,6 +178,7 @@ alias docker-clean='docker rm $(docker ps -a -f status=exited -q)'
 
 # Xorg aliases:
 alias gta='gitk --all'
+alias gita='gitk --all'
 
 #------------------------------
 # Misc

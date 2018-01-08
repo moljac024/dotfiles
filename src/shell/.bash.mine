@@ -11,6 +11,8 @@ if [ -f $HOME/.bash.paths ]; then
     source $HOME/.bash.paths
 fi
 
+# Fuzzy file find bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 #------------------------------
 # All the colors
@@ -149,7 +151,7 @@ export LANG=en_US.UTF-8
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     # Linux
     alias ls='ls --color=auto --group-directories-first --sort=extension'
-    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade"'
+    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OS X
     alias ls='ls -FG'
@@ -203,6 +205,5 @@ export EDITOR='vim'
 stty stop undef
 stty start undef
 
-
-# Fuzzy file find bash
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# Enable Erlang/Elixir shell history
+export ERL_AFLAGS="-kernel shell_history enabled"

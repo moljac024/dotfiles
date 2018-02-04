@@ -49,6 +49,7 @@ Plug 'danro/rename.vim'
 
 " Files
 Plug 'scrooloose/nerdtree'
+Plug 'justinmk/vim-dirvish'
 
 " Searching
 Plug 'ctrlpvim/ctrlp.vim'

@@ -8,6 +8,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 fi
 
+# Locally compiled files
+export PATH=$HOME/.local/bin:$PATH
+
 # Asdf version manager
 if [ -f $HOME/.asdf/asdf.sh ]; then
     source $HOME/.asdf/asdf.sh
@@ -17,8 +20,7 @@ fi
 export N_PREFIX=$HOME/.n
 export PATH=$N_PREFIX/bin:$PATH
 
-# Locally compiled files
-export PATH=$HOME/.local/bin:$PATH
-
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
+
+

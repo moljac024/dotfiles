@@ -24,6 +24,7 @@
 	st = status
 	ff = merge --ff-only
 	gg = log --all --graph --oneline --decorate --color
+	quick-stats = ! /usr/local/bin/git-quick-stats
 [branch]
 	autosetuprebase = always
 [color]

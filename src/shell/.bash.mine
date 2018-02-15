@@ -173,8 +173,6 @@ alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)
 alias http-server="python -m SimpleHTTPServer"
 alias npm-exec='PATH=$(npm bin):$PATH'
 
-alias docker-clean='docker rm $(docker ps -a -f status=exited -q) && docker images -q --filter "dangling=true" | xargs docker rmi'
-
 # TODO: Add a check if nvim is available on path, and only then do the alias:
 # alias vim='nvim'
 

@@ -103,6 +103,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         source `brew --prefix`/etc/bash_completion
     fi
 
+    # Iterm integration
+    if [ -f $HOME/.iterm2_shell_integration.bash ]; then
+        source $HOME/.iterm2_shell_integration.bash
+    fi
+
     # Enable rbenv shims and autocompletion (per Homebrew's caveat after installing rbenv and ruby-build)
     if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 fi

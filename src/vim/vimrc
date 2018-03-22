@@ -468,12 +468,6 @@ let g:ctrlp_clear_cache_on_exit=0
 " Add additional root markers
 " let g:ctrlp_root_markers = ['composer.json', 'package.json']
 
-" Ignore these files and directories
-let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\.git$\|\.hg$\|\.svn$\|cache$\|vendor$\|node_modules$\|bower_components$',
-            \ 'file': '\v\.(exe|so|dll|pyc|zip|tar\.gz|tar\.bz2|pdf|doc|docx|odt|png|jpg|gif|xcf|swf|flv|mp3|mp4|mkv|torrent|jar)$',
-            \ }
-
 " Supertab
 let g:SupertabMappingForward = '<c-space>'
 let g:SupertabMappingBackward = '<s-c-space>'

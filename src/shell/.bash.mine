@@ -121,6 +121,8 @@ if [ -d $HOME/.bash_completions ]; then
     done
 fi
 
+function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
+
 # Oh-my-git prompt
 # IMPORTANT: This has to come after setting custom PS1
 # source $HOME/.oh-my-git/prompt.sh

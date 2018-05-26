@@ -1,45 +1,71 @@
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Plugins
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 call plug#begin($HOME . '/.vim/plugged') " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 
+"===========================================
 " Basics
+"===========================================
 Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar'
+"===========================================
 
+"===========================================
 " Themes/colors
+"===========================================
 Plug 'altercation/vim-colors-solarized'
 Plug 'chriskempson/base16-vim'
+"===========================================
 
+"===========================================
 " Editing
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
 Plug 'editorconfig/editorconfig-vim'
+"===========================================
 
+"===========================================
 " Movement
 Plug 'easymotion/vim-easymotion'
 Plug 'justinmk/vim-sneak'
+"===========================================
 
+"===========================================
 " Languages
+"===========================================
+" Markdown
 Plug 'tpope/vim-markdown'
+" JSON
 Plug 'elzr/vim-json'
+" HTML5
 Plug 'othree/html5.vim'
+" Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+" Typescript
 Plug 'leafgarland/typescript-vim'
+"Elm
 Plug 'elmcast/elm-vim'
+" Elixir
 Plug 'elixir-lang/vim-elixir'
 Plug 'mhinz/vim-mix-format'
+" Haskell
 Plug 'neovimhaskell/haskell-vim'
+" Go
 Plug 'fatih/vim-go'
+" Rust
 Plug 'rust-lang/rust.vim'
+" PHP
 Plug 'stanangeloff/php.vim'
+"===========================================
 
+"===========================================
 " Misc
+"===========================================
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-startify'
 Plug 'mbbill/undotree'
@@ -47,29 +73,37 @@ Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'danro/rename.vim'
+"===========================================
 
+"===========================================
 " Files
+"===========================================
 Plug 'scrooloose/nerdtree'
 Plug 'justinmk/vim-dirvish'
+"===========================================
 
+"===========================================
 " Searching
+"===========================================
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'eugen0329/vim-esearch'
 Plug 'wincent/ferret'
+"===========================================
 
 
 call plug#end() " Initialize plugin system
 
-""""""""""""""""""""""""""""""""""""""""""""""
+
+"===========================================
 " First thing's first
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 set nocompatible " No old school compatability
 
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Directories
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 " On Windows, also use '.vim' instead of 'vimfiles'
 if has('win32') || has('win64')
@@ -130,9 +164,9 @@ if isdirectory($HOME . '/.vim/undo')
 endif
 
 
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Vim options
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 set encoding=utf-8 " Default encoding utf-8
 " set title " Update terminal title
@@ -187,9 +221,9 @@ set wildmode=longest:full
 " Tags - search cwd, then up recursively until root
 set tags=./tags;/
 
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Look and feel
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 "set t_Co=256 " Use 256 colors in terminal
 "set number " Show line numbers
@@ -237,9 +271,9 @@ if has("gui_running") " Options for when GUI is present (gVim)
     endif
 endif
 
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Programming
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 " General tab options
 set tabstop=4
@@ -294,9 +328,9 @@ au BufRead,BufNewFile *.mak set filetype=mako
 " Don't expand tabs to spaces when writing a Makefile
 autocmd FileType make setlocal noexpandtab
 
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Keybinds
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 "Set mapleader key
 let g:mapleader=","
@@ -402,9 +436,9 @@ cnoremap w!! w !sudo tee % >/dev/null
 " Edit files relative to current file
 cnoremap %% <c-r>=expand("%:p:h")<cr>/
 
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Plugin Keybinds
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 " Open buffer explorer
 nnoremap <leader>b :silent CtrlPBuffer<cr>
@@ -452,9 +486,9 @@ if executable('ag')
 endif
 
 
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 " Keybinds
-""""""""""""""""""""""""""""""""""""""""""""""
+"===========================================
 
 " Disable auto-pairs keybind for <M-p> (conflict with yankstack)
 "let g:AutoPairShortcutToggle = '' " why doesn't this work?

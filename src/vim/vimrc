@@ -39,26 +39,47 @@ Plug 'justinmk/vim-sneak'
 "===========================================
 " Markdown
 Plug 'tpope/vim-markdown'
+" ==========
+
 " JSON
 Plug 'elzr/vim-json'
+" ==========
+
 " HTML5
 Plug 'othree/html5.vim'
+" ==========
+
 " Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+" ==========
+
 " Typescript
 Plug 'leafgarland/typescript-vim'
+" ==========
+
 "Elm
 Plug 'elmcast/elm-vim'
+" ==========
+
 " Elixir
 Plug 'elixir-lang/vim-elixir'
 Plug 'mhinz/vim-mix-format'
+" ==========
+
 " Haskell
 Plug 'neovimhaskell/haskell-vim'
+" ==========
+
 " Go
 Plug 'fatih/vim-go'
+" ==========
+
 " Rust
 Plug 'rust-lang/rust.vim'
+" ==========
+
 " PHP
 Plug 'stanangeloff/php.vim'
 "===========================================
@@ -322,6 +343,12 @@ autocmd FileType javascript setlocal softtabstop=2
 autocmd FileType javascript setlocal shiftwidth=2
 autocmd FileType javascript setlocal expandtab
 
+" Elixir indenting rules
+autocmd FileType elixir setlocal tabstop=2
+autocmd FileType elixir setlocal softtabstop=2
+autocmd FileType elixir setlocal shiftwidth=2
+autocmd FileType elixir setlocal expandtab
+
 " Set .mak files to mako filetype
 au BufRead,BufNewFile *.mak set filetype=mako
 
@@ -513,11 +540,16 @@ let g:SuperTabClosePreviewOnPopupClose = 1
 " JSX works on .js files too
 let g:jsx_ext_required = 0
 
+" Run prettier before save
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+
 " Change to VCS root when selecting file from startify splash screen
 let g:startify_change_to_vcs_root = 1
 
 " Format elixir on save
 let g:mix_format_on_save = 1
+let g:mix_format_silent_errors = 1
 
 " Syntastic: use project local installation of eslint
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'

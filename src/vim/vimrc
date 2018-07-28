@@ -25,7 +25,7 @@ Plug 'chriskempson/base16-vim'
 " Editing
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
-Plug 'editorconfig/editorconfig-vim'
+" Plug 'editorconfig/editorconfig-vim' " Behaves badly
 "===========================================
 
 "===========================================
@@ -549,7 +549,7 @@ let g:startify_change_to_vcs_root = 1
 
 " Format elixir on save
 let g:mix_format_on_save = 1
-let g:mix_format_silent_errors = 1
+" let g:mix_format_silent_errors = 1
 
 " Syntastic: use project local installation of eslint
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'

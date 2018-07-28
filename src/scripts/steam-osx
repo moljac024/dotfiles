@@ -1,0 +1,3 @@
+#!/bin/bash
+hdiutil attach ~/Steam.dmg -mountroot ~/Library/Application\ Support
+open -a Steam

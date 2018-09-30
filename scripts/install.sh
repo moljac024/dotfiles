@@ -65,14 +65,8 @@ link src/i3 $HOME/.config/i3
 # XMonad baby
 link src/xmonad $HOME/.xmonad
 
-
-# Install rbenv and rbenv-build
-git_clone https://github.com/rbenv/rbenv.git $HOME/.rbenv
-mkdir -p $HOME/.rbenv/plugins
-git_clone https://github.com/rbenv/ruby-build.git $HOME/.rbenv/plugins/ruby-build
-
-# Install pyenv
-git_clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+# Install asdf version manager
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.1
 
 # Install oh-my-git
 git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git

@@ -1,3 +1,4 @@
+#!/bin/bash
 #------------------------------
 # Paths
 #------------------------------
@@ -17,11 +18,5 @@ if [ -f $HOME/.asdf/asdf.sh ]; then
     source $HOME/.asdf/asdf.sh
 fi
 
-# N node version manager
-export N_PREFIX=$HOME/.n
-export PATH=$N_PREFIX/bin:$PATH
-
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
-
-

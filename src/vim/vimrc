@@ -51,12 +51,15 @@ Plug 'othree/html5.vim'
 
 " Javascript
 Plug 'pangloss/vim-javascript'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
 Plug 'mxw/vim-jsx'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 " ==========
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi' " typescript omnicomplete
 " ==========
 
 "Elm
@@ -98,7 +101,7 @@ Plug 'danro/rename.vim'
 
 "===========================================
 " Files
-"===========================================
+Plug 'airblade/vim-rooter'
 Plug 'scrooloose/nerdtree'
 Plug 'justinmk/vim-dirvish'
 "===========================================
@@ -145,9 +148,9 @@ else
         let s:uname = substitute(system("uname -s"), '\n', '', '')
         if s:uname == "Darwin"
             " Do Mac stuff here
-            " if $USER != 'root'
-            "     set clipboard=unnamed
-            " endif
+            if $USER != 'root'
+                set clipboard=unnamed
+            endif
         else
             " Do linux stuff here
             set clipboard=unnamedplus
@@ -550,6 +553,8 @@ let g:startify_change_to_vcs_root = 1
 " Format elixir on save
 let g:mix_format_on_save = 1
 " let g:mix_format_silent_errors = 1
+
+let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']
 
 " Syntastic: use project local installation of eslint
 let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'

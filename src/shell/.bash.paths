@@ -7,7 +7,6 @@
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # Make homebrew apps have precedent
   export PATH=/usr/local/sbin:/usr/local/bin:$PATH
-  export PATH=/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH
 fi
 
 # Locally compiled files

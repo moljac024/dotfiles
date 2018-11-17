@@ -66,7 +66,7 @@ link src/i3 $HOME/.config/i3
 link src/xmonad $HOME/.xmonad
 
 # Install asdf version manager
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.1
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.1
 
 # Install oh-my-git
 git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git

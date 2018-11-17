@@ -9,6 +9,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 fi
 
+if [[ -d "/home/linuxbrew" ]]; then
+    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+    export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
+    export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
+fi
+
 # Locally compiled files
 export PATH=$HOME/.local/bin:$PATH
 

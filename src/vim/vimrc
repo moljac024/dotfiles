@@ -102,16 +102,14 @@ Plug 'danro/rename.vim'
 "===========================================
 " Files
 Plug 'airblade/vim-rooter'
-Plug 'scrooloose/nerdtree'
 Plug 'justinmk/vim-dirvish'
 "===========================================
 
 "===========================================
 " Searching
 "===========================================
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'eugen0329/vim-esearch'
+Plug 'junegunn/fzf.vim'
 Plug 'wincent/ferret'
 "===========================================
 

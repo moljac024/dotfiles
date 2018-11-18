@@ -123,8 +123,6 @@ if [ -d $HOME/.bash_completions ]; then
     source $HOME/.asdf/completions/asdf.bash
 fi
 
-function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
-
 # Oh-my-git prompt
 # IMPORTANT: This has to come after setting custom PS1
 # source $HOME/.oh-my-git/prompt.sh
@@ -216,3 +214,5 @@ stty start undef
 
 # Enable Erlang/Elixir shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
+
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc

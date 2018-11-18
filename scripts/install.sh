@@ -25,7 +25,9 @@ git_clone () {
     fi
 }
 
-# Link the shell configs
+# --------------------------------------------------------------
+# Bash
+# --------------------------------------------------------------
 link src/shell/.bash.paths $HOME/.bash.paths
 link src/shell/.bash_profile $HOME/.bash_profile
 link src/shell/.bash.mine $HOME/.bash.mine
@@ -36,37 +38,64 @@ if [ -f $HOME/.bash.mine ]; then
   source $HOME/.bash.mine
 fi
 EOF
+# ______________________________________________________________
 
 
-# Link the git config
+# --------------------------------------------------------------
+# Git
+# --------------------------------------------------------------
 link src/git/.gitconfig $HOME/.gitconfig
 link src/git/.gitignore_global $HOME/.gitignore_global
+# ______________________________________________________________
 
-# Link tmux config
-link src/tmux/.tmux.conf $HOME/.tmux.conf
-
-# Link the tmuxinator bash completion script
-mkdir -p $HOME/.bash_completions
-link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
-
-# Link spacemacs
-link src/misc/.spacemacs $HOME/.spacemacs
-
-# Link vim
+# --------------------------------------------------------------
+# Vim
+# --------------------------------------------------------------
 mkdir -p $HOME/.vim/autoload
 link src/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
 link src/vim/vimrc $HOME/.vim/vimrc
 link src/vim/vimrc $HOME/.vimrc
+# ______________________________________________________________
 
+# --------------------------------------------------------------
+# Ripgrep
+link src/.ripgreprc $HOME/.ripgreprc
+# ______________________________________________________________
+
+# --------------------------------------------------------------
+# Tmux
+# --------------------------------------------------------------
+link src/tmux/.tmux.conf $HOME/.tmux.conf
+# ______________________________________________________________
+
+# --------------------------------------------------------------
+# Tmuxinator
+# --------------------------------------------------------------
+mkdir -p $HOME/.bash_completions
+link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
+# ______________________________________________________________
+
+# --------------------------------------------------------------
 # i3 window manager
+# --------------------------------------------------------------
 mkdir -p $HOME/.config
 link src/i3 $HOME/.config/i3
+# ______________________________________________________________
 
-# XMonad baby
+# --------------------------------------------------------------
+# XMonad
+# --------------------------------------------------------------
 link src/xmonad $HOME/.xmonad
+# ______________________________________________________________
 
-# Install asdf version manager
-git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.1
+# --------------------------------------------------------------
+# Asdf version manager
+# --------------------------------------------------------------
+git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.1
+# ______________________________________________________________
 
-# Install oh-my-git
+# --------------------------------------------------------------
+# Oh-my-git
+# --------------------------------------------------------------
 git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git
+# ______________________________________________________________

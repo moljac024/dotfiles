@@ -216,3 +216,4 @@ stty start undef
 export ERL_AFLAGS="-kernel shell_history enabled"
 
 export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+export FZF_DEFAULT_COMMAND="rg --files"

@@ -25,7 +25,6 @@ Plug 'chriskempson/base16-vim'
 " Editing
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
-" Plug 'editorconfig/editorconfig-vim' " Behaves badly
 "===========================================
 
 "===========================================
@@ -438,9 +437,6 @@ cnoremap <C-e> <end>
 " Source
 vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
 nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
-
-" Strip trailing whitespaces
-nnoremap <leader>W :silent %s/\s\+$//<cr>:let @/=''<cr>
 
 " Map Control-Space to omnicompletion
 inoremap <c-space> <c-x><c-o>

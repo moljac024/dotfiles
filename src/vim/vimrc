@@ -263,15 +263,10 @@ if &term =~ '256color'
   set t_ut=
 endif
 
-" set background=dark
-
 " Solarized colors
 "let g:solarized_termcolors=16 " For use with solarized terminal color palette
-if has("gui_running")
-    colorscheme solarized
-else
-    colorscheme solarized
-endif
+"set background=dark
+colorscheme solarized
 
 " gVim options
 if has("gui_running") " Options for when GUI is present (gVim)

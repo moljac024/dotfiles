@@ -520,6 +520,9 @@ autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.gra
 " Change to VCS root when selecting file from startify splash screen
 let g:startify_change_to_vcs_root = 1
 
+" Vim JSON
+let g:vim_json_syntax_conceal = 0
+
 " Rooter
 "===========================================
 let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']

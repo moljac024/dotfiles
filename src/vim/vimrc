@@ -456,14 +456,14 @@ cnoremap %% <c-r>=expand("%:p:h")<cr>/
 "===========================================
 
 " Open buffer explorer
-nnoremap <leader>b :silent Buffers<cr>
-nnoremap <c-b> :silent Buffers<cr>
-inoremap <c-b> <esc>:silent Buffers<cr>
+nnoremap <leader>b :Buffers<cr>
+nnoremap <c-b> :Buffers<cr>
+inoremap <c-b> <esc>:Buffers<cr>
 
 " Open file explorer
-nnoremap <leader>p :silent FZF<cr>
-nnoremap <c-p> :silent FZF<cr>
-inoremap <c-p> <esc>:silent FZF<cr>
+nnoremap <leader>p :FZF<cr>
+nnoremap <c-p> :FZF<cr>
+inoremap <c-p> <esc>:FZF<cr>
 
 nnoremap <leader>F :Ack<space>
 

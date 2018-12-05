@@ -44,10 +44,6 @@ Plug 'tpope/vim-markdown'
 Plug 'elzr/vim-json'
 " ==========
 
-" HTML5
-Plug 'othree/html5.vim'
-" ==========
-
 " Javascript
 Plug 'pangloss/vim-javascript'
 Plug 'prettier/vim-prettier', {
@@ -89,11 +85,11 @@ Plug 'stanangeloff/php.vim'
 "===========================================
 " Misc
 "===========================================
+Plug 'valloric/listtoggle'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-startify'
 Plug 'mbbill/undotree'
 Plug 'tomtom/tcomment_vim'
-Plug 'scrooloose/syntastic'
 Plug 'mhinz/vim-signify'
 Plug 'w0rp/ale'
 "===========================================
@@ -460,14 +456,16 @@ cnoremap %% <c-r>=expand("%:p:h")<cr>/
 "===========================================
 
 " Open buffer explorer
-nnoremap <leader>b :silent CtrlPBuffer<cr>
-nnoremap <c-b> :silent CtrlPBuffer<cr>
-inoremap <c-b> <esc>:silent CtrlPBuffer<cr>
+nnoremap <leader>b :silent Buffers<cr>
+nnoremap <c-b> :silent Buffers<cr>
+inoremap <c-b> <esc>:silent Buffers<cr>
 
 " Open file explorer
-nnoremap <leader>p :silent CtrlP<cr>
-nnoremap <c-p> :silent CtrlP<cr>
-inoremap <c-p> <esc>:silent CtrlP<cr>
+nnoremap <leader>p :silent FZF<cr>
+nnoremap <c-p> :silent FZF<cr>
+inoremap <c-p> <esc>:silent FZF<cr>
+
+nnoremap <leader>F :Ack<space>
 
 " Undo tree
 nnoremap <leader>u :silent UndotreeToggle<cr>
@@ -532,8 +530,3 @@ let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']
 " Format elixir on save
 let g:mix_format_on_save = 1
 " let g:mix_format_silent_errors = 1
-
-" Syntastic
-"===========================================
-" Syntastic: use project local installation of eslint
-let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'

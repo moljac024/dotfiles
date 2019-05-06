@@ -5,8 +5,8 @@
 
 # OS X specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  # Make homebrew apps have precedent
-  export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+    # Make homebrew apps have precedent
+    export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 fi
 
 if [[ -d "/home/linuxbrew" ]]; then
@@ -21,7 +21,13 @@ export PATH=$HOME/.local/bin:$PATH
 # Asdf version manager
 if [ -f $HOME/.asdf/asdf.sh ]; then
     source $HOME/.asdf/asdf.sh
+    if [ -f $HOME/.asdf/plugins/java/asdf-java-wrapper.bash ]; then
+        source $HOME/.asdf/plugins/java/asdf-java-wrapper.bash
+    fi
 fi
 
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
+
+# OPAM
+eval $(opam config env)

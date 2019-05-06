@@ -110,6 +110,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         source $HOME/.iterm2_shell_integration.bash
     fi
 
+    genpasswd() {
+        pwgen -sy ${1:-20} 1 | pbcopy; echo “Has been copied to clipboard”
+    }
 fi
 
 if [ -d $HOME/.bash_completions ]; then

@@ -124,7 +124,7 @@ if [ -d $HOME/.bash_completions ]; then
     done
 fi
 
-if [ -d $HOME/.bash_completions ]; then
+if [ -f $HOME/.asdf/completions/asdf.bash ]; then
     source $HOME/.asdf/completions/asdf.bash
 fi
 
@@ -183,12 +183,6 @@ alias mux='tmuxinator start'
 alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
 
 alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
-
-alias http-server="python -m SimpleHTTPServer"
-alias npm-exec='PATH=$(npm bin):$PATH'
-
-# TODO: Add a check if nvim is available on path, and only then do the alias:
-# alias vim='nvim'
 
 # Xorg aliases:
 alias gta='gitk --all'

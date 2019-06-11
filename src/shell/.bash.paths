@@ -28,6 +28,3 @@ fi
 
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
-
-# OPAM
-eval $(opam config env)

@@ -54,7 +54,6 @@ link src/git/.gitignore_global $HOME/.gitignore_global
 mkdir -p $HOME/.vim/autoload
 link src/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
 link src/vim/vimrc $HOME/.vim/vimrc
-link src/vim/vimrc $HOME/.vimrc
 # ______________________________________________________________
 
 # --------------------------------------------------------------

@@ -122,35 +122,6 @@ set nocompatible " No old school compatability
 " Directories
 "===========================================
 
-" On Windows, also use '.vim' instead of 'vimfiles'
-if has('win32') || has('win64')
-    set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
-endif
-
-" Font size on mac
-if has("gui_macvim") || has("gui_vimr")
-   set guifont=FiraCode:h18
-endif
-
-" Sync with system clipboard
-if has('win32') || has('win64')
-    set clipboard=unnamed
-else
-    if has("unix")
-        let s:uname = system("uname -s")
-        let s:uname = substitute(system("uname -s"), '\n', '', '')
-        if s:uname == "Darwin"
-            " Do Mac stuff here
-            if $USER != 'root'
-                set clipboard=unnamed
-            endif
-        else
-            " Do linux stuff here
-            set clipboard=unnamedplus
-        endif
-    endif
-endif
-
 " Make directory if it doesn't exist
 function! EnsureDirExists (dir)
     if !isdirectory(a:dir)
@@ -437,9 +408,6 @@ nnoremap <leader>sg :%s/\<<C-r><C-w>\>/
 vnoremap < <gv
 vnoremap > >gv
 
-" Use sudo to write file
-cnoremap w!! w !sudo tee % >/dev/null
-
 " Edit files relative to current file
 cnoremap %% <c-r>=expand("%:p:h")<cr>/
 
@@ -449,20 +417,14 @@ cnoremap %% <c-r>=expand("%:p:h")<cr>/
 
 " Open buffer explorer
 nnoremap <leader>b :Buffers<cr>
-nnoremap <c-b> :Buffers<cr>
-inoremap <c-b> <esc>:Buffers<cr>
 
 " Open file explorer
 nnoremap <leader>p :FZF<cr>
-nnoremap <c-p> :FZF<cr>
-inoremap <c-p> <esc>:FZF<cr>
 
 nnoremap <leader>F :Ack<space>
 
 " Undo tree
 nnoremap <leader>u :silent UndotreeToggle<cr>
-nnoremap <c-u> :silent UndotreeToggle<cr>
-inoremap <c-u> <esc>:silent UndotreeToggle<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""""
 " Misc

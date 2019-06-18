@@ -85,6 +85,8 @@ ZSH_THEME="bira"
 plugins=(
   git
   asdf
+  tmux
+  tmuxinator
 )
 
 source $ZSH/oh-my-zsh.sh

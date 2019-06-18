@@ -7,7 +7,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 ########## Setup ##############################################################
 
-export OH_MY_ZSH_HOME="$HOME/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 export ZPLUG_HOME="$HOME/.zplug"
 
 source $ZPLUG_HOME/init.zsh
@@ -84,11 +84,10 @@ ZSH_THEME="bira"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  dotenv
   asdf
 )
 
-# source $OH_MY_ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
 
 ###############################################################################
 
@@ -101,6 +100,9 @@ zplug "Tarrasch/zsh-autoenv"
 
 
 # User configuration ##########################################################
+
+export EDITOR=vim
+# alias vim=nvim
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

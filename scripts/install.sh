@@ -28,9 +28,9 @@ git_clone () {
 # --------------------------------------------------------------
 # Bash
 # --------------------------------------------------------------
-link src/shell/.bash.paths $HOME/.bash.paths
-link src/shell/.bash_profile $HOME/.bash_profile
-link src/shell/.bash.mine $HOME/.bash.mine
+link src/bash/.bash.paths $HOME/.bash.paths
+link src/bash/.bash_profile $HOME/.bash_profile
+link src/bash/.bash.mine $HOME/.bash.mine
 
 cat >> $HOME/.bashrc <<EOF
 # Source custom bash config
@@ -38,8 +38,18 @@ if [ -f $HOME/.bash.mine ]; then
   source $HOME/.bash.mine
 fi
 EOF
+
+git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git
 # ______________________________________________________________
 
+# --------------------------------------------------------------
+# Zsh
+# --------------------------------------------------------------
+link src/zsh/.zshrc $HOME/.zshrc
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+# ______________________________________________________________
 
 # --------------------------------------------------------------
 # Git
@@ -90,11 +100,5 @@ link src/xmonad $HOME/.xmonad
 # --------------------------------------------------------------
 # Asdf version manager
 # --------------------------------------------------------------
-git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.1
-# ______________________________________________________________
-
-# --------------------------------------------------------------
-# Oh-my-git
-# --------------------------------------------------------------
-git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git
+git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.2
 # ______________________________________________________________

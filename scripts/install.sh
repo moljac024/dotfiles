@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 ################################################################################
 ### Baseline
 ################################################################################
@@ -60,7 +61,6 @@ link src/zsh/.zshenv $HOME/.zshenv
 link src/zsh/.zshrc $HOME/.zshrc
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 ################################################################################
 
@@ -69,7 +69,10 @@ curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/instal
 ### Fish
 ################################################################################
 
-
+mkdir -p $HOME/.config/fish/functions
+link src/fish/config.fish $HOME/.config/fish/config.fish
+link src/fish/fishfile $HOME/.config/fish/fishfile
+link src/fish/functions/fisher.fish $HOME/.config/fish/functions/fisher.fish
 
 ################################################################################
 
@@ -91,6 +94,18 @@ link src/git/.gitignore_global $HOME/.gitignore_global
 mkdir -p $HOME/.vim/autoload
 link src/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
 link src/vim/vimrc $HOME/.vim/vimrc
+
+################################################################################
+
+
+################################################################################
+### Neovim
+################################################################################
+
+mkdir -p $HOME/.local/share/nvim/site/autoload
+mkdir -p $HOME/.config/nvim
+link src/vim/autoload/plug.vim $HOME/.local/share/nvim/site/autload/plug.vim
+link src/vim/vimrc $HOME/.config/nvim/init.vim
 
 ################################################################################
 

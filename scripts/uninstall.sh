@@ -1,55 +1,14 @@
 #!/usr/bin/env bash
 
 ################################################################################
-### Baseline
-################################################################################
-
-link () {
-    original=$1
-    path=$2
-    original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
-
-    if [ -L "$path" ]; then
-        rm "$path"
-    fi
-
-    if [ -e "$path" ]; then
-        mv "$path" "$path.old"
-    fi
-
-    ln -s "$original_fullpath" "$path"
-}
-
-
-git_clone () {
-    repo=$1
-    location=$2
-    location_fullpath="$(cd "$(dirname "$location")"; pwd)/$(basename "$location")"
-
-    if [ ! -d "$location_fullpath" ]; then
-        git clone "$repo" "$location_fullpath"
-    fi
-}
-
-################################################################################
-
-
-################################################################################
 ### Bash
 ################################################################################
 
-link src/bash/.bash.paths $HOME/.bash.paths
-link src/bash/.bash_profile $HOME/.bash_profile
-link src/bash/.bash.mine $HOME/.bash.mine
+rm $HOME/.bash.paths
+rm $HOME/.bash_profile
+rm $HOME/.bash.mine
 
-cat >> $HOME/.bashrc <<EOF
-# Source custom bash config
-if [ -f $HOME/.bash.mine ]; then
-  source $HOME/.bash.mine
-fi
-EOF
-
-git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git
+rm -rf $HOME/.oh-my-git
 
 ################################################################################
 
@@ -58,10 +17,10 @@ git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git
 ### Zsh
 ################################################################################
 
-link src/zsh/.zshenv $HOME/.zshenv
-link src/zsh/.zshrc $HOME/.zshrc
+rm $HOME/.zshenv
+rm $HOME/.zshrc
 
-git_clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+rm -rf $HOME/.oh-my-zsh
 
 ################################################################################
 
@@ -70,10 +29,7 @@ git_clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
 ### Fish
 ################################################################################
 
-mkdir -p $HOME/.config/fish/functions
-link src/fish/config.fish $HOME/.config/fish/config.fish
-link src/fish/fishfile $HOME/.config/fish/fishfile
-curl https://git.io/fisher --create-dirs -sLo $HOME/.config/fish/functions/fisher.fish && fish -c fisher
+rm -rf $HOME/.config/fish
 
 ################################################################################
 
@@ -82,8 +38,8 @@ curl https://git.io/fisher --create-dirs -sLo $HOME/.config/fish/functions/fishe
 ### Git
 ################################################################################
 
-link src/git/.gitconfig $HOME/.gitconfig
-link src/git/.gitignore_global $HOME/.gitignore_global
+rm $HOME/.gitconfig
+rm $HOME/.gitignore_global
 
 ################################################################################
 
@@ -92,9 +48,7 @@ link src/git/.gitignore_global $HOME/.gitignore_global
 ### Vim
 ################################################################################
 
-mkdir -p $HOME/.vim/autoload
-link src/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
-link src/vim/vimrc $HOME/.vim/vimrc
+rm -rf $HOME/.vim
 
 ################################################################################
 
@@ -103,10 +57,8 @@ link src/vim/vimrc $HOME/.vim/vimrc
 ### Neovim
 ################################################################################
 
-mkdir -p $HOME/.local/share/nvim/site/autoload
-mkdir -p $HOME/.config/nvim
-link src/vim/autoload/plug.vim $HOME/.local/share/nvim/site/autoload/plug.vim
-link src/vim/vimrc $HOME/.config/nvim/init.vim
+rm -rf $HOME/.local/share/nvim
+rm -rf $HOME/.config/nvim
 
 ################################################################################
 
@@ -115,7 +67,7 @@ link src/vim/vimrc $HOME/.config/nvim/init.vim
 ### Ripgrep
 ################################################################################
 
-link src/.ripgreprc $HOME/.ripgreprc
+rm $HOME/.ripgreprc
 
 ################################################################################
 
@@ -124,7 +76,7 @@ link src/.ripgreprc $HOME/.ripgreprc
 ### Tmux
 ################################################################################
 
-link src/tmux/.tmux.conf $HOME/.tmux.conf
+rm $HOME/.tmux.conf
 
 ################################################################################
 
@@ -133,17 +85,15 @@ link src/tmux/.tmux.conf $HOME/.tmux.conf
 ### Tmuxinator bash completions
 ################################################################################
 
-mkdir -p $HOME/.bash_completions
-link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
+rm $HOME/.bash_completions/tmuxinator
 
 ################################################################################
 
 
 ################################################################################
-### Asdf version manager
-################################################################################
+### Asdf version manager ################################################################################
 
-git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.2
+rm -rf $HOME/.asdf
 
 ################################################################################
 
@@ -152,8 +102,8 @@ git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.2
 ### i3 wm
 ################################################################################
 
-mkdir -p $HOME/.config
-link src/i3 $HOME/.config/i3
+rm $HOME/.config/i3
 
 ################################################################################
+
 

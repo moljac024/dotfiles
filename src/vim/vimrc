@@ -2,7 +2,11 @@
 " Plugins
 "===========================================
 
-call plug#begin($HOME . '/.vim/plugged') " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+if has('nvim')
+  call plug#begin($HOME . '/.local/share/nvim/plugged')
+else
+  call plug#begin($HOME . '/.vim/plugged')
+endif
 
 "===========================================
 " Basics

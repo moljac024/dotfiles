@@ -80,7 +80,8 @@ source $ZSH/oh-my-zsh.sh
 ### Other #####################################################################
 
 # FZF
-export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_DEFAULT_COMMAND="rg"
+export FZF_FIND_FILE_COMMAND="rg --files"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ###############################################################################

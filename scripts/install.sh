@@ -38,18 +38,10 @@ git_clone () {
 ### Bash
 ################################################################################
 
-link src/bash/.bash.paths $HOME/.bash.paths
 link src/bash/.bash_profile $HOME/.bash_profile
-link src/bash/.bash.mine $HOME/.bash.mine
+link src/bash/.bashrc $HOME/.bashrc
 
-cat >> $HOME/.bashrc <<EOF
-# Source custom bash config
-if [ -f $HOME/.bash.mine ]; then
-  source $HOME/.bash.mine
-fi
-EOF
-
-git_clone https://github.com/arialdomartini/oh-my-git.git $HOME/.oh-my-git
+git_clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
 
 ################################################################################
 

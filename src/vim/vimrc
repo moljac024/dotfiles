@@ -194,9 +194,7 @@ if &term =~ '256color'
   set t_ut=
 endif
 
-" Solarized colors
-"let g:solarized_termcolors=16 " For use with solarized terminal color palette
-"set background=dark
+set background=light
 colorscheme solarized
 
 "===========================================

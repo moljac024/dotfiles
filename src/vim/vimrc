@@ -18,7 +18,6 @@ Plug 'tpope/vim-vinegar'
 " Themes/colors
 "===========================================
 Plug 'altercation/vim-colors-solarized'
-Plug 'chriskempson/base16-vim'
 "===========================================
 
 "===========================================
@@ -54,7 +53,6 @@ Plug 'mxw/vim-jsx'
 
 " Typescript
 Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi' " typescript omnicomplete
 " ==========
 
 "Elm
@@ -156,72 +154,38 @@ endif
 " Vim options
 "===========================================
 
-set encoding=utf-8 " Default encoding utf-8
-" set title " Update terminal title
 set shortmess=at " Be less verbose
 set hidden " Enable multiple buffers open
 set scrolloff=3 " Maintain more context around cursor when scrolling
+
 set foldmethod=indent " Fold method
 set foldlevel=99 " Fold level
 "set nofoldenable " Don't fold code
+
 set nobackup " No backup files
 set noswapfile " No swap file, that is so 70s
-set backspace=indent,eol,start " Allow backspacing over everything in insert mode
 set viewoptions=folds,options,cursor,unix,slash " Better Unix/Windows compatibility
-"set timeoutlen=750 " Set the timeout for mapped key combos in ms (default 1000)
 set history=1000 " Remember more commands and search history, like an elephant
 set undolevels=1000 " Use many muchos levels of undo
-set autoread " Automatically reload a file when change detected
 set list " Show whitespace characters
-set listchars=tab:>-,trail:·,extends:# " Highlight problematic whitespace
 
 set splitbelow " Vertical splits go below instead of above
 set splitright " Horizontal splits go to the right instead of to the left
-
-" Strip trailing whitespace when saving a file
-autocmd BufWritePre * :silent %s/\s\+$//e
-
-"set showmatch " Show matching brackets
-"set nowrap " Do not wrap lines
-"set autochdir " Auto change directory - better left off, messes up plugins
 
 " Search options
 set gdefault " Make global replace default
 set ignorecase " Ignore case in search
 set smartcase " Ignore case but only when all lowercase characters
-set incsearch " Incremental search
 set hlsearch " Highlight search results
 set wrapscan " Make search wrap around
-
-" Wildignore
-" Ignore git repository directory (This doesn't play well with fugitive - it breaks 3-way merge (:Gdiff))
-" set wildignore=*/.git/*
-" Ignore backup files
-set wildignore+=*~
-" Ignore compiled files
-set wildignore+=*.o
-set wildignore+=*.pyc
-
-" Auto completion: show menu
-set wildmenu
-set wildmode=longest:full
-
-" Tags - search cwd, then up recursively until root
-set tags=./tags;/
 
 "===========================================
 " Look and feel
 "===========================================
 
-"set t_Co=256 " Use 256 colors in terminal
-"set number " Show line numbers
-"set cursorline " Highlight current line
-"set visualbell " Don't beep, blink instead
 set noerrorbells " Don't beep, don't you even blink
-set ruler " Show cursor position at all times
 set showcmd " Show incomplete commands
 set showmode " Always show current mode
-set ls=2 " Always show status line
 
 if &term =~ '256color'
 " Disable Background Color Erase (BCE) so that color schemes
@@ -235,25 +199,6 @@ endif
 "set background=dark
 colorscheme solarized
 
-" gVim options
-if has("gui_running") " Options for when GUI is present (gVim)
-    set guioptions-=r " Remove right scrollbar
-    set guioptions-=l " Remove left scrollbar
-    set guioptions-=R " Remove right scrollbar when window is split
-    set guioptions-=L " Remove left scrollbar when window is split
-    set guioptions-=T " Remove tool bar
-    set guioptions-=m " Remove menu bar
-    set mousehide " Hide mouse when user starts typing
-    if has("gui_gtk2") " Options for when GUI is gtk2 (Linux)
-        "set guifont=Deja\ Vu\ Sans\ Mono\ 12
-        set guifont=Monospace\ 18
-    endif
-    if has("gui_gtk3") " Options for when GUI is gtk2 (Linux)
-        "set guifont=Deja\ Vu\ Sans\ Mono\ 12
-        set guifont=Monospace\ 18
-    endif
-endif
-
 "===========================================
 " Programming
 "===========================================
@@ -264,28 +209,6 @@ set softtabstop=4
 set shiftwidth=4
 set shiftround " Round indent to multiples of shiftwidth
 set expandtab " Expand tabs to spaces (purge evil tabs)
-"set smarttab " Insert tabs according to shiftwidth instead of tabstops
-
-" General indenting
-set autoindent " Autoindent according to previous line indentation
-"set nosmartindent " Intereferes with filetype based indentation
-"set nocopyindent " Copy the previous indentation on auto indenting
-"set nocindent " C-style auto indenting - Interferes with filetype based indentation
-
-" Syntax highlighting, automatic file detection, and omnicompletion
-syntax on
-filetype plugin on
-filetype plugin indent on
-set omnifunc=syntaxcomplete#Complete
-
-" Omnicompletion
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType python setlocal omnifunc=jedi#completions
 
 " Python indenting rules
 autocmd FileType python setlocal tabstop=4
@@ -294,25 +217,22 @@ autocmd FileType python setlocal shiftwidth=4
 autocmd FileType python setlocal nosmartindent
 
 " Html indenting rules
-autocmd FileType xml,html,html.twig,mako setlocal tabstop=2
-autocmd FileType xml,html,html.twig,mako setlocal softtabstop=2
-autocmd FileType xml,html,html.twig,mako setlocal shiftwidth=2
-autocmd FileType xml,html,html.twig,mako setlocal expandtab
+autocmd FileType xml,html setlocal tabstop=2
+autocmd FileType xml,html setlocal softtabstop=2
+autocmd FileType xml,html setlocal shiftwidth=2
+autocmd FileType xml,html setlocal expandtab
 
 " Javascript indenting rules
-autocmd FileType javascript setlocal tabstop=2
-autocmd FileType javascript setlocal softtabstop=2
-autocmd FileType javascript setlocal shiftwidth=2
-autocmd FileType javascript setlocal expandtab
+autocmd FileType javascript,typescript setlocal tabstop=2
+autocmd FileType javascript,typescript setlocal softtabstop=2
+autocmd FileType javascript,typescript setlocal shiftwidth=2
+autocmd FileType javascript,typescript setlocal expandtab
 
 " Elixir indenting rules
 autocmd FileType elixir setlocal tabstop=2
 autocmd FileType elixir setlocal softtabstop=2
 autocmd FileType elixir setlocal shiftwidth=2
 autocmd FileType elixir setlocal expandtab
-
-" Set .mak files to mako filetype
-au BufRead,BufNewFile *.mak set filetype=mako
 
 " Don't expand tabs to spaces when writing a Makefile
 autocmd FileType make setlocal noexpandtab
@@ -339,9 +259,6 @@ nnoremap Y y$
 
 " Delete buffer
 nnoremap <leader>k :bw<cr>
-
-" Paste from system clipboard
-nnoremap <leader>p "+gP<cr>
 
 " Clear highlight from search
 nnoremap <leader>c :silent noh<cr>
@@ -384,25 +301,12 @@ nnoremap <C-e> $
 cnoremap <C-a> <home>
 cnoremap <C-e> <end>
 
-" Split line (opposite of join line (J))
-" (uncomment when resolving conflict with vim-sneak S keybind)
-"nnoremap S i<cr><esc><right>
-
-" Source
-vnoremap <leader>S y:execute @@<cr>:echo 'Sourced selection.'<cr>
-nnoremap <leader>S ^vg_y:execute @@<cr>:echo 'Sourced line.'<cr>
-
 " Map Control-Space to omnicompletion
 inoremap <c-space> <c-x><c-o>
 
 " Format selected text or paragraph with Q
 vmap Q gq
 nnoremap Q gqap
-
-" Replace word under cursor - on current line
-nnoremap <leader>sl :s/\<<C-r><C-w>\>/
-" Replace word under cursor - on all lines
-nnoremap <leader>sg :%s/\<<C-r><C-w>\>/
 
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -430,19 +334,12 @@ nnoremap <leader>u :silent UndotreeToggle<cr>
 " Misc
 """"""""""""""""""""""""""""""""""""""""""""""
 
-" Close autocomplete preview window
-autocmd CursorMovedI *  if pumvisible() == 0|silent! pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
-
 " Jump to last known position in file
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 "===========================================
 " Keybinds
 "===========================================
-
-" Disable auto-pairs keybind for <M-p> (conflict with yankstack)
-"let g:AutoPairShortcutToggle = '' " why doesn't this work?
 
 "===========================================
 " Plugins

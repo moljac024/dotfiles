@@ -18,18 +18,16 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar'
 
 " ===========================================
-" Themes/colors
+" Ricing
 " ===========================================
 Plug 'altercation/vim-colors-solarized'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " ===========================================
-" Editing
+" Editing & Movement
 " ===========================================
 Plug 'godlygeek/tabular'
-
-" ===========================================
-" Movement
-" ===========================================
 Plug 'justinmk/vim-sneak'
 let g:sneak#label = 1
 
@@ -107,14 +105,13 @@ Plug 'tomtom/tcomment_vim'
 Plug 'mhinz/vim-signify'
 
 " ===========================================
-" Language server
+" Language servers and linters
 " ===========================================
 " Plug 'w0rp/ale'
 " Plug 'prabirshrestha/vim-lsp'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-
 
 " ===========================================
 " Files
@@ -124,7 +121,6 @@ let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']
 
 Plug 'justinmk/vim-dirvish'
 Plug 'kristijanhusak/vim-dirvish-git'
-
 
 " ===========================================
 " Searching
@@ -137,7 +133,6 @@ Plug 'wincent/ferret'
 
 
 call plug#end() " Initialize plugin system
-
 
 " ==============================================================================
 " First thing's first
@@ -177,7 +172,6 @@ if isdirectory($HOME . '/.vim/undo')
         set undofile
     endif
 endif
-
 
 " ==============================================================================
 " General options
@@ -225,6 +219,12 @@ endif
 
 set background=light
 colorscheme solarized
+
+if exists('&signcolumn')  " Vim 7.4.2201
+    set signcolumn=yes
+    " Solarized sets a weird color here
+    highlight clear SignColumn
+endif
 
 " ==============================================================================
 " Programming
@@ -349,7 +349,6 @@ vnoremap > >gv
 
 " Edit files relative to current file
 cnoremap %% <c-r>=expand("%:p:h")<cr>/
-
 
 " ==============================================================================
 " Misc

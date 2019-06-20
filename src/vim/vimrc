@@ -1,6 +1,6 @@
-"===========================================
+" ==============================================================================
 " Plugins
-"===========================================
+" ==============================================================================
 
 if has('nvim')
   call plug#begin($HOME . '/.local/share/nvim/plugged')
@@ -8,125 +8,146 @@ else
   call plug#begin($HOME . '/.vim/plugged')
 endif
 
-"===========================================
+" ===========================================
 " Basics
-"===========================================
+" ===========================================
 Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar'
-"===========================================
 
-"===========================================
+" ===========================================
 " Themes/colors
-"===========================================
+" ===========================================
 Plug 'altercation/vim-colors-solarized'
-"===========================================
 
-"===========================================
+" ===========================================
 " Editing
-Plug 'ervandew/supertab'
+" ===========================================
 Plug 'godlygeek/tabular'
-"===========================================
 
-"===========================================
+" ===========================================
 " Movement
-Plug 'easymotion/vim-easymotion'
+" ===========================================
 Plug 'justinmk/vim-sneak'
-"===========================================
+let g:sneak#label = 1
 
-"===========================================
-" Languages
-"===========================================
+"============================================
+" Programming
+"============================================
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-" Fish shell
+" Fish shell ================================
 Plug 'dag/vim-fish'
 
-" Markdown
+" Markdown ==================================
 Plug 'tpope/vim-markdown'
-" ==========
 
-" JSON
+" JSON ======================================
 Plug 'elzr/vim-json'
-" ==========
+let g:vim_json_syntax_conceal = 0
 
-" Javascript
+" Javascript ================================
 Plug 'pangloss/vim-javascript'
+
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+" Run prettier before save
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
+
 Plug 'mxw/vim-jsx'
-" ==========
+" JSX works on .js files too
+let g:jsx_ext_required = 0
 
-" Typescript
+" Typescript ================================
 Plug 'leafgarland/typescript-vim'
-" ==========
 
-"Elm
+" Elm =======================================
 Plug 'elmcast/elm-vim'
-" ==========
 
-" Elixir
+" Elixir ====================================
 Plug 'elixir-lang/vim-elixir'
+" Format elixir on save
+let g:mix_format_on_save = 1
+" let g:mix_format_silent_errors = 1
 Plug 'mhinz/vim-mix-format'
-" ==========
 
-" Haskell
+" Haskell ===================================
 Plug 'neovimhaskell/haskell-vim'
-" ==========
 
-" Go
+" Go ========================================
 Plug 'fatih/vim-go'
-" ==========
 
-" Rust
+" Rust ======================================
 Plug 'rust-lang/rust.vim'
-" ==========
 
-" PHP
+" PHP =======================================
 Plug 'stanangeloff/php.vim'
-"===========================================
 
-"===========================================
+" ===========================================
 " Misc
-"===========================================
+" ===========================================
 Plug 'valloric/listtoggle'
 Plug 'tpope/vim-fugitive'
+
 Plug 'mhinz/vim-startify'
+" Change to VCS root when selecting file from startify splash screen
+let g:startify_change_to_vcs_root = 1
+
 Plug 'mbbill/undotree'
+nnoremap <leader>u :silent UndotreeToggle<cr>
+
 Plug 'tomtom/tcomment_vim'
 Plug 'mhinz/vim-signify'
-Plug 'w0rp/ale'
-"===========================================
 
-"===========================================
+" ===========================================
+" Language server
+" ===========================================
+" Plug 'w0rp/ale'
+" Plug 'prabirshrestha/vim-lsp'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+
+
+" ===========================================
 " Files
+" ===========================================
 Plug 'airblade/vim-rooter'
-Plug 'justinmk/vim-dirvish'
-"===========================================
+let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']
 
-"===========================================
+Plug 'justinmk/vim-dirvish'
+Plug 'kristijanhusak/vim-dirvish-git'
+
+
+" ===========================================
 " Searching
-"===========================================
+" ===========================================
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+nnoremap <leader>p :FZF<cr>
+
 Plug 'wincent/ferret'
-"===========================================
 
 
 call plug#end() " Initialize plugin system
 
 
-"===========================================
+" ==============================================================================
 " First thing's first
-"===========================================
+" ==============================================================================
 
 set nocompatible " No old school compatability
 
-"===========================================
+" ==============================================================================
 " Directories
-"===========================================
+" ==============================================================================
 
 " Make directory if it doesn't exist
 function! EnsureDirExists (dir)
@@ -158,9 +179,9 @@ if isdirectory($HOME . '/.vim/undo')
 endif
 
 
-"===========================================
-" Vim options
-"===========================================
+" ==============================================================================
+" General options
+" ==============================================================================
 
 set shortmess=at " Be less verbose
 set hidden " Enable multiple buffers open
@@ -180,34 +201,34 @@ set list " Show whitespace characters
 set splitbelow " Vertical splits go below instead of above
 set splitright " Horizontal splits go to the right instead of to the left
 
-" Search options
+" Search
 set gdefault " Make global replace default
 set ignorecase " Ignore case in search
 set smartcase " Ignore case but only when all lowercase characters
 set hlsearch " Highlight search results
 set wrapscan " Make search wrap around
 
-"===========================================
+" ==============================================================================
 " Look and feel
-"===========================================
+" ==============================================================================
 
 set noerrorbells " Don't beep, don't you even blink
 set showcmd " Show incomplete commands
 set showmode " Always show current mode
 
-if &term =~ '256color'
-" Disable Background Color Erase (BCE) so that color schemes
-" work properly when Vim is used inside tmux and GNU screen.
-" See also http://snk.tuxfamily.org/log/vim-256color-bce.html
-  set t_ut=
+if !has('nvim') && &term =~ '256color'
+    " Disable Background Color Erase (BCE) so that color schemes
+    " work properly when Vim is used inside tmux and GNU screen.
+    " See also http://snk.tuxfamily.org/log/vim-256color-bce.html
+    set t_ut=
 endif
 
 set background=light
 colorscheme solarized
 
-"===========================================
+" ==============================================================================
 " Programming
-"===========================================
+" ==============================================================================
 
 " General tab options
 set tabstop=4
@@ -243,12 +264,20 @@ autocmd FileType elixir setlocal expandtab
 " Don't expand tabs to spaces when writing a Makefile
 autocmd FileType make setlocal noexpandtab
 
-"===========================================
+" ==============================================================================
 " Keybinds
-"===========================================
+" ==============================================================================
 
 "Set mapleader key
 let g:mapleader=","
+
+" Faster browsing/scrolling
+nnoremap <space> <C-f>
+nnoremap <s-space> <C-b>
+nnoremap <backspace> <C-b>
+vnoremap <space> <C-f>
+vnoremap <s-space> <C-b>
+vnoremap <backspace> <C-b>
 
 " More speed!
 inoremap jj <esc>
@@ -321,69 +350,10 @@ vnoremap > >gv
 " Edit files relative to current file
 cnoremap %% <c-r>=expand("%:p:h")<cr>/
 
-"===========================================
-" Plugin Keybinds
-"===========================================
 
-" Open buffer explorer
-nnoremap <leader>b :Buffers<cr>
-
-" Open file explorer
-nnoremap <leader>p :FZF<cr>
-
-nnoremap <leader>F :Ack<space>
-
-" Undo tree
-nnoremap <leader>u :silent UndotreeToggle<cr>
-
-""""""""""""""""""""""""""""""""""""""""""""""
+" ==============================================================================
 " Misc
-""""""""""""""""""""""""""""""""""""""""""""""
+" ==============================================================================
 
 " Jump to last known position in file
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
-"===========================================
-" Keybinds
-"===========================================
-
-"===========================================
-" Plugins
-"===========================================
-
-" Supertab
-"===========================================
-let g:SupertabMappingForward = '<c-space>'
-let g:SupertabMappingBackward = '<s-c-space>'
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>" " omnicomplete
-let g:SuperTabDefaultCompletionType = "context" " smartass
-let g:SuperTabClosePreviewOnPopupClose = 1
-
-" JSX
-"===========================================
-" JSX works on .js files too
-let g:jsx_ext_required = 0
-
-" Prettier
-"===========================================
-" Run prettier before save
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
-
-" Startify
-"===========================================
-" Change to VCS root when selecting file from startify splash screen
-let g:startify_change_to_vcs_root = 1
-
-" Vim JSON
-let g:vim_json_syntax_conceal = 0
-
-" Rooter
-"===========================================
-let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']
-
-" Elixir
-"===========================================
-" Format elixir on save
-let g:mix_format_on_save = 1
-" let g:mix_format_silent_errors = 1

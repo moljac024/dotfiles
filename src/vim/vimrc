@@ -48,6 +48,8 @@ Plug 'tpope/vim-markdown'
 " JSON ======================================
 Plug 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
+" JSONC comments
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " Javascript ================================
 Plug 'pangloss/vim-javascript'

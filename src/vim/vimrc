@@ -15,14 +15,14 @@ Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 
 " ===========================================
 " Ricing
 " ===========================================
 Plug 'altercation/vim-colors-solarized'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
 
 " ===========================================
 " Editing & Movement
@@ -34,10 +34,10 @@ let g:sneak#label = 1
 "============================================
 " Programming
 "============================================
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/vim-lsp'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " Fish shell ================================
 Plug 'dag/vim-fish'
@@ -96,12 +96,12 @@ Plug 'stanangeloff/php.vim'
 Plug 'valloric/listtoggle'
 Plug 'tpope/vim-fugitive'
 
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 " Change to VCS root when selecting file from startify splash screen
-let g:startify_change_to_vcs_root = 1
+" let g:startify_change_to_vcs_root = 1
 
-Plug 'mbbill/undotree'
-nnoremap <leader>u :silent UndotreeToggle<cr>
+" Plug 'mbbill/undotree'
+" nnoremap <leader>u :silent UndotreeToggle<cr>
 
 Plug 'tomtom/tcomment_vim'
 Plug 'mhinz/vim-signify'
@@ -112,8 +112,8 @@ Plug 'mhinz/vim-signify'
 " Plug 'w0rp/ale'
 " Plug 'prabirshrestha/vim-lsp'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 
 " ===========================================
 " Files
@@ -121,17 +121,17 @@ Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'airblade/vim-rooter'
 let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']
 
-Plug 'justinmk/vim-dirvish'
-Plug 'kristijanhusak/vim-dirvish-git'
+" Plug 'justinmk/vim-dirvish'
+" Plug 'kristijanhusak/vim-dirvish-git'
 
 " ===========================================
 " Searching
 " ===========================================
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-nnoremap <leader>p :FZF<cr>
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
+" nnoremap <leader>p :FZF<cr>
 
-Plug 'wincent/ferret'
+" Plug 'wincent/ferret'
 
 
 call plug#end() " Initialize plugin system
@@ -147,33 +147,33 @@ set nocompatible " No old school compatability
 " ==============================================================================
 
 " Make directory if it doesn't exist
-function! EnsureDirExists (dir)
-    if !isdirectory(a:dir)
-        if exists("*mkdir")
-            call mkdir(a:dir, 'p')
-        else
-            echo "Please create directory: " . a:dir
-        endif
-    endif
-endfunction
+" function! EnsureDirExists (dir)
+"     if !isdirectory(a:dir)
+"         if exists("*mkdir")
+"             call mkdir(a:dir, 'p')
+"         else
+"             echo "Please create directory: " . a:dir
+"         endif
+"     endif
+" endfunction
 
 " Ensure needed directories are there
-call EnsureDirExists($HOME . '/.vim/backup')
-call EnsureDirExists($HOME . '/.vim/sessions')
-call EnsureDirExists($HOME . '/.vim/undo')
+" call EnsureDirExists($HOME . '/.vim/backup')
+" call EnsureDirExists($HOME . '/.vim/sessions')
+" call EnsureDirExists($HOME . '/.vim/undo')
 
 " Keep all backups in a single directory
-if isdirectory($HOME . '/.vim/backup')
-    set backupdir=~/.vim/backup//
-endif
+" if isdirectory($HOME . '/.vim/backup')
+"     set backupdir=~/.vim/backup//
+" endif
 
 " Keep all undo in a single directory
-if isdirectory($HOME . '/.vim/undo')
-    if has("persistent_undo")
-        set undodir=~/.vim/undo//
-        set undofile
-    endif
-endif
+" if isdirectory($HOME . '/.vim/undo')
+"     if has("persistent_undo")
+"         set undodir=~/.vim/undo//
+"         set undofile
+"     endif
+" endif
 
 " ==============================================================================
 " General options
@@ -262,6 +262,12 @@ autocmd FileType elixir setlocal tabstop=2
 autocmd FileType elixir setlocal softtabstop=2
 autocmd FileType elixir setlocal shiftwidth=2
 autocmd FileType elixir setlocal expandtab
+
+" YAML indenting
+autocmd FileType yaml setlocal tabstop=2
+autocmd FileType yaml setlocal softtabstop=2
+autocmd FileType yaml setlocal shiftwidth=2
+autocmd FileType yaml setlocal expandtab
 
 " Don't expand tabs to spaces when writing a Makefile
 autocmd FileType make setlocal noexpandtab

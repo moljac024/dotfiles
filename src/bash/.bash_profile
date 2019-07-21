@@ -151,3 +151,5 @@ export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_FIND_FILE_COMMAND="rg --files"
 
 ################################################################################
+
+export PATH="$HOME/.cargo/bin:$PATH"

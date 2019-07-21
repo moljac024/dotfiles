@@ -5,7 +5,8 @@
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="bira"
+# ZSH_THEME="bira"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -67,6 +68,7 @@ ZSH_THEME="bira"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  fzf
   asdf
   tmux
   tmuxinator
@@ -80,8 +82,9 @@ source $ZSH/oh-my-zsh.sh
 ### Other #####################################################################
 
 # FZF
-export FZF_DEFAULT_COMMAND="rg"
+export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_FIND_FILE_COMMAND="rg --files"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ###############################################################################
+source ~/.purepower

@@ -6,7 +6,7 @@
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
 # ZSH_THEME="bira"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -66,15 +66,22 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  fzf
-  asdf
-  tmux
-  tmuxinator
-)
+# plugins=(
+#   git
+#   fzf
+#   asdf
+#   tmux
+#   tmuxinator
+# )
 
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
+
+###############################################################################
+#
+### Pure #####################################################################
+
+autoload -U promptinit; promptinit
+prompt pure
 
 ###############################################################################
 
@@ -87,4 +94,3 @@ export FZF_FIND_FILE_COMMAND="rg --files"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ###############################################################################
-source ~/.purepower

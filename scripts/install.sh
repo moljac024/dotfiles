@@ -50,10 +50,17 @@ git_clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
 ### Zsh
 ################################################################################
 
+mkdir -p $HOME/.zsh/functions
+mkdir -p $HOME/.zsh/prompts
+
 link src/zsh/.zshenv $HOME/.zshenv
 link src/zsh/.zshrc $HOME/.zshrc
 
-git_clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+# git_clone https://github.com/robbyrussell/oh-my-zsh.git $HOME/.oh-my-zsh
+
+git_clone https://github.com/sindresorhus/pure.git $HOME/.zsh/prompts/pure
+link $HOME/.zsh/prompts/pure/pure.zsh $HOME/.zsh/functions/prompt_pure_setup
+link $HOME/.zsh/prompts/pure/async.zsh $HOME/.zsh/functions/async
 
 ################################################################################
 

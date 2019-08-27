@@ -75,6 +75,11 @@ bindsym $mod+Shift+Right move right
 # Switch between the current and previously focused workspace
 bindsym $mod+Tab workspace back_and_forth
 
+bindsym $mod+$ctrl+h move workspace to output left
+bindsym $mod+$ctrl+j move workspace to output down
+bindsym $mod+$ctrl+k move workspace to output up
+bindsym $mod+$ctrl+l move workspace to output right
+
 # split in horizontal orientation
 bindsym $mod+b split h
 
@@ -135,7 +140,10 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exit
+
+bindsym $mod+Shift+Backspace i3-msg exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -167,7 +175,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        tray_output eDP-1-1
+        tray_output primary
 }
 
 # Should focus follow mouse movement
@@ -219,10 +227,15 @@ bindsym $ctrl+Shift+4 exec --no-startup-id screenshot-part
 
 # Auto start apps
 # exec --no-startup-id xrandr --output eDP-1-1 --auto --primary --output HDMI-1-2 --auto --right-of eDP-1-1  # Set up monitors
-exec --no-startup-id setup-displays
-exec --no-startup-id setup-mouse-speed
-exec --no-startup-id setxkbmap -layout us -option ctrl:nocaps  # Make caps-lock a second control
-exec --no-startup-id setxkbmap -layout us,rs -variant ,latin -option grp:lalt_lshift_toggle,ctrl:nocaps  # Make caps-lock a second control and set up kb layouts
+# exec --no-startup-id setup-xorg
+# exec --no-startup-id setup-displays
+# exec --no-startup-id setup-mouse-speed-home
+# exec --no-startup-id setup-mouse-speed-work
+
+# exec --no-startup-id setxkbmap -layout us -option ctrl:nocaps  # Make caps-lock a second control
+# exec --no-startup-id setxkbmap -layout us,rs -variant ,latin -option grp:lalt_lshift_toggle,ctrl:nocaps  # Make caps-lock a second control and set up kb layouts
+
 exec --no-startup-id nitrogen --restore  # Restore wallpaper
 exec --no-startup-id dunst -config ~/.config/i3/dunstrc  # Minimalistic notification manager
+# exec --no-startup-id light-locker
 # exec --no-startup-id nm-applet  # Network manager applet

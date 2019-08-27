@@ -31,12 +31,17 @@ fi
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
 
+# Yarn local install
+if [[ -d $HOME/.yarn/bin ]]; then
+    export PATH=$HOME/.yarn/bin:$PATH
+fi
+
 ################################################################################
 
 
 # If not running interactively, don't do anything
 case $- in
-  *i*) ;;
+    *i*) ;;
     *) return;;
 esac
 
@@ -111,7 +116,7 @@ alias gita='gitk --all'
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [[ -e "$HOME/.fzf-extras/fzf-extras.sh" ]] \
-  && source "$HOME/.fzf-extras/fzf-extras.sh"
+    && source "$HOME/.fzf-extras/fzf-extras.sh"
 
 
 # OS X
@@ -153,3 +158,8 @@ export FZF_FIND_FILE_COMMAND="rg --files"
 ################################################################################
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# If running from tty1 start sway
+if [ "$(tty)" = "/dev/tty1" ]; then
+    exec sway
+fi

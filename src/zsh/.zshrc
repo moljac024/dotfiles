@@ -88,9 +88,8 @@ prompt pure
 
 ### Other #####################################################################
 
-# FZF
-export FZF_DEFAULT_COMMAND="rg --files"
-export FZF_FIND_FILE_COMMAND="rg --files"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ "$(tty)" = "/dev/tty1" ]; then
+    exec env XDG_CURRENT_DESKTOP=Unity sway
+fi
 
 ###############################################################################

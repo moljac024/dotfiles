@@ -1,82 +1,38 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
-
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
+set $ctrl Control
+set $alt Alt
 # Home row direction keys, like vim
 set $left h
 set $down j
 set $up k
 set $right l
 
-# set $left a
-# set $down s
-# set $up w
-# set $right d
-# Your preferred terminal emulator
+# Preferred terminal emulator
 set $term gnome-terminal
-# Your preferred application launcher
-# Note: it's recommended that you pass the final command to sway
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# Preferred application launcher
+set $launcher rofi -show drun
 
 # Preferred file manager
-set $file_manager thunar
+# set $file_manager thunar
+# set $file_manager caja
+set $file_manager nautilus
 
 # Identifier for built-in display
 set $laptop_display eDP-1
 
-### Output configuration
-#
+# Lock screen command
+set $lock_cmd sway-lock-screen
+
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
-output eDP-1 {
-  # Always start from built-in display
-  pos 0 0
+# Inputs
+input type:touchpad {
+  natural_scroll enabled
 }
-
-output HDMI-A-2 {
-  pos 1920 0
-}
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-
-### Idle configuration
-#
-# Example configuration:
-#
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' \
-#               resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
 
 input type:keyboard {
   xkb_options ctrl:nocaps
@@ -88,9 +44,6 @@ input type:pointer {
   pointer_accel -0.5
 }
 
-input type:touchpad {
-  natural_scroll enabled
-}
 
 ### Key bindings
 #
@@ -100,13 +53,26 @@ input type:touchpad {
     bindsym $mod+Return exec $term
 
     # start a file manager
-    bindsym $mod+shift+f exec $file_manager
+    bindsym $mod+Shift+f exec $file_manager
 
     # kill focused window
     bindsym $mod+q kill
 
-    # start your launcher
-    bindsym $mod+space exec $menu
+    # The middle button over a titlebar kills the window
+    bindsym button2 kill
+    # The middle button and a modifer over any part of the window kills the window
+    bindsym --whole-window $mod+button2 kill
+
+    # The right button over a titlebar toggles floating
+    bindsym button3 floating toggle
+    # The right button and a modifer over any part of the window toggles floating
+    bindsym $mod+button3 floating toggle
+
+    # Start your launcher
+    bindsym $mod+space exec $launcher
+
+    # Lock screen
+    # bindsym $mod+$ctrl+l exec $lock_cmd
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -118,8 +84,10 @@ input type:touchpad {
     # reload the configuration file
     bindsym $mod+Shift+c reload
 
-    # exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    # Exit sway with confirmation (logs you out of your Wayland session)
+    # bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    # Exit sway without confirmation (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exit
 #
 # Moving around:
 #
@@ -144,6 +112,17 @@ input type:touchpad {
     bindsym $mod+Shift+Down move down
     bindsym $mod+Shift+Up move up
     bindsym $mod+Shift+Right move right
+
+    bindsym $mod+$ctrl+$left move workspace to output left
+    bindsym $mod+$ctrl+$right move workspace to output right
+    bindsym $mod+$ctrl+$up move workspace to output up
+    bindsym $mod+$ctrl+$down move workspace to output down
+
+    bindsym $mod+$ctrl+Left move workspace to output left
+    bindsym $mod+$ctrl+Right move workspace to output right
+    bindsym $mod+$ctrl+Up move workspace to output up
+    bindsym $mod+$ctrl+Down move workspace to output down
+
 #
 # Workspaces:
 #
@@ -233,23 +212,81 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
+# Screenshots
+bindsym --release Print exec sway-screenshot
+bindsym --release $mod+Print exec sway-screenshot-selection
+
+# Volume control
+bindsym XF86AudioRaiseVolume exec sound-volume-increase
+bindsym XF86AudioLowerVolume exec sound-volume-decrease
+bindsym XF86AudioMute exec sound-volume-toggle-mute
+bindsym XF86AudioMicMute exec mic-toggle-mute
+
+# Brightness control
+bindsym XF86MonBrightnessDown exec brightness-decrease
+bindsym XF86MonBrightnessUp exec brightness-increase
+
 # Default layout is stacking
 workspace_layout stacking
+
+# Gaps
+# gaps outer 0
+# gaps inner 2
+
+# Hide mouse cursor after 2 seconds
+seat * hide_cursor 2000
+
+# Run X apps
+xwayland enable
 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
+# bar {
+#     # gaps 2
+#     position top
+#
+#     # When the status_command prints a new line to stdout, swaybar updates.
+#     # The default just shows the current date and time.
+#     status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+#
+#     colors {
+#         statusline #ffffff
+#         background #323232
+#         inactive_workspace #32323200 #32323200 #5c5c5c
+#     }
+# }
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+# Window rules
+for_window [class="^Steam$" title="^Friends$"] floating enable
+for_window [class="^Steam$" title="Steam - News"] floating enable
+for_window [class="^Steam$" title=".* - Chat"] floating enable
+for_window [class="^Steam$" title="^Settings$"] floating enable
+for_window [class="^Steam$" title=".* - event started"] floating enable
+for_window [class="^Steam$" title=".* CD key"] floating enable
+for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+for_window [title="^Steam Keyboard$"] floating enable
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
+for_window [class="VirtualBox"] floating enable
+
+
+# Autostart apps
+#
+# Status bar
+exec waybar -c ~/.config/sway/waybar.json -s ~/.config/sway/waybar.css
+
+# Idle configuration
+exec swayidle -w \
+    timeout 300 'exec $lock_cmd' \
+    timeout 600 'swaymsg "output * dpms off"' \
+    after-resume 'swaymsg "output * dpms on"' \
+    before-sleep 'exec $lock_cmd'
+
+# Notifications
+exec mako
+
+# Network manager
+exec nm-applet --indicator

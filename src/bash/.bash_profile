@@ -97,7 +97,6 @@ alias ..='cd ..'
 alias back='cd "$OLDPWD"'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'
-alias mux='tmuxinator start'
 alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
 
 alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
@@ -161,5 +160,5 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # If running from tty1 start sway
 if [ "$(tty)" = "/dev/tty1" ]; then
-    exec sway
+    exec env XDG_CURRENT_DESKTOP=Unity sway
 fi

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo plymouthd ; sudo plymouth --show-splash ; for ((I=0; I<5; I++)); do sleep 1 ; sudo plymouth --update=test$I ; done ; sudo plymouth --quit

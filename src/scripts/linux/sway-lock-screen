@@ -1,0 +1,5 @@
+#!/bin/bash
+
+WALLPAPER="/mnt/data/Pictures/Wallpapers/827259.png"
+
+exec swaylock -f --show-failed-attempts --image=$WALLPAPER --scaling=fill

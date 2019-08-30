@@ -1,0 +1,30 @@
+#!/bin/bash
+
+cd $HOME
+DATA_DIR=/mnt/data
+
+LinkDir () {
+  if [[ -d $1 && ! -L $1 ]]; then
+    rmdir $1
+    ln -s $DATA_DIR/$1 $1
+    return 0
+  fi
+
+  if [[ ! -e $1 ]]; then
+    ln -s $DATA_DIR/$1 $1
+    return 0
+  fi
+
+  return 1
+}
+
+LinkDir Downloads
+LinkDir Documents
+LinkDir Pictures
+LinkDir Projects
+LinkDir Workspaces
+LinkDir bin
+
+if [[ ! -e data ]]; then
+    ln -s $DATA_DIR data
+fi

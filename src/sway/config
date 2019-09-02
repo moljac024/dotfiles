@@ -13,12 +13,12 @@ set $right l
 # Preferred terminal emulator
 set $term gnome-terminal
 # Preferred application launcher
-set $launcher rofi -show drun
+set $launcher rofi -modi "drun,run" -show drun -show-icons
 
 # Preferred file manager
-# set $file_manager thunar
+set $file_manager thunar
 # set $file_manager caja
-set $file_manager nautilus
+# set $file_manager nautilus
 
 # Identifier for built-in display
 set $laptop_display eDP-1
@@ -28,9 +28,13 @@ set $lock_cmd sway-lock-screen
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/.config/sway/wallpaper fill
 
 # Inputs
 input type:touchpad {
+  dwt enabled
+  tap disabled
+  scroll_method two_finger
   natural_scroll enabled
 }
 
@@ -58,15 +62,11 @@ input type:pointer {
     # kill focused window
     bindsym $mod+q kill
 
-    # The middle button over a titlebar kills the window
-    bindsym button2 kill
-    # The middle button and a modifer over any part of the window kills the window
-    bindsym --whole-window $mod+button2 kill
+    # The right button over a titlebar kills the window
+    bindsym button3 kill
 
-    # The right button over a titlebar toggles floating
-    bindsym button3 floating toggle
-    # The right button and a modifer over any part of the window toggles floating
-    bindsym $mod+button3 floating toggle
+    # The middle button over a titlebar toggles floating
+    bindsym button2 floating toggle
 
     # Start your launcher
     bindsym $mod+space exec $launcher
@@ -231,7 +231,7 @@ workspace_layout stacking
 
 # Gaps
 # gaps outer 0
-# gaps inner 2
+gaps inner 5
 
 # Hide mouse cursor after 2 seconds
 seat * hide_cursor 2000
@@ -271,22 +271,28 @@ for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Require
 for_window [title="^Steam Keyboard$"] floating enable
 
 for_window [class="VirtualBox"] floating enable
+for_window [class="Wine"] floating enable
 
+
+# Should focus follow mouse movement or do you need to click
+focus_follows_mouse no
 
 # Autostart apps
 #
 # Status bar
-exec waybar -c ~/.config/sway/waybar.json -s ~/.config/sway/waybar.css
+exec_always ~/.config/sway/waybar.sh
 
 # Idle configuration
 exec swayidle -w \
-    timeout 300 'exec $lock_cmd' \
+    timeout 300 '$lock_cmd' \
     timeout 600 'swaymsg "output * dpms off"' \
+    timeout 900 'systemctl suspend' \
+    resume 'swaymsg "output * dpms on"' \
     after-resume 'swaymsg "output * dpms on"' \
-    before-sleep 'exec $lock_cmd'
+    before-sleep '$lock_cmd'
 
 # Notifications
 exec mako
 
 # Network manager
-exec nm-applet --indicator
+# exec nm-applet --indicator

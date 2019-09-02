@@ -1,5 +1,5 @@
 #!/bin/bash
 
-WALLPAPER="/mnt/data/Pictures/Wallpapers/827259.png"
+WALLPAPER="$HOME/.config/sway/wallpaper"
 
 exec swaylock -f --show-failed-attempts --image=$WALLPAPER --scaling=fill

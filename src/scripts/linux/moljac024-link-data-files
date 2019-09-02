@@ -20,6 +20,7 @@ LinkDir () {
 
 LinkDir Downloads
 LinkDir Documents
+LinkDir Music
 LinkDir Pictures
 LinkDir Projects
 LinkDir Workspaces

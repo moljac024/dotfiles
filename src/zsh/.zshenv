@@ -34,6 +34,11 @@ export PATH=$HOME/.local/bin:$PATH
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
 
+# Asdf
+if [[ -e "$HOME/.asdf/asdf.sh" ]]; then
+    source $HOME/.asdf/asdf.sh
+fi
+
 # FZF
 export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_FIND_FILE_COMMAND="rg --files"
@@ -64,7 +69,8 @@ alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)
 
 alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
 
-# Xorg aliases:
+# GUI aliases:
+alias open='xdg-open'
 alias gta='gitk --all'
 alias gita='gitk --all'
 

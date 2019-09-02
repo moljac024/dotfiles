@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ ! -e "$@" ]]; then
+    exit 1
+fi
+
+WALLPAPER=$HOME/.config/sway/wallpaper
+
+ln -sf "$@" $WALLPAPER
+exec swaymsg "output * bg $WALLPAPER fill"

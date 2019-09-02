@@ -6,12 +6,22 @@
     "cpu",
     "memory",
     "tray",
+    "network",
     "backlight",
     "battery",
     "pulseaudio",
     "idle_inhibitor",
     "clock"
   ],
+  "network": {
+    "format": "{ifname} {ipaddr}",
+    "format-wifi": "📶 {essid} ({signalStrength}%) {ipaddr}",
+    "format-ethernet": "🖥️ {ipaddr}",
+    "format-disconnected": "{ifname} offline", // An empty format will hide the module.
+    "on-click": "swaymsg exec '$term -e nmtui-connect'",
+    "on-click-right": "swaymsg exec '$term -e nmtui-edit'",
+    "max-length": 50
+  },
   "backlight": {
     "interval": 2,
     "format": "💡 {percent}%",
@@ -34,7 +44,8 @@
     "format": "MEM: {percentage}%"
   },
   "battery": {
-    "format": "🔋 {capacity}%"
+    "format": "🔋 {capacity}%",
+    "format-charging": "🔌 {capacity}%"
   },
   "pulseaudio": {
     "format": "🔉 {volume}%",

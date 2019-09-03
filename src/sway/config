@@ -258,6 +258,16 @@ xwayland enable
 #     }
 # }
 
+
+# Titlebar font
+font monospace 12
+titlebar_border_thickness 2
+
+# Colors
+client.focused #000000 #2aa198 #fdf6e3 #657b83 #000000
+client.unfocused #000000 #fdf6e3 #2aa198 #657b83 #000000
+client.focused_inactive #000000 #657b83 #fdf6e3 #2aa198 #000000
+
 # Window rules
 for_window [class="^Steam$" title="^Friends$"] floating enable
 for_window [class="^Steam$" title="Steam - News"] floating enable

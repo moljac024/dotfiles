@@ -231,7 +231,7 @@ workspace_layout stacking
 
 # Gaps
 # gaps outer 0
-gaps inner 5
+gaps inner 2
 
 # Hide mouse cursor after 2 seconds
 seat * hide_cursor 2000
@@ -285,14 +285,14 @@ exec_always ~/.config/sway/waybar.sh
 # Idle configuration
 exec swayidle -w \
     timeout 300 '$lock_cmd' \
-    timeout 600 'swaymsg "output * dpms off"' \
+    timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
     timeout 900 'systemctl suspend' \
-    resume 'swaymsg "output * dpms on"' \
-    after-resume 'swaymsg "output * dpms on"' \
-    before-sleep '$lock_cmd'
+    lock '$lock_cmd' \
+    before-sleep '$lock_cmd' \
+    after-resume 'swaymsg "output * dpms on"'
 
 # Notifications
 exec mako
 
 # Network manager
-# exec nm-applet --indicator
+exec nm-applet --indicator

@@ -15,7 +15,7 @@ window#waybar {
 }
 
 window > box {
-  margin: 5px 5px 0px 5px;
+  margin: 2px 2px 0px 2px;
   background: #fdf6e3; /* Solarized light background */
   border: 2px solid black;
 }

@@ -10,6 +10,11 @@ set $down j
 set $up k
 set $right l
 
+set $color_black #000000
+set $color_grey #657b83
+set $color_solarized_cyan #2aa198
+set $color_solarized_sun #fdf6e3
+
 # Preferred terminal emulator
 set $term gnome-terminal
 # Preferred application launcher
@@ -264,9 +269,9 @@ font monospace 12
 titlebar_border_thickness 2
 
 # Colors
-client.focused #000000 #2aa198 #fdf6e3 #657b83 #000000
-client.unfocused #000000 #fdf6e3 #2aa198 #657b83 #000000
-client.focused_inactive #000000 #657b83 #fdf6e3 #2aa198 #000000
+client.focused $color_black $color_solarized_cyan $color_solarized_sun $color_grey $color_black
+client.unfocused $color_black $color_solarized_sun $color_solarized_cyan $color_grey $color_black
+client.focused_inactive $color_black $color_grey $color_solarized_sun $color_solarized_cyan $color_black
 
 # Window rules
 for_window [class="^Steam$" title="^Friends$"] floating enable
@@ -302,7 +307,11 @@ exec swayidle -w \
     after-resume 'swaymsg "output * dpms on"'
 
 # Notifications
-exec mako
+exec mako --font monospace 12 \
+          --background-color "$color_solarized_cyan" \
+          --text-color "$color_solarized_sun" \
+          --border-color "$color_black" \
+          --border-size 2
 
 # Network manager
 exec nm-applet --indicator

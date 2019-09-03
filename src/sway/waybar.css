@@ -8,7 +8,7 @@
 
 window#waybar {
   background: transparent;
-  color: #657b83; /* Solarized foreground */
+  color: #657b83; /* Grey */
 
   transition-property: background-color;
   transition-duration: 0.1s;
@@ -16,7 +16,7 @@ window#waybar {
 
 window > box {
   margin: 2px 2px 0px 2px;
-  background: #fdf6e3; /* Solarized light background */
+  background: #fdf6e3; /* Solarized sun */
   border: 2px solid black;
 }
 
@@ -30,12 +30,12 @@ window > box {
 #tray,
 #idle_inhibitor {
   padding: 0 1px;
-  background: #657b83; /* Solarized foreground */
-  color: #FDF6E3; /* Solarized light background */
+  background: #657b83; /* Grey */
+  color: #fdf6e3; /* Solarized sun */
 }
 
 #workspaces button {
-  color: #657b83; /* Solarized foreground */
+  color: #657b83; /* Grey */
   padding: 0 5px;
   background-color: transparent;
 }
@@ -46,8 +46,8 @@ window > box {
 }
 
 #workspaces button.focused {
-  background: #657b83; /* Solarized foreground */
-  color: #fdf6e3; /* Solarized light background */
+  background: #2aa198; /* Solarized cyan */
+  color: #fdf6e3; /* Solarized sun */
 }
 
 #workspaces button.urgent {
@@ -57,8 +57,8 @@ window > box {
 
 #mode {
   padding: 2px 5px 2px 5px;
-  background: #657b83; /* Solarized foreground */
-  color: #fdf6e3; /* Solarized light background */
+  background: #657b83; /* Grey */
+  color: #fdf6e3; /* Solarized sun */
 }
 
 @keyframes blink {

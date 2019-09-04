@@ -29,7 +29,7 @@ window > box {
 #pulseaudio,
 #tray,
 #idle_inhibitor {
-  padding: 0 1px;
+  padding: 0 2px;
   background: #657b83; /* Grey */
   color: #fdf6e3; /* Solarized sun */
 }
@@ -76,6 +76,10 @@ window > box {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+#tray {
+  padding: 0 4px;
 }
 
 #cpu {

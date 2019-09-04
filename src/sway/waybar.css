@@ -45,6 +45,11 @@ window > box {
   text-shadow: inherit;
 }
 
+#workspaces button.visible {
+  background: #657b83; /* Grey */
+  color: #fdf6e3; /* Solarized sun */
+}
+
 #workspaces button.focused {
   background: #2aa198; /* Solarized cyan */
   color: #fdf6e3; /* Solarized sun */

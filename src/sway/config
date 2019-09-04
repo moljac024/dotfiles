@@ -314,4 +314,4 @@ exec mako --font monospace 12 \
           --border-size 2
 
 # Network manager
-exec nm-applet --indicator
+# exec nm-applet --indicator

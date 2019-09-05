@@ -18,7 +18,7 @@ set $color_solarized_sun #fdf6e3
 # Preferred terminal emulator
 set $term gnome-terminal
 # Preferred application launcher
-set $launcher rofi -modi "drun,run" -show drun -show-icons
+set $launcher rofi -modi "drun,run,window" -show drun -show-icons
 
 # Preferred file manager
 set $file_manager thunar

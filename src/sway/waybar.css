@@ -28,6 +28,7 @@ window > box {
 #backlight,
 #pulseaudio,
 #tray,
+#custom-power,
 #idle_inhibitor {
   padding: 0 2px;
   background: #657b83; /* Grey */

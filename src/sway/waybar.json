@@ -11,7 +11,8 @@
     "battery",
     "pulseaudio",
     "idle_inhibitor",
-    "clock"
+    "clock",
+    "custom/power"
   ],
   "network": {
     "format": "{ifname} {ipaddr}",
@@ -62,5 +63,9 @@
   },
   "clock": {
     "format-alt": "{:%a, %d. %b  %H:%M}"
+  },
+  "custom/power": {
+    "format": "⏻",
+    "on-click": "sway-power-menu"
   }
 }

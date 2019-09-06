@@ -16,7 +16,7 @@ set $color_solarized_cyan #2aa198
 set $color_solarized_sun #fdf6e3
 
 # Preferred terminal emulator
-set $term gnome-terminal
+set $term kitty
 # Preferred application launcher
 set $launcher rofi -modi "drun,run,window" -show drun -show-icons
 

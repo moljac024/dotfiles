@@ -36,8 +36,6 @@ let g:sneak#label = 1
 "============================================
 " Plug 'prabirshrestha/async.vim'
 " Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/vim-lsp'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 " Fish shell ================================
 Plug 'dag/vim-fish'
@@ -112,8 +110,8 @@ Plug 'mhinz/vim-signify'
 " Plug 'w0rp/ale'
 " Plug 'prabirshrestha/vim-lsp'
 
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 
 " ===========================================
 " Files
@@ -220,13 +218,19 @@ if !has('nvim') && &term =~ '256color'
 endif
 
 set background=light
+" set background=dark
 colorscheme solarized
 
 if exists('&signcolumn')  " Vim 7.4.2201
-    set signcolumn=yes
+    set signcolumn=no
     " Solarized sets a weird color here
     highlight clear SignColumn
+    highlight SignColumn guibg=NONE ctermbg=NONE
 endif
+
+" Dont color background - so we can have nice transparent terminal
+highlight Normal guibg=NONE ctermbg=NONE
+highlight StatusLine guibg=NONE ctermbg=NONE
 
 " ==============================================================================
 " Programming

@@ -21,7 +21,13 @@ set $term kitty
 set $launcher rofi -modi "drun,run,window" -show drun -show-icons
 
 # Preferred file manager
-set $file_manager thunar
+
+# zsh -c is needed for ranger to have the correct environment. I would rather
+# not do it (in order to remain shell-neutral) but such is life. For some
+# reason, when running ranger directly it doesn't see any of the environment
+# that zsh sets in .zshenv, even though sway was run from that
+set $file_manager $term zsh -c ranger
+# set $file_manager thunar
 # set $file_manager caja
 # set $file_manager nautilus
 

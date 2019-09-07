@@ -1,10 +1,12 @@
 #!/bin/bash
 
-if [[ ! -e "$@" ]]; then
+FULL_PATH=$(readlink -e "$@")
+
+if [[ ! -e "$FULL_PATH" ]]; then
     exit 1
 fi
 
 WALLPAPER=$HOME/.config/sway/wallpaper
 
-ln -sf "$@" $WALLPAPER
+ln -sf "$FULL_PATH" "$WALLPAPER"
 exec swaymsg "output * bg $WALLPAPER fill"

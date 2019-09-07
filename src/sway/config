@@ -231,6 +231,9 @@ bindsym XF86AudioMicMute exec mic-toggle-mute
 bindsym XF86MonBrightnessDown exec brightness-decrease
 bindsym XF86MonBrightnessUp exec brightness-increase
 
+# Dismiss all notifications
+bindsym $mod+Escape exec makoctl dismiss -a
+
 # Default layout is stacking
 workspace_layout stacking
 

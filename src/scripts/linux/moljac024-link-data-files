@@ -24,7 +24,6 @@ LinkDir Music
 LinkDir Pictures
 LinkDir Projects
 LinkDir Workspaces
-LinkDir bin
 
 if [[ ! -e data ]]; then
     ln -s $DATA_DIR data

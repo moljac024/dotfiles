@@ -1,9 +1,11 @@
 #!/bin/bash
 
 cd $HOME
+mkdir -p $HOME/.config
+mkdir -p $HOME/.local
 DATA_DIR=/mnt/data
 
-LinkDir () {
+LinkDataDir () {
   if [[ -d $1 && ! -L $1 ]]; then
     rmdir $1
     ln -s $DATA_DIR/$1 $1
@@ -18,13 +20,25 @@ LinkDir () {
   return 1
 }
 
-LinkDir Downloads
-LinkDir Documents
-LinkDir Music
-LinkDir Pictures
-LinkDir Projects
-LinkDir Workspaces
+Link () {
+  if [[ -e $1 && ! -e $2 ]]; then
+      ln -s $1 $2
+      return 0
+  fi
 
-if [[ ! -e data ]]; then
-    ln -s $DATA_DIR data
-fi
+  return 1
+}
+
+Link $DATA_DIR data
+Link $DATA_DIR/Local/ssh .ssh
+Link $DATA_DIR/Local/bin .local/bin
+Link $DATA_DIR/Local/config/tmuxinator .config/tmuxinator
+Link $DATA_DIR/Local/docker docker
+
+LinkDataDir Downloads
+LinkDataDir Documents
+LinkDataDir Music
+LinkDataDir Pictures
+LinkDataDir Projects
+LinkDataDir Workspaces
+

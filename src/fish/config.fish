@@ -6,7 +6,7 @@ set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 set -gx EDITOR vim
 
-set -x PATH $HOME/bin $PATH
+set -x PATH $HOME/bin $HOME/.local/bin $PATH
 
 if test -d /home/linuxbrew/.linuxbrew/bin
     set -x PATH $PATH /home/linuxbrew/.linuxbrew/bin
@@ -42,3 +42,12 @@ end
 if type -q fizzygit
     fizzygit
 end
+
+# Wasmer
+export WASMER_DIR="/home/bojan/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+
+
+# Wasmtime
+set -gx WASMTIME_HOME "$HOME/.wasmtime"
+string match -r ".wasmtime" "$PATH" > /dev/null; or set -gx PATH "$WASMTIME_HOME/bin" $PATH

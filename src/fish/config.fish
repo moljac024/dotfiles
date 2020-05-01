@@ -16,6 +16,10 @@ if test -d $HOME/.cargo/bin
     set -x PATH $PATH $HOME/.cargo/bin
 end
 
+if test -d /var/lib/snapd/snap/bin
+    set -x PATH $PATH /var/lib/snapd/snap/bin
+end
+
 ################################################################################
 ### Aliases
 ################################################################################

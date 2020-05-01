@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec wine /mnt/data/Apps/heidisql/10.2/heidisql.exe

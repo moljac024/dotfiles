@@ -1,5 +1,0 @@
-#!/bin/bash
-
-WALLPAPER="$HOME/.config/sway/wallpaper"
-
-exec swaylock -f --show-failed-attempts --image=$WALLPAPER --scaling=fill

@@ -1,5 +1,0 @@
-#!/bin/bash
-
-swaymsg output '"Dell Inc. DELL U2415 08DXD4AA2MHL" pos 0 0' &&\
-swaymsg output '"Dell Inc. DELL U2415 08DXD5941AES" pos 1920 0' &&\
-swaymsg output 'eDP-1 pos 1920 1200'

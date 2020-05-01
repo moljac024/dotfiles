@@ -1,7 +1,0 @@
-#!/bin/bash
-
-LOCAL_KITTY=$HOME/.local/kitty.app/bin/kitty
-
-if [[ -x $LOCAL_KITTY ]]; then
-  exec $LOCAL_KITTY $@
-fi

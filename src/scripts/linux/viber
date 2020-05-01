@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec env QT_AUTO_SCREEN_SCALE_FACTOR=0 /snap/bin/viber-unofficial.viber &

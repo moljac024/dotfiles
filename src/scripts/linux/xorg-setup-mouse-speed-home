@@ -1,3 +1,0 @@
-#!/bin/bash
-
-xinput --set-prop "pointer:Razer Razer DeathAdder Chroma" "libinput Accel Speed" -0.95

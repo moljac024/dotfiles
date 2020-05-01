@@ -1,5 +1,0 @@
-#!/bin/bash
-
-SCREENSHOTS_DIR=$HOME/Pictures/Screenshots
-
-exec grim -g "$(slurp)" "$SCREENSHOTS_DIR/$(date +'%Y-%m-%d-%H%M%S').png"

@@ -1,3 +1,0 @@
-#!/bin/bash
-
-exec /mnt/data/Apps/mattermost-desktop-4.2.1-linux-x64/mattermost-desktop

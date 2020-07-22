@@ -33,7 +33,6 @@ Link $DATA_DIR data
 Link $DATA_DIR/Local/ssh .ssh
 Link $DATA_DIR/Local/bin .local/bin
 Link $DATA_DIR/Local/config/tmuxinator .config/tmuxinator
-Link $DATA_DIR/Local/docker docker
 
 LinkDataDir Downloads
 LinkDataDir Documents

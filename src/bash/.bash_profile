@@ -20,6 +20,14 @@ if [[ -d "/home/linuxbrew" ]]; then
     export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 fi
 
+# Rust binaries
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Yarn local install
+if [[ -d $HOME/.yarn/bin ]]; then
+    export PATH=$HOME/.yarn/bin:$PATH
+fi
+
 # Locally compiled files
 export PATH=$HOME/.local/bin:$PATH
 
@@ -30,14 +38,6 @@ fi
 
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
-
-# Yarn local install
-if [[ -d $HOME/.yarn/bin ]]; then
-    export PATH=$HOME/.yarn/bin:$PATH
-fi
-
-# Rust binaries
-export PATH="$HOME/.cargo/bin:$PATH"
 
 # Enable Erlang/Elixir shell history
 export ERL_AFLAGS="-kernel shell_history enabled"

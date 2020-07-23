@@ -36,6 +36,18 @@ if [[ -d $HOME/.yarn/bin ]]; then
     export PATH=$HOME/.yarn/bin:$PATH
 fi
 
+# Rust binaries
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# Enable Erlang/Elixir shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+# Ripgrep and fzf config
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_FIND_FILE_COMMAND="rg --files"
+
+
 ################################################################################
 
 
@@ -147,18 +159,9 @@ if [ -f $HOME/.asdf/completions/asdf.bash ]; then
 fi
 
 
-# Enable Erlang/Elixir shell history
-export ERL_AFLAGS="-kernel shell_history enabled"
-
-export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
-export FZF_DEFAULT_COMMAND="rg --files"
-export FZF_FIND_FILE_COMMAND="rg --files"
-
 ################################################################################
 
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# If running from tty1 start sway
-if [ "$(tty)" = "/dev/tty1" ]; then
-    exec env XDG_CURRENT_DESKTOP=Unity sway
+# Automatically start/connect to tmux on ssh sessions
+if [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
+    tmux new-session -A -s ssh
 fi

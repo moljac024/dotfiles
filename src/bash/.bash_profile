@@ -144,13 +144,20 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Bash completions
-if [ -d $HOME/.bash_completions ]; then
-    for f in $HOME/.bash_completions/*
-    do
-        if [ -f $f ]; then
-            source $f
-        fi
-    done
+if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        source /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        source /etc/bash_completion
+    fi
+    if [ -d $HOME/.bash_completions ]; then
+        for f in $HOME/.bash_completions/*
+        do
+            if [ -f $f ]; then
+                source $f
+            fi
+        done
+    fi
 fi
 
 # Asdf completions

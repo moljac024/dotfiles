@@ -1,20 +1,78 @@
 #!/usr/bin/env bash
 
+function is_exported {
+    local name="$1"
+    if [[ "${!name@a}" == *x* ]]; then
+        true; return
+    else
+        false; return
+    fi
+}
+
+function is_wsl {
+    if grep -qi microsoft /proc/version; then
+        true; return
+    else
+        false; return
+    fi
+}
+
 ################################################################################
 ### Environment
 ################################################################################
 
-if [[ -f $HOME/.dir_colors ]]; then
-    eval "$(dircolors $HOME/.dir_colors)"
-fi
+
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export EDITOR='vim'
+
+# OS X
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Enable bash completion on OS X
+    if [ -f `brew --prefix`/etc/bash_completion ]; then
+        source `brew --prefix`/etc/bash_completion
+    fi
+
+    # Iterm integration
+    if [ -f $HOME/.iterm2_shell_integration.bash ]; then
+        source $HOME/.iterm2_shell_integration.bash
+    fi
+fi
 
 # OS X Homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH=/usr/local/sbin:/usr/local/bin:$PATH
 fi
+
+# WSL
+if is_wsl; then
+    export WSL_HOST=$(tail -1 /etc/resolv.conf | cut -d' ' -f2)
+fi
+
+# Yarn local install
+if [[ -d $HOME/.yarn/bin ]]; then
+    export PATH=$HOME/.yarn/bin:$PATH
+fi
+
+# JAVA
+if [ -d "/usr/lib/jvm/java-8-openjdk-amd64" ]; then
+    export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+    export JRE_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
+    export PATH=$PATH:$JAVA_HOME/bin
+fi
+
+if [ -d $HOME/Android/Sdk ];then
+    export ANDROID_HOME=$HOME/Android
+    export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+    export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
+    export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+    if is_exported WSL_HOST; then
+        export ADB_SERVER_SOCKET=tcp:$WSL_HOST:5037
+    fi
+fi
+
+# Rust binaries
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Linuxbrew
 if [[ -d "/home/linuxbrew" ]]; then
@@ -23,33 +81,18 @@ if [[ -d "/home/linuxbrew" ]]; then
     export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 fi
 
-# Rust binaries
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# Yarn local install
-if [[ -d $HOME/.yarn/bin ]]; then
-    export PATH=$HOME/.yarn/bin:$PATH
-fi
-
-# Locally compiled files
-export PATH=$HOME/.local/bin:$PATH
-
 # Asdf version manager
 if [ -f $HOME/.asdf/asdf.sh ]; then
     source $HOME/.asdf/asdf.sh
 fi
 
+# Locally compiled/installed files
+export PATH=$HOME/.local/bin:$PATH
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
 
 # Enable Erlang/Elixir shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
-
-# Ripgrep and fzf config
-export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
-export FZF_DEFAULT_COMMAND="rg --files"
-export FZF_FIND_FILE_COMMAND="rg --files"
-
 
 ################################################################################
 
@@ -59,7 +102,6 @@ case $- in
     *i*) ;;
     *) return;;
 esac
-
 
 ################################################################################
 ### Bash it!
@@ -120,6 +162,12 @@ alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([c
 alias gta='gitk --all'
 alias gita='gitk --all'
 
+# AWS aliases
+alias aws='docker run --rm -it amazon/aws-cli command'
+alias cdk='npx --package aws-cdk cdk'
+alias cdktf='npx --package cdktf-cli cdktf'
+alias cdk8s='npx --package cdk8s-cli cdk8s'
+
 ################################################################################
 
 
@@ -127,24 +175,20 @@ alias gita='gitk --all'
 ### Other
 ################################################################################
 
+# Dircolors
+if [[ -f $HOME/.dir_colors ]]; then
+    eval "$(dircolors $HOME/.dir_colors)"
+fi
+
+# Ripgrep and fzf config
+export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+export FZF_DEFAULT_COMMAND="rg --files"
+export FZF_FIND_FILE_COMMAND="rg --files"
+
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [[ -e "$HOME/.fzf-extras/fzf-extras.sh" ]] \
     && source "$HOME/.fzf-extras/fzf-extras.sh"
-
-
-# OS X
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # Enable bash completion on OS X
-    if [ -f `brew --prefix`/etc/bash_completion ]; then
-        source `brew --prefix`/etc/bash_completion
-    fi
-
-    # Iterm integration
-    if [ -f $HOME/.iterm2_shell_integration.bash ]; then
-        source $HOME/.iterm2_shell_integration.bash
-    fi
-fi
 
 # Bash completions
 if ! shopt -oq posix; then
@@ -168,10 +212,10 @@ if [ -f $HOME/.asdf/completions/asdf.bash ]; then
     source $HOME/.asdf/completions/asdf.bash
 fi
 
-
 ################################################################################
 
 # Automatically start/connect to tmux on ssh sessions
 if [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
     tmux new-session -A -s ssh
 fi
+

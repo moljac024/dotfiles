@@ -140,4 +140,3 @@ link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
 git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
 
 ################################################################################
-

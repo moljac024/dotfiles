@@ -163,7 +163,7 @@ alias gta='gitk --all'
 alias gita='gitk --all'
 
 # AWS aliases
-alias aws='docker run --rm -it amazon/aws-cli command'
+alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
 alias cdk='npx --package aws-cdk cdk'
 alias cdktf='npx --package cdktf-cli cdktf'
 alias cdk8s='npx --package cdk8s-cli cdk8s'

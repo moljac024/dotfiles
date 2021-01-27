@@ -46,7 +46,9 @@ fi
 
 # WSL
 if is_wsl; then
-    export WSL_HOST=$(tail -1 /etc/resolv.conf | cut -d' ' -f2)
+    export WSL_HOST=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
+    export DISPLAY="$WSL_HOST:0"
+    export LIBGL_ALWAYS_INDIRECT=1
 fi
 
 # Yarn local install

@@ -163,6 +163,7 @@ alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([c
 # Xorg aliases:
 alias gta='gitk --all'
 alias gita='gitk --all'
+alias gg='git gui'
 
 # AWS aliases
 alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'

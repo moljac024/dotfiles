@@ -204,6 +204,9 @@ set smartcase " Ignore case but only when all lowercase characters
 set hlsearch " Highlight search results
 set wrapscan " Make search wrap around
 
+" No annoying bell
+set visualbell
+set t_vb=
 " ==============================================================================
 " Look and feel
 " ==============================================================================

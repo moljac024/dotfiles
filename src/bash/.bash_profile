@@ -165,6 +165,8 @@ alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)
 
 alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
 
+alias serve-spa="npx --yes http-server-spa"
+
 # Xorg aliases:
 alias gta='gitk --all'
 alias gita='gitk --all'

@@ -93,6 +93,10 @@ if [ -f $HOME/.asdf/asdf.sh ]; then
     source $HOME/.asdf/asdf.sh
 fi
 
+# Volta nodejs version manager
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
 # Locally compiled/installed files
 export PATH=$HOME/.local/bin:$PATH
 # Home binaries (systems should do this already)
@@ -229,5 +233,3 @@ if [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
     tmux new-session -A -s ssh
 fi
 
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"

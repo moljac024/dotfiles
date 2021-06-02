@@ -56,11 +56,6 @@ if is_wsl; then
     export WSL_GUEST=$(wsl_ip)
 fi
 
-# Yarn local install
-if [[ -d $HOME/.yarn/bin ]]; then
-    export PATH=$HOME/.yarn/bin:$PATH
-fi
-
 # JAVA
 if [ -d "/usr/lib/jvm/java-8-openjdk-amd64" ]; then
     export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
@@ -233,3 +228,10 @@ if [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
     tmux new-session -A -s ssh
 fi
 
+
+# Direnv
+if hash direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+else
+    echo "no direnv!"
+fi

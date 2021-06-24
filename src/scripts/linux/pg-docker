@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if type podman >/dev/null; then
+if type podman >/dev/null 2>&1; then
     PROGRAM=podman
 else
     PROGRAM=docker

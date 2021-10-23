@@ -4,13 +4,15 @@
 #------------------------------
 # Configuration
 #------------------------------
-backupDir="$HOME/backup"
+backupsDir="$HOME/backup"
 #------------------------------
 
 set -o nounset
 
-if [[ ! -d $backupDir ]]; then
-    mkdir -p $backupDir
+backupTo=$backupsDir/$(date +"%F-%H%M%S")
+
+if [[ ! -d $backupTo ]]; then
+    mkdir -p $backupTo
 fi
 
 if [[ $EUID = 0 ]]; then
@@ -21,7 +23,7 @@ fi
 backupSsh () {
     echo "Backing up ssh files.."
     cd "$HOME"
-    tar -czf "$backupDir"/ssh.tar.gz \
+    tar -czf "$backupTo"/ssh.tar.gz \
         .ssh/ \
         &> /dev/null
 }
@@ -29,7 +31,7 @@ backupSsh () {
 backupProjects () {
     echo "Backing up project files.."
     cd "$HOME"
-    tar -czf "$backupDir"/projects.tar.gz \
+    tar -czf "$backupTo"/projects.tar.gz \
         projects/ \
         workspaces/ \
         &> /dev/null

@@ -4,15 +4,15 @@
 #------------------------------
 # Configuration
 #------------------------------
-backupsDir="$HOME/backup"
+backups_root="$HOME/backup"
 #------------------------------
 
 set -o nounset
 
-backupTo=$backupsDir/$(date +"%F-%H%M%S")
+backup_dir=$backups_root/$(date +"%F-%H%M%S")
 
-if [[ ! -d $backupTo ]]; then
-    mkdir -p $backupTo
+if [[ ! -d $backup_dir ]]; then
+    mkdir -p $backup_dir
 fi
 
 if [[ $EUID = 0 ]]; then
@@ -20,24 +20,27 @@ if [[ $EUID = 0 ]]; then
     exit 1
 fi
 
-backupSsh () {
-    echo "Backing up ssh files.."
+backupCredentials () {
+    echo "Backing up credentials.."
     cd "$HOME"
-    tar -czf "$backupTo"/ssh.tar.gz \
+    tar -czf "$backup_dir"/credentials.tar.gz \
         .ssh/ \
+        .aws/ \
+        .azure/ \
         &> /dev/null
 }
 
-backupProjects () {
-    echo "Backing up project files.."
+backupWorkData () {
+    echo "Backing up work files.."
     cd "$HOME"
-    tar -czf "$backupTo"/projects.tar.gz \
+    tar -czf "$backup_dir"/work.tar.gz \
+        .config/tmuxinator \
         projects/ \
         workspaces/ \
         &> /dev/null
 }
 
-backupSsh &&\
-backupProjects &&\
+backupCredentials &&\
+backupWorkData &&\
 
 exit 0

@@ -9,15 +9,15 @@ backups_root="$HOME/backup"
 
 set -o nounset
 
+if [[ $EUID = 0 ]]; then
+    echo "Ooops, you're running this as root! You better not!"
+    exit 1
+fi
+
 backup_dir=$backups_root/$(date +"%F-%H%M%S")
 
 if [[ ! -d $backup_dir ]]; then
     mkdir -p $backup_dir
-fi
-
-if [[ $EUID = 0 ]]; then
-    echo "Ooops, you're running this as root! You better not!"
-    exit 1
 fi
 
 backupCredentials () {

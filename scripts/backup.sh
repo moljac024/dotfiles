@@ -34,6 +34,8 @@ backupWorkData () {
     echo "Backing up work files.."
     cd "$HOME"
     tar -czf "$backup_dir"/work.tar.gz \
+        .npmrc \
+        .config/git \
         .config/tmuxinator \
         projects/ \
         workspaces/ \

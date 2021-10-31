@@ -4,7 +4,7 @@
 #------------------------------
 # Configuration
 #------------------------------
-backups_root="$HOME/backup"
+BACKUPS_ROOT_DEFAULT="$HOME/backup"
 #------------------------------
 
 set -o nounset
@@ -14,26 +14,79 @@ if [[ $EUID = 0 ]]; then
     exit 1
 fi
 
-backup_dir=$backups_root/$(date +"%F-%H%M%S")
+read -d '' RESTORE_SCRIPT <<-"_EOF_"
+#!/bin/bash
+#------------------------------
+# Backup restore script
+#------------------------------
+# Configuration
+#------------------------------
+RESTORE_TO_DEFAULT="$HOME"
+#------------------------------
 
-if [[ ! -d $backup_dir ]]; then
-    mkdir -p $backup_dir
+set -o nounset
+
+if [[ $EUID = 0 ]]; then
+    echo "Ooops, you're running this as root! You better not!"
+    exit 1
 fi
+
+SCRIPT_DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+
+RESTORE_FROM=$SCRIPT_DIR
+RESTORE_TO=${1:-$RESTORE_TO_DEFAULT}
+
+if [[ ! -d $RESTORE_TO ]]; then
+    mkdir -p $RESTORE_TO
+fi
+
+cd $RESTORE_FROM
+for f in *.tar.gz; do
+    tar -xzvf "$f" --directory $RESTORE_TO
+done
+
+exit 0
+_EOF_
+
+BACKUPS_ROOT=${1:-$BACKUPS_ROOT_DEFAULT}
+
+BACKUP_DIR=$BACKUPS_ROOT/$(date +"%F-%H%M%S")
+
+if [[ ! -d $BACKUP_DIR ]]; then
+    mkdir -p $BACKUP_DIR
+fi
+
+echo "$RESTORE_SCRIPT" > $BACKUP_DIR/restore.sh
+chmod u+x $BACKUP_DIR/restore.sh
 
 backupCredentials () {
     echo "Backing up credentials.."
     cd "$HOME"
-    tar -czf "$backup_dir"/credentials.tar.gz \
+    tar -czf "$BACKUP_DIR"/credentials.tar.gz \
         .ssh/ \
-        .aws/ \
-        .azure/ \
+        &> /dev/null
+}
+
+backupDotfiles () {
+    echo "Backing up dotfiles.."
+    cd "$HOME"
+    tar -czf "$BACKUP_DIR"/dotfiles.tar.gz \
+        dotfiles/ \
+        &> /dev/null
+}
+
+backupTools () {
+    echo "Backing up tools.."
+    cd "$HOME"
+    tar -czf "$BACKUP_DIR"/tools.tar.gz \
+        .asdf/ \
         &> /dev/null
 }
 
 backupWorkData () {
     echo "Backing up work files.."
     cd "$HOME"
-    tar -czf "$backup_dir"/work.tar.gz \
+    tar -czf "$BACKUP_DIR"/work.tar.gz \
         .npmrc \
         .config/git \
         .config/tmuxinator \
@@ -43,6 +96,8 @@ backupWorkData () {
 }
 
 backupCredentials &&\
+backupDotfiles &&\
+backupTools &&\
 backupWorkData &&\
 
 exit 0

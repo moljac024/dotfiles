@@ -74,18 +74,6 @@ git_clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
 
 
 ################################################################################
-### Fish
-################################################################################
-
-mkdir -p $HOME/.config/fish/functions
-link src/fish/config.fish $HOME/.config/fish/config.fish
-link src/fish/fishfile $HOME/.config/fish/fishfile
-curl https://git.io/fisher --create-dirs -sLo $HOME/.config/fish/functions/fisher.fish && fish -c fisher
-
-################################################################################
-
-
-################################################################################
 ### Git
 ################################################################################
 
@@ -149,4 +137,3 @@ git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
 curl https://get.volta.sh | bash -s -- --skip-setup
 
 ################################################################################
-

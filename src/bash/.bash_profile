@@ -47,8 +47,8 @@ fi
 # WSL
 if is_wsl; then
     export WSL_HOST=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
-    export DISPLAY="$WSL_HOST:0"
-    export LIBGL_ALWAYS_INDIRECT=1
+    #export DISPLAY="$WSL_HOST:0"
+    #export LIBGL_ALWAYS_INDIRECT=1
 
     function wsl_ip {
         ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'

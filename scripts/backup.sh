@@ -75,14 +75,6 @@ backupDotfiles () {
         &> /dev/null
 }
 
-backupTools () {
-    echo "Backing up tools.."
-    cd "$HOME"
-    tar -czf "$BACKUP_DIR"/tools.tar.gz \
-        .asdf/ \
-        &> /dev/null
-}
-
 backupWorkData () {
     echo "Backing up work files.."
     cd "$HOME"
@@ -97,7 +89,6 @@ backupWorkData () {
 
 backupCredentials &&\
 backupDotfiles &&\
-backupTools &&\
 backupWorkData &&\
 
 exit 0

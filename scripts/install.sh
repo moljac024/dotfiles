@@ -126,7 +126,7 @@ link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
 ### Asdf version manager
 ################################################################################
 
-git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.7.8
+git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0
 
 ################################################################################
 

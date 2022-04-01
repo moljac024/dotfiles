@@ -97,8 +97,8 @@ export PATH=$HOME/.local/bin:$PATH
 # Home binaries (systems should do this already)
 export PATH=$HOME/bin:$PATH
 
-# Enable Erlang/Elixir shell history
-export ERL_AFLAGS="-kernel shell_history enabled"
+# Flatpak paths
+export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
 
 ################################################################################
 
@@ -172,7 +172,6 @@ alias gita='gitk --all'
 alias gg='git gui'
 
 # AWS aliases
-alias aws='docker run --rm -it -v ~/.aws:/root/.aws -v $(pwd):/aws amazon/aws-cli'
 alias cdk='npx --package aws-cdk cdk'
 alias cdktf='npx --package cdktf-cli cdktf'
 alias cdk8s='npx --package cdk8s-cli cdk8s'
@@ -183,6 +182,9 @@ alias cdk8s='npx --package cdk8s-cli cdk8s'
 ################################################################################
 ### Other
 ################################################################################
+
+# Enable Erlang/Elixir shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Dircolors
 if [[ -f $HOME/.dir_colors ]]; then
@@ -232,6 +234,16 @@ fi
 # Direnv
 if hash direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
-else
-    echo "no direnv!"
+fi
+
+if command -v kubectl >/dev/null 2>&1; then
+    source <(kubectl completion bash)
+fi
+
+if command -v dagger >/dev/null 2>&1; then
+    source <(dagger completion bash)
+fi
+
+if [[ -f $HOME/dotfiles/.credentials/github-token-registry ]]; then
+    export CR_PAT=$(cat $HOME/dotfiles/.credentials/github-token-registry)
 fi

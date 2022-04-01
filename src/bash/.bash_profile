@@ -76,6 +76,11 @@ fi
 # Rust binaries
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Vector
+if [[ -d $HOME/.vector ]]; then
+    export PATH="$HOME/.vector/bin:$PATH"
+fi
+
 # Linuxbrew
 if [[ -d "/home/linuxbrew" ]]; then
     export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"

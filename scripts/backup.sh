@@ -7,7 +7,9 @@
 BACKUPS_ROOT_DEFAULT="$HOME/backup"
 #------------------------------
 
-set -o nounset
+set -e
+set -u
+set -o pipefail
 
 if [[ $EUID = 0 ]]; then
     echo "Ooops, you're running this as root! You better not!"
@@ -56,8 +58,8 @@ if [[ ! -d $BACKUP_DIR ]]; then
     mkdir -p $BACKUP_DIR
 fi
 
-echo "$RESTORE_SCRIPT" > $BACKUP_DIR/restore.sh
-chmod u+x $BACKUP_DIR/restore.sh
+echo "$RESTORE_SCRIPT" > $BACKUP_DIR/restore_files.sh
+chmod u+x $BACKUP_DIR/restore_files.sh
 
 backupCredentials () {
     echo "Backing up credentials.."
@@ -75,6 +77,16 @@ backupDotfiles () {
         &> /dev/null
 }
 
+backupTools () {
+    echo "Backing up tools.."
+    cd "$HOME"
+    tar -czf "$BACKUP_DIR"/tools.tar.gz \
+        .local/bin/ \
+        .volta \
+        .asdf \
+        &> /dev/null
+}
+
 backupWorkData () {
     echo "Backing up work files.."
     cd "$HOME"
@@ -83,12 +95,32 @@ backupWorkData () {
         .config/git \
         .config/tmuxinator \
         projects/ \
-        workspaces/ \
         &> /dev/null
 }
 
-backupCredentials &&\
-backupDotfiles &&\
-backupWorkData &&\
+
+generateFlathubInstallScript () {
+    echo "#!/bin/sh"
+    echo ""
+    echo "# Install user flatpaks"
+    flatpak list --user --app --columns=origin,ref | \
+    awk '{print "flatpak install --assumeyes --user "$1" "$2""}'
+    echo ""
+    echo "# Install system flatpaks"
+    flatpak list --system --app --columns=origin,ref | \
+    awk '{print "flatpak install --assumeyes --system "$1" "$2""}'
+}
+
+backupFlatpakApps () {
+    echo "Backing up list of installed flatpak apps.."
+    generateFlathubInstallScript > $BACKUP_DIR/install_apps.sh
+    chmod u+x $BACKUP_DIR/install_apps.sh
+}
+
+backupCredentials
+backupDotfiles
+backupTools
+backupWorkData
+backupFlatpakApps
 
 exit 0

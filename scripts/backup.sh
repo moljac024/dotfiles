@@ -6,10 +6,7 @@
 #------------------------------
 BACKUPS_ROOT_DEFAULT="$HOME/backup"
 #------------------------------
-
-set -e
 set -u
-set -o pipefail
 
 if [[ $EUID = 0 ]]; then
     echo "Ooops, you're running this as root! You better not!"
@@ -117,10 +114,10 @@ backupFlatpakApps () {
     chmod u+x $BACKUP_DIR/install_apps.sh
 }
 
-backupCredentials
-backupDotfiles
-backupTools
-backupWorkData
-backupFlatpakApps
+backupCredentials &&\
+backupDotfiles &&\
+backupTools &&\
+backupWorkData &&\
+backupFlatpakApps &&\
 
 exit 0

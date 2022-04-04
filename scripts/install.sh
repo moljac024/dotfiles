@@ -126,7 +126,9 @@ link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
 ### Asdf version manager
 ################################################################################
 
-git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0
+if [ ! -d "$HOME/.asdf" ]; then
+    git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0
+fi
 
 ################################################################################
 
@@ -134,6 +136,8 @@ git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0
 ### Volta nodejs version manager
 ################################################################################
 
-curl https://get.volta.sh | bash -s -- --skip-setup
+if [ ! -d "$HOME/.volta" ]; then
+    curl https://get.volta.sh | bash -s -- --skip-setup
+fi
 
 ################################################################################

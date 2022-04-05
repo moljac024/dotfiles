@@ -230,12 +230,6 @@ fi
 
 ################################################################################
 
-# Automatically start/connect to tmux on ssh sessions
-if [ -z "$TMUX" ] && [ -n "$SSH_TTY" ] && [[ $- =~ i ]]; then
-    tmux new-session -A -s ssh
-fi
-
-
 # Direnv
 if hash direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"

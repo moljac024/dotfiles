@@ -36,11 +36,6 @@ let g:sneak#label = 1
 "============================================
 " Programming
 "============================================
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/asyncomplete.vim'
-
-" Fish shell ================================
-Plug 'dag/vim-fish'
 
 " Markdown ==================================
 Plug 'tpope/vim-markdown'
@@ -53,13 +48,6 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " Javascript ================================
 Plug 'pangloss/vim-javascript'
-
-Plug 'prettier/vim-prettier', {
-            \ 'do': 'yarn install',
-            \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
-" Run prettier before save
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 
 Plug 'mxw/vim-jsx'
 " JSX works on .js files too
@@ -111,9 +99,6 @@ Plug 'mhinz/vim-signify'
 " ===========================================
 " Plug 'w0rp/ale'
 " Plug 'prabirshrestha/vim-lsp'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 
 " ===========================================
 " Files

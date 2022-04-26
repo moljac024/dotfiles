@@ -94,8 +94,16 @@ if [ -f $HOME/.asdf/asdf.sh ]; then
 fi
 
 # Volta nodejs version manager
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+if [[ -d $HOME/.volta ]]; then
+    export VOLTA_HOME="$HOME/.volta"
+    export PATH="$VOLTA_HOME/bin:$PATH"
+fi
+
+# N node version manager
+if [[ -d $HOME/.n ]]; then
+    export N_PREFIX=$HOME/.n
+    export PATH=$N_PREFIX/bin:$PATH
+fi
 
 # Locally compiled/installed files
 export PATH=$HOME/.local/bin:$PATH

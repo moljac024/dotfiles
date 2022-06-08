@@ -105,6 +105,10 @@ if [[ -d $HOME/.n ]]; then
     export PATH=$N_PREFIX/bin:$PATH
 fi
 
+# Fly.io
+export FLYCTL_INSTALL="$HOME/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
 # Locally compiled/installed files
 export PATH=$HOME/.local/bin:$PATH
 # Home binaries (systems should do this already)
@@ -169,6 +173,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     }
 fi
 
+alias c='clear'
 alias ..='cd ..'
 alias back='cd "$OLDPWD"'
 alias mkdir='mkdir -p -v'
@@ -179,6 +184,8 @@ alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([c
 
 alias serve-spa="npx --yes http-server-spa"
 
+alias emacs="flatpak run org.gnu.emacs"
+
 # Xorg aliases:
 alias gta='gitk --all'
 alias gita='gitk --all'
@@ -188,6 +195,9 @@ alias gg='git gui'
 alias cdk='npx --package aws-cdk cdk'
 alias cdktf='npx --package cdktf-cli cdktf'
 alias cdk8s='npx --package cdk8s-cli cdk8s'
+
+# k8s aliases
+alias k='kubectl'
 
 ################################################################################
 

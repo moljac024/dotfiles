@@ -67,6 +67,7 @@ link src/dircolors/solarized-ansi-light $HOME/.dir_colors
 link src/bash/.bash_profile $HOME/.bash_profile
 link src/bash/.bashrc $HOME/.bashrc
 link src/bash/.inputrc $HOME/.inputrc
+link src/bash/.complete_alias $HOME/.bash_complete_alias
 
 git_clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
 

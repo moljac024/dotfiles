@@ -198,6 +198,7 @@ alias cdk8s='npx --package cdk8s-cli cdk8s'
 
 # k8s aliases
 alias k='kubectl'
+alias kc='k config view --minify | grep name'
 
 ################################################################################
 
@@ -238,6 +239,12 @@ if ! shopt -oq posix; then
                 source $f
             fi
         done
+    fi
+
+    if [ -f $HOME/.bash.complete_alias ]; then
+        source $HOME/.bash.complete_alias
+        # Complete all aliases
+        complete -F _complete_alias "${!BASH_ALIASES[@]}"
     fi
 fi
 

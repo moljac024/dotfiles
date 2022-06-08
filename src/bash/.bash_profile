@@ -17,6 +17,16 @@ function is_wsl {
     fi
 }
 
+function export_secret () {
+    local varName=$1
+    local file=$2
+    local content=$(cat $file)
+
+    if [[ -f $file ]]; then
+      export "${varName}"="$content"
+    fi
+}
+
 ################################################################################
 ### Environment
 ################################################################################
@@ -25,6 +35,7 @@ function is_wsl {
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export EDITOR='vim'
+export DOTFILES=$HOME/dotfiles
 
 # OS X
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -196,9 +207,12 @@ alias cdk='npx --package aws-cdk cdk'
 alias cdktf='npx --package cdktf-cli cdktf'
 alias cdk8s='npx --package cdk8s-cli cdk8s'
 
+alias tf='terraform'
+
 # k8s aliases
 alias k='kubectl'
 alias kc='k config view --minify | grep name'
+alias kx='kubectx'
 
 ################################################################################
 
@@ -268,6 +282,5 @@ if command -v dagger >/dev/null 2>&1; then
     source <(dagger completion bash)
 fi
 
-if [[ -f $HOME/dotfiles/.credentials/github-token-registry ]]; then
-    export CR_PAT=$(cat $HOME/dotfiles/.credentials/github-token-registry)
-fi
+export_secret CR_PAT $DOTFILES/.credentials/github-token-registry
+export_secret DO_PAT $DOTFILES/.credentials/digital-ocean

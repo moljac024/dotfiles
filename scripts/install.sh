@@ -5,9 +5,9 @@
 ################################################################################
 
 link () {
-    original=$1
-    path=$2
-    original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
+    local original=$1
+    local path=$2
+    local original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
 
     if [ -L "$path" ]; then
         rm "$path"
@@ -22,9 +22,9 @@ link () {
 
 
 git_clone () {
-    repo=$1
-    location=$2
-    location_fullpath="$(cd "$(dirname "$location")"; pwd)/$(basename "$location")"
+    local repo=$1
+    local location=$2
+    local location_fullpath="$(cd "$(dirname "$location")"; pwd)/$(basename "$location")"
 
     if [ ! -d "$location_fullpath" ]; then
         git clone "$repo" "$location_fullpath"

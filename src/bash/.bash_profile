@@ -287,3 +287,4 @@ fi
 
 export_secret CR_PAT $DOTFILES/.credentials/github-token-registry
 export_secret DO_PAT $DOTFILES/.credentials/digital-ocean
+export_secret NPM_TOKEN_FOR_GITHUB $DOTFILES/.credentials/npm_token_for_github

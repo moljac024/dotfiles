@@ -143,33 +143,14 @@ case $- in
 esac
 
 ################################################################################
-### Bash it!
+### Prompt
 ################################################################################
 
-# Path to the bash it configuration
-export BASH_IT="$HOME/.bash_it"
+# Starship prompt
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init bash)"
+fi
 
-# Lock and Load a custom theme file.
-# Leave empty to disable theming.
-# location /.bash_it/themes/
-export BASH_IT_THEME='bakke'
-
-unset GIT_HOSTING
-
-# Don't check mail when opening terminal.
-unset MAILCHECK
-
-# Change this to your console based IRC client of choice.
-export IRC_CLIENT='irssi'
-
-# Set this to the command you use for todo.txt-cli
-export TODO="t"
-
-# Set this to false to turn off version control status checking within the prompt for all themes
-export SCM_CHECK=true
-
-# Load Bash It
-source "$BASH_IT"/bash_it.sh
 
 ################################################################################
 
@@ -247,6 +228,13 @@ export FZF_FIND_FILE_COMMAND="rg --files"
 [[ -e "$HOME/.fzf-extras/fzf-extras.sh" ]] \
     && source "$HOME/.fzf-extras/fzf-extras.sh"
 
+################################################################################
+
+
+################################################################################
+### Completions
+################################################################################
+
 # Bash completions
 if ! shopt -oq posix; then
     if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -275,8 +263,6 @@ if [ -f $HOME/.asdf/completions/asdf.bash ]; then
     source $HOME/.asdf/completions/asdf.bash
 fi
 
-################################################################################
-
 # Direnv
 if hash direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
@@ -289,6 +275,13 @@ fi
 if command -v dagger >/dev/null 2>&1; then
     source <(dagger completion bash)
 fi
+
+################################################################################
+
+
+################################################################################
+### Secrets
+################################################################################
 
 export_secret CR_PAT $DOTFILES/.credentials/github-token-registry
 export_secret DO_PAT $DOTFILES/.credentials/digital-ocean

@@ -39,6 +39,14 @@ fi
 
 
 ################################################################################
+### Starship shell prompt
+################################################################################
+
+link src/starship/starship.toml $HOME/.config/starship.toml
+
+################################################################################
+
+################################################################################
 ### Scripts
 ################################################################################
 
@@ -68,8 +76,6 @@ link src/bash/.bash_profile $HOME/.bash_profile
 link src/bash/.bashrc $HOME/.bashrc
 link src/bash/.inputrc $HOME/.inputrc
 link src/bash/.complete_alias $HOME/.bash_complete_alias
-
-git_clone https://github.com/Bash-it/bash-it.git $HOME/.bash_it
 
 ################################################################################
 

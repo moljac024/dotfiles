@@ -120,6 +120,11 @@ fi
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
+# pnpm
+export PNPM_HOME="/home/bojan/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+# pnpm end
+
 # Locally compiled/installed files
 export PATH=$HOME/.local/bin:$PATH
 # Home binaries (systems should do this already)

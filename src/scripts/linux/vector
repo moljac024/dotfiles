@@ -1,3 +1,0 @@
-#!/bin/bash
-
-docker run -i -v $(pwd)/:/etc/vector/ --rm timberio/vector:0.23.3-debian $@

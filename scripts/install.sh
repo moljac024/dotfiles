@@ -134,7 +134,7 @@ link src/tmux/tmuxinator-completion.bash $HOME/.bash_completions/tmuxinator
 ################################################################################
 
 if [ ! -d "$HOME/.asdf" ]; then
-    git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0
+    git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.10.2
 fi
 
 ################################################################################

@@ -196,6 +196,7 @@ alias cdk8s='npx --package cdk8s-cli cdk8s'
 
 alias tf='terraform'
 
+alias docker-compose='docker compose'
 # k8s aliases
 alias k='kubectl'
 alias kc='k config view --minify | grep name'
@@ -271,6 +272,7 @@ fi
 
 if command -v kubectl >/dev/null 2>&1; then
     source <(kubectl completion bash)
+    complete -o default -F __start_kubectl k
 fi
 
 if command -v dagger >/dev/null 2>&1; then

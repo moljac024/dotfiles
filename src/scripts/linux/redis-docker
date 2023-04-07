@@ -6,4 +6,4 @@ else
     PROGRAM=docker
 fi
 
-docker run --name ${1:-redis} -p ${2:-6379}:6379 -d redis
+$PROGRAM run --name ${1:-redis} -p ${2:-6379}:6379 -d redis

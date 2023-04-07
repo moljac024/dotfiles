@@ -133,6 +133,11 @@ export PATH=$HOME/bin:$PATH
 # Flatpak paths
 export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
 
+# Cursor size
+if command -v gsettings >/dev/null 2>&1; then
+    export XCURSOR_SIZE="$(gsettings get org.gnome.desktop.interface cursor-size)"
+fi
+
 ################################################################################
 
 

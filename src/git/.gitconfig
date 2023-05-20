@@ -33,6 +33,7 @@
 	branch = auto
 [push]
 	default = simple
+	autoSetupRemote = true
 #[credential]
 	#helper = osxkeychain
 [gui]

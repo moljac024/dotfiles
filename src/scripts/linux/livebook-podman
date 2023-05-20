@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# In order to access and save notebooks directly to your machine
+# you can mount a local directory into the container.
+# Make sure to specify the user with "-u $(id -u):$(id -g)"
+# so that the created files have proper permissions
+
+
+# eval "podman run --userns=keep-id -p 8080:8080 -p 8081:8081 --pull always -u $(id -u):$(id -g) -v $(pwd):/data:Z,U -e LIVEBOOK_DATA_PATH=/data ghcr.io/livebook-dev/livebook /app/bin/livebook start" > >(sed 's/0\.0\.0\.0/localhost/g')
+
+LIVEBOOK_DATA="${HOME}/.livebook"
+
+if [[ ! -d $LIVEBOOK_DATA ]]; then
+  mkdir -p $LIVEBOOK_DATA
+fi
+
+eval "podman run --userns=keep-id -p 8080:8080 -p 8081:8081 --pull always -u $(id -u):$(id -g) -v ${LIVEBOOK_DATA}:/data:Z,U -v $(pwd):/notebooks:Z,U -e LIVEBOOK_DATA_PATH=/data -e LIVEBOOK_HOME=/notebooks ghcr.io/livebook-dev/livebook /app/bin/livebook start" > >(sed 's/0\.0\.0\.0/localhost/g')

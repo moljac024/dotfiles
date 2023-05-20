@@ -207,6 +207,9 @@ alias k='kubectl'
 alias kc='k config view --minify | grep name'
 alias kx='kubectx'
 
+# Distrobox aliases
+alias dbu='distrobox enter ubuntu22'
+
 # Krew kubectl plugin package manager
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 

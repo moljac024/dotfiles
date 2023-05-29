@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DAGGER_ENGINE_DOCKER_CONTAINER="$(docker container list --all --filter 'name=^dagger-engine-*' --format '{{.Names}}')"
+
+if [[ "$DAGGER_ENGINE_DOCKER_CONTAINER" == "" ]]; then
+    echo "no engine to purge"
+    exit 0
+fi
+docker container stop "$DAGGER_ENGINE_DOCKER_CONTAINER"
+docker container rm "$DAGGER_ENGINE_DOCKER_CONTAINER"

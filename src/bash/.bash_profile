@@ -273,6 +273,11 @@ if [ -f $HOME/.asdf/completions/asdf.bash ]; then
     source $HOME/.asdf/completions/asdf.bash
 fi
 
+# Dagger completions
+if command -v dagger >/dev/null 2>&1; then
+    source <(dagger completion bash)
+fi
+
 # Direnv
 if hash direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"

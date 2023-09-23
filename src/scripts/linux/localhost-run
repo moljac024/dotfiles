@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PORT="${1:-8080}"
+
+ssh -i $HOME/.ssh/id_rsa_localhostrun -R 80:localhost:$PORT plan@localhost.run

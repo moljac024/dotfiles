@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -rf $HOME/var/app/md.obsidian.Obsidian/cache
+rm -rf $HOME/.var/app/md.obsidian.Obsidian/config/obsidian/GPUCache

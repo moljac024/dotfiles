@@ -79,9 +79,18 @@ if [ -d $HOME/Android/Sdk ]; then
     export ANDROID_SDK_ROOT=$HOME/Android/Sdk
     export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
     export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
+    export PATH=$PATH:$ANDROID_HOME/emulator
     if is_exported WSL_HOST; then
         export ADB_SERVER_SOCKET=tcp:$WSL_HOST:5037
     fi
+fi
+
+# Android dev
+if [ -d "$HOME/Applications/android-studio" ]; then
+    export PATH=$PATH:"$HOME/Applications/android-studio/bin"
+fi
+if [ -d "$HOME/Applications/flutter" ]; then
+    export PATH=$PATH:"$HOME/Applications/flutter/bin"
 fi
 
 # Rust binaries

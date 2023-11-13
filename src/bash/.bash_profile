@@ -74,8 +74,8 @@ if [ -d "/usr/lib/jvm/java-8-openjdk-amd64" ]; then
     export PATH=$PATH:$JAVA_HOME/bin
 fi
 
-if [ -d $HOME/Android/Sdk ];then
-    export ANDROID_HOME=$HOME/Android
+if [ -d $HOME/Android/Sdk ]; then
+    export ANDROID_HOME=$HOME/Android/Sdk
     export ANDROID_SDK_ROOT=$HOME/Android/Sdk
     export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
     export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
@@ -209,7 +209,7 @@ alias kc='k config view --minify | grep name'
 alias kx='kubectx'
 
 # Distrobox aliases
-alias dbu='distrobox enter ubuntu22'
+alias dbu='distrobox enter ubuntu-22-04'
 
 # Krew kubectl plugin package manager
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"

@@ -28,6 +28,12 @@ function export_secret () {
 }
 
 function modify_path () {
+    # Check if the directory exists and return early if it doesn't
+    if [ ! -d "$1" ]; then
+        # echo "The directory $1 does not exist"
+        return
+    fi
+
     # Check if the directory is not already in PATH
     if [[ ":$PATH:" != *":$1:"* ]]; then
         # Append or prepend the directory to PATH based on the second argument

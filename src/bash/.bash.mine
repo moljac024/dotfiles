@@ -27,6 +27,24 @@ function export_secret () {
     fi
 }
 
+ensure_symlink() {
+    local original=$1
+    local path=$2
+
+    if [ -e "$path" ]; then
+       # mv "$path" "$path.old"
+       return
+    fi
+
+    local original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
+
+    if [ -L "$path" ]; then
+        rm "$path"
+    fi
+
+    ln -s "$original_fullpath" "$path"
+}
+
 function modify_path () {
     # Check if the directory exists and return early if it doesn't
     if [ ! -d "$1" ]; then

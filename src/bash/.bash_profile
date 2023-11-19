@@ -70,6 +70,7 @@ fi
 # Android studio
 if [ -d "$HOME/Applications/android-studio" ]; then
     export ANDROID_STUDIO=$HOME/Applications/android-studio
+    ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" $HOME/bin/android-studio
     modify_path "$HOME/Applications/android-studio/bin" append
 fi
 if [ -d "$HOME/Applications/flutter" ]; then

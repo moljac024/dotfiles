@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+function is_exported {
+    local name="$1"
+    if [[ "${!name@a}" == *x* ]]; then
+        true; return
+    else
+        false; return
+    fi
+}
+
+function is_wsl {
+    if grep -qi microsoft /proc/version; then
+        true; return
+    else
+        false; return
+    fi
+}
+
+function export_secret () {
+    local varName=$1
+    local file=$2
+    local content=$(cat $file)
+
+    if [[ -f $file ]]; then
+      export "${varName}"="$content"
+    fi
+}
+
+function modify_path () {
+    # Check if the directory is not already in PATH
+    if [[ ":$PATH:" != *":$1:"* ]]; then
+        # Append or prepend the directory to PATH based on the second argument
+        if [[ $2 == "prepend" ]]; then
+            export PATH="$1:$PATH"
+            # echo "Prepended $1 to PATH"
+        else
+            export PATH="$PATH:$1"
+            # echo "Appended $1 to PATH"
+        fi
+    else
+        # echo "$1 is already in PATH"
+        echo ""  > /dev/null
+    fi
+}

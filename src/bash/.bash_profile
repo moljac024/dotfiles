@@ -1,31 +1,7 @@
 #!/usr/bin/env bash
 
-function is_exported {
-    local name="$1"
-    if [[ "${!name@a}" == *x* ]]; then
-        true; return
-    else
-        false; return
-    fi
-}
-
-function is_wsl {
-    if grep -qi microsoft /proc/version; then
-        true; return
-    else
-        false; return
-    fi
-}
-
-function export_secret () {
-    local varName=$1
-    local file=$2
-    local content=$(cat $file)
-
-    if [[ -f $file ]]; then
-      export "${varName}"="$content"
-    fi
-}
+# Get helper functions
+source $HOME/.bash.mine
 
 ################################################################################
 ### Environment
@@ -52,7 +28,7 @@ fi
 
 # OS X Homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH=/usr/local/sbin:/usr/local/bin:$PATH
+    modify_path "/usr/local/sbin:/usr/local/bin" prepend
 fi
 
 # WSL
@@ -67,45 +43,37 @@ if is_wsl; then
     export WSL_GUEST=$(wsl_ip)
 fi
 
-# JAVA
-if [ -d "/usr/lib/jvm/java-8-openjdk-amd64" ]; then
-    export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
-    export JRE_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
-    export PATH=$PATH:$JAVA_HOME/bin
-fi
-
+# Android dev
 if [ -d $HOME/Android/Sdk ]; then
     export ANDROID_HOME=$HOME/Android/Sdk
-    export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-    export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
-    export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin
-    export PATH=$PATH:$ANDROID_HOME/emulator
+    export ANDROID_SDK_ROOT=$ANDROID_HOME
+
+    modify_path "$ANDROID_HOME/emulator" append
+    modify_path "$ANDROID_HOME/platform-tools" append
+    modify_path "$ANDROID_HOME/cmdline-tools/latest/bin" append
+    modify_path "$ANDROID_HOME/tools" append
+    modify_path "$ANDROID_HOME/tools/bin" append
+
     if is_exported WSL_HOST; then
         export ADB_SERVER_SOCKET=tcp:$WSL_HOST:5037
     fi
 fi
 
-# Android dev
+# Android studio
 if [ -d "$HOME/Applications/android-studio" ]; then
-    export PATH=$PATH:"$HOME/Applications/android-studio/bin"
+    export ANDROID_STUDIO=$HOME/Applications/android-studio
+    modify_path "$HOME/Applications/android-studio/bin" append
 fi
 if [ -d "$HOME/Applications/flutter" ]; then
-    export PATH=$PATH:"$HOME/Applications/flutter/bin"
+    modify_path "$HOME/Applications/flutter/bin" append
 fi
 
 # Rust binaries
-export PATH="$HOME/.cargo/bin:$PATH"
+modify_path "$HOME/.cargo/bin" prepend
 
 # Vector
 if [[ -d $HOME/.vector ]]; then
-    export PATH="$HOME/.vector/bin:$PATH"
-fi
-
-# Linuxbrew
-if [[ -d "/home/linuxbrew" ]]; then
-    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-    export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
-    export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
+    modify_path "$HOME/.vector/bin" prepend
 fi
 
 # Asdf version manager
@@ -116,28 +84,28 @@ fi
 # Volta nodejs version manager
 if [[ -d $HOME/.volta ]]; then
     export VOLTA_HOME="$HOME/.volta"
-    export PATH="$VOLTA_HOME/bin:$PATH"
+    modify_path "$VOLTA_HOME/bin" prepend
 fi
 
 # N node version manager
 if [[ -d $HOME/.n ]]; then
     export N_PREFIX=$HOME/.n
-    export PATH=$N_PREFIX/bin:$PATH
+    modify_path "$N_PREFIX/bin" prepend
 fi
 
 # Fly.io
 export FLYCTL_INSTALL="$HOME/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
+modify_path "$FLYCTL_INSTALL/bin" prepend
 
 # pnpm
 export PNPM_HOME="/home/bojan/.local/share/pnpm"
-export PATH="$PNPM_HOME:$PATH"
+modify_path "$PNPM_HOME" prepend
 # pnpm end
 
 # Locally compiled/installed files
-export PATH=$HOME/.local/bin:$PATH
+modify_path "$HOME/.local/bin" prepend
 # Home binaries (systems should do this already)
-export PATH=$HOME/bin:$PATH
+modify_path "$HOME/bin" prepend
 
 # Flatpak paths
 export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
@@ -221,7 +189,7 @@ alias kx='kubectx'
 alias dbu='distrobox enter ubuntu-22-04'
 
 # Krew kubectl plugin package manager
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 
 ################################################################################
 

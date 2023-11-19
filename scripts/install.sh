@@ -72,6 +72,7 @@ link src/dircolors/solarized-ansi-light $HOME/.dir_colors
 ### Bash
 ################################################################################
 
+link src/bash/.bash.mine $HOME/.bash.mine
 link src/bash/.bash_profile $HOME/.bash_profile
 link src/bash/.bashrc $HOME/.bashrc
 link src/bash/.inputrc $HOME/.inputrc

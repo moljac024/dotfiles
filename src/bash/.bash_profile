@@ -50,7 +50,15 @@ if [ -d $HOME/Android/Sdk ]; then
 
     modify_path "$ANDROID_HOME/emulator" append
     modify_path "$ANDROID_HOME/platform-tools" append
+
+    # If cmdline tools version 8.0 are installed they should have precendence,
+    # because react native does not work with newer ones
+    modify_path "$ANDROID_HOME/cmdline-tools/8.0/bin" append
     modify_path "$ANDROID_HOME/cmdline-tools/latest/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/11.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/10.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/9.0/bin" append
+
     modify_path "$ANDROID_HOME/tools" append
     modify_path "$ANDROID_HOME/tools/bin" append
 

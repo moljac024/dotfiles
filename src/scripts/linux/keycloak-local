@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+#podman run --replace -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin --name keycloak quay.io/keycloak/keycloak start-dev
+
+# Run the Keycloak container
+podman run --rm --replace --network local-dev -p 8080:8080 \
+  -e KEYCLOAK_ADMIN=admin \
+  -e KEYCLOAK_ADMIN_PASSWORD=admin \
+  -e KC_DB=postgres \
+  -e KC_DB_URL="jdbc:postgresql://postgres/keycloak?user=postgres&password=admin" \
+  --name keycloak quay.io/keycloak/keycloak start-dev

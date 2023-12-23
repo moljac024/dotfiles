@@ -10,4 +10,4 @@ VOLUME=postgres
 
 $PROGRAM volume create $VOLUME
 
-$PROGRAM run --rm  --name pg-docker -e POSTGRES_PASSWORD=docker -p 5432:5432 -v $VOLUME:/var/lib/postgresql/data:O postgres
+$PROGRAM run --rm  --network local-dev --name postgres -e POSTGRES_PASSWORD=admin -p 5432:5432 -v $VOLUME:/var/lib/postgresql/data postgres

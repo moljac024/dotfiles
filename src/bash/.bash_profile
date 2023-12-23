@@ -188,6 +188,9 @@ alias cdk8s='npx --package cdk8s-cli cdk8s'
 
 alias tf='terraform'
 
+# Use podman over docker
+export DOCKER_HOST=unix:///run/podman/podman.sock
+
 alias docker-compose='docker compose'
 # k8s aliases
 alias k='kubectl'

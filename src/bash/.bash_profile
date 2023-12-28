@@ -154,6 +154,7 @@ fi
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias ls='ls --color=auto --group-directories-first --sort=extension'
     alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
+    alias update-fedora='sudo sh -c "yum update -y"'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     alias ls='ls -FG'
 

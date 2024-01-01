@@ -116,6 +116,7 @@ link src/ripgrep/.ripgreprc $HOME/.ripgreprc
 ################################################################################
 
 link src/tmux/.tmux.conf $HOME/.tmux.conf
+link src/tmuxinator $HOME/.config/tmuxinator
 
 ################################################################################
 

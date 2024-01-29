@@ -163,6 +163,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     }
 fi
 
+alias update-npm-packages="npx npm-check-updates"
 alias c='clear'
 alias ..='cd ..'
 alias back='cd "$OLDPWD"'

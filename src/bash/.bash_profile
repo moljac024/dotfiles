@@ -205,6 +205,9 @@ alias dbu='distrobox enter ubuntu-22-04'
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 
+# Rancher desktop
+modify_path "$HOME/.rd/bin" prepend
+
 ################################################################################
 
 

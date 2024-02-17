@@ -183,30 +183,27 @@ alias gta='gitk --all'
 alias gita='gitk --all'
 alias gg='git gui'
 
-# AWS aliases
-alias cdk='npx --package aws-cdk cdk'
-alias cdktf='npx --package cdktf-cli cdktf'
-alias cdk8s='npx --package cdk8s-cli cdk8s'
-
-alias tf='terraform'
-
 # Use podman over docker
-export DOCKER_HOST=unix:///run/podman/podman.sock
+# If podman is installed, use it instead of docker
+if command -v podman >/dev/null 2>&1; then
+    alias docker=podman
+    alias docker-compose='podman-compose'
+    export DOCKER_HOST="unix:///run/podman/podman.sock"
+fi
+
 
 alias docker-compose='docker compose'
 # k8s aliases
 alias k='kubectl'
-alias kc='k config view --minify | grep name'
-alias kx='kubectx'
+alias kcfg='kubectl config view --minify | grep name'
+alias kc='kubectx'
+alias kn='kubens'
 
 # Distrobox aliases
 alias dbu='distrobox enter ubuntu-22-04'
 
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
-
-# Rancher desktop
-modify_path "$HOME/.rd/bin" prepend
 
 ################################################################################
 

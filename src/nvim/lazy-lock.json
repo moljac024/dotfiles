@@ -1,0 +1,17 @@
+{
+  "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
+  "conform.nvim": { "branch": "master", "commit": "59d0dd233a2cafacfa1235ab22054c4d80a72319" },
+  "dashboard-nvim": { "branch": "master", "commit": "a0a78099658c7d4be3714f657b18ca8285d5d106" },
+  "diffview.nvim": { "branch": "main", "commit": "3dc498c9777fe79156f3d32dddd483b8b3dbd95f" },
+  "gitsigns.nvim": { "branch": "main", "commit": "805610a9393fa231f2c2b49cb521bfa413fadb3d" },
+  "lazy.nvim": { "branch": "main", "commit": "e44636a43376e8a1e851958f7e9cbe996751d59f" },
+  "neo-tree.nvim": { "branch": "v3.x", "commit": "7aad1bf3f6b849cbf108e02c55ad4d701cb4d33a" },
+  "neogit": { "branch": "master", "commit": "bc0c609e3568a171e0549b449aa1b2b4b5b20e8c" },
+  "nui.nvim": { "branch": "main", "commit": "a3597dc88b53489d3fddbddbbd13787355253bb0" },
+  "nvim-web-devicons": { "branch": "master", "commit": "e37bb1feee9e7320c76050a55443fa843b4b6f83" },
+  "oil.nvim": { "branch": "master", "commit": "f630887cd845a7341bc16488fe8aaecffe3aaa8a" },
+  "plenary.nvim": { "branch": "master", "commit": "08e301982b9a057110ede7a735dd1b5285eb341f" },
+  "solarized.nvim": { "branch": "main", "commit": "b3a976585551d93370fbac3c662ae254724ba103" },
+  "telescope.nvim": { "branch": "master", "commit": "52f500110bcf9190b44b4d8640162adc86772ec4" },
+  "trouble.nvim": { "branch": "dev", "commit": "52fe175294a4ccd4b759c59a08ae45b768ffda1c" }
+}

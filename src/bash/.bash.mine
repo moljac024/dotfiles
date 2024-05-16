@@ -277,8 +277,9 @@ alias kcfg='kubectl config view --minify | grep name'
 alias kc='kubectx'
 alias kn='kubens'
 
-# Distrobox aliases
+# Distrobox & toolbox aliases
 alias dbu='distrobox enter ubuntu-22-04'
+alias tbf='toolbox enter fedora-toolbox-39'
 
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend

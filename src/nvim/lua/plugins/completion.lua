@@ -22,9 +22,13 @@ return {
 
       cmp.setup({
         sources = {
-          { name = "nvim_lsp" },
-          { name = "path" },
-          { name = "buffer" },
+          -- Copilot Source
+          { name = "copilot", group_index = 2 },
+          -- Other Sources
+          { name = "nvim_lsp", group_index = 2 },
+          { name = "path", group_index = 2 },
+          { name = "buffer", group_index = 2 },
+          { name = "luasnip", group_index = 2 },
         },
         mapping = {
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),

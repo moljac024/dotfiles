@@ -1,4 +1,10 @@
 -- ############################################################################
+-- Basics
+-- ############################################################################
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- ############################################################################
 -- Keybinds
 -- ############################################################################
 vim.g.mapleader = ","
@@ -13,7 +19,13 @@ vim.keymap.set("i", "jj", "<Esc>", {
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
-vim.bo.softtabstop = 2
+vim.opt.softtabstop = 2
+
+-- ############################################################################
+-- Misc
+-- ############################################################################
+vim.opt.signcolumn = "yes"
+vim.opt.relativenumber = true
 
 -- ############################################################################
 -- Lazy (plugin manager)
@@ -31,4 +43,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({ { import = "plugins" } })
+require("lazy").setup({ import = "plugins" }, {
+  change_detection = {
+    notify = false,
+  },
+})

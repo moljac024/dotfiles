@@ -1,6 +1,23 @@
 #!/usr/bin/env bash
 
 ################################################################################
+### Terminal integration
+################################################################################
+
+# Kitty
+if test -n "$KITTY_INSTALLATION_DIR"; then
+    # export KITTY_SHELL_INTEGRATION="enabled"
+    source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"
+fi
+
+# OSX Iterm integration
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [ -f $HOME/.iterm2_shell_integration.bash ]; then
+        source $HOME/.iterm2_shell_integration.bash
+    fi
+fi
+
+################################################################################
 ### Helper functions
 ################################################################################
 
@@ -89,7 +106,7 @@ function modify_path () {
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
-export EDITOR='vim'
+export EDITOR='nvim'
 export DOTFILES=$HOME/dotfiles
 
 # OS X
@@ -99,15 +116,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         source `brew --prefix`/etc/bash_completion
     fi
 
+    modify_path "/usr/local/sbin:/usr/local/bin" prepend
+
     # Iterm integration
     if [ -f $HOME/.iterm2_shell_integration.bash ]; then
         source $HOME/.iterm2_shell_integration.bash
     fi
-fi
-
-# OS X Homebrew
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    modify_path "/usr/local/sbin:/usr/local/bin" prepend
 fi
 
 # WSL

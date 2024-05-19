@@ -19,7 +19,6 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      vim.notify("setting up oil...")
       require("oil").setup()
 
       -- Open parent directory in current window

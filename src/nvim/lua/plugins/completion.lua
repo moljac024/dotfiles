@@ -1,6 +1,10 @@
 return {
   {
     "hrsh7th/nvim-cmp",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
     lazy = false,
     priority = 100,
     dependencies = {

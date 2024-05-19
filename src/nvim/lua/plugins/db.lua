@@ -1,6 +1,10 @@
 return {
   {
     "kndndrj/nvim-dbee",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
     dependencies = { "MunifTanjim/nui.nvim" },
     build = function()
       require("dbee").install()

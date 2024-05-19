@@ -1,6 +1,10 @@
 return {
   {
     "folke/trouble.nvim",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
     branch = "dev", -- IMPORTANT!
     keys = {
       {

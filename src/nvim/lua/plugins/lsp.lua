@@ -1,6 +1,10 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
     dependencies = {
       "folke/neodev.nvim",
       "williamboman/mason.nvim",

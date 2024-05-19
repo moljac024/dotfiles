@@ -1,6 +1,10 @@
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
     branch = "v3.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -15,6 +19,7 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
+      vim.notify("setting up oil...")
       require("oil").setup()
 
       -- Open parent directory in current window

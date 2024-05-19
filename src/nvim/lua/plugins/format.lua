@@ -1,6 +1,10 @@
 return {
   {
     "stevearc/conform.nvim",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
     opts = {},
     config = function()
       require("conform").setup({

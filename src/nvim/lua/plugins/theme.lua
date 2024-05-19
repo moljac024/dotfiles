@@ -1,6 +1,10 @@
 return {
   {
     "maxmx03/solarized.nvim",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
     lazy = false,
     priority = 1000,
     config = function()

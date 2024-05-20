@@ -24,8 +24,7 @@ require("lazy").setup({
     {
       import = "plugins",
       cond = function()
-        return true
-        -- return not vim.g.vscode
+        return not vim.g.vscode
       end,
     },
   },

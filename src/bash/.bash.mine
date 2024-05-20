@@ -6,7 +6,7 @@
 
 # Kitty
 if test -n "$KITTY_INSTALLATION_DIR"; then
-    # export KITTY_SHELL_INTEGRATION="enabled"
+    export KITTY_SHELL_INTEGRATION="enabled"
     source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"
 fi
 
@@ -213,7 +213,7 @@ modify_path "$HOME/bin" prepend
 export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
 
 # Cursor size
-if command -v gsettings >/dev/null 2>&1; then
+if is_command gsettings; then
     export XCURSOR_SIZE="$(gsettings get org.gnome.desktop.interface cursor-size)"
 fi
 
@@ -231,7 +231,7 @@ esac
 ################################################################################
 
 # Starship prompt
-if command -v starship >/dev/null 2>&1; then
+if is_command starship; then
     eval "$(starship init bash)"
     eval "$(starship completions bash)"
 fi
@@ -271,8 +271,14 @@ alias serve-spa="npx --yes http-server-spa"
 alias emacs="flatpak run org.gnu.emacs"
 
 # Vim / Neovim
-if command -v nvim >/dev/null 2>&1; then
+if is_command nvim; then
     alias vim='nvim'
+    export EDITOR='nvim'
+fi
+
+# Vscode
+if is_command code; then
+    alias vscode='code'
 fi
 
 # Xorg aliases:
@@ -282,7 +288,7 @@ alias gg='git gui'
 
 # Use podman over docker
 # If podman is installed, use it instead of docker
-if command -v podman >/dev/null 2>&1; then
+if is_command podman; then
     alias docker=podman
     alias docker-compose='podman-compose'
     export DOCKER_HOST="unix:///run/podman/podman.sock"
@@ -364,7 +370,7 @@ if [ -f $HOME/.asdf/completions/asdf.bash ]; then
 fi
 
 # Dagger completions
-if command -v dagger >/dev/null 2>&1; then
+if is_command dagger; then
     source <(dagger completion bash)
 fi
 
@@ -373,12 +379,12 @@ if hash direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
 fi
 
-if command -v kubectl >/dev/null 2>&1; then
+if is_command kubectl; then
     source <(kubectl completion bash)
     complete -o default -F __start_kubectl k
 fi
 
-if command -v dagger >/dev/null 2>&1; then
+if is_command dagger; then
     source <(dagger completion bash)
 fi
 

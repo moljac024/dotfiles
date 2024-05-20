@@ -31,6 +31,6 @@ vim.opt.softtabstop = 2
 -- Misc
 -- ############################################################################
 vim.opt.signcolumn = "yes"
-vim.opt.relativenumber = true
+vim.opt.number = true
 vim.opt.smartcase = true
 vim.opt.ignorecase = true

@@ -253,6 +253,11 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     }
 fi
 
+if is_command sudo; then
+  # Keep terminal info when using sudo
+  alias sudo="sudo TERMINFO=\"$TERMINFO\""
+fi
+
 alias update-npm-packages="npx npm-check-updates"
 alias c='clear'
 alias ..='cd ..'
@@ -271,11 +276,13 @@ alias emacs="flatpak run org.gnu.emacs"
 # Vim / Neovim
 if is_command vim; then
   export EDITOR='vim'
+  export VISUAL='vim'
   alias vi='vim'
 fi
 
 if is_command nvim; then
     export EDITOR='nvim'
+    export VISUAL='nvim'
     alias vi='nvim'
     alias vim='nvim'
     alias vimdiff='nvim -d'

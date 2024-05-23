@@ -1,5 +1,14 @@
 return {
   {
+    "AckslD/nvim-neoclip.lua",
+    dependencies = {
+      { "nvim-telescope/telescope.nvim" },
+    },
+    config = function()
+      require("neoclip").setup()
+    end,
+  },
+  {
     "ThePrimeagen/harpoon",
     enabled = function()
       -- Disable if running in vscode

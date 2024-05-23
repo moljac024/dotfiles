@@ -24,4 +24,8 @@ return {
     },
     cmd = "Nerdy",
   },
+  {
+    "stevearc/dressing.nvim",
+    opts = {},
+  },
 }

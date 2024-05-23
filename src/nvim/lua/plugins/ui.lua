@@ -88,8 +88,29 @@ return {
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim" },
     config = function()
       local data = assert(vim.fn.stdpath("data")) --[[@as string]]
+      local telescope = require("telescope")
+      local actions = require("telescope.actions")
 
-      require("telescope").setup({
+      telescope.setup({
+        defaults = {
+          mappings = {
+            i = {
+              -- Close telescope with <esc>. Effectively, it means telescope is only used in insert mode
+              ["<esc>"] = "close",
+              -- Move selection with <C-j> and <C-k>
+              ["<C-j>"] = {
+                actions.move_selection_next,
+                type = "action",
+                opts = { nowait = true, silent = true },
+              },
+              ["<C-k>"] = {
+                actions.move_selection_previous,
+                type = "action",
+                opts = { nowait = true, silent = true },
+              },
+            },
+          },
+        },
         extensions = {
           fzf = {},
           wrap_results = true,

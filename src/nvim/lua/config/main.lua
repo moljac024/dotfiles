@@ -5,6 +5,9 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Faster updatetime
+vim.opt.updatetime = 200
+
 -- enable 24-bit colour
 vim.opt.termguicolors = true
 

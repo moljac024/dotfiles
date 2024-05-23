@@ -1,5 +1,4 @@
 return {
-  { "nvimtools/none-ls.nvim" },
   {
     "folke/trouble.nvim",
     enabled = function()
@@ -141,10 +140,10 @@ return {
           local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
-          vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = 0 })
+          vim.keymap.set("n", "gd", telescope_builtin.lsp_implementations, { buffer = 0 })
           vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0 })
-          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = 0 })
-          vim.keymap.set("n", "gT", vim.lsp.buf.type_definition, { buffer = 0 })
+          vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0 })
+          vim.keymap.set("n", "gT", telescope_builtin.lsp_type_definitions, { buffer = 0 })
           vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
 
           vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0 })

@@ -5,10 +5,14 @@ return {
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require("oil").setup()
+      local oil = require("oil")
+      oil.setup({
+        experimental_watch_for_changes = true,
+      })
 
       -- Open parent directory in current window
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      vim.keymap.set("n", "_", oil.open_float, { desc = "Open parent directory in floating window" })
 
       -- Open parent directory in floating window
       vim.keymap.set("n", "<leader>-", require("oil").toggle_float)

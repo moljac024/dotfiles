@@ -26,6 +26,10 @@ vim.keymap.set("n", "<c-k>", "<c-w><c-k>")
 vim.keymap.set("n", "<c-l>", "<c-w><c-l>")
 vim.keymap.set("n", "<c-h>", "<c-w><c-h>")
 
+-- Go back
+vim.keymap.set("n", "<leader><leader>", "<c-^>")
+vim.keymap.set("n", "<leader>gb", "<c-^>")
+
 -- Faster browsing/scrolling
 vim.keymap.set({ "n", "v" }, "<space>", "<c-f>")
 vim.keymap.set({ "n", "v" }, "<s-space>", "<c-b>")

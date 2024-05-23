@@ -46,6 +46,9 @@ vim.keymap.set({ "v", "x" }, ">", ">gv")
 vim.keymap.set("v", "Q", "gq")
 vim.keymap.set({ "n" }, "Q", "gqap")
 
+-- Clear search highlight
+vim.keymap.set("n", "<leader>n", "<CMD>noh<CR>")
+
 -- Window splits
 vim.keymap.set({ "n" }, "<leader>2", ":sp<cr>") -- Split window horizontally
 vim.keymap.set({ "n" }, "<leader>3", ":vsp<cr>") -- Split window vertically

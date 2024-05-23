@@ -56,6 +56,9 @@ vim.keymap.set({ "n" }, "<leader>1", "<c-w>o") -- Close other windows
 vim.keymap.set({ "n" }, "<leader>4", "<c-w>c") -- Close current window
 vim.keymap.set({ "n" }, "<leader>0", "<c-w>c") -- Close current window
 
+-- Buffers
+vim.keymap.set("n", "<leader>k", ":bw<cr>") -- Kill buffer
+
 -- ############################################################################
 -- Formatting
 -- ############################################################################

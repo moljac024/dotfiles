@@ -47,6 +47,7 @@ vim.keymap.set({ "n" }, "<leader>2", ":sp<cr>") -- Split window horizontally
 vim.keymap.set({ "n" }, "<leader>3", ":vsp<cr>") -- Split window vertically
 vim.keymap.set({ "n" }, "<leader>1", "<c-w>o") -- Close other windows
 vim.keymap.set({ "n" }, "<leader>4", "<c-w>c") -- Close current window
+vim.keymap.set({ "n" }, "<leader>0", "<c-w>c") -- Close current window
 
 -- ############################################################################
 -- Formatting

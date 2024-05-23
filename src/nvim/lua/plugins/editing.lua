@@ -89,9 +89,10 @@ return {
         if variant == "alternative" then
           vim.keymap.set("n", "s", "<Plug>(leap)")
           vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
-          vim.keymap.set({ "x", "o" }, "s", "<Plug>(leap-forward)")
-          vim.keymap.set({ "x", "o" }, "S", "<Plug>(leap-backward)")
+          vim.keymap.set({ "x", "o" }, "s", "<Plug>(leap)")
 
+          -- vim.keymap.set({ "x", "o" }, "s", "<Plug>(leap-forward)")
+          -- vim.keymap.set({ "x", "o" }, "S", "<Plug>(leap-backward)")
           return
         end
 
@@ -101,8 +102,7 @@ return {
         end
       end
 
-      -- activateKeymaps()
-      activateKeymaps("default")
+      activateKeymaps("alternative") -- "default" or "alternative"
     end,
   },
   {

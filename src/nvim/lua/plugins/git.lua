@@ -12,6 +12,16 @@ return {
     end,
   },
   {
+    "lewis6991/gitsigns.nvim",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
+    config = function()
+      require("gitsigns").setup()
+    end,
+  },
+  {
     "NeogitOrg/neogit",
     enabled = function()
       -- Disable if running in vscode
@@ -23,16 +33,9 @@ return {
 
       "nvim-telescope/telescope.nvim",
     },
-    config = true,
-  },
-  {
-    "lewis6991/gitsigns.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     config = function()
-      require("gitsigns").setup()
+      local neogit = require("neogit")
+      neogit.setup({})
     end,
   },
 }

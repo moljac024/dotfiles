@@ -1,5 +1,39 @@
 return {
   {
+    "nvim-treesitter/nvim-treesitter",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
+    build = ":TSUpdate",
+    config = function()
+      local configs = require("nvim-treesitter.configs")
+
+      ---@diagnostic disable-next-line: missing-fields
+      configs.setup({
+        ensure_installed = {
+          "c",
+          "lua",
+          "vim",
+          "vimdoc",
+          "query",
+          "go",
+          "elixir",
+          "heex",
+          "javascript",
+          "typescript",
+          "json",
+          "sql",
+          "css",
+          "html",
+        },
+        sync_install = false,
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
+    end,
+  },
+  {
     "AckslD/nvim-neoclip.lua",
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
@@ -119,6 +153,30 @@ return {
 
       vim.keymap.set("n", "<leader>tt", tidy.toggle, {})
       vim.keymap.set("n", "<leader>tr", tidy.run, {})
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    enabled = function()
+      -- Disable if running in vscode
+      return not vim.g.vscode
+    end,
+    opts = {},
+    config = function()
+      require("conform").setup({
+        formatters_by_ft = {
+          lua = { "stylua" },
+          -- Conform will run multiple formatters sequentially
+          python = { "isort", "black" },
+          -- Use a sub-list to run only the first available formatter
+          javascript = { { "prettierd", "prettier" } },
+        },
+        format_on_save = {
+          -- These options will be passed to conform.format()
+          timeout_ms = 500,
+          lsp_fallback = true,
+        },
+      })
     end,
   },
 }

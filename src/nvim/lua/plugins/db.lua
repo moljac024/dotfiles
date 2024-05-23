@@ -24,7 +24,7 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<space>od", function()
+      vim.keymap.set("n", "<leader>od", function()
         require("dbee").open()
       end)
 

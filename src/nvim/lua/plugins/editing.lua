@@ -22,14 +22,25 @@ return {
           "heex",
           "javascript",
           "typescript",
+          "tsx",
           "json",
           "sql",
           "css",
           "html",
+          "xml",
+          "yaml",
         },
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
+        ---@diagnostic disable-next-line: unused-local
+        disable = function(lang, buf)
+          local max_filesize = 200 * 1024 -- Max file size in KB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+            return true
+          end
+        end,
       })
     end,
   },

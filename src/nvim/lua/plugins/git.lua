@@ -10,6 +10,12 @@ return {
         enabled = false,
       })
     end,
+    commander = {
+      {
+        cmd = "<CMD>GitBlameToggle<CR>",
+        desc = "Toggle git blame",
+      },
+    },
   },
   {
     "lewis6991/gitsigns.nvim",
@@ -38,5 +44,11 @@ return {
       neogit.setup({})
       vim.keymap.set("n", "<C-g>", "<cmd>Neogit<cr>")
     end,
+    commander = {
+      {
+        cmd = "<CMD>Neogit<CR>",
+        desc = "Neogit",
+      },
+    },
   },
 }

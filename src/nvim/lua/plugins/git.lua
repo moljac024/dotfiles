@@ -47,7 +47,7 @@ return {
     commander = {
       {
         cmd = "<CMD>Neogit<CR>",
-        desc = "Neogit",
+        desc = "Open git ui (Neogit)",
       },
     },
   },

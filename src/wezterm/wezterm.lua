@@ -49,6 +49,10 @@ config.color_scheme = scheme_for_appearance(get_appearance())
 config.use_fancy_tab_bar = true
 config.enable_scroll_bar = true
 
+config.colors = {
+	scrollbar_thumb = "#839496",
+}
+
 config.audible_bell = "Disabled"
 config.visual_bell = {
 	fade_in_duration_ms = 75,

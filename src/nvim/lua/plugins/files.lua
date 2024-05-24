@@ -7,7 +7,10 @@ return {
     config = function()
       local oil = require("oil")
       oil.setup({
-        experimental_watch_for_changes = true,
+        buf_options = {
+          buflisted = false,
+          bufhidden = "hide",
+        },
       })
 
       -- Open parent directory in current window

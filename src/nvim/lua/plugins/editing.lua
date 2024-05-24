@@ -186,6 +186,18 @@ return {
     end,
   },
   {
+    "mfussenegger/nvim-lint",
+    config = function()
+      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+        callback = function()
+          -- try_lint without arguments runs the linters defined in `linters_by_ft`
+          -- for the current filetype
+          require("lint").try_lint()
+        end,
+      })
+    end,
+  },
+  {
     "stevearc/conform.nvim",
     enabled = function()
       -- Disable if running in vscode
@@ -200,6 +212,9 @@ return {
           python = { "isort", "black" },
           -- Use a sub-list to run only the first available formatter
           javascript = { { "prettierd", "prettier" } },
+          typescript = { { "prettierd", "prettier" } },
+          javascriptreact = { { "prettierd", "prettier" } },
+          typescriptreact = { { "prettierd", "prettier" } },
         },
         format_on_save = {
           -- These options will be passed to conform.format()

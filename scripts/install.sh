@@ -20,7 +20,6 @@ link () {
     ln -s "$original_fullpath" "$path"
 }
 
-
 git_clone () {
     local repo=$1
     local location=$2
@@ -55,10 +54,11 @@ else
 fi
 
 ################################################################################
-### Kitty
+### Terminals
 ################################################################################
 
 link src/kitty $HOME/.config/kitty
+link src/wezterm $HOME/.config/wezterm
 
 ################################################################################
 ### Dircolors

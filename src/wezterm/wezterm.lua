@@ -45,7 +45,7 @@ config.window_padding = {
 }
 
 config.color_scheme = scheme_for_appearance(get_appearance())
-config.window_background_opacity = 0.9
+-- config.window_background_opacity = 0.9
 config.use_fancy_tab_bar = true
 config.enable_scroll_bar = true
 

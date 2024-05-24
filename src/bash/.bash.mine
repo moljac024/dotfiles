@@ -1,23 +1,6 @@
 #!/usr/bin/env bash
 
 ################################################################################
-### Terminal integration
-################################################################################
-
-# Kitty
-# if test -n "$KITTY_INSTALLATION_DIR"; then
-#     export KITTY_SHELL_INTEGRATION="enabled"
-#     source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"
-# fi
-
-# OSX Iterm integration
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    if [ -f $HOME/.iterm2_shell_integration.bash ]; then
-        source $HOME/.iterm2_shell_integration.bash
-    fi
-fi
-
-################################################################################
 ### Helper functions
 ################################################################################
 
@@ -98,7 +81,6 @@ function modify_path () {
     fi
 }
 
-
 ################################################################################
 ### Environment
 ################################################################################
@@ -116,11 +98,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     modify_path "/usr/local/sbin:/usr/local/bin" prepend
-
-    # Iterm integration
-    if [ -f $HOME/.iterm2_shell_integration.bash ]; then
-        source $HOME/.iterm2_shell_integration.bash
-    fi
 fi
 
 # WSL
@@ -217,8 +194,9 @@ if is_command gsettings; then
 fi
 
 ################################################################################
+### If not running interactively, stop here
+################################################################################
 
-# If not running interactively, stop here
 case $- in
     *i*) ;;
     *) return;;
@@ -233,9 +211,6 @@ if is_command starship; then
     eval "$(starship init bash)"
     eval "$(starship completions bash)"
 fi
-
-################################################################################
-
 
 ################################################################################
 ### Aliases
@@ -306,7 +281,6 @@ if is_command podman; then
     export DOCKER_HOST="unix:///run/podman/podman.sock"
 fi
 
-
 alias docker-compose='docker compose'
 # k8s aliases
 alias k='kubectl'
@@ -320,9 +294,6 @@ alias tbf='toolbox enter fedora-toolbox-39'
 
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
-
-################################################################################
-
 
 ################################################################################
 ### Other
@@ -345,9 +316,6 @@ export FZF_FIND_FILE_COMMAND="rg --files"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [[ -e "$HOME/.fzf-extras/fzf-extras.sh" ]] \
     && source "$HOME/.fzf-extras/fzf-extras.sh"
-
-################################################################################
-
 
 ################################################################################
 ### Completions
@@ -399,8 +367,6 @@ fi
 if is_command dagger; then
     source <(dagger completion bash)
 fi
-
-################################################################################
 
 ################################################################################
 ### Secrets

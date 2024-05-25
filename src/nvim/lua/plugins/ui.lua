@@ -62,9 +62,22 @@ return {
       require("lualine").setup({
         options = {
           theme = "solarized_light",
+          component_separators = { left = "|", right = "|" },
+          section_separators = { left = "", right = "" },
+          disabled_filetypes = {
+            statusline = {
+              "neo-tree",
+              "NvimTree",
+              "Trouble",
+              "DiffviewFiles",
+              "toggleterm",
+            },
+            winbar = {},
+          },
         },
         sections = {
           lualine_c = {
+            "filename",
             "lsp_progress",
           },
         },

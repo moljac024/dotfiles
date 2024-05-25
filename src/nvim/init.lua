@@ -1,7 +1,12 @@
 -- ############################################################################
--- Init script
+-- Config
 -- ############################################################################
-require("config")
+
+if not vim.g.vscode then
+  require("config")
+else
+  require("vscode.config")
+end
 
 -- ############################################################################
 -- Lazy (plugin manager)
@@ -27,6 +32,12 @@ require("lazy").setup({
       import = "plugins",
       cond = function()
         return not vim.g.vscode
+      end,
+    },
+    {
+      import = "vscode/plugins",
+      cond = function()
+        return vim.g.vscode
       end,
     },
   },

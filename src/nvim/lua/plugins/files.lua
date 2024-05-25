@@ -38,7 +38,7 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<C-b>", "<CMD>NvimTreeToggle<CR>")
+      vim.keymap.set("n", "<leader>b", "<CMD>NvimTreeToggle<CR>")
     end,
   },
   {

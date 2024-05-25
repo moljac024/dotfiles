@@ -1,10 +1,6 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     lazy = false,
     priority = 100,
     dependencies = {
@@ -16,7 +12,7 @@ return {
       "saadparwaiz1/cmp_luasnip",
     },
     config = function()
-      vim.opt.completeopt = { "menu", "menuone", "noselect" }
+      vim.opt.completeopt = { "menu", "menuone", "preview", "noselect", "noinsert" }
       vim.opt.shortmess:append("c")
 
       local lspkind = require("lspkind")
@@ -26,6 +22,19 @@ return {
       local luasnip = require("luasnip")
 
       cmp.setup({
+        ---@diagnostic disable-next-line: missing-fields
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = "symbol_text",
+            menu = {
+              buffer = "[Buffer]",
+              nvim_lsp = "[LSP]",
+              luasnip = "[LuaSnip]",
+              nvim_lua = "[Lua]",
+              latex_symbols = "[Latex]",
+            },
+          }),
+        },
         sources = {
           -- Copilot Source
           { name = "copilot", group_index = 2 },
@@ -36,8 +45,8 @@ return {
           { name = "luasnip", group_index = 2 },
         },
         mapping = {
-          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-y>"] = cmp.mapping(
             cmp.mapping.confirm({
               behavior = cmp.ConfirmBehavior.Insert,
@@ -52,9 +61,14 @@ return {
               if luasnip.expandable() then
                 luasnip.expand()
               else
-                cmp.confirm({
-                  select = true,
-                })
+                -- If an option is selected, confirm it. Otherwise, fallback
+                if cmp.get_active_entry() == nil then
+                  fallback()
+                else
+                  cmp.confirm({
+                    select = true,
+                  })
+                end
               end
             else
               fallback()

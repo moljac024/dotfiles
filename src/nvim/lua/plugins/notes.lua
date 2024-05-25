@@ -1,10 +1,6 @@
 return {
   {
     "epwalsh/obsidian.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     version = "*", -- recommended, use latest release instead of latest commit
     lazy = true,
     ft = "markdown",

@@ -1,14 +1,16 @@
 return {
   {
     "maxmx03/solarized.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     lazy = false,
     priority = 1000,
     config = function()
       vim.o.background = "light" -- 'dark' or 'light'
+
+      require("solarized").setup({
+        transparent = true,
+        -- palette = "selenized",
+        -- theme = "neo",
+      })
 
       vim.cmd.colorscheme("solarized")
     end,
@@ -52,19 +54,25 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+      "arkav/lualine-lsp-progress",
+    },
     config = function()
       require("lualine").setup({
-        theme = "solarized_light",
+        options = {
+          theme = "solarized_light",
+        },
+        sections = {
+          lualine_c = {
+            "lsp_progress",
+          },
+        },
       })
     end,
   },
   {
     "nvimdev/dashboard-nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     event = "VimEnter",
     config = function()
       require("dashboard").setup({
@@ -80,10 +88,6 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     tag = "0.1.6",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim" },
     config = function()
@@ -147,6 +151,7 @@ return {
       local builtin = require("telescope.builtin")
       -- local themes = require("telescope.themes")
 
+      vim.keymap.set("n", "<leader>fr", builtin.resume)
       vim.keymap.set("n", "<leader>ff", builtin.find_files)
       vim.keymap.set("n", "<leader>fb", builtin.buffers)
       vim.keymap.set("n", "<leader>fh", builtin.help_tags)
@@ -160,10 +165,6 @@ return {
   -- Improve notifications
   {
     "rcarriga/nvim-notify",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     config = function()
       local notify = require("notify")
 
@@ -173,10 +174,6 @@ return {
   },
   {
     "2kabhishek/nerdy.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-telescope/telescope.nvim",

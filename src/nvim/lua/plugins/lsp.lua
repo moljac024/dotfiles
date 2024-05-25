@@ -1,10 +1,6 @@
 return {
   {
     "folke/trouble.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     branch = "dev", -- IMPORTANT!
     keys = {
       {
@@ -42,19 +38,12 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     dependencies = {
       "folke/neodev.nvim",
       "nvim-telescope/telescope.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
-
-      { "j-hui/fidget.nvim", opts = {} },
-
       -- JSON schemas
       "b0o/SchemaStore.nvim",
     },
@@ -111,12 +100,15 @@ return {
 
       require("mason").setup()
       local ensure_installed = {
+        "bashls",
+        "cssls",
         "stylua",
         "lua_ls",
       }
 
       vim.list_extend(ensure_installed, servers_to_install)
       require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+      require("mason-lspconfig").setup()
 
       for name, config in pairs(servers) do
         if config == true then

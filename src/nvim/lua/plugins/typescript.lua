@@ -1,10 +1,6 @@
 return {
   {
     "pmizio/typescript-tools.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
     opts = {},
     config = function()

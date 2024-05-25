@@ -3,10 +3,6 @@ vim.g.skip_ts_context_commentstring_module = true
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     build = ":TSUpdate",
     config = function()
       local configs = require("nvim-treesitter.configs")
@@ -74,10 +70,6 @@ return {
   },
   {
     "ThePrimeagen/harpoon",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
@@ -117,10 +109,6 @@ return {
   },
   {
     "m4xshen/autoclose.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     config = function()
       require("autoclose").setup()
     end,
@@ -173,10 +161,6 @@ return {
   },
   {
     "mcauley-penney/tidy.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     opts = {
       enabled_on_save = true,
     },
@@ -207,10 +191,6 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    enabled = function()
-      -- Disable if running in vscode
-      return not vim.g.vscode
-    end,
     opts = {},
     config = function()
       require("conform").setup({

@@ -7,16 +7,32 @@ return {
     config = function()
       local oil = require("oil")
       oil.setup({
-        buf_options = {
-          buflisted = false,
-          bufhidden = "hide",
+        -- Id is automatically added at the beginning, and name at the end
+        -- See :help oil-columns
+        columns = {
+          "icon",
+          -- "permissions",
+          -- "size",
+          -- "mtime",
+        },
+        view_options = {
+          show_hidden = true,
+        },
+        keymaps = {
+          ["g?"] = "actions.show_help",
+          ["<CR>"] = "actions.select",
+          ["<C-p>"] = "actions.preview",
+          ["<C-c>"] = "actions.close",
+          ["<Esc>"] = "actions.close",
+          ["<C-r>"] = "actions.refresh",
+          ["-"] = "actions.parent",
+          ["_"] = "actions.open_cwd",
+          ["g."] = "actions.toggle_hidden",
         },
       })
 
       -- Open parent directory in current window
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-      vim.keymap.set("n", "_", oil.open_float, { desc = "Open parent directory in floating window" })
-
       -- Open parent directory in floating window
       vim.keymap.set("n", "<leader>-", require("oil").toggle_float)
     end,

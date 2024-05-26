@@ -56,8 +56,7 @@ return {
             }),
             { "i", "c" }
           ),
-
-          -- ... Your other mappings ...
+          ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "s" }),
           ["<CR>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               if luasnip.expandable() then

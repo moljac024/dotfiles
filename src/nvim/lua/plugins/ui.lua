@@ -101,7 +101,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.6",
+    tag = "0.1.8",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim" },
     config = function()
       local data = assert(vim.fn.stdpath("data")) --[[@as string]]
@@ -169,7 +169,6 @@ return {
       vim.keymap.set("n", "<leader>fb", builtin.buffers)
       vim.keymap.set("n", "<leader>fh", builtin.help_tags)
       vim.keymap.set("n", "<leader>fg", builtin.live_grep)
-
       vim.keymap.set("n", "<leader>gw", builtin.grep_string)
 
       vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)

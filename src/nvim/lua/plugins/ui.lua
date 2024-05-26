@@ -110,15 +110,19 @@ return {
       local themes = require("telescope.themes")
       local actions = require("telescope.actions")
 
+      local default_vertical_layout_config = {
+        prompt_position = "bottom",
+        height = 0.95,
+        width = 0.95,
+        preview_height = 0.5,
+        preview_cutoff = 24,
+      }
+
       telescope.setup({
         defaults = {
           layout_strategy = "vertical",
           layout_config = {
-            prompt_position = "bottom",
-            height = 0.95,
-            width = 0.95,
-            preview_height = 0.5,
-            preview_cutoff = 24,
+            vertical = default_vertical_layout_config,
           },
           mappings = {
             i = {

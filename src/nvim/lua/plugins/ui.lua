@@ -101,15 +101,25 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
+    -- tag = "0.1.8",
+    branch = "0.1.x",
     dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim" },
     config = function()
       local data = assert(vim.fn.stdpath("data")) --[[@as string]]
       local telescope = require("telescope")
+      local themes = require("telescope.themes")
       local actions = require("telescope.actions")
 
       telescope.setup({
         defaults = {
+          layout_strategy = "vertical",
+          layout_config = {
+            prompt_position = "bottom",
+            height = 0.95,
+            width = 0.95,
+            preview_height = 0.5,
+            preview_cutoff = 24,
+          },
           mappings = {
             i = {
               -- Close telescope with <esc>. Effectively, it means telescope is only used in insert mode
@@ -169,6 +179,7 @@ return {
       vim.keymap.set("n", "<leader>fb", builtin.buffers)
       vim.keymap.set("n", "<leader>fh", builtin.help_tags)
       vim.keymap.set("n", "<leader>fg", builtin.live_grep)
+      vim.keymap.set("n", "<leader>fk", builtin.keymaps)
       vim.keymap.set("n", "<leader>gw", builtin.grep_string)
 
       vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)

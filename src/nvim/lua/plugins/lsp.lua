@@ -135,7 +135,7 @@ return {
           vim.keymap.set("n", "gd", telescope_builtin.lsp_implementations, { buffer = 0 })
           vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0 })
           vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0 })
-          vim.keymap.set("n", "gT", telescope_builtin.lsp_type_definitions, { buffer = 0 })
+          vim.keymap.set("n", "gt", telescope_builtin.lsp_type_definitions, { buffer = 0 })
           vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
 
           vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0 })

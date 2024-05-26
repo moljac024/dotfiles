@@ -48,7 +48,7 @@ vim.keymap.set("n", "<c-l>", "<c-w><c-l>")
 vim.keymap.set("n", "<c-h>", "<c-w><c-h>")
 
 vim.keymap.set("n", "<leader><leader>", "<c-^>") -- Go to prev buffer
-vim.keymap.set("n", "<leader>gb", "<c-o>") -- Go back
+vim.keymap.set("n", "<leader>g;", "<c-o>") -- Go back
 
 -- Faster browsing/scrolling
 vim.keymap.set({ "n", "v" }, "<space>", "<c-f>")

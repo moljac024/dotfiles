@@ -72,4 +72,4 @@ vim.keymap.set({ "n" }, "<leader>4", "<c-w>c") -- Close current window
 vim.keymap.set({ "n" }, "<leader>0", "<c-w>c") -- Close current window
 
 -- Buffers
-vim.keymap.set("n", "<leader>k", ":bw<cr>") -- Kill buffer
+vim.keymap.set("n", "<leader><Backspace>", ":bw<cr>") -- Kill buffer

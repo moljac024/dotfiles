@@ -16,6 +16,7 @@ vim.opt.showmode = false -- we don't need to see things like -- INSERT -- anymor
 vim.opt.updatetime = 200 -- Faster updatetime
 vim.opt.termguicolors = true -- enable 24-bit colour
 
+vim.opt.laststatus = 3 -- Always show one status line
 vim.opt.signcolumn = "yes"
 vim.opt.wrap = false -- Don't wrap lines
 vim.opt.scrolloff = 8 -- Make sure there are always some lines of context
@@ -48,7 +49,7 @@ vim.keymap.set("n", "<c-l>", "<c-w><c-l>")
 vim.keymap.set("n", "<c-h>", "<c-w><c-h>")
 
 vim.keymap.set("n", "<leader><leader>", "<c-^>") -- Go to prev buffer
-vim.keymap.set("n", "<leader>g;", "<c-o>") -- Go back
+vim.keymap.set("n", "g;", "<c-o>") -- Go back
 
 -- Y will yank from the cursor to the end of the line, to be consistent with C and D.
 vim.keymap.set("n", "Y", "y$")

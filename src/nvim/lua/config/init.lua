@@ -13,7 +13,7 @@ vim.opt.swapfile = false -- no swapfile
 vim.opt.undofile = true -- enable persistent undo
 vim.opt.writebackup = false -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
 vim.opt.showmode = false -- we don't need to see things like -- INSERT -- anymore
-vim.opt.updatetime = 200 -- Faster updatetime
+vim.opt.updatetime = 2000 -- Faster updatetime, default is 4000
 vim.opt.termguicolors = true -- enable 24-bit colour
 
 vim.opt.laststatus = 3 -- Always show one status line

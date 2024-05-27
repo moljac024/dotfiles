@@ -274,14 +274,6 @@ autocmd FileType make setlocal noexpandtab
 "Set mapleader key
 let g:mapleader=","
 
-" Faster browsing/scrolling
-nnoremap <space> <C-f>
-nnoremap <s-space> <C-b>
-nnoremap <backspace> <C-b>
-vnoremap <space> <C-f>
-vnoremap <s-space> <C-b>
-vnoremap <backspace> <C-b>
-
 " More speed!
 inoremap jj <esc>
 cnoremap jj <c-c><esc>

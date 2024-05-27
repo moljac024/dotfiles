@@ -233,6 +233,10 @@ if is_command sudo; then
   alias sudo="sudo TERMINFO=\"$TERMINFO\""
 fi
 
+if is_command lazygit; then
+  alias lg='lazygit'
+fi
+
 alias update-npm-packages="npx npm-check-updates"
 alias c='clear'
 alias ..='cd ..'

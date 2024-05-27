@@ -34,8 +34,8 @@ vim.opt.softtabstop = 2
 -- ############################################################################
 -- Keybindings
 -- ############################################################################
-vim.g.mapleader = ","
--- vim.g.maplocalleader = ","
+vim.g.mapleader = " "
+vim.g.maplocalleader = "<Backspace>"
 vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
   silent = true,
   noremap = true,
@@ -49,11 +49,6 @@ vim.keymap.set("n", "<c-h>", "<c-w><c-h>")
 
 vim.keymap.set("n", "<leader><leader>", "<c-^>") -- Go to prev buffer
 vim.keymap.set("n", "<leader>g;", "<c-o>") -- Go back
-
--- Faster browsing/scrolling
-vim.keymap.set({ "n", "v" }, "<space>", "<c-f>")
-vim.keymap.set({ "n", "v" }, "<s-space>", "<c-b>")
-vim.keymap.set({ "n", "v" }, "<backspace>", "<c-b>")
 
 -- Y will yank from the cursor to the end of the line, to be consistent with C and D.
 vim.keymap.set("n", "Y", "y$")

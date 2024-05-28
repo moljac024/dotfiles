@@ -42,6 +42,13 @@ return {
       })
     end,
   },
+  {
+    "Bekaboo/dropbar.nvim",
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+    },
+  },
   -- Sane commenting for JSX/TSX and other mixed language files
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
@@ -228,7 +235,7 @@ return {
         },
         format_on_save = {
           -- These options will be passed to conform.format()
-          timeout_ms = 500,
+          timeout_ms = 2000,
           lsp_fallback = true,
         },
       })

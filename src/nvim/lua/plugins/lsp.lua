@@ -66,6 +66,7 @@ return {
         bashls = true,
         lua_ls = true,
         cssls = true,
+        tailwindcss = true,
 
         jsonls = {
           settings = {
@@ -104,6 +105,7 @@ return {
         "cssls",
         "stylua",
         "lua_ls",
+        "tailwindcss-language-server",
       }
 
       vim.list_extend(ensure_installed, servers_to_install)

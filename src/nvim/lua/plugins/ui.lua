@@ -25,6 +25,7 @@ return {
     priority = 999,
     keys = {
       { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" },
+      { "<leader>P", "<CMD>Telescope commander<CR>", mode = "n" },
     },
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -180,11 +181,12 @@ return {
 
       vim.keymap.set("n", ";", builtin.resume)
       vim.keymap.set("n", "<leader>ff", builtin.find_files)
+      vim.keymap.set("n", "<leader>p", builtin.find_files)
       vim.keymap.set("n", "<leader>fb", builtin.buffers)
       vim.keymap.set("n", "<leader>fh", builtin.help_tags)
-      vim.keymap.set("n", "<leader>fg", builtin.live_grep)
+      vim.keymap.set("n", "<leader>fs", builtin.live_grep)
+      vim.keymap.set("n", "<leader>fg", builtin.grep_string)
       vim.keymap.set("n", "<leader>fk", builtin.keymaps)
-      vim.keymap.set("n", "<leader>gw", builtin.grep_string)
 
       vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
     end,

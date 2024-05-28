@@ -22,7 +22,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     lazy = false,
-    priority = 999,
+    priority = 998,
     keys = {
       { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" },
       { "<leader>P", "<CMD>Telescope commander<CR>", mode = "n" },

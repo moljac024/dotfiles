@@ -11,4 +11,10 @@ return {
       require("kitty-scrollback").setup()
     end,
   },
+
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    opts = {},
+  },
 }

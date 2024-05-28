@@ -36,7 +36,8 @@ vim.opt.softtabstop = 2
 -- Keybindings
 -- ############################################################################
 vim.g.mapleader = " "
-vim.g.maplocalleader = "<Backspace>"
+vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<BS>", false, false, true) -- Backspace as local leader
+
 vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
   silent = true,
   noremap = true,

@@ -17,4 +17,14 @@ return {
     version = "*",
     opts = {},
   },
+  {
+    "numToStr/FTerm.nvim",
+    config = function()
+      local fterm = require("FTerm")
+      vim.keymap.set("n", "<A-i>", function()
+        fterm.toggle()
+      end)
+      vim.keymap.set("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+    end,
+  },
 }

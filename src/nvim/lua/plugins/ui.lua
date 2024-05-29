@@ -1,3 +1,5 @@
+local lualine_theme = "solarized_light"
+
 return {
   {
     "maxmx03/solarized.nvim",
@@ -62,7 +64,7 @@ return {
     config = function()
       require("lualine").setup({
         options = {
-          theme = "solarized_light",
+          theme = lualine_theme,
           component_separators = { left = "|", right = "|" },
           section_separators = { left = "", right = "" },
           disabled_filetypes = {

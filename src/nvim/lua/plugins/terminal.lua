@@ -15,16 +15,51 @@ return {
   {
     "akinsho/toggleterm.nvim",
     version = "*",
-    opts = {},
-  },
-  {
-    "numToStr/FTerm.nvim",
     config = function()
-      local fterm = require("FTerm")
-      vim.keymap.set("n", "<A-i>", function()
-        fterm.toggle()
-      end)
-      vim.keymap.set("t", "<A-i>", '<C-\\><C-n><CMD>lua require("FTerm").toggle()<CR>')
+      local toggleterm = require("toggleterm")
+      toggleterm.setup({})
+
+      function _G.set_terminal_keymaps()
+        local opts = { buffer = 0 }
+        -- vim.keymap.set("t", "<esc><esc><esc>", [[<C-\><C-n>]], opts)
+        vim.keymap.set("t", "<A-h>", [[<Cmd>wincmd h<CR>]], opts)
+        vim.keymap.set("t", "<A-j>", [[<Cmd>wincmd j<CR>]], opts)
+        vim.keymap.set("t", "<A-k>", [[<Cmd>wincmd k<CR>]], opts)
+        vim.keymap.set("t", "<A-l>", [[<Cmd>wincmd l<CR>]], opts)
+        vim.keymap.set("t", "<A-w>", [[<C-\><C-n><C-w>]], opts)
+      end
+
+      vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+      -- Local terminal keybind to toggle
+      local on_terminal_open = function(t)
+        vim.keymap.set({ "t", "n" }, "<A-i>", function()
+          t:toggle()
+        end, { noremap = true, silent = true, buffer = 0 })
+      end
+
+      local Terminal = require("toggleterm.terminal").Terminal
+      local lazygit = Terminal:new({
+        cmd = "lazygit",
+        hidden = true,
+        direction = "float",
+        on_open = function(t)
+          on_terminal_open(t)
+          vim.keymap.set({ "t", "n" }, "<A-g>", function()
+            t:toggle()
+          end, { noremap = true, silent = true, buffer = 0 })
+        end,
+      })
+      local main_terminal = Terminal:new({ direction = "float", on_open = on_terminal_open })
+
+      -- Global keybind to toggle main terminal
+      vim.keymap.set({ "n", "i", "v", "x" }, "<A-i>", function()
+        main_terminal:toggle()
+      end, { noremap = true, silent = true })
+
+      vim.keymap.set("n", "<A-g>", function()
+        lazygit:toggle()
+      end, { noremap = true, silent = true })
     end,
   },
 }

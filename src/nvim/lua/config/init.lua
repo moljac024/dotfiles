@@ -47,10 +47,14 @@ vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
 })
 
 -- Basic movement keybinds, these make navigating splits easy for me
-vim.keymap.set("n", "<c-j>", "<c-w><c-j>")
-vim.keymap.set("n", "<c-k>", "<c-w><c-k>")
-vim.keymap.set("n", "<c-l>", "<c-w><c-l>")
-vim.keymap.set("n", "<c-h>", "<c-w><c-h>")
+vim.keymap.set("n", "<A-j>", "<c-w><c-j>")
+vim.keymap.set("n", "<A-k>", "<c-w><c-k>")
+vim.keymap.set("n", "<A-l>", "<c-w><c-l>")
+vim.keymap.set("n", "<A-h>", "<c-w><c-h>")
+vim.keymap.set("i", "<A-j>", "<esc><c-w><c-j>")
+vim.keymap.set("i", "<A-k>", "<esc><c-w><c-k>")
+vim.keymap.set("i", "<A-l>", "<esc><c-w><c-l>")
+vim.keymap.set("i", "<A-h>", "<esc><c-w><c-h>")
 
 vim.keymap.set("n", "<leader><leader>", "<c-^>") -- Go to prev buffer
 vim.keymap.set("n", "g;", "<c-o>") -- Go back

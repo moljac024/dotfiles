@@ -35,7 +35,10 @@ vim.opt.softtabstop = 2
 -- ############################################################################
 -- Keybindings
 -- ############################################################################
-vim.g.mapleader = " "
+vim.opt.timeout = true -- Enable timeout
+vim.opt.timeoutlen = 1000 -- By default timeoutlen is 1000 ms
+
+vim.g.mapleader = ","
 vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<BS>", false, false, true) -- Backspace as local leader
 
 vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {

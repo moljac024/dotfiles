@@ -44,6 +44,7 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
+      "LukasPietzschmann/boo.nvim",
       -- JSON schemas
       "b0o/SchemaStore.nvim",
     },
@@ -63,10 +64,10 @@ return {
       local lspconfig = require("lspconfig")
 
       local servers = {
-        bashls = true,
-        lua_ls = true,
-        cssls = true,
-        tailwindcss = true,
+        bashls = {},
+        lua_ls = {},
+        cssls = {},
+        tailwindcss = {},
 
         jsonls = {
           settings = {
@@ -92,30 +93,14 @@ return {
 
       local servers_to_install = vim.tbl_filter(function(key)
         local t = servers[key]
-        if type(t) == "table" then
-          return not t.manual_install
-        else
-          return t
-        end
+        return not t.manual_install
       end, vim.tbl_keys(servers))
 
       require("mason").setup()
-      local ensure_installed = {
-        "bashls",
-        "cssls",
-        "stylua",
-        "lua_ls",
-        "tailwindcss-language-server",
-      }
-
-      vim.list_extend(ensure_installed, servers_to_install)
-      require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+      require("mason-tool-installer").setup({ ensure_installed = servers_to_install })
       require("mason-lspconfig").setup()
 
       for name, config in pairs(servers) do
-        if config == true then
-          config = {}
-        end
         config = vim.tbl_deep_extend("force", {}, {
           capabilities = capabilities,
         }, config)
@@ -138,7 +123,11 @@ return {
           vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0 })
           vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0 })
           vim.keymap.set("n", "gt", telescope_builtin.lsp_type_definitions, { buffer = 0 })
-          vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
+
+          -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
+          vim.keymap.set("n", "K", function()
+            require("boo").boo()
+          end, { buffer = 0 })
 
           vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0 })
           vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0 })

@@ -8,7 +8,7 @@ return {
 
       require("solarized").setup({
         transparent = true,
-        -- palette = "selenized",
+        palette = "selenized",
         -- theme = "neo",
       })
 

@@ -67,16 +67,7 @@ return {
           theme = lualine_theme,
           component_separators = { left = "|", right = "|" },
           section_separators = { left = "", right = "" },
-          disabled_filetypes = {
-            statusline = {
-              "neo-tree",
-              "NvimTree",
-              "Trouble",
-              "DiffviewFiles",
-              "toggleterm",
-            },
-            winbar = {},
-          },
+          globalstatus = true,
         },
         sections = {
           lualine_c = {
@@ -110,7 +101,7 @@ return {
     config = function()
       local data = assert(vim.fn.stdpath("data")) --[[@as string]]
       local telescope = require("telescope")
-      local themes = require("telescope.themes")
+      -- local themes = require("telescope.themes")
       local actions = require("telescope.actions")
 
       local default_vertical_layout_config = {
@@ -156,20 +147,6 @@ return {
             require("telescope.themes").get_dropdown({
               -- even more opts
             }),
-
-            -- pseudo code / specification for writing custom displays, like the one
-            -- for "codeactions"
-            -- specific_opts = {
-            --   [kind] = {
-            --     make_indexed = function(items) -> indexed_items, width,
-            --     make_displayer = function(widths) -> displayer
-            --     make_display = function(displayer) -> function(e)
-            --     make_ordinal = function(e) -> string
-            --   },
-            --   -- for example to disable the custom builtin "codeactions" display
-            --      do the following
-            --   codeactions = false,
-            -- }
           },
         },
       })

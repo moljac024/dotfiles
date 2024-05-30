@@ -48,4 +48,20 @@ return {
       vim.keymap.set("n", "<leader>-", require("oil").toggle_float)
     end,
   },
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup({
+        sync_root_with_cwd = true,
+        respect_buf_cwd = true,
+      })
+
+      vim.keymap.set("n", "<A-b>", "<CMD>NvimTreeToggle<CR>")
+    end,
+  },
 }

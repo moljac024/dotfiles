@@ -23,7 +23,7 @@ vim.keymap.set("i", "<A-k>", "<esc><c-w><c-k>")
 vim.keymap.set("i", "<A-l>", "<esc><c-w><c-l>")
 vim.keymap.set("i", "<A-h>", "<esc><c-w><c-h>")
 
-vim.keymap.set("n", "<leader><leader>", "<c-^>", { desc = "Go to previous buffer" })
+vim.keymap.set("n", "<leader><leader>", "<c-^>", { desc = "Go to alternate file" })
 vim.keymap.set("n", "g;", "<c-o>", { desc = "Go back" }) -- Go back
 
 -- Y will yank from the cursor to the end of the line, to be consistent with C and D.

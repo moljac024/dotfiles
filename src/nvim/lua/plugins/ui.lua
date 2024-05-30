@@ -161,15 +161,15 @@ return {
       -- local themes = require("telescope.themes")
 
       vim.keymap.set("n", ";", builtin.resume)
-      vim.keymap.set("n", "<leader>ff", builtin.find_files)
-      vim.keymap.set("n", "<leader>p", builtin.find_files)
-      vim.keymap.set("n", "<leader>fb", builtin.buffers)
-      vim.keymap.set("n", "<leader>fh", builtin.help_tags)
-      vim.keymap.set("n", "<leader>fs", builtin.live_grep)
-      vim.keymap.set("n", "<leader>fg", builtin.grep_string)
-      vim.keymap.set("n", "<leader>fk", builtin.keymaps)
+      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Search for files" })
+      vim.keymap.set("n", "<leader>p", builtin.find_files, { desc = "Search for files" })
+      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Search buffers" })
+      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Search help" })
+      vim.keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Live grep" })
+      vim.keymap.set("n", "<leader>fg", builtin.grep_string, { desc = "Search for string" })
+      vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Look up keymaps" })
 
-      vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
+      vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Find in buffer" })
     end,
   },
   -- Improve notifications
@@ -189,5 +189,18 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     cmd = "Nerdy",
+  },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 500
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
   },
 }

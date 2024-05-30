@@ -119,18 +119,28 @@ return {
           local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
-          vim.keymap.set("n", "gd", telescope_builtin.lsp_implementations, { buffer = 0 })
-          vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0 })
-          vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0 })
-          vim.keymap.set("n", "gt", telescope_builtin.lsp_type_definitions, { buffer = 0 })
+          vim.keymap.set(
+            "n",
+            "gd",
+            telescope_builtin.lsp_implementations,
+            { buffer = 0, desc = "Go to implementation(s)" }
+          )
+          vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0, desc = "Go to reference(s)" })
+          vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0, desc = "Go to definition(s)" })
+          vim.keymap.set(
+            "n",
+            "gt",
+            telescope_builtin.lsp_type_definitions,
+            { buffer = 0, desc = "Go to type definition(s)" }
+          )
 
           -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
           vim.keymap.set("n", "K", function()
             require("boo").boo()
           end, { buffer = 0 })
 
-          vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0 })
-          vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0 })
+          vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })
+          vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0, desc = "Code actions" })
 
           local filetype = vim.bo[bufnr].filetype
           if disable_semantic_tokens[filetype] then

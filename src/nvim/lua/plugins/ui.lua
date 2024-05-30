@@ -62,14 +62,13 @@ return {
       "arkav/lualine-lsp-progress",
     },
     config = function()
-      -- This settings goes well with the globalstatus option of lualine
-      vim.opt.laststatus = 3 -- Always show one status line
       require("lualine").setup({
         options = {
           theme = lualine_theme,
+          -- No fancy powerline separators
           component_separators = { left = "|", right = "|" },
           section_separators = { left = "", right = "" },
-          globalstatus = true,
+          globalstatus = true, -- Always show one global status line
         },
         sections = {
           lualine_c = {

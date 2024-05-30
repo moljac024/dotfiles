@@ -62,6 +62,8 @@ return {
       "arkav/lualine-lsp-progress",
     },
     config = function()
+      -- This settings goes well with the globalstatus option of lualine
+      vim.opt.laststatus = 3 -- Always show one status line
       require("lualine").setup({
         options = {
           theme = lualine_theme,

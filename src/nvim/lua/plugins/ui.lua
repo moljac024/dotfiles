@@ -24,7 +24,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     lazy = false,
-    priority = 998,
+    priority = 997,
     keys = {
       { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" },
       { "<leader>P", "<CMD>Telescope commander<CR>", mode = "n" },
@@ -191,6 +191,7 @@ return {
   },
   {
     "folke/which-key.nvim",
+    priority = 998,
     event = "VeryLazy",
     init = function()
       vim.o.timeout = true

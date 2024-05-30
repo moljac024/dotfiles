@@ -17,6 +17,18 @@ return {
     version = "*",
     config = function()
       local toggleterm = require("toggleterm")
+      local float_opts = {
+        row = 1,
+        col = 7,
+        width = function()
+          -- return math.ceil(vim.o.columns * 0.90)
+          return vim.o.columns - 2
+        end,
+        height = function()
+          -- return math.ceil(vim.o.lines * 0.85)
+          return vim.o.lines - 5
+        end,
+      }
       toggleterm.setup({})
 
       function _G.set_terminal_keymaps()
@@ -43,6 +55,7 @@ return {
         cmd = "lazygit",
         hidden = true,
         direction = "float",
+        float_opts = float_opts,
         on_open = function(t)
           on_terminal_open(t)
           vim.keymap.set({ "t", "n" }, "<A-g>", function()
@@ -50,7 +63,7 @@ return {
           end, { noremap = true, silent = true, buffer = 0 })
         end,
       })
-      local main_terminal = Terminal:new({ direction = "float", on_open = on_terminal_open })
+      local main_terminal = Terminal:new({ direction = "float", float_opts = float_opts, on_open = on_terminal_open })
 
       -- Global keybind to toggle main terminal
       vim.keymap.set({ "n", "i", "v", "x" }, "<A-i>", function()

@@ -196,8 +196,8 @@ return {
     init = function()
       local tidy = require("tidy")
 
-      vim.keymap.set("n", "<leader>tt", tidy.toggle, {})
-      vim.keymap.set("n", "<leader>tr", tidy.run, {})
+      vim.keymap.set("n", "<leader>tt", tidy.toggle, { desc = "(tidy) Toggle" })
+      vim.keymap.set("n", "<leader>tr", tidy.run, { desc = "(tidy) Format file" })
     end,
   },
   {

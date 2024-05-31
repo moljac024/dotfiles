@@ -65,6 +65,13 @@ return {
       })
       local main_terminal = Terminal:new({ direction = "float", float_opts = float_opts, on_open = on_terminal_open })
 
+      for i = 1, 9 do
+        local terminal = Terminal:new({ direction = "float", float_opts = float_opts, on_open = on_terminal_open })
+        vim.keymap.set("n", "<leader>t" .. i .. "", function()
+          terminal:toggle()
+        end, { noremap = true, silent = true, desc = "Toggle terminal " .. i })
+      end
+
       -- Global keybind to toggle main terminal
       vim.keymap.set({ "n", "i", "v", "x" }, "<A-i>", function()
         main_terminal:toggle()

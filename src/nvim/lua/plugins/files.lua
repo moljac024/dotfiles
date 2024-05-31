@@ -36,7 +36,7 @@ return {
           ["<C-c>"] = "actions.close",
           ["<Esc>"] = "actions.close",
           ["<C-r>"] = "actions.refresh",
-          ["-"] = "actions.parent",
+          ["-"] = "actions.close",
           ["<Backspace>"] = "actions.parent",
           ["_"] = "actions.open_cwd",
           ["g."] = "actions.toggle_hidden",

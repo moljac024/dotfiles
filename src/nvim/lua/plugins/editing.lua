@@ -241,4 +241,12 @@ return {
       })
     end,
   },
+  {
+    "AckslD/muren.nvim",
+    config = function()
+      require("muren").setup({})
+
+      vim.keymap.set("n", "<leader>r", "<CMD>:MurenToggle<CR>")
+    end,
+  },
 }

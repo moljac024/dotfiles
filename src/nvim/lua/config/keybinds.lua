@@ -49,3 +49,6 @@ vim.keymap.set({ "n" }, "<leader>0", "<c-w>c", { desc = "Close current window" }
 
 -- Buffers
 vim.keymap.set("n", "<leader><Backspace>", ":bw<cr>", { desc = "Kill current buffer" })
+
+-- Initiate search
+vim.keymap.set("n", "<leader>s", ":%s@", { desc = "Search in buffer" })

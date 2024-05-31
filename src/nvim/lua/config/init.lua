@@ -32,4 +32,6 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 vim.opt.softtabstop = 2
 
+vim.o.inccommand = "split"
+
 require("config.keybinds")

@@ -1,7 +1,7 @@
 return {
   {
     "ahmedkhalf/project.nvim",
-    priority = 999,
+    priority = 899,
     config = function()
       require("project_nvim").setup({
         -- your configuration comes here
@@ -56,6 +56,7 @@ return {
   },
   {
     "nvim-tree/nvim-tree.lua",
+    priority = 898,
     version = "*",
     lazy = false,
     dependencies = {

@@ -39,7 +39,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "folke/neodev.nvim",
       "nvim-telescope/telescope.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
@@ -49,13 +48,6 @@ return {
       "b0o/SchemaStore.nvim",
     },
     config = function()
-      require("neodev").setup({
-        -- library = {
-        --   plugins = { "nvim-dap-ui" },
-        --   types = true,
-        -- },
-      })
-
       local capabilities = nil
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -159,5 +151,20 @@ return {
         end,
       })
     end,
+  },
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    dependencies = {
+      { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+    },
+    opts = {
+      library = {
+        vim.env.LAZY .. "/luvit-meta/library", -- see below
+        -- You can also add plugins you always want to have loaded.
+        -- Useful if the plugin has globals or types you want to use
+        -- vim.env.LAZY .. "/LazyVim", -- see below
+      },
+    },
   },
 }

@@ -58,7 +58,8 @@ return {
         float_opts = float_opts,
         on_open = function(t)
           on_terminal_open(t)
-          vim.keymap.set({ "t", "n" }, "<A-g>", function()
+          vim.keymap.set({ "t" }, "<A-g>", "q", { noremap = true, silent = true, buffer = 0 })
+          vim.keymap.set({ "n" }, "<A-g>", function()
             t:toggle()
           end, { noremap = true, silent = true, buffer = 0 })
         end,
@@ -66,16 +67,24 @@ return {
       local main_terminal = Terminal:new({ direction = "float", float_opts = float_opts, on_open = on_terminal_open })
 
       for i = 1, 9 do
+        local key = i + 1
+        if key == 10 then
+          key = 0
+        end
+
         local terminal = Terminal:new({ direction = "float", float_opts = float_opts, on_open = on_terminal_open })
-        vim.keymap.set("n", "<leader>t" .. i .. "", function()
+        vim.keymap.set("n", "<leader>t" .. key .. "", function()
           terminal:toggle()
-        end, { noremap = true, silent = true, desc = "Toggle terminal " .. i })
+        end, { noremap = true, silent = true, desc = "Toggle terminal " .. i + 1 })
       end
 
       -- Global keybind to toggle main terminal
       vim.keymap.set({ "n", "i", "v", "x" }, "<A-i>", function()
         main_terminal:toggle()
       end, { noremap = true, silent = true })
+      vim.keymap.set({ "n", "i", "v", "x" }, "<leader>t1", function()
+        main_terminal:toggle()
+      end, { noremap = true, silent = true, desc = "Toggle terminal 1" })
 
       vim.keymap.set("n", "<A-g>", function()
         lazygit:toggle()

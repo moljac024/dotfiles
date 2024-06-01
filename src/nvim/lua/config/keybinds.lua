@@ -1,12 +1,6 @@
 -- ############################################################################
 -- Keybindings
 -- ############################################################################
-vim.opt.timeout = true -- Enable timeout
-vim.opt.timeoutlen = 1000 -- By default timeoutlen is 1000 ms
-
-vim.g.mapleader = ","
-vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<BS>", false, false, true) -- Backspace as local leader
--- vim.g.maplocalleader = " " -- Space as local leader
 
 vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
   silent = true,
@@ -25,6 +19,10 @@ vim.keymap.set("i", "<A-h>", "<esc><c-w><c-h>")
 
 vim.keymap.set("n", "<leader><leader>", "<c-^>", { desc = "Go to alternate file" })
 vim.keymap.set("n", "g;", "<c-o>", { desc = "Go back" }) -- Go back
+
+-- Some heresy (emacs/readline keybinds)
+vim.keymap.set({ "i", "c" }, "<C-a>", "<Home>", { noremap = true })
+vim.keymap.set({ "i", "c" }, "<C-e>", "<End>", { noremap = true })
 
 -- Y will yank from the cursor to the end of the line, to be consistent with C and D.
 vim.keymap.set("n", "Y", "y$", { desc = "Yank to end of line" })

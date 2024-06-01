@@ -34,4 +34,11 @@ vim.opt.softtabstop = 2
 
 vim.o.inccommand = "split"
 
-require("config.keybinds")
+-- Keybindings leader
+vim.g.mapleader = ","
+vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<BS>", false, false, true) -- Backspace as local leader
+-- vim.g.maplocalleader = " " -- Space as local leader
+
+-- Keybinds timeout
+vim.opt.timeout = true -- Enable timeout
+vim.opt.timeoutlen = 1000 -- By default timeoutlen is 1000 ms

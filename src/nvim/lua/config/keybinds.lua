@@ -46,6 +46,12 @@ vim.keymap.set({ "n" }, "<leader>3", ":vsp<cr>", { desc = "Split window vertical
 vim.keymap.set({ "n" }, "<leader>1", "<c-w>o", { desc = "Close other windows" })
 vim.keymap.set({ "n" }, "<leader>4", "<c-w>c", { desc = "Close current window" })
 vim.keymap.set({ "n" }, "<leader>0", "<c-w>c", { desc = "Close current window" })
+--
+vim.keymap.set({ "n" }, "<A-2>", ":sp<cr>", { desc = "Split window horizontally" })
+vim.keymap.set({ "n" }, "<A-3>", ":vsp<cr>", { desc = "Split window vertically" })
+vim.keymap.set({ "n" }, "<A-1>", "<c-w>o", { desc = "Close other windows" })
+vim.keymap.set({ "n" }, "<A-4>", "<c-w>c", { desc = "Close current window" })
+vim.keymap.set({ "n" }, "<A-0>", "<c-w>c", { desc = "Close current window" })
 
 -- Buffers
 vim.keymap.set("n", "<leader><Backspace>", ":bw<cr>", { desc = "Kill current buffer" })

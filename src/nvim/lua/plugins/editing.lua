@@ -3,6 +3,9 @@ vim.g.skip_ts_context_commentstring_module = true
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      { "nvim-treesitter/nvim-treesitter-textobjects" },
+    },
     build = ":TSUpdate",
     config = function()
       local configs = require("nvim-treesitter.configs")
@@ -39,6 +42,16 @@ return {
             return true
           end
         end,
+      })
+    end,
+  },
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
       })
     end,
   },

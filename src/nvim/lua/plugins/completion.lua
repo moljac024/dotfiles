@@ -24,6 +24,9 @@ return {
       require("luasnip.loaders.from_vscode").lazy_load()
 
       cmp.setup({
+        completion = {
+          -- autocomplete = false, -- Only trigger completion when explicitly called
+        },
         ---@diagnostic disable-next-line: missing-fields
         formatting = {
           format = lspkind.cmp_format({
@@ -47,6 +50,8 @@ return {
           { name = "luasnip", group_index = 2 },
         },
         mapping = {
+          ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),

@@ -6,8 +6,15 @@ return {
     config = function()
       require("copilot").setup({
         suggestion = { enabled = false },
-        panel = { enabled = false },
+        panel = { enabled = true },
       })
+
+      vim.keymap.set({ "n" }, "<leader>cp", function()
+        require("copilot.panel").open({
+          ratio = 0.5,
+          position = "bottom",
+        })
+      end, { desc = "Open copilot" })
     end,
   },
   {
@@ -16,4 +23,5 @@ return {
       require("copilot_cmp").setup()
     end,
   },
+  { "AndreM222/copilot-lualine" },
 }

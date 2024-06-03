@@ -99,7 +99,11 @@ return {
     "nvim-telescope/telescope.nvim",
     -- tag = "0.1.8",
     branch = "0.1.x",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-ui-select.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
+      "nvim-telescope/telescope-symbols.nvim",
+    },
     config = function()
       local data = assert(vim.fn.stdpath("data")) --[[@as string]]
       local telescope = require("telescope")
@@ -169,6 +173,10 @@ return {
       vim.keymap.set("n", "<leader>fg", builtin.grep_string, { desc = "Search for string under cursor" })
       vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Look up keymaps" })
       vim.keymap.set("n", "<leader>fj", builtin.jumplist, { desc = "Search in jumplist" })
+
+      vim.keymap.set({ "n" }, "<leader>fe", function()
+        builtin.symbols({ sources = { "emoji" } })
+      end, { desc = "Search for emoji" })
 
       vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Find in buffer" })
     end,

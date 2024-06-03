@@ -53,6 +53,15 @@ return {
           },
         },
       })
+
+      require("commander").add({
+        {
+          desc = "Quit neovim",
+          cmd = "<CMD>qall!<CR>",
+        },
+      }, {
+        show = true,
+      })
     end,
   },
   {

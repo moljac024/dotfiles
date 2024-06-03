@@ -18,7 +18,7 @@ vim.opt.termguicolors = true -- enable 24-bit colour
 
 vim.opt.laststatus = 3 -- Always show one status line
 vim.opt.signcolumn = "yes"
-vim.opt.wrap = false -- Don't wrap lines
+vim.opt.wrap = true -- Wrap lines
 vim.opt.scrolloff = 8 -- Make sure there are always some lines of context
 vim.opt.sidescrolloff = 8 -- Make sure there are always some lines of context
 vim.opt.number = true

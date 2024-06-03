@@ -165,9 +165,10 @@ return {
       vim.keymap.set("n", "<leader>p", builtin.find_files, { desc = "Search for files" })
       vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Search buffers" })
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Search help" })
-      vim.keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Live grep" })
-      vim.keymap.set("n", "<leader>fg", builtin.grep_string, { desc = "Search for string" })
+      vim.keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Search for string (live grep)" })
+      vim.keymap.set("n", "<leader>fg", builtin.grep_string, { desc = "Search for string under cursor" })
       vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Look up keymaps" })
+      vim.keymap.set("n", "<leader>fj", builtin.jumplist, { desc = "Search in jumplist" })
 
       vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Find in buffer" })
     end,

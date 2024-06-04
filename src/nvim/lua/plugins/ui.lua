@@ -222,4 +222,29 @@ return {
       -- refer to the configuration section below
     },
   },
+  {
+    "stevearc/stickybuf.nvim",
+    opts = {},
+    config = function()
+      require("stickybuf").setup({
+        get_auto_pin = function(bufnr)
+          local buftype = vim.bo[bufnr].buftype
+          local filetype = vim.bo[bufnr].filetype
+          local bufname = vim.api.nvim_buf_get_name(bufnr)
+          -- You can return "bufnr", "buftype", "filetype", or a custom function to set how the window will be pinned.
+          -- You can instead return an table that will be passed in as "opts" to `stickybuf.pin`.
+          -- The function below encompasses the default logic. Inspect the source to see what it does.
+          local default = require("stickybuf").should_auto_pin(bufnr)
+
+          if default ~= nil then
+            return default
+          elseif filetype == "Outline" then
+            return "filetype"
+          else
+            return nil
+          end
+        end,
+      })
+    end,
+  },
 }

@@ -25,6 +25,7 @@ vim.keymap.set({ "i", "c" }, "<C-a>", "<Home>", { noremap = true })
 vim.keymap.set({ "i", "c" }, "<C-e>", "<End>", { noremap = true })
 vim.keymap.set({ "i", "c" }, "<C-b>", "<Left>", { noremap = true })
 vim.keymap.set({ "i", "c" }, "<C-f>", "<Right>", { noremap = true })
+vim.keymap.set({ "i", "c" }, "<C-k>", "<C-o>D", { noremap = true }) -- Kill to end of line
 
 -- Y will yank from the cursor to the end of the line, to be consistent with C and D.
 vim.keymap.set("n", "Y", "y$", { desc = "Yank to end of line" })

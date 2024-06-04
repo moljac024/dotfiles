@@ -42,3 +42,10 @@ vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<BS>", false, false, true
 -- Keybinds timeout
 vim.opt.timeout = true -- Enable timeout
 vim.opt.timeoutlen = 1000 -- By default timeoutlen is 1000 ms
+
+-- Restore cursor to where it last was in file
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+  desc = "return cursor to where it was last time closing the file",
+  pattern = "*",
+  command = 'silent! normal! g`"zv',
+})

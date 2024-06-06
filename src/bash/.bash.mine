@@ -240,6 +240,7 @@ fi
 # If running in kitty, alias ssh to kitten ssh
 if [[ "$TERM" == "xterm-kitty" ]]; then
     alias ssh='kitten ssh'
+    # gsettings set org.gnome.desktop.default-applications.terminal exec kitty
 fi
 
 alias update-npm-packages="npx npm-check-updates"
@@ -290,16 +291,23 @@ if is_command podman; then
     export DOCKER_HOST="unix:///run/podman/podman.sock"
 fi
 
+# Distrobox & toolbox aliases
+if is_command distrobox; then
+  alias db='distrobox'
+  alias dbu='distrobox enter ubuntu-22-04'
+fi
+
+if is_command toolbox; then
+  alias tb='toolbox'
+  alias tbf='toolbox enter fedora-toolbox-39'
+fi
+
 alias docker-compose='docker compose'
 # k8s aliases
 alias k='kubectl'
 alias kcfg='kubectl config view --minify | grep name'
 alias kc='kubectx'
 alias kn='kubens'
-
-# Distrobox & toolbox aliases
-alias dbu='distrobox enter ubuntu-22-04'
-alias tbf='toolbox enter fedora-toolbox-39'
 
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend

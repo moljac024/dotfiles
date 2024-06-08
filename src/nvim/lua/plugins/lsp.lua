@@ -1,5 +1,22 @@
 return {
   {
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble<cr>",
+        desc = "Open Trouble",
+      },
+      {
+        "<leader>xc",
+        "<cmd>Trouble close<cr>",
+        desc = "Close Trouble",
+      },
+    },
+  },
+  {
     "neovim/nvim-lspconfig",
     dependencies = {
       "nvim-telescope/telescope.nvim",

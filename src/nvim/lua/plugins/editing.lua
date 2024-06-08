@@ -262,4 +262,10 @@ return {
       vim.keymap.set("n", "<leader>r", "<CMD>:MurenToggle<CR>")
     end,
   },
+  {
+    "yorickpeterse/nvim-pqf",
+    config = function()
+      require("pqf").setup()
+    end,
+  },
 }

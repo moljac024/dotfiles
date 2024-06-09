@@ -54,6 +54,11 @@ vim.keymap.set({ "n" }, "<A-1>", "<c-w>o", { desc = "Close other windows" })
 vim.keymap.set({ "n" }, "<A-4>", "<c-w>c", { desc = "Close current window" })
 vim.keymap.set({ "n" }, "<A-0>", "<c-w>c", { desc = "Close current window" })
 
+vim.keymap.set({ "n" }, "<A-left>", "<CMD>bprev<CR>", { desc = "Previous buffer" })
+vim.keymap.set({ "n" }, "<A-right>", "<CMD>bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set({ "n" }, "<A-,>", "<CMD>bprev<CR>", { desc = "Previous buffer" })
+vim.keymap.set({ "n" }, "<A-.>", "<CMD>bnext<CR>", { desc = "Next buffer" })
+
 -- Buffers
 vim.keymap.set("n", "<leader><Backspace>", ":bw<cr>", { desc = "Kill current buffer" })
 

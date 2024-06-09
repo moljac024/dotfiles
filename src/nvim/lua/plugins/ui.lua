@@ -233,7 +233,7 @@ return {
     event = "VeryLazy",
     init = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 500
+      vim.o.timeoutlen = 350
     end,
     opts = {
       -- your configuration comes here
@@ -274,6 +274,18 @@ return {
             stickybuf.pin()
           end
         end,
+      })
+    end,
+  },
+  {
+    "akinsho/bufferline.nvim",
+    version = "*",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    config = function()
+      require("bufferline").setup({
+        options = {
+          diagnostics = "nvim_lsp",
+        },
       })
     end,
   },

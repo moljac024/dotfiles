@@ -36,7 +36,7 @@ vim.keymap.set({ "v", "x" }, ">", ">gv")
 
 -- Format selected text or paragraph with Q
 vim.keymap.set("v", "Q", "gw")
-vim.keymap.set({ "n" }, "Q", "gwip")
+-- vim.keymap.set({ "n" }, "Q", "gwip")
 
 -- Clear search highlight
 vim.keymap.set("n", "<Esc>", "<CMD>noh<CR>")

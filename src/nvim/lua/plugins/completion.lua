@@ -63,25 +63,14 @@ return {
             }),
             { "i", "c" }
           ),
+          ["<CR>"] = cmp.mapping(
+            cmp.mapping.confirm({
+              behavior = cmp.ConfirmBehavior.Insert,
+              select = true,
+            }),
+            { "i", "c" }
+          ),
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "s" }),
-          ["<CR>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              if luasnip.expandable() then
-                luasnip.expand()
-              else
-                -- If an option is selected, confirm it. Otherwise, fallback
-                if cmp.get_active_entry() == nil then
-                  fallback()
-                else
-                  cmp.confirm({
-                    select = true,
-                  })
-                end
-              end
-            else
-              fallback()
-            end
-          end),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()

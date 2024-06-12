@@ -41,6 +41,8 @@ return {
         cssls = {},
         tailwindcss = {},
 
+        vtsls = {},
+
         jsonls = {
           settings = {
             json = {

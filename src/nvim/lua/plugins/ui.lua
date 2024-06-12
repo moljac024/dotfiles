@@ -242,6 +242,42 @@ return {
     },
   },
   {
+    "stevearc/stickybuf.nvim",
+    opts = {},
+    config = function()
+      require("stickybuf").setup({
+        get_auto_pin = function(bufnr)
+          local buftype = vim.bo[bufnr].buftype
+          local filetype = vim.bo[bufnr].filetype
+          local bufname = vim.api.nvim_buf_get_name(bufnr)
+          -- You can return "bufnr", "buftype", "filetype", or a custom function to set how the window will be pinned.
+          -- You can instead return an table that will be passed in as "opts" to `stickybuf.pin`.
+          -- The function below encompasses the default logic. Inspect the source to see what it does.
+          local default = require("stickybuf").should_auto_pin(bufnr)
+
+          if default ~= nil then
+            return default
+          elseif filetype == "Outline" then
+            return nil
+            -- return "filetype"
+          else
+            return nil
+          end
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("BufEnter", {
+        desc = "Pin the buffer to any window that is fixed width or height",
+        callback = function(args)
+          local stickybuf = require("stickybuf")
+          if not stickybuf.is_pinned() and (vim.wo.winfixwidth or vim.wo.winfixheight) then
+            stickybuf.pin()
+          end
+        end,
+      })
+    end,
+  },
+  {
     "akinsho/bufferline.nvim",
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",

@@ -152,7 +152,13 @@ return {
         -- Your setup opts here (leave empty to use defaults)
       })
 
+      local toggling = false
       local toggle = function()
+        if toggling then
+          return
+        end
+        toggling = true
+
         -- Fix an issue with stickybuf where calling toggle while focus is in
         -- outline raises an error
         if outline.is_focus_in_outline() then
@@ -163,7 +169,8 @@ return {
         -- focus an error is raised. It has something to do with stickybuf IMO.
         vim.defer_fn(function()
           outline.toggle()
-        end, 200)
+          toggling = false
+        end, 300)
       end
 
       vim.keymap.set("n", "<leader>o", toggle, { desc = "Toggle Outline" })

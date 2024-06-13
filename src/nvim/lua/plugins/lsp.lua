@@ -43,6 +43,9 @@ return {
 
         vtsls = {},
 
+        pyright = {},
+        elixirls = {},
+
         jsonls = {
           settings = {
             json = {

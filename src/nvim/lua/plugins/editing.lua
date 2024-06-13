@@ -56,14 +56,7 @@ return {
     end,
   },
   {
-    "Bekaboo/dropbar.nvim",
-    -- optional, but required for fuzzy finder support
-    dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
-    },
-  },
-  -- Sane commenting for JSX/TSX and other mixed language files
-  {
+    -- Sane commenting for JSX/TSX and other mixed language files
     "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -80,6 +73,7 @@ return {
     end,
   },
   {
+    -- Clipboard manager
     "AckslD/nvim-neoclip.lua",
     dependencies = {
       { "nvim-telescope/telescope.nvim" },
@@ -89,6 +83,7 @@ return {
     end,
   },
   {
+    -- Project file navigation
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     dependencies = { "nvim-lua/plenary.nvim" },
@@ -263,6 +258,7 @@ return {
     end,
   },
   {
+    -- Pretty quickfix window
     "yorickpeterse/nvim-pqf",
     config = function()
       require("pqf").setup()

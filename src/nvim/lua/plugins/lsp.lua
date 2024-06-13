@@ -147,6 +147,20 @@ return {
     },
   },
   {
+    "Bekaboo/dropbar.nvim",
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+    },
+    config = function()
+      require("dropbar").setup()
+
+      vim.keymap.set({ "n" }, "<leader>o", function()
+        require("dropbar.api").pick()
+      end, { noremap = true, desc = "Pick from dropbar" })
+    end,
+  },
+  {
     "stevearc/aerial.nvim",
     -- Optional dependencies
     dependencies = {
@@ -163,7 +177,7 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle!<CR>")
+      vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>")
     end,
   },
 }

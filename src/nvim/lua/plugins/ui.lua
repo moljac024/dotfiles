@@ -258,8 +258,7 @@ return {
           if default ~= nil then
             return default
           elseif filetype == "Outline" then
-            return nil
-            -- return "filetype"
+            return "filetype"
           else
             return nil
           end

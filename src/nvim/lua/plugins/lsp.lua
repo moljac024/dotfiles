@@ -147,36 +147,23 @@ return {
     },
   },
   {
-    "hedyhli/outline.nvim",
+    "stevearc/aerial.nvim",
+    -- Optional dependencies
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
     config = function()
-      local outline = require("outline")
-      outline.setup({
-        -- Your setup opts here (leave empty to use defaults)
+      require("aerial").setup({
+        backends = { "lsp", "treesitter" },
+        layout = {
+          max_width = { 40, 0.2 },
+          width = nil,
+          min_width = 20,
+        },
       })
 
-      local toggling = false
-      local toggle = function()
-        if toggling then
-          return
-        end
-        toggling = true
-
-        -- Fix an issue with stickybuf where calling toggle while focus is in
-        -- outline raises an error
-        if outline.is_focus_in_outline() then
-          outline.focus_toggle()
-        end
-        -- Sleep for a bit before calling the toggle function. There is a
-        -- weird race condition where if it's called too soon after changing
-        -- focus an error is raised. It has something to do with stickybuf IMO.
-        vim.defer_fn(function()
-          outline.toggle()
-          toggling = false
-        end, 300)
-      end
-
-      vim.keymap.set("n", "<leader>o", toggle, { desc = "Toggle Outline" })
-      vim.keymap.set({ "n", "i", "v", "x" }, "<A-o>", toggle, { desc = "Toggle Outline" })
+      vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle!<CR>")
     end,
   },
 }

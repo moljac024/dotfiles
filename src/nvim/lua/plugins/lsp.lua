@@ -17,6 +17,60 @@ return {
     },
   },
   {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    dependencies = {
+      { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+    },
+    opts = {
+      library = {
+        "luvit-meta/library",
+      },
+    },
+  },
+  {
+    "Bekaboo/dropbar.nvim",
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      "nvim-telescope/telescope-fzf-native.nvim",
+    },
+    config = function()
+      require("dropbar").setup()
+
+      vim.keymap.set({ "n" }, "<leader>o", function()
+        require("dropbar.api").pick()
+      end, { noremap = true, desc = "Pick from dropbar" })
+    end,
+  },
+  {
+    "stevearc/aerial.nvim",
+    -- Optional dependencies
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("aerial").setup({
+        backends = { "lsp", "treesitter" },
+        layout = {
+          max_width = { 40, 0.2 },
+          width = nil,
+          min_width = 20,
+        },
+      })
+
+      vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>")
+    end,
+  },
+  {
+    -- Improve LSP progress notifiations
+    "mrded/nvim-lsp-notify",
+    enabled = false, -- Can be spammy with certain LSP servers
+    config = function()
+      require("lsp-notify").setup({})
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     dependencies = {
       "nvim-telescope/telescope.nvim",
@@ -36,16 +90,6 @@ return {
       local lspconfig = require("lspconfig")
 
       local servers = {
-        bashls = {},
-        lua_ls = {},
-        cssls = {},
-        tailwindcss = {},
-
-        vtsls = {},
-
-        pyright = {},
-        elixirls = {},
-
         jsonls = {
           settings = {
             json = {
@@ -54,7 +98,6 @@ return {
             },
           },
         },
-
         yamlls = {
           settings = {
             yaml = {
@@ -66,6 +109,16 @@ return {
             },
           },
         },
+        bashls = {},
+        lua_ls = {},
+
+        cssls = {},
+        tailwindcss = {},
+        eslint = {},
+        -- tsserver = {} -- Default typescript LSP,
+        vtsls = {}, -- Alternative typescript LSP
+        pyright = {},
+        elixirls = {},
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
@@ -135,52 +188,6 @@ return {
           })
         end,
       })
-    end,
-  },
-  {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    dependencies = {
-      { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-    },
-    opts = {
-      library = {
-        "luvit-meta/library",
-      },
-    },
-  },
-  {
-    "Bekaboo/dropbar.nvim",
-    -- optional, but required for fuzzy finder support
-    dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
-    },
-    config = function()
-      require("dropbar").setup()
-
-      vim.keymap.set({ "n" }, "<leader>o", function()
-        require("dropbar.api").pick()
-      end, { noremap = true, desc = "Pick from dropbar" })
-    end,
-  },
-  {
-    "stevearc/aerial.nvim",
-    -- Optional dependencies
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("aerial").setup({
-        backends = { "lsp", "treesitter" },
-        layout = {
-          max_width = { 40, 0.2 },
-          width = nil,
-          min_width = 20,
-        },
-      })
-
-      vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>")
     end,
   },
 }

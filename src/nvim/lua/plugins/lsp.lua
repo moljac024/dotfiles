@@ -59,7 +59,33 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>")
+      -- vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>")
+    end,
+  },
+  {
+    "hedyhli/outline.nvim",
+    config = function()
+      local outline = require("outline")
+      outline.setup({
+        -- Your setup opts here (leave empty to use defaults)
+      })
+
+      local toggle = function()
+        -- Fix an issue with stickybuf where calling toggle while focus is in
+        -- outline raises an error
+        if outline.is_focus_in_outline() then
+          outline.focus_toggle()
+        end
+        -- Sleep for a bit before calling the toggle function. There is a
+        -- weird race condition where if it's called too soon after changing
+        -- focus an error is raised. It has something to do with stickybuf IMO.
+        vim.defer_fn(function()
+          outline.toggle()
+        end, 200)
+      end
+
+      vim.keymap.set("n", "<leader>o", toggle, { desc = "Toggle Outline" })
+      vim.keymap.set({ "n", "i", "v", "x" }, "<A-o>", toggle, { desc = "Toggle Outline" })
     end,
   },
   {

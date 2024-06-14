@@ -84,7 +84,6 @@ return {
         end, 200)
       end
 
-      vim.keymap.set("n", "<leader>o", toggle, { desc = "Toggle Outline" })
       vim.keymap.set({ "n", "i", "v", "x" }, "<A-o>", toggle, { desc = "Toggle Outline" })
     end,
   },

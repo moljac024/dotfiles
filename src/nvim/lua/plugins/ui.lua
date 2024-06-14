@@ -258,7 +258,8 @@ return {
           if default ~= nil then
             return default
           elseif filetype == "Outline" then
-            return "filetype"
+            return nil -- There are some issues with using stickybuf with outline plugin
+            -- return "filetype"
           else
             return nil
           end

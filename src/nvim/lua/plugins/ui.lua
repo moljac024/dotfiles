@@ -97,22 +97,76 @@ return {
       -- Add telescope builtin searches
       local telescope_builtin = require("telescope.builtin")
       commander.add({
-        { desc = "Resume previous search", cmd = telescope_builtin.resume },
-        { desc = "Search files", cmd = telescope_builtin.find_files },
-        { desc = "Search buffers", cmd = telescope_builtin.buffers },
-        { desc = "Search help", cmd = telescope_builtin.help_tags },
-        { desc = "Search for string (live grep)", cmd = telescope_builtin.live_grep },
-        { desc = "Search for string under cursor", cmd = telescope_builtin.grep_string },
-        { desc = "Search keymaps", cmd = telescope_builtin.keymaps },
-        { desc = "Search jumplist", cmd = telescope_builtin.jumplist },
-        { desc = "Find in buffer", cmd = telescope_builtin.current_buffer_fuzzy_find },
+        { desc = "Resume previous search", keys = {
+          { "n", ";" },
+        }, cmd = telescope_builtin.resume },
+        {
+          desc = "Search files",
+          keys = {
+            { "n", "<leader>ff" },
+          },
+          cmd = telescope_builtin.find_files,
+        },
+        {
+          desc = "Search buffers",
+          keys = {
+            { "n", "<leader>fb" },
+          },
+          cmd = telescope_builtin.buffers,
+        },
+        {
+          desc = "Search help",
+          keys = {
+            { "n", "<leader>fh" },
+          },
+          cmd = telescope_builtin.help_tags,
+        },
+        {
+          desc = "Search for string (live grep)",
+          keys = {
+            { "n", "<leader>fs" },
+          },
+          cmd = telescope_builtin.live_grep,
+        },
+        {
+          desc = "Search for string under cursor",
+          keys = {
+            { "n", "<leader>fg" },
+          },
+          cmd = telescope_builtin.grep_string,
+        },
+        {
+          desc = "Search keymaps",
+          keys = {
+
+            { "n", "<leader>fk" },
+          },
+          cmd = telescope_builtin.keymaps,
+        },
+        {
+          desc = "Search jumplist",
+          keys = {
+            { "n", "<leader>fj" },
+          },
+          cmd = telescope_builtin.jumplist,
+        },
+        {
+          desc = "Find in buffer",
+          keys = {
+            { "n", "<leader>/" },
+          },
+          cmd = telescope_builtin.current_buffer_fuzzy_find,
+        },
         {
           desc = "Search emoji",
+          keys = {
+            { "n", "<leader>fe" },
+          },
           cmd = function()
             telescope_builtin.symbols({ sources = { "emoji" } })
           end,
         },
-      }, { set = false, show = true, cat = "telescope" })
+      }, { set = true, show = true, cat = "telescope" })
 
       -- Monkey patch keymap set for commander
       local vim_keymap_set = vim.keymap.set
@@ -258,20 +312,6 @@ return {
 
       local builtin = require("telescope.builtin")
       -- local themes = require("telescope.themes")
-
-      vim.keymap.set("n", ";", builtin.resume, { desc = "Resume previous search" })
-      vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Search for files" })
-      vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Search buffers" })
-      vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Search help" })
-      vim.keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Search for string (live grep)" })
-      vim.keymap.set("n", "<leader>fg", builtin.grep_string, { desc = "Search for string under cursor" })
-      vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Look up keymaps" })
-      vim.keymap.set("n", "<leader>fj", builtin.jumplist, { desc = "Search in jumplist" })
-      vim.keymap.set({ "n" }, "<leader>fe", function()
-        builtin.symbols({ sources = { "emoji" } })
-      end, { desc = "Search for emoji" })
-
-      vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Find in buffer" })
     end,
   },
   -- Improve notifications

@@ -22,10 +22,11 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
+      local neovide = vim.g.neovide
       vim.o.background = "light" -- 'dark' or 'light'
 
       require("solarized").setup({
-        transparent = true,
+        transparent = not neovide,
         palette = "selenized",
         -- theme = "neo",
       })

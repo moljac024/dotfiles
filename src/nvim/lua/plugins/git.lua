@@ -16,7 +16,15 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     config = function()
-      require("gitsigns").setup()
+      local gitsigns = require("gitsigns")
+      gitsigns.setup()
+
+      vim.keymap.set(
+        { "n" },
+        "<leader>gb",
+        gitsigns.toggle_current_line_blame,
+        { desc = "(gitsigns) Toggle git blame for current line", commander = {} }
+      )
     end,
   },
 }

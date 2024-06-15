@@ -44,13 +44,13 @@ return {
       })
 
       -- Open parent directory in current window
-      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory", commander = { cat = "oil" } })
       -- Open parent directory in floating window
       vim.keymap.set(
         "n",
         "<leader>-",
         require("oil").toggle_float,
-        { desc = "Open parent directory in floating window" }
+        { desc = "Open parent directory in floating window", commander = { cat = "oil" } }
       )
     end,
   },
@@ -72,7 +72,12 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<A-b>", "<CMD>NvimTreeToggle<CR>")
+      vim.keymap.set(
+        "n",
+        "<A-b>",
+        "<CMD>NvimTreeToggle<CR>",
+        { desc = "Toggle file tree", commander = { cat = "nvim-tree" } }
+      )
     end,
   },
 }

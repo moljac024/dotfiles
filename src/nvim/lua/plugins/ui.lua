@@ -34,20 +34,32 @@ return {
     end,
   },
   {
+    "folke/which-key.nvim",
+    priority = 999,
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 350
+    end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
+  {
     -- Keybindings helper
     "FeiyouG/commander.nvim",
     dependencies = {
       "nvim-telescope/telescope.nvim",
     },
     lazy = false,
-    priority = 997,
-    keys = {
-      { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" },
-      { "<leader>P", "<CMD>Telescope commander<CR>", mode = "n" },
-    },
+    priority = 998,
+    keys = {},
     config = function()
+      local commander = require("commander")
       ---@diagnostic disable-next-line: missing-fields
-      require("commander").setup({
+      commander.setup({
         components = {
           "DESC",
           "KEYS",
@@ -70,7 +82,10 @@ return {
         },
       })
 
-      require("commander").add({
+      vim.keymap.set({ "n" }, "<leader>fc", "<CMD>Telescope commander<CR>", { desc = "Open commander" })
+      vim.keymap.set({ "n" }, "<leader>p", "<CMD>Telescope commander<CR>", { desc = "Open commander" })
+
+      commander.add({
         {
           desc = "Quit neovim",
           cmd = "<CMD>qall!<CR>",
@@ -78,6 +93,58 @@ return {
       }, {
         show = true,
       })
+
+      -- Add telescope builtin searches
+      local telescope_builtin = require("telescope.builtin")
+      commander.add({
+        { desc = "Resume previous search", cmd = telescope_builtin.resume },
+        { desc = "Search files", cmd = telescope_builtin.find_files },
+        { desc = "Search buffers", cmd = telescope_builtin.buffers },
+        { desc = "Search help", cmd = telescope_builtin.help_tags },
+        { desc = "Search for string (live grep)", cmd = telescope_builtin.live_grep },
+        { desc = "Search for string under cursor", cmd = telescope_builtin.grep_string },
+        { desc = "Search keymaps", cmd = telescope_builtin.keymaps },
+        { desc = "Search jumplist", cmd = telescope_builtin.jumplist },
+        { desc = "Find in buffer", cmd = telescope_builtin.current_buffer_fuzzy_find },
+        {
+          desc = "Search emoji",
+          cmd = function()
+            telescope_builtin.symbols({ sources = { "emoji" } })
+          end,
+        },
+      }, { set = false, show = true, cat = "telescope" })
+
+      -- Monkey patch keymap set for commander
+      local vim_keymap_set = vim.keymap.set
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.keymap.set = function(...)
+        local args = { ... }
+        local modes = args[1]
+        local lhs = args[2]
+        local rhs = args[3]
+        local opts = args[4] or {}
+        local should_add = opts.desc and opts.desc ~= "" and type(opts.commander) == "table"
+
+        if should_add then
+          commander.add({
+            {
+              keys = {
+                { modes, lhs },
+              },
+              desc = opts.desc or "",
+              cmd = rhs,
+            },
+          }, {
+            set = false,
+            show = true,
+            cat = opts.commander.cat,
+          })
+        end
+
+        -- Remove extra keys from opts
+        opts.commander = nil
+        vim_keymap_set(...)
+      end
     end,
   },
   {
@@ -192,16 +259,14 @@ return {
       local builtin = require("telescope.builtin")
       -- local themes = require("telescope.themes")
 
-      vim.keymap.set("n", ";", builtin.resume)
+      vim.keymap.set("n", ";", builtin.resume, { desc = "Resume previous search" })
       vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Search for files" })
-      vim.keymap.set("n", "<leader>p", builtin.find_files, { desc = "Search for files" })
       vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Search buffers" })
       vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Search help" })
       vim.keymap.set("n", "<leader>fs", builtin.live_grep, { desc = "Search for string (live grep)" })
       vim.keymap.set("n", "<leader>fg", builtin.grep_string, { desc = "Search for string under cursor" })
       vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Look up keymaps" })
       vim.keymap.set("n", "<leader>fj", builtin.jumplist, { desc = "Search in jumplist" })
-
       vim.keymap.set({ "n" }, "<leader>fe", function()
         builtin.symbols({ sources = { "emoji" } })
       end, { desc = "Search for emoji" })
@@ -228,20 +293,6 @@ return {
     cmd = "Nerdy",
   },
   {
-    "folke/which-key.nvim",
-    priority = 998,
-    event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 350
-    end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-  },
-  {
     "stevearc/stickybuf.nvim",
     opts = {},
     config = function()
@@ -259,7 +310,7 @@ return {
             return default
           elseif filetype == "Outline" then
             return nil -- There are some issues with using stickybuf with outline plugin
-            -- return "filetype"
+          -- return "filetype"
           else
             return nil
           end

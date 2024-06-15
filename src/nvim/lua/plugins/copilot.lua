@@ -14,7 +14,7 @@ return {
           ratio = 0.5,
           position = "bottom",
         })
-      end, { desc = "Open copilot" })
+      end, { desc = "Open copilot", commander = { cat = "copilot" } })
     end,
   },
   {

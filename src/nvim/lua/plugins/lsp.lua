@@ -39,7 +39,7 @@ return {
 
       vim.keymap.set({ "n" }, "<leader>o", function()
         require("dropbar.api").pick()
-      end, { noremap = true, desc = "Pick from dropbar" })
+      end, { noremap = true, desc = "Pick from dropbar", commander = { cat = "dropbar" } })
     end,
   },
   {
@@ -84,7 +84,12 @@ return {
         end, 200)
       end
 
-      vim.keymap.set({ "n", "i", "v", "x" }, "<A-o>", toggle, { desc = "Toggle Outline" })
+      vim.keymap.set(
+        { "n", "i", "v", "x" },
+        "<A-o>",
+        toggle,
+        { desc = "Toggle Outline", commander = { cat = "outline" } }
+      )
     end,
   },
   {

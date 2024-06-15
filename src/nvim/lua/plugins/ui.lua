@@ -167,6 +167,13 @@ return {
             telescope_builtin.symbols({ sources = { "emoji" } })
           end,
         },
+        {
+          desc = "Switch to project",
+          keys = {
+            { "n", "<leader>fp" },
+          },
+          cmd = "<CMD>Telescope projects<CR>",
+        },
       }, { set = true, show = true, cat = "telescope" })
 
       -- Monkey patch keymap set for commander

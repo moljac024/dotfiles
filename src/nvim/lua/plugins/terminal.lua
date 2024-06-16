@@ -71,10 +71,10 @@ return {
       end
 
       -- Global keybind to toggle main terminal
-      vim.keymap.set({ "n", "i", "v", "x" }, "<A-i>", function()
+      vim.keymap.set({ "n" }, "<A-i>", function()
         main_terminal:toggle()
       end, { noremap = true, silent = true, desc = "Toggle terminal 1", commander = { cat = "toggleterm" } })
-      vim.keymap.set({ "n", "i", "v", "x" }, "<leader>t1", function()
+      vim.keymap.set({ "n" }, "<leader>t1", function()
         main_terminal:toggle()
       end, { noremap = true, silent = true, desc = "Toggle terminal 1" })
 

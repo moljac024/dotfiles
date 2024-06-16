@@ -179,38 +179,6 @@ return {
           cmd = "<CMD>Telescope projects<CR>",
         },
       }, { set = true, show = true, cat = "telescope" })
-
-      -- Monkey patch keymap set for commander
-      local vim_keymap_set = vim.keymap.set
-      ---@diagnostic disable-next-line: duplicate-set-field
-      vim.keymap.set = function(...)
-        local args = { ... }
-        local modes = args[1]
-        local lhs = args[2]
-        local rhs = args[3]
-        local opts = args[4] or {}
-        local should_add = opts.desc and opts.desc ~= "" and type(opts.commander) == "table"
-
-        if should_add then
-          commander.add({
-            {
-              keys = {
-                { modes, lhs },
-              },
-              desc = opts.desc or "",
-              cmd = rhs,
-            },
-          }, {
-            set = false,
-            show = true,
-            cat = opts.commander.cat,
-          })
-        end
-
-        -- Remove extra keys from opts
-        opts.commander = nil
-        vim_keymap_set(...)
-      end
     end,
   },
   {

@@ -42,6 +42,41 @@ return {
       end, { noremap = true, desc = "Pick from dropbar", commander = { cat = "dropbar" } })
     end,
   },
+
+  {
+    "lewis6991/hover.nvim",
+    config = function()
+      require("hover").setup({
+        init = function()
+          -- Require providers
+          require("hover.providers.lsp")
+          -- require('hover.providers.gh')
+          -- require('hover.providers.gh_user')
+          -- require('hover.providers.jira')
+          require("hover.providers.dap")
+          require("hover.providers.fold_preview")
+          require("hover.providers.diagnostic")
+          require("hover.providers.man")
+          require("hover.providers.dictionary")
+        end,
+        preview_opts = {
+          border = "single",
+        },
+        -- Whether the contents of a currently open hover window should be moved
+        -- to a :h preview-window when pressing the hover keymap.
+        preview_window = false,
+        title = false,
+        mouse_providers = {
+          "LSP",
+        },
+        mouse_delay = 1000,
+      })
+
+      -- Setup keymaps
+      vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
+    end,
+  },
+
   {
     "stevearc/aerial.nvim",
     -- Optional dependencies
@@ -107,7 +142,6 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
-      "LukasPietzschmann/boo.nvim",
       -- JSON schemas
       "b0o/SchemaStore.nvim",
     },
@@ -194,10 +228,7 @@ return {
             { buffer = 0, desc = "Go to type definition(s)" }
           )
 
-          -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
-          vim.keymap.set("n", "K", function()
-            require("boo").boo()
-          end, { desc = "Hover (LSP)", buffer = 0 })
+          -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover (LSP)", buffer = 0 })
 
           vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })
           vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0, desc = "Code actions" })

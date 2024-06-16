@@ -116,7 +116,7 @@ return {
       end, { desc = "Add current file to harpoon", commander = {} })
       vim.keymap.set("n", "<C-e>", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
-      end)
+      end, { desc = "Open harpoon quick menu" })
       vim.keymap.set("n", "<leader>ht", function()
         toggle_telescope(harpoon:list())
       end, { desc = "Open harpoon window" })

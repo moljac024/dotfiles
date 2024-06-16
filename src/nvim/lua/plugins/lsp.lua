@@ -197,7 +197,7 @@ return {
           -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
           vim.keymap.set("n", "K", function()
             require("boo").boo()
-          end, { buffer = 0 })
+          end, { desc = "Hover (LSP)", buffer = 0 })
 
           vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })
           vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0, desc = "Code actions" })

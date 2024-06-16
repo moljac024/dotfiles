@@ -65,7 +65,7 @@ return {
         end, {
           noremap = true,
           silent = true,
-          desc = "Toggle terminal " .. i + 1,
+          desc = "Toggle terminal " .. key,
           commander = { cat = "toggleterm" },
         })
       end

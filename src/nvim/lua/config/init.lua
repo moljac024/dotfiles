@@ -37,8 +37,8 @@ vim.o.inccommand = "split"
 -- Keybindings leader
 -- vim.g.mapleader = "," -- Comma as leader
 vim.g.mapleader = " " -- Space as leader
-vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<BS>", false, false, true) -- Backspace as local leader
--- vim.g.maplocalleader = " " -- Space as local leader
+vim.g.maplocalleader = "," -- Comma as local leader
+-- vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<BS>", false, false, true) -- Backspace as local leader
 
 -- Keybinds timeout
 vim.opt.timeout = true -- Enable timeout

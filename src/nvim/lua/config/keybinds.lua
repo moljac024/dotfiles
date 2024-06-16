@@ -8,16 +8,17 @@ vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
 })
 
 -- Basic movement keybinds, these make navigating splits easy for me
-vim.keymap.set("n", "<A-j>", "<c-w><c-j>")
-vim.keymap.set("n", "<A-k>", "<c-w><c-k>")
-vim.keymap.set("n", "<A-l>", "<c-w><c-l>")
-vim.keymap.set("n", "<A-h>", "<c-w><c-h>")
-vim.keymap.set("i", "<A-j>", "<esc><c-w><c-j>")
-vim.keymap.set("i", "<A-k>", "<esc><c-w><c-k>")
-vim.keymap.set("i", "<A-l>", "<esc><c-w><c-l>")
-vim.keymap.set("i", "<A-h>", "<esc><c-w><c-h>")
+vim.keymap.set("n", "<A-j>", "<c-w><c-j>", { desc = "Focus window down" })
+vim.keymap.set("n", "<A-k>", "<c-w><c-k>", { desc = "Focus window up" })
+vim.keymap.set("n", "<A-l>", "<c-w><c-l>", { desc = "Focus window right" })
+vim.keymap.set("n", "<A-h>", "<c-w><c-h>", { desc = "Focus window left" })
 
-vim.keymap.set("n", "<leader><leader>", "<c-^>", { desc = "Go to alternate file", commander = {} })
+vim.keymap.set("i", "<A-j>", "<esc><c-w><c-j>", { desc = "Focus window down" })
+vim.keymap.set("i", "<A-k>", "<esc><c-w><c-k>", { desc = "Focus window up" })
+vim.keymap.set("i", "<A-l>", "<esc><c-w><c-l>", { desc = "Focus window right" })
+vim.keymap.set("i", "<A-h>", "<esc><c-w><c-h>", { desc = "Focus window left" })
+
+vim.keymap.set("n", "<BS>", "<c-^>", { desc = "Go to alternate file", commander = {} })
 vim.keymap.set("n", "g;", "<c-o>", { desc = "Go back", commander = {} }) -- Go back
 
 -- Some heresy (emacs/readline keybinds)
@@ -31,8 +32,8 @@ vim.keymap.set({ "i", "c" }, "<C-k>", "<C-o>D", { noremap = true }) -- Kill to e
 vim.keymap.set("n", "Y", "y$", { desc = "Yank to end of line" })
 
 -- Visual shifting (does not exit Visual mode)
-vim.keymap.set({ "v", "x" }, "<", "<gv")
-vim.keymap.set({ "v", "x" }, ">", ">gv")
+vim.keymap.set({ "v", "x" }, "<", "<gv", { desc = "Shift selection left" })
+vim.keymap.set({ "v", "x" }, ">", ">gv", { desc = "Shift selection right" })
 
 vim.keymap.set("v", "Q", "gw", { desc = "Format selected text", commander = {} })
 vim.keymap.set("n", "<Esc>", "<CMD>noh<CR>", { desc = "Clear search highlight", commander = {} })
@@ -56,7 +57,8 @@ vim.keymap.set({ "n" }, "<A-,>", "<CMD>bprev<CR>", { desc = "Previous buffer" })
 vim.keymap.set({ "n" }, "<A-.>", "<CMD>bnext<CR>", { desc = "Next buffer" })
 
 -- Buffers
-vim.keymap.set("n", "<leader><Backspace>", ":bw<cr>", { desc = "Kill current buffer", commander = {} })
+vim.keymap.set("n", "<leader>bk", ":bw<cr>", { desc = "Kill current buffer", commander = {} })
+vim.keymap.set("n", "<leader>b!", ":bw!<cr>", { desc = "Kill current buffer (force)", commander = {} })
 
 -- Initiate search
 vim.keymap.set("n", "<leader>s", "<CMD>%s@", { desc = "Search in buffer", commander = {} })

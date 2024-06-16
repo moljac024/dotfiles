@@ -254,7 +254,12 @@ return {
     config = function()
       require("muren").setup({})
 
-      vim.keymap.set("n", "<leader>r", "<CMD>:MurenToggle<CR>")
+      vim.keymap.set(
+        "n",
+        "<leader>r",
+        "<CMD>:MurenToggle<CR>",
+        { desc = "Toggle Muren (Search and replace)", commander = {} }
+      )
     end,
   },
   {

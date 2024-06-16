@@ -98,9 +98,13 @@ return {
       -- Add telescope builtin searches
       local telescope_builtin = require("telescope.builtin")
       commander.add({
-        { desc = "Resume previous search", keys = {
-          { "n", ";" },
-        }, cmd = telescope_builtin.resume },
+        {
+          desc = "Resume previous search",
+          keys = {
+            { "n", "<leader>f;" },
+          },
+          cmd = telescope_builtin.resume,
+        },
         {
           desc = "Search files",
           keys = {

@@ -5,7 +5,7 @@ return {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        suggestion = { enabled = false },
+        suggestion = { enabled = true },
         panel = { enabled = true },
       })
 
@@ -19,6 +19,7 @@ return {
   },
   {
     "zbirenbaum/copilot-cmp",
+    enabled = false,
     config = function()
       require("copilot_cmp").setup()
     end,

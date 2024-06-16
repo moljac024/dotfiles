@@ -41,9 +41,9 @@ return {
           }),
         },
         sources = {
-          -- Copilot Source
-          { name = "copilot", group_index = 2 },
-          -- Other Sources
+          -- Copilot source really slows down completion, best to use it manually
+          -- { name = "copilot", group_index = 2 },
+
           { name = "nvim_lsp", group_index = 2 },
           { name = "path", group_index = 2 },
           { name = "buffer", group_index = 2 },
@@ -54,9 +54,25 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
           ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<C-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<C-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<C-y>"] = cmp.mapping(
+          -- Make it possible to manually trigger completion
+          ---@diagnostic disable-next-line: unused-local
+          ["<C-j>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            else
+              cmp.complete()
+            end
+          end),
+          -- Make it possible to manually trigger completion
+          ---@diagnostic disable-next-line: unused-local
+          ["<C-k>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+            else
+              cmp.complete()
+            end
+          end),
+          ["<C-l>"] = cmp.mapping(
             cmp.mapping.confirm({
               behavior = cmp.ConfirmBehavior.Insert,
               select = true,

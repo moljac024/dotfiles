@@ -23,7 +23,7 @@ return {
         { "n" },
         "<leader>gb",
         gitsigns.toggle_current_line_blame,
-        { desc = "(gitsigns) Toggle git blame for current line", commander = {} }
+        { desc = "Toggle git blame for current line", commander = { cat = "gitsigns" } }
       )
     end,
   },

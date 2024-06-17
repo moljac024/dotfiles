@@ -258,7 +258,7 @@ return {
         "n",
         "<leader>r",
         "<CMD>:MurenToggle<CR>",
-        { desc = "Toggle Muren (Search and replace)", commander = {} }
+        { desc = "Toggle muren (search and replace)", commander = {} }
       )
     end,
   },

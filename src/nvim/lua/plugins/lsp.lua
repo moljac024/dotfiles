@@ -7,12 +7,12 @@ return {
       {
         "<leader>xx",
         "<cmd>Trouble<cr>",
-        desc = "Open Trouble",
+        desc = "Open trouble",
       },
       {
         "<leader>xc",
         "<cmd>Trouble close<cr>",
-        desc = "Close Trouble",
+        desc = "Close trouble",
       },
     },
   },
@@ -123,7 +123,7 @@ return {
         { "n", "i", "v", "x" },
         "<A-o>",
         toggle,
-        { desc = "Toggle Outline", commander = { cat = "outline" } }
+        { desc = "Toggle outline", commander = { cat = "outline" } }
       )
     end,
   },

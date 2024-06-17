@@ -88,7 +88,7 @@ return {
 
       commander.add({
         {
-          desc = "Quit neovim",
+          desc = "Quit/Exit",
           cmd = "<CMD>qall!<CR>",
         },
       }, {

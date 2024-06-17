@@ -58,7 +58,9 @@ vim.keymap.set({ "n" }, "<A-.>", "<CMD>bnext<CR>", { desc = "Next buffer" })
 
 -- Buffers
 vim.keymap.set("n", "<leader>bk", ":bw<cr>", { desc = "Kill current buffer", commander = {} })
-vim.keymap.set("n", "<leader>b!", ":bw!<cr>", { desc = "Kill current buffer (force)", commander = {} })
+vim.keymap.set("n", "<leader>bK", ":bw!<cr>", { desc = "Kill current buffer (force)", commander = {} })
+vim.keymap.set("n", "<leader>br", ":e<cr>", { desc = "Reload current buffer", commander = {} })
+vim.keymap.set("n", "<leader>bR", ":e!<cr>", { desc = "Reload current buffer (force)", commander = {} })
 
 -- Initiate search
 vim.keymap.set("n", "<leader>s", "<CMD>%s@", { desc = "Search in buffer", commander = {} })

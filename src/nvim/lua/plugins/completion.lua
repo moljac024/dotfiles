@@ -39,10 +39,7 @@ return {
         if cmp.visible() then
           selectPrev()
         else
-          cmp.complete()
-          if cmp.visible() then
-            selectPrev()
-          end
+          fallback()
         end
       end, { "i", "c" })
 

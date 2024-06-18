@@ -23,6 +23,43 @@ return {
       local luasnip = require("luasnip")
       require("luasnip.loaders.from_vscode").lazy_load()
 
+      local down_mapping = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+        else
+          cmp.complete()
+        end
+      end, { "i", "c" })
+
+      local up_mapping = cmp.mapping(function(fallback)
+        local function selectPrev()
+          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+        end
+
+        if cmp.visible() then
+          selectPrev()
+        else
+          cmp.complete()
+          if cmp.visible() then
+            selectPrev()
+          end
+        end
+      end, { "i", "c" })
+
+      local accept_mapping = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          local selected = cmp.get_selected_entry()
+          if selected ~= nil then
+            return cmp.confirm({
+              behavior = cmp.ConfirmBehavior.Insert,
+              select = false,
+            })
+          end
+        end
+        -- If we got here, fallback
+        fallback()
+      end, { "i", "c" })
+
       cmp.setup({
         completion = {
           -- autocomplete = false, -- Only trigger completion when explicitly called
@@ -52,46 +89,16 @@ return {
         mapping = {
           ["<C-d>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-          ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+          ["<C-n>"] = down_mapping,
+          ["<C-p>"] = up_mapping,
           -- Make it possible to manually trigger completion
           ---@diagnostic disable-next-line: unused-local
-          ["<C-j>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            else
-              cmp.complete()
-            end
-          end),
+          ["<C-j>"] = down_mapping,
           -- Make it possible to manually trigger completion
           ---@diagnostic disable-next-line: unused-local
-          ["<C-k>"] = cmp.mapping(function(fallback)
-            local function selectPrev()
-              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-            end
-
-            if cmp.visible() then
-              selectPrev()
-            else
-              cmp.complete()
-              if cmp.visible() then
-                selectPrev()
-              end
-            end
-          end),
-          ["<CR>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              local selected = cmp.get_selected_entry()
-              if selected ~= nil then
-                return cmp.confirm({
-                  behavior = cmp.ConfirmBehavior.Insert,
-                  select = false,
-                })
-              end
-            end
-            -- If we got here, fallback
-            fallback()
-          end, { "i", "c" }),
+          ["<C-k>"] = up_mapping,
+          ["<CR>"] = accept_mapping,
+          ["<C-CR>"] = accept_mapping,
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "s" }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then

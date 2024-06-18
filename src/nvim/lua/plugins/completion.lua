@@ -66,26 +66,32 @@ return {
           -- Make it possible to manually trigger completion
           ---@diagnostic disable-next-line: unused-local
           ["<C-k>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            local function selectPrev()
               cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+            end
+
+            if cmp.visible() then
+              selectPrev()
             else
               cmp.complete()
+              if cmp.visible() then
+                selectPrev()
+              end
             end
           end),
-          ["<C-l>"] = cmp.mapping(
-            cmp.mapping.confirm({
-              behavior = cmp.ConfirmBehavior.Insert,
-              select = true,
-            }),
-            { "i", "c" }
-          ),
-          ["<CR>"] = cmp.mapping(
-            cmp.mapping.confirm({
-              behavior = cmp.ConfirmBehavior.Insert,
-              select = true,
-            }),
-            { "i", "c" }
-          ),
+          ["<CR>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              local selected = cmp.get_selected_entry()
+              if selected ~= nil then
+                return cmp.confirm({
+                  behavior = cmp.ConfirmBehavior.Insert,
+                  select = false,
+                })
+              end
+            end
+            -- If we got here, fallback
+            fallback()
+          end, { "i", "c" }),
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "s" }),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then

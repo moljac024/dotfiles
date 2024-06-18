@@ -7,6 +7,8 @@ vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
   noremap = true,
 })
 
+vim.keymap.set("n", ";", ":", { noremap = true })
+
 -- Basic movement keybinds, these make navigating splits easy for me
 vim.keymap.set("n", "<A-j>", "<c-w><c-j>", { desc = "Focus window down" })
 vim.keymap.set("n", "<A-k>", "<c-w><c-k>", { desc = "Focus window up" })

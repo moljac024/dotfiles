@@ -57,8 +57,8 @@ vim.keymap.set({ "n" }, "<A-,>", "<CMD>bprev<CR>", { desc = "Previous buffer" })
 vim.keymap.set({ "n" }, "<A-.>", "<CMD>bnext<CR>", { desc = "Next buffer" })
 
 -- Buffers
-vim.keymap.set("n", "<leader>bk", ":bw<cr>", { desc = "Kill current buffer", commander = {} })
-vim.keymap.set("n", "<leader>bK", ":bw!<cr>", { desc = "Kill current buffer (force)", commander = {} })
+-- vim.keymap.set("n", "<leader>bk", ":bw<CR>", { desc = "Kill current buffer", commander = {} })
+-- vim.keymap.set("n", "<leader>bK", ":bw!<CR>", { desc = "Kill current buffer (force)", commander = {} })
 vim.keymap.set("n", "<leader>br", ":e<cr>", { desc = "Reload/Refresh current buffer", commander = {} })
 vim.keymap.set("n", "<leader>bR", ":e!<cr>", { desc = "Reload/Refresh current buffer (force)", commander = {} })
 

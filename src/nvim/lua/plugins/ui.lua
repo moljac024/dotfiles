@@ -313,6 +313,13 @@ return {
     cmd = "Nerdy",
   },
   {
+    "famiu/bufdelete.nvim",
+    config = function()
+      vim.keymap.set("n", "<leader>bk", ":Bwipeout<CR>", { desc = "Kill current buffer", commander = {} })
+      vim.keymap.set("n", "<leader>bK", ":Bwipeout!<CR>", { desc = "Kill current buffer (force)", commander = {} })
+    end,
+  },
+  {
     "stevearc/stickybuf.nvim",
     opts = {},
     config = function()

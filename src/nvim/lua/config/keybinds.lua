@@ -41,14 +41,14 @@ vim.keymap.set("v", "Q", "gw", { desc = "Format selected text", commander = {} }
 vim.keymap.set("n", "<Esc>", "<CMD>noh<CR>", { desc = "Clear search highlight", commander = {} })
 
 -- Window splits
-vim.keymap.set({ "n" }, "<leader>2", ":sp<cr>", { desc = "Split window horizontally" })
-vim.keymap.set({ "n" }, "<leader>3", ":vsp<cr>", { desc = "Split window vertically" })
+vim.keymap.set({ "n" }, "<leader>2", "<CMD>sp<CR>", { desc = "Split window horizontally" })
+vim.keymap.set({ "n" }, "<leader>3", "<CMD>vsp<CR>", { desc = "Split window vertically" })
 vim.keymap.set({ "n" }, "<leader>1", "<c-w>o", { desc = "Close other windows" })
 vim.keymap.set({ "n" }, "<leader>4", "<c-w>c", { desc = "Close current window" })
 vim.keymap.set({ "n" }, "<leader>0", "<c-w>c", { desc = "Close current window" })
 --
-vim.keymap.set({ "n" }, "<A-2>", ":sp<cr>", { desc = "Split window horizontally", commander = {} })
-vim.keymap.set({ "n" }, "<A-3>", ":vsp<cr>", { desc = "Split window vertically", commander = {} })
+vim.keymap.set({ "n" }, "<A-2>", "<CMD>sp<CR>", { desc = "Split window horizontally", commander = {} })
+vim.keymap.set({ "n" }, "<A-3>", "<CMD>vsp<CR>", { desc = "Split window vertically", commander = {} })
 vim.keymap.set({ "n" }, "<A-1>", "<c-w>o", { desc = "Close other windows", commander = {} })
 vim.keymap.set({ "n" }, "<A-4>", "<c-w>c", { desc = "Close current window", commander = {} })
 vim.keymap.set({ "n" }, "<A-0>", "<c-w>c", { desc = "Close current window", commander = {} })
@@ -59,10 +59,12 @@ vim.keymap.set({ "n" }, "<A-,>", "<CMD>bprev<CR>", { desc = "Previous buffer" })
 vim.keymap.set({ "n" }, "<A-.>", "<CMD>bnext<CR>", { desc = "Next buffer" })
 
 -- Buffers
--- vim.keymap.set("n", "<leader>bk", ":bw<CR>", { desc = "Kill current buffer", commander = {} })
--- vim.keymap.set("n", "<leader>bK", ":bw!<CR>", { desc = "Kill current buffer (force)", commander = {} })
-vim.keymap.set("n", "<leader>br", ":e<cr>", { desc = "Reload/Refresh current buffer", commander = {} })
-vim.keymap.set("n", "<leader>bR", ":e!<cr>", { desc = "Reload/Refresh current buffer (force)", commander = {} })
+-- vim.keymap.set("n", "<leader>bk", "<CMD>bw<CR>", { desc = "Kill current buffer", commander = {} })
+-- vim.keymap.set("n", "<leader>bK", "<CMD>bw!<CR>", { desc = "Kill current buffer (force)", commander = {} })
+vim.keymap.set("n", "<leader>bs", "<CMD>w<CR>", { desc = "Save current buffer", commander = {} })
+vim.keymap.set("n", "<leader>bS", "<CMD>wa<CR>", { desc = "Save all buffers", commander = {} })
+vim.keymap.set("n", "<leader>br", "<CMD>e<CR>", { desc = "Reload/Refresh current buffer", commander = {} })
+vim.keymap.set("n", "<leader>bR", "<CMD>e!<CR>", { desc = "Reload/Refresh current buffer (force)", commander = {} })
 
 -- Initiate search
-vim.keymap.set("n", "<leader>s", "<CMD>%s@", { desc = "Search in buffer", commander = {} })
+vim.keymap.set("n", "<leader>s", ":%s@", { desc = "Search in buffer", commander = {} })

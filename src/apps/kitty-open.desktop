@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=kitty URL Launcher
+GenericName=Terminal emulator
+Comment=Open URLs with kitty
+StartupNotify=true
+TryExec=/home/bojan/.local/kitty.app/bin/kitty
+Exec=/home/bojan/.local/kitty.app/bin/kitty +open %U
+#Icon=/home/bojan/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png
+Icon=/home/bojan/.config/kitty/icons/whiskers2/whiskers2_256x256.png
+Categories=System;TerminalEmulator;
+NoDisplay=true
+MimeType=image/*;application/x-sh;application/x-shellscript;inode/directory;text/*;x-scheme-handler/kitty;x-scheme-handler/ssh;

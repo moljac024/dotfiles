@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=kitty
+GenericName=Terminal emulator
+Comment=Fast, feature-rich, GPU based terminal
+TryExec=/home/bojan/.local/kitty.app/bin/kitty
+StartupNotify=true
+Exec=/home/bojan/.local/kitty.app/bin/kitty --title "Kitty Terminal"
+#Icon=/home/bojan/.local/kitty.app/share/icons/hicolor/256x256/apps/kitty.png
+Icon=/home/bojan/.config/kitty/icons/whiskers2/whiskers2_256x256.png
+Categories=System;TerminalEmulator;

@@ -241,7 +241,7 @@ return {
           javascriptreact = { { "prettierd", "prettier" } },
           typescriptreact = { { "prettierd", "prettier" } },
         },
-        format_on_save = {
+        format_after_save = {
           -- These options will be passed to conform.format()
           timeout_ms = 2000,
           lsp_fallback = true,

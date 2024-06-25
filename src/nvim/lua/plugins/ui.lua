@@ -20,7 +20,7 @@ return {
   {
     "maxmx03/solarized.nvim",
     lazy = false,
-    priority = 1000,
+    priority = 1100,
     config = function()
       local neovide = vim.g.neovide
       vim.o.background = "light" -- 'dark' or 'light'
@@ -32,6 +32,13 @@ return {
       })
 
       vim.cmd.colorscheme("solarized")
+    end,
+  },
+  {
+    "xiyaowong/transparent.nvim",
+    config = function()
+      require("transparent").clear_prefix("BufferLine")
+      require("transparent").clear_prefix("lualine")
     end,
   },
   {
@@ -185,7 +192,7 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      "arkav/lualine-lsp-progress",
+      -- "arkav/lualine-lsp-progress",
       "axkirillov/hbac.nvim",
     },
     config = function()
@@ -208,7 +215,7 @@ return {
               color = { fg = "#ef5f6b", gui = "bold" },
             },
             "filename",
-            "lsp_progress",
+            -- "lsp_progress",
           },
           lualine_x = { "copilot", "encoding", "fileformat", "filetype" },
         },
@@ -232,6 +239,19 @@ return {
   {
     "stevearc/dressing.nvim",
     opts = {},
+  },
+  -- LSP progress notifications
+  {
+    "j-hui/fidget.nvim",
+    opts = {
+      notification = {
+        window = {
+          -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
+          border = "single",
+          winblend = 0,
+        },
+      },
+    },
   },
   {
     "nvim-telescope/telescope.nvim",

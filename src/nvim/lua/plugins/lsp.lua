@@ -128,14 +128,6 @@ return {
     end,
   },
   {
-    -- Improve LSP progress notifiations
-    "mrded/nvim-lsp-notify",
-    enabled = false, -- Can be spammy with certain LSP servers
-    config = function()
-      require("lsp-notify").setup({})
-    end,
-  },
-  {
     "neovim/nvim-lspconfig",
     dependencies = {
       "nvim-telescope/telescope.nvim",

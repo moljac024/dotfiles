@@ -186,6 +186,7 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "arkav/lualine-lsp-progress",
+      "axkirillov/hbac.nvim",
     },
     config = function()
       require("lualine").setup({
@@ -198,6 +199,14 @@ return {
         },
         sections = {
           lualine_c = {
+            {
+              function()
+                local cur_buf = vim.api.nvim_get_current_buf()
+                return require("hbac.state").is_pinned(cur_buf) and "📍" or ""
+                -- tip: nerd fonts have pinned/unpinned icons!
+              end,
+              color = { fg = "#ef5f6b", gui = "bold" },
+            },
             "filename",
             "lsp_progress",
           },
@@ -289,9 +298,6 @@ return {
       pcall(require("telescope").load_extension, "fzf")
       pcall(require("telescope").load_extension, "smart_history")
       pcall(require("telescope").load_extension, "ui-select")
-
-      local builtin = require("telescope.builtin")
-      -- local themes = require("telescope.themes")
     end,
   },
   -- Improve notifications

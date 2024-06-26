@@ -38,7 +38,7 @@ return {
     "xiyaowong/transparent.nvim",
     config = function()
       require("transparent").clear_prefix("BufferLine")
-      require("transparent").clear_prefix("lualine")
+      -- require("transparent").clear_prefix("lualine")
     end,
   },
   {
@@ -192,7 +192,6 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
-      -- "arkav/lualine-lsp-progress",
       "axkirillov/hbac.nvim",
     },
     config = function()
@@ -215,7 +214,6 @@ return {
               color = { fg = "#ef5f6b", gui = "bold" },
             },
             "filename",
-            -- "lsp_progress",
           },
           lualine_x = { "copilot", "encoding", "fileformat", "filetype" },
         },
@@ -248,7 +246,7 @@ return {
         window = {
           -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
           border = "single",
-          winblend = 0,
+          winblend = 0, -- Important!
         },
       },
     },

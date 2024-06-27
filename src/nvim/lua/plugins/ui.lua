@@ -37,8 +37,13 @@ return {
   {
     "xiyaowong/transparent.nvim",
     config = function()
+      require("transparent").setup()
       require("transparent").clear_prefix("BufferLine")
       -- require("transparent").clear_prefix("lualine")
+
+      vim.keymap.set("n", "utt", "<CMD>TransparentToggle<CR>", { desc = "Transparency toggle", commander = {} })
+      vim.keymap.set("n", "ut1", "<CMD>TransparentEnable<CR>", { desc = "Transparency enable", commander = {} })
+      vim.keymap.set("n", "ut0", "<CMD>TransparentDisable<CR>", { desc = "Transparency disable", commander = {} })
     end,
   },
   {

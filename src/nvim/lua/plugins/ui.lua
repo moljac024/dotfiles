@@ -35,9 +35,14 @@ return {
       require("transparent").setup()
       -- require("transparent").clear_prefix("lualine")
 
-      vim.keymap.set("n", "utt", "<CMD>TransparentToggle<CR>", { desc = "Transparency toggle", commander = {} })
-      vim.keymap.set("n", "ut1", "<CMD>TransparentEnable<CR>", { desc = "Transparency enable", commander = {} })
-      vim.keymap.set("n", "ut0", "<CMD>TransparentDisable<CR>", { desc = "Transparency disable", commander = {} })
+      vim.keymap.set("n", "<leader>utt", "<CMD>TransparentToggle<CR>", { desc = "Transparency toggle", commander = {} })
+      vim.keymap.set("n", "<leader>ut1", "<CMD>TransparentEnable<CR>", { desc = "Transparency enable", commander = {} })
+      vim.keymap.set(
+        "n",
+        "<leader>ut0",
+        "<CMD>TransparentDisable<CR>",
+        { desc = "Transparency disable", commander = {} }
+      )
     end,
   },
   {

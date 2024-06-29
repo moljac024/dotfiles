@@ -89,7 +89,18 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local harpoon = require("harpoon")
-      harpoon:setup()
+      harpoon:setup({
+        settings = {
+          key = function()
+            local cwd = vim.loop.cwd() or ""
+            -- If cwd starts with /var/home, replace it to start with /home
+            if cwd:sub(1, 8) == "/var/home" then
+              cwd = "/home" .. cwd:sub(9)
+            end
+            return cwd
+          end,
+        },
+      })
 
       -- basic telescope configuration
       local conf = require("telescope.config").values

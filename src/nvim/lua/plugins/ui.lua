@@ -14,31 +14,25 @@ local logo = [[
 ⠀⠀⠀⠀⠁⠀⠈⢧⣈⠀⠘⢦⠀⣀⠇⣼⠃⠰⣄⣡⠞⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⢤⠼⠁⠀⠀⠳⣤⡼⠀⠀⠀⠀⠀⠀
     ]]
-local lualine_theme = "solarized_light"
+local lualine_theme = "auto"
 
 return {
   {
-    "maxmx03/solarized.nvim",
-    lazy = false,
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1100,
     config = function()
-      local neovide = vim.g.neovide
-      vim.o.background = "light" -- 'dark' or 'light'
-
-      require("solarized").setup({
-        transparent = not neovide,
-        palette = "selenized",
-        -- theme = "neo",
+      require("catppuccin").setup({
+        flavour = "frappe",
+        -- transparent_background = vim.g.transparent_enabled,
       })
-
-      vim.cmd.colorscheme("solarized")
+      vim.cmd.colorscheme("catppuccin")
     end,
   },
   {
     "xiyaowong/transparent.nvim",
     config = function()
       require("transparent").setup()
-      require("transparent").clear_prefix("BufferLine")
       -- require("transparent").clear_prefix("lualine")
 
       vim.keymap.set("n", "utt", "<CMD>TransparentToggle<CR>", { desc = "Transparency toggle", commander = {} })
@@ -250,8 +244,8 @@ return {
       notification = {
         window = {
           -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
-          border = "single",
-          winblend = 0, -- Important!
+          border = "none",
+          winblend = 0, -- Make sure window is transparent
         },
       },
     },

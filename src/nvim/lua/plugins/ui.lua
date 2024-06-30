@@ -31,6 +31,7 @@ return {
   },
   {
     "xiyaowong/transparent.nvim",
+    enabled = not vim.g.neovide,
     config = function()
       require("transparent").setup()
       -- require("transparent").clear_prefix("lualine")
@@ -112,7 +113,7 @@ return {
         {
           desc = "Resume previous search",
           keys = {
-            { "n", "<leader>f;" },
+            { "n", "<leader>fr" },
           },
           cmd = telescope_builtin.resume,
         },
@@ -140,14 +141,14 @@ return {
         {
           desc = "Search for string (live grep)",
           keys = {
-            { "n", "<leader>fs" },
+            { "n", "<leader>fg" },
           },
           cmd = telescope_builtin.live_grep,
         },
         {
           desc = "Search for string under cursor",
           keys = {
-            { "n", "<leader>fg" },
+            { "n", "<leader>fs" },
           },
           cmd = telescope_builtin.grep_string,
         },

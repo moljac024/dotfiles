@@ -54,11 +54,7 @@ return {
       vim.o.timeout = true
       vim.o.timeoutlen = 350
     end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
+    opts = {},
   },
   {
     -- Keybindings helper
@@ -102,6 +98,11 @@ return {
         {
           desc = "Quit/Exit",
           cmd = "<CMD>qall!<CR>",
+        },
+        {
+
+          desc = "Close tab",
+          cmd = "<CMD>tabclose<CR>",
         },
       }, {
         show = true,
@@ -391,6 +392,8 @@ return {
     config = function()
       require("bufferline").setup({
         options = {
+          always_show_bufferline = false, -- Don't show bufferline if there is only one item
+          mode = "tabs", -- Show only tabs, no buffers
           diagnostics = "nvim_lsp",
         },
       })

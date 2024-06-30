@@ -55,8 +55,8 @@ vim.keymap.set({ "n" }, "<A-0>", "<c-w>c", { desc = "Close current window", comm
 
 vim.keymap.set({ "n" }, "<A-left>", "<CMD>bprev<CR>", { desc = "Previous buffer", commander = {} })
 vim.keymap.set({ "n" }, "<A-right>", "<CMD>bnext<CR>", { desc = "Next buffer", commander = {} })
-vim.keymap.set({ "n" }, "<A-,>", "<CMD>bprev<CR>", { desc = "Previous buffer" })
-vim.keymap.set({ "n" }, "<A-.>", "<CMD>bnext<CR>", { desc = "Next buffer" })
+vim.keymap.set({ "n" }, "<A-,>", "<CMD>tabprevious<CR>", { desc = "Previous tab", commander = {} })
+vim.keymap.set({ "n" }, "<A-.>", "<CMD>tabnext<CR>", { desc = "Next tab", commander = {} })
 
 -- Buffers
 -- vim.keymap.set("n", "<leader>bk", "<CMD>bw<CR>", { desc = "Kill current buffer", commander = {} })

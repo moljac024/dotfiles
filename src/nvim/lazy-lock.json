@@ -1,6 +1,6 @@
 {
   "LuaSnip": { "branch": "master", "commit": "ce0a05ab4e2839e1c48d072c5236cce846a387bc" },
-  "SchemaStore.nvim": { "branch": "main", "commit": "73594484edfa33ec9301e42c6c7a4af25c48266f" },
+  "SchemaStore.nvim": { "branch": "main", "commit": "e796f9d8d95c2ada582b591d3332daac32f012fc" },
   "aerial.nvim": { "branch": "master", "commit": "a1c5476732686da2a51218f47580f0dc1a3b8aa9" },
   "bufdelete.nvim": { "branch": "master", "commit": "f6bcea78afb3060b198125256f897040538bcb81" },
   "bufferline.nvim": { "branch": "main", "commit": "99337f63f0a3c3ab9519f3d1da7618ca4f91cffe" },
@@ -24,7 +24,7 @@
   "harpoon": { "branch": "harpoon2", "commit": "0378a6c428a0bed6a2781d459d7943843f374bce" },
   "hbac.nvim": { "branch": "main", "commit": "991b13a33a017f4e5d73a483d2aab53bd5490c17" },
   "hover.nvim": { "branch": "main", "commit": "4339cbbcb572b1934c53dcb66ad4bf6a0abb7918" },
-  "lazy.nvim": { "branch": "main", "commit": "1fad61712bd3937dda925775a7736b8efbcbf1a7" },
+  "lazy.nvim": { "branch": "main", "commit": "a9d7ade203b3f3ee3058c082c62afdf8e4bcb416" },
   "lazydev.nvim": { "branch": "main", "commit": "78d8a11fbd02ad4eafa07dd8a43a959a69fb3bf8" },
   "leap.nvim": { "branch": "main", "commit": "eca8108dcd5f41fbde2a674dceb58b81ed887dc8" },
   "lspkind.nvim": { "branch": "master", "commit": "1735dd5a5054c1fb7feaf8e8658dbab925f4f0cf" },

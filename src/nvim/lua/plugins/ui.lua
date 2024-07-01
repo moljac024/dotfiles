@@ -99,11 +99,6 @@ return {
           desc = "Quit/Exit",
           cmd = "<CMD>qall!<CR>",
         },
-        {
-
-          desc = "Close tab",
-          cmd = "<CMD>tabclose<CR>",
-        },
       }, {
         show = true,
       })

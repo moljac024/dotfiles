@@ -120,3 +120,9 @@ fi
 if [ ! -d "$HOME/.volta" ]; then
     curl https://get.volta.sh | bash -s -- --skip-setup
 fi
+
+################################################################################
+### Applications (.desktop files)
+################################################################################
+mkdir -p $HOME/.local/share/applications &&\
+cp -r src/applications/*.desktop $HOME/.local/share/applications

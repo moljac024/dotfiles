@@ -18,19 +18,18 @@ declare -a ASDF_PLUGINS=(
   "opentofu"
   "jq"
   "yq"
+  "tmux"
 )
 
 # Install all the asdf managed programs
 for plugin in "${ASDF_PLUGINS[@]}"; do
-  echo "====================================================="
-  echo "Installing $plugin..."
-  echo "====================================================="
+  echo "================================================================================"
+  echo "$plugin"
+  echo "================================================================================"
 
   asdf plugin add "$plugin"
   asdf install "$plugin" latest
   asdf global "$plugin" latest
-
-  echo "Installed $plugin."
-  echo "====================================================="
+  echo "================================================================================"
   echo ""
 done

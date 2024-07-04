@@ -32,11 +32,10 @@ Link () {
 Link $DATA_DIR data
 Link $DATA_DIR/Local/ssh .ssh
 Link $DATA_DIR/Local/bin .local/bin
-Link $DATA_DIR/Local/config/tmuxinator .config/tmuxinator
 
 LinkDataDir Downloads
 LinkDataDir Documents
+LinkDataDir "My Documents"
 LinkDataDir Music
 LinkDataDir Pictures
 LinkDataDir Projects
-

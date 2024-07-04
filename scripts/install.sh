@@ -95,7 +95,8 @@ link src/nvim $HOME/.config/nvim
 
 link src/ripgrep/.ripgreprc $HOME/.ripgreprc
 
-git_clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+mkdir -p $HOME/.tmux/plugins
+git_clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 link src/tmux/.tmux.conf $HOME/.tmux.conf
 
 link src/k9s $HOME/.config/k9s
@@ -113,7 +114,7 @@ link src/mpd/mpd.conf $HOME/.config/mpd/mpd.conf
 
 # Asdf
 if [ ! -d "$HOME/.asdf" ]; then
-    git_clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+    git_clone https://github.com/asdf-vm/asdf.git $HOME/.asdf --branch v0.14.0
 fi
 
 # Volta nodejs version manager

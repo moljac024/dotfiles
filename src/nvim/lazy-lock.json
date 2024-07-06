@@ -1,6 +1,6 @@
 {
   "LuaSnip": { "branch": "master", "commit": "ce0a05ab4e2839e1c48d072c5236cce846a387bc" },
-  "SchemaStore.nvim": { "branch": "main", "commit": "30946db59edba23103c2f524e636910a7a2160df" },
+  "SchemaStore.nvim": { "branch": "main", "commit": "a1be387e7c5d5f4f503515b170b79626a0644b4a" },
   "aerial.nvim": { "branch": "master", "commit": "db0af491ff13c18a966ce2f9ac7f5211aec000a7" },
   "bufdelete.nvim": { "branch": "master", "commit": "f6bcea78afb3060b198125256f897040538bcb81" },
   "bufferline.nvim": { "branch": "main", "commit": "99337f63f0a3c3ab9519f3d1da7618ca4f91cffe" },
@@ -24,8 +24,8 @@
   "harpoon": { "branch": "harpoon2", "commit": "0378a6c428a0bed6a2781d459d7943843f374bce" },
   "hbac.nvim": { "branch": "main", "commit": "991b13a33a017f4e5d73a483d2aab53bd5490c17" },
   "hover.nvim": { "branch": "main", "commit": "4339cbbcb572b1934c53dcb66ad4bf6a0abb7918" },
-  "lazy.nvim": { "branch": "main", "commit": "16ccd54360651ad2b27ee0117365f7a33577ea3c" },
-  "lazydev.nvim": { "branch": "main", "commit": "2d526d4a4616679caef1b0b62028e8789048d0ea" },
+  "lazy.nvim": { "branch": "main", "commit": "933f0b596c7372daf534373ae9a11e98744b8636" },
+  "lazydev.nvim": { "branch": "main", "commit": "cea5d0fb556cdc35122d9cae772e7e0ed65b4505" },
   "leap.nvim": { "branch": "main", "commit": "72812e3e4a3a4f7ec027a8ec0b3554a0c6b3337c" },
   "lspkind.nvim": { "branch": "master", "commit": "1735dd5a5054c1fb7feaf8e8658dbab925f4f0cf" },
   "lualine.nvim": { "branch": "master", "commit": "0a5a66803c7407767b799067986b4dc3036e1983" },
@@ -69,8 +69,8 @@
   "tidy.nvim": { "branch": "main", "commit": "b8a5fdb81dce59ed25addadd4e4efe46e485fd47" },
   "toggleterm.nvim": { "branch": "main", "commit": "066cccf48a43553a80a210eb3be89a15d789d6e6" },
   "transparent.nvim": { "branch": "main", "commit": "fd35a46f4b7c1b244249266bdcb2da3814f01724" },
-  "trouble.nvim": { "branch": "main", "commit": "5273137d903a7d6035b5fc0ef503ee51e69ad0ee" },
+  "trouble.nvim": { "branch": "main", "commit": "4453fea6bb597830fbd58d2c484612f37b97bd8c" },
   "ts-error-translator.nvim": { "branch": "main", "commit": "11ae55b28bde02663b5f983f59b0e3fd9c4e845b" },
   "tsc.nvim": { "branch": "main", "commit": "06734767eee606ebaa0a4645e0fd801c64e6aa7a" },
-  "which-key.nvim": { "branch": "main", "commit": "744ad78220309110cd641f712eaa29b287216dfb" }
+  "which-key.nvim": { "branch": "main", "commit": "af4ded85542d40e190014c732fa051bdbf88be3d" }
 }

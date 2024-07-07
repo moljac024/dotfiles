@@ -9,6 +9,7 @@ declare -a ASDF_PLUGINS=(
   "neovim"
   "kubectl"
   "kubectx"
+  "kubecm"
   "minikube"
   "kustomize"
   "helm"
@@ -18,7 +19,6 @@ declare -a ASDF_PLUGINS=(
   "opentofu"
   "jq"
   "yq"
-  "tmux"
 )
 
 # Install all the asdf managed programs
@@ -32,6 +32,8 @@ for plugin in "${ASDF_PLUGINS[@]}"; do
   asdf global "$plugin" latest
   echo "================================================================================"
   echo ""
+
+  sleep 2
 done
 
 asdf reshim

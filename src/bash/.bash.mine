@@ -32,9 +32,9 @@ function is_command {
 }
 
 function export_secret () {
+    local varName=$1
+    local file=$2
     if [[ -f $file ]]; then
-        local varName=$1
-        local file=$2
         local content=$(cat $file)
         export "${varName}"="$content"
     fi
@@ -367,11 +367,6 @@ if [ -f $HOME/.asdf/completions/asdf.bash ]; then
     source $HOME/.asdf/completions/asdf.bash
 fi
 
-# Dagger completions
-if is_command dagger; then
-    source <(dagger completion bash)
-fi
-
 # Direnv
 if hash direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
@@ -382,9 +377,11 @@ if is_command kubectl; then
     complete -o default -F __start_kubectl k
 fi
 
-if is_command dagger; then
-    source <(dagger completion bash)
-fi
+# For some reason, this is very slow
+# Dagger completions
+# if is_command dagger; then
+#     source <(dagger completion bash)
+# fi
 
 ################################################################################
 ### Secrets

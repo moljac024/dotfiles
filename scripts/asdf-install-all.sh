@@ -19,6 +19,7 @@ declare -a ASDF_PLUGINS=(
   "opentofu"
   "jq"
   "yq"
+  "mkcert"
 )
 
 # Install all the asdf managed programs

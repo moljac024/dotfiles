@@ -20,6 +20,7 @@ declare -a ASDF_PLUGINS=(
   "jq"
   "yq"
   "mkcert"
+  "zig"
 )
 
 # Install all the asdf managed programs

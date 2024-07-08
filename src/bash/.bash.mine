@@ -390,3 +390,16 @@ fi
 export_secret CR_PAT $DOTFILES/.credentials/github-token-registry
 export_secret DO_PAT $DOTFILES/.credentials/digital-ocean
 export_secret NPM_TOKEN_FOR_GITHUB $DOTFILES/.credentials/npm_token_for_github
+
+################################################################################
+### Misc
+################################################################################
+
+# If pwd is not the same as $HOME, then cd to $HOME.
+#
+# Not sure why, but sometimes the shell starts in a different directory on
+# Fedora 40 Kinoite
+#
+if [ "$PWD" != "$HOME" ]; then
+    cd
+fi

@@ -34,10 +34,23 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.color_scheme = scheme_for_appearance(get_appearance())
--- config.window_background_opacity = 0.9
 config.use_fancy_tab_bar = false
 config.enable_scroll_bar = true
+local color_scheme_name = scheme_for_appearance(get_appearance())
+local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
+local bg_color = wezterm.color.parse(color_scheme.background)
+config.color_scheme = color_scheme_name
+
+config.background = {
+  { source = { Color = bg_color }, width = '100%', height = '100%' },
+  {
+    source = {
+      File = wezterm.home_dir .. "/dotfiles/src/backgrounds/tyrande-transparent.png",
+    },
+    opacity = 0.2,
+    hsb = { brightness = 0.4 }
+  },
+}
 
 config.audible_bell = "Disabled"
 config.visual_bell = {

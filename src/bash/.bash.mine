@@ -295,7 +295,7 @@ fi
 # Distrobox & toolbox aliases
 if is_command distrobox; then
   alias db='distrobox'
-  alias dbu='distrobox enter ubuntu-22-04'
+  alias dbu='distrobox enter ubuntu-24-04'
 fi
 
 if is_command toolbox; then

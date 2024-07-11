@@ -15,7 +15,7 @@ config.font = wezterm.font('ZedMono NF')
 config.font_size = 16.0
 
 -- Disable font ligatures
--- config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 -- wezterm.gui is not available to the mux server, so take care to
 -- do something reasonable when this config is evaluated by the mux
@@ -38,9 +38,9 @@ end
 
 config.window_padding = {
   left = 2,
-  right = 6, -- Makes the scrollbar a little wider
-  top = 0,
-  bottom = 0,
+  right = 6,
+  top = 2,
+  bottom = 2,
 }
 
 config.use_fancy_tab_bar = false

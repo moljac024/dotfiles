@@ -5,11 +5,14 @@ local config = wezterm.config_builder() -- This will hold the configuration.
 -- ==== Appearance
 -- =============================================================================
 
-local font = "FiraCode Nerd Font"
--- local font = "Iosevka Nerd Font"
+local font = {
+  name = 'FiraCode Nerd Font',
+  -- name = 'Iosevka Nerd Font',
+  size = 16.0,
+}
 
-config.font = wezterm.font(font)
-config.font_size = 16.0
+config.font = wezterm.font(font.name)
+config.font_size = font.size
 
 -- wezterm.gui is not available to the mux server, so take care to
 -- do something reasonable when this config is evaluated by the mux
@@ -73,6 +76,8 @@ local main_mod = "CTRL|SHIFT"
 config.keys = {
   { key = 'h', mods = main_mod, action = act.ActivateTabRelative(-1) },
   { key = 'l', mods = main_mod, action = act.ActivateTabRelative(1) },
+  { key = 'k', mods = main_mod, action = act.ScrollByPage(-0.5) },
+  { key = 'j', mods = main_mod, action = act.ScrollByPage(0.5) },
 }
 
 -- and finally, return the configuration to wezterm

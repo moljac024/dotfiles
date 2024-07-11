@@ -5,14 +5,16 @@ local config = wezterm.config_builder() -- This will hold the configuration.
 -- ==== Appearance
 -- =============================================================================
 
-local font = {
-  name = 'FiraCode Nerd Font',
-  -- name = 'Iosevka Nerd Font',
-  size = 16.0,
-}
+config.font = wezterm.font('FiraCode Nerd Font')
+-- config.font = wezterm.font('JetBrainsMono NF')
+-- config.font = wezterm.font('IBM Plex Mono')
+-- config.font = wezterm.font('Monoid Nerd Font')
+-- config.font = wezterm.font('ZedMono NF')
+-- config.font = wezterm.font('Iosevka Nerd Font')
+config.font_size = 16.0
 
-config.font = wezterm.font(font.name)
-config.font_size = font.size
+-- Disable font ligatures
+-- config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 -- wezterm.gui is not available to the mux server, so take care to
 -- do something reasonable when this config is evaluated by the mux

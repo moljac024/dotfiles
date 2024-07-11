@@ -41,6 +41,7 @@ config.window_padding = {
 }
 
 config.use_fancy_tab_bar = false
+-- config.show_tab_index_in_tab_bar = false
 config.enable_scroll_bar = true
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- Hide the title bar
 
@@ -74,10 +75,29 @@ config.visual_bell = {
 local act = wezterm.action
 local main_mod = "CTRL|SHIFT"
 config.keys = {
+  { key = '<', mods = main_mod, action = act.MoveTabRelative(-1) },
+  { key = '>', mods = main_mod, action = act.MoveTabRelative(1) },
   { key = 'h', mods = main_mod, action = act.ActivateTabRelative(-1) },
   { key = 'l', mods = main_mod, action = act.ActivateTabRelative(1) },
   { key = 'k', mods = main_mod, action = act.ScrollByPage(-0.5) },
   { key = 'j', mods = main_mod, action = act.ScrollByPage(0.5) },
+
+  -- Rename tab title
+  {
+    key = '"',
+    mods = main_mod,
+    action = act.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, pane, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+  }
 }
 
 -- and finally, return the configuration to wezterm

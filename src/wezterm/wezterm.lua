@@ -2,8 +2,8 @@
 local wezterm = require("wezterm")
 -- This will hold the configuration.
 local config = wezterm.config_builder()
--- local font = "FiraCode Nerd Font"
-local font = "Iosevka Nerd Font"
+local font = "FiraCode Nerd Font"
+-- local font = "Iosevka Nerd Font"
 
 config.font = wezterm.font(font)
 config.font_size = 16.0

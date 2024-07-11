@@ -32,7 +32,8 @@ return {
   },
   {
     "xiyaowong/transparent.nvim",
-    enabled = not vim.g.neovide,
+    enabled = false,
+    -- enabled = not vim.g.neovide,
     config = function()
       require("transparent").setup()
       -- require("transparent").clear_prefix("lualine")

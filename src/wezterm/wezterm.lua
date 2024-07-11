@@ -55,6 +55,8 @@ config.background = {
     source = {
       File = wezterm.home_dir .. "/dotfiles/src/backgrounds/tyrande-transparent.png",
     },
+    horizontal_align = "Right",
+    vertical_align = "Bottom",
     opacity = 0.15,
     hsb = { brightness = 0.5 }
   },

@@ -24,6 +24,7 @@ return {
     config = function()
       require("catppuccin").setup({
         flavour = "frappe",
+        transparent_background = not vim.g.neovide,
         -- transparent_background = vim.g.transparent_enabled,
       })
       vim.cmd.colorscheme("catppuccin")
@@ -362,7 +363,7 @@ return {
             return default
           elseif filetype == "Outline" then
             return nil -- There are some issues with using stickybuf with outline plugin
-          -- return "filetype"
+            -- return "filetype"
           else
             return nil
           end
@@ -388,7 +389,7 @@ return {
       require("bufferline").setup({
         options = {
           always_show_bufferline = false, -- Don't show bufferline if there is only one item
-          mode = "tabs", -- Show only tabs, no buffers
+          mode = "tabs",                  -- Show only tabs, no buffers
           diagnostics = "nvim_lsp",
         },
       })

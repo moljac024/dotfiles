@@ -60,10 +60,10 @@ ensure_symlink() {
 
 function modify_path () {
     # Check if the directory exists and return early if it doesn't
-    if [ ! -d "$1" ]; then
-        # echo "The directory $1 does not exist"
-        return
-    fi
+    # if [ ! -d "$1" ]; then
+    #     # echo "The directory $1 does not exist"
+    #     return
+    # fi
 
     # Check if the directory is not already in PATH
     if [[ ":$PATH:" != *":$1:"* ]]; then

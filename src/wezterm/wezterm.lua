@@ -5,12 +5,13 @@ local config = wezterm.config_builder() -- This will hold the configuration.
 -- ==== Appearance
 -- =============================================================================
 
-config.font = wezterm.font('FiraCode Nerd Font')
+-- config.font = wezterm.font('FiraCode Nerd Font')
+-- config.font = wezterm.font('Hack Nerd Font')
 -- config.font = wezterm.font('JetBrainsMono NF')
 -- config.font = wezterm.font('IBM Plex Mono')
 -- config.font = wezterm.font('Monoid Nerd Font')
--- config.font = wezterm.font('ZedMono NF')
 -- config.font = wezterm.font('Iosevka Nerd Font')
+config.font = wezterm.font('ZedMono NF')
 config.font_size = 16.0
 
 -- Disable font ligatures

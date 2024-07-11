@@ -1,7 +1,10 @@
--- Pull in the wezterm API
-local wezterm = require("wezterm")
--- This will hold the configuration.
-local config = wezterm.config_builder()
+local wezterm = require("wezterm")      -- Pull in the wezterm API
+local config = wezterm.config_builder() -- This will hold the configuration.
+
+-- =============================================================================
+-- ==== Appearance
+-- =============================================================================
+
 local font = "FiraCode Nerd Font"
 -- local font = "Iosevka Nerd Font"
 
@@ -36,20 +39,20 @@ config.window_padding = {
 
 config.use_fancy_tab_bar = false
 config.enable_scroll_bar = true
-config.window_decorations = "RESIZE" -- Hide the title bar
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- Hide the title bar
+
 local color_scheme_name = scheme_for_appearance(get_appearance())
 local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
 local bg_color = wezterm.color.parse(color_scheme.background)
 config.color_scheme = color_scheme_name
-
 config.background = {
   { source = { Color = bg_color }, width = '100%', height = '100%' },
   {
     source = {
       File = wezterm.home_dir .. "/dotfiles/src/backgrounds/tyrande-transparent.png",
     },
-    opacity = 0.2,
-    hsb = { brightness = 0.4 }
+    opacity = 0.15,
+    hsb = { brightness = 0.5 }
   },
 }
 
@@ -58,6 +61,18 @@ config.visual_bell = {
   fade_in_duration_ms = 75,
   fade_out_duration_ms = 75,
   target = "CursorColor",
+}
+
+
+-- =============================================================================
+-- ==== Keybindings
+-- =============================================================================
+
+local act = wezterm.action
+local main_mod = "CTRL|SHIFT"
+config.keys = {
+  { key = 'h', mods = main_mod, action = act.ActivateTabRelative(-1) },
+  { key = 'l', mods = main_mod, action = act.ActivateTabRelative(1) },
 }
 
 -- and finally, return the configuration to wezterm

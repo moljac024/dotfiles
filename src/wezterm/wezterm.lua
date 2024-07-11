@@ -36,6 +36,7 @@ config.window_padding = {
 
 config.use_fancy_tab_bar = false
 config.enable_scroll_bar = true
+config.window_decorations = "RESIZE"
 local color_scheme_name = scheme_for_appearance(get_appearance())
 local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
 local bg_color = wezterm.color.parse(color_scheme.background)

@@ -1,6 +1,8 @@
 local wezterm = require("wezterm")      -- Pull in the wezterm API
 local config = wezterm.config_builder() -- This will hold the configuration.
 local act = wezterm.action
+
+---@diagnostic disable-next-line: unused-local
 local global = wezterm.GLOBAL
 
 -- =============================================================================

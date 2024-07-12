@@ -98,10 +98,10 @@ config.font_size = 16.0
 config.harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 config.window_padding = {
-  left = 2,
-  right = 6,
-  top = 2,
-  bottom = 2,
+  left = "0.5cell",
+  right = "0.5cell",
+  top = "0.5cell",
+  bottom = "0.5cell",
 }
 
 config.use_fancy_tab_bar = false

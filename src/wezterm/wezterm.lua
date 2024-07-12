@@ -143,7 +143,9 @@ config.keys = {
     key = '"',
     mods = main_mod,
     action = rename_tab_action
-  }
+  },
+  { key = "d", mods = main_mod, action = act.ShowDebugOverlay },
+  { key = ":", mods = main_mod, action = act.ShowLauncher },
 }
 
 -- =============================================================================

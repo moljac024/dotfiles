@@ -26,7 +26,7 @@ local function scheme_for_appearance(appearance)
   end
 end
 
-local function set_background()
+local function set_background_image()
   local color_scheme_name = scheme_for_appearance(get_appearance())
   local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
   local bg_color = wezterm.color.parse(color_scheme.background)
@@ -114,8 +114,7 @@ config.use_fancy_tab_bar = false
 config.enable_scroll_bar = true
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- Hide the title bar
 config.color_scheme = scheme_for_appearance(get_appearance())
-
-set_background()
+set_background_image()
 
 config.audible_bell = "Disabled"
 config.visual_bell = {

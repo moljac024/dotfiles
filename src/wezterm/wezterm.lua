@@ -29,16 +29,25 @@ local function set_background()
   local color_scheme_name = scheme_for_appearance(get_appearance())
   local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
   local bg_color = wezterm.color.parse(color_scheme.background)
-  local base_wallpaper_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds/"
+  local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds/"
 
-  local images = { "tyrande-transparent.png", "nature2.png", "nature4.png" }
-  local image = images[math.random(#images)]
+  local preferred_images = {
+    "girl1.png",
+    "girl2.png",
+    "nature1.png",
+    "nature2.png",
+    "nature3.png",
+    "tyrande-transparent.png",
+  }
+
+  local image_pool = preferred_images
+  local image = image_pool[math.random(#image_pool)]
 
   config.background = {
     { source = { Color = bg_color }, width = '100%', height = '100%' },
     {
       source = {
-        File = base_wallpaper_dir .. image
+        File = images_dir .. image
       },
       horizontal_align = "Right",
       vertical_align = "Bottom",

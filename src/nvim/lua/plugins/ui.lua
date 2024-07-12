@@ -56,7 +56,11 @@ return {
       vim.o.timeout = true
       vim.o.timeoutlen = 350
     end,
-    opts = {},
+    config = function()
+      require("which-key").setup({
+        preset = "helix" -- classic | modern | helix
+      })
+    end
   },
   {
     -- Keybindings helper

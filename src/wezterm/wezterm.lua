@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")      -- Pull in the wezterm API
 local config = wezterm.config_builder() -- This will hold the configuration.
 local act = wezterm.action
+local global = wezterm.GLOBAL
 
 -- =============================================================================
 -- ==== Functions
@@ -41,13 +42,23 @@ local function set_background()
   }
 
   local image_pool = preferred_images
-  local image = image_pool[math.random(#image_pool)]
 
+  local current_background_image = global.current_background_image
+  local new_image = nil
+  while new_image == nil or new_image == current_background_image do
+    new_image = image_pool[math.random(#image_pool)]
+  end
+
+  if new_image == nil then
+    return
+  end
+
+  global.current_background_image = new_image
   config.background = {
     { source = { Color = bg_color }, width = '100%', height = '100%' },
     {
       source = {
-        File = images_dir .. "/" .. image
+        File = images_dir .. "/" .. new_image
       },
       horizontal_align = "Right",
       vertical_align = "Bottom",

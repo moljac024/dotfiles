@@ -29,7 +29,7 @@ local function set_background()
   local color_scheme_name = scheme_for_appearance(get_appearance())
   local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
   local bg_color = wezterm.color.parse(color_scheme.background)
-  local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds/"
+  local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds"
 
   local preferred_images = {
     "girl1.png",
@@ -47,7 +47,7 @@ local function set_background()
     { source = { Color = bg_color }, width = '100%', height = '100%' },
     {
       source = {
-        File = images_dir .. image
+        File = images_dir .. "/" .. image
       },
       horizontal_align = "Right",
       vertical_align = "Bottom",

@@ -42,18 +42,12 @@ local function set_background()
   }
 
   local image_pool = preferred_images
-
-  local current_background_image = global.current_background_image
-  local new_image = nil
-  while new_image == nil or new_image == current_background_image do
-    new_image = image_pool[math.random(#image_pool)]
-  end
+  local new_image = image_pool[math.random(#image_pool)]
 
   if new_image == nil then
     return
   end
 
-  global.current_background_image = new_image
   config.background = {
     { source = { Color = bg_color }, width = '100%', height = '100%' },
     {

@@ -20,7 +20,11 @@ return {
 
       function _G.set_terminal_keymaps()
         local opts = { buffer = 0 }
-        vim.keymap.set("t", "<esc><esc><esc>", [[<C-\><C-n>]], opts)
+        vim.keymap.set("t", "<C-g>n", [[<C-\><C-n>]], { buffer = 0, noremap = true, desc = "Go to normal mode" })
+        vim.keymap.set("t", "<C-g>g", [[<C-\><C-g>]],
+          { buffer = 0, noremap = true, desc = "Send CTRL-G to terminal" })
+        vim.keymap.set("t", "<C-g><C-g>", [[<C-\><C-g>]],
+          { buffer = 0, noremap = true, desc = "Send CTRL-G to terminal" })
         vim.keymap.set("t", "<A-h>", [[<Cmd>wincmd h<CR>]], opts)
         vim.keymap.set("t", "<A-j>", [[<Cmd>wincmd j<CR>]], opts)
         vim.keymap.set("t", "<A-k>", [[<Cmd>wincmd k<CR>]], opts)

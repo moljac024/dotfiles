@@ -35,11 +35,13 @@ local function set_background_image()
   local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds"
 
   local preferred_images = {
+    "legs.png",
     "girl1.png",
     "girl2.png",
+    "firewatch1.png",
+    "firewatch2.png",
+    "firewatch3.png",
     "nature1.png",
-    "nature2.png",
-    "nature3.png",
     "tyrande-transparent.png",
   }
 

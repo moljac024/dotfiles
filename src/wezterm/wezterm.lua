@@ -1,13 +1,38 @@
 local wezterm = require("wezterm")      -- Pull in the wezterm API
 local config = wezterm.config_builder() -- This will hold the configuration.
 local act = wezterm.action
+local global = wezterm.GLOBAL
 
 ---@diagnostic disable-next-line: unused-local
-local global = wezterm.GLOBAL
+local log = {
+  info = wezterm.log_info,
+  warn = wezterm.log_warn,
+  error = wezterm.log_error
+}
 
 -- =============================================================================
 -- ==== Functions
 -- =============================================================================
+
+local function split_str(input_str, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t = {}
+  for str in string.gmatch(input_str, "([^" .. sep .. "]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
+
+local function includes(table, value)
+  for i = 1, #table do
+    if (table[i] == value) then
+      return true
+    end
+  end
+  return false
+end
 
 -- wezterm.gui is not available to the mux server, so take care to
 -- do something reasonable when this config is evaluated by the mux
@@ -28,23 +53,33 @@ local function scheme_for_appearance(appearance)
   end
 end
 
-
-local function get_random_image()
+local function get_background_images()
   local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds"
-  local all_images = wezterm.read_dir(images_dir)
+  local all_images_in_dir = wezterm.read_dir(images_dir)
 
   local preferred_images = {
     images_dir .. "/" .. "legs.png",
     images_dir .. "/" .. "girl1.png",
     images_dir .. "/" .. "girl2.png",
+    images_dir .. "/" .. "tyrande.png",
     images_dir .. "/" .. "firewatch1.png",
     images_dir .. "/" .. "firewatch2.png",
     images_dir .. "/" .. "firewatch3.png",
-    images_dir .. "/" .. "nature1.png",
-    images_dir .. "/" .. "tyrande-transparent.png",
   }
 
-  local image_pool = preferred_images
+  local all_images = preferred_images
+  ---@diagnostic disable-next-line: unused-local
+  for i, image in ipairs(all_images_in_dir) do
+    if (not includes(all_images, image)) then
+      table.insert(all_images, image)
+    end
+  end
+
+  return { all_images = all_images, preferred_images = preferred_images }
+end
+
+local function get_random_image()
+  local image_pool = get_background_images().preferred_images
   local tries = 0
   local new_image = image_pool[math.random(#image_pool)]
 
@@ -57,21 +92,21 @@ local function get_random_image()
 end
 
 local function set_background_image()
+  local image = global.background_image
+  if image == nil then
+    return
+  end
+
   local color_scheme_name = scheme_for_appearance(get_appearance())
   local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
   local bg_color = wezterm.color.parse(color_scheme.background)
 
-  local new_image = get_random_image()
-  if new_image == nil then
-    return
-  end
-
-  global.background_image = new_image
+  global.background_image = image
   config.background = {
     { source = { Color = bg_color }, width = '100%', height = '100%' },
     {
       source = {
-        File = new_image
+        File = image
       },
       horizontal_align = "Right",
       vertical_align = "Bottom",
@@ -80,6 +115,49 @@ local function set_background_image()
     },
   }
 end
+
+local choose_background_image_action = wezterm.action_callback(function(window, pane)
+  local choices = {}
+  local images = get_background_images().all_images
+
+  if (#images == 0) then
+    return
+  end
+
+  table.insert(choices, { label = "Random image", id = "random" })
+
+  for i, image in ipairs(images) do
+    local split = split_str(image, "/")
+    table.insert(choices, { label = split[#split], id = image })
+  end
+
+  window:perform_action(
+    act.InputSelector {
+      ---@diagnostic disable-next-line: unused-local
+      action = wezterm.action_callback(function(_window, _pane, id, label)
+        if not id and not label then
+          wezterm.log_info 'cancelled'
+        else
+          if (id == "random") then
+            global.randomize_background_image = true
+          else
+            global.randomize_background_image = false
+            global.background_image = id
+          end
+
+
+          wezterm.reload_configuration()
+        end
+      end),
+      title = 'Choose background image',
+      choices = choices,
+      alphabet = '123456789',
+      description = 'Write the number you want to choose or press / to search.',
+    },
+    pane
+  )
+end)
+
 
 local function get_tab_title(tab_info)
   local title = tab_info.tab_title
@@ -133,6 +211,11 @@ config.use_fancy_tab_bar = false
 config.enable_scroll_bar = true
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- Hide the title bar
 config.color_scheme = scheme_for_appearance(get_appearance())
+
+-- If background image is not set, set a random one
+if global.background_image == nil or global.randomize_background_image == true then
+  global.background_image = get_random_image()
+end
 set_background_image()
 
 config.audible_bell = "Disabled"
@@ -162,6 +245,9 @@ config.keys = {
     mods = main_mod,
     action = rename_tab_action
   },
+  -- Choose background image
+  { key = "b", mods = main_mod, action = choose_background_image_action },
+
   { key = "d", mods = main_mod, action = act.ShowDebugOverlay },
   { key = ":", mods = main_mod, action = act.ShowLauncher },
 }

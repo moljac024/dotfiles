@@ -28,35 +28,50 @@ local function scheme_for_appearance(appearance)
   end
 end
 
+
+local function get_random_image()
+  local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds"
+  local all_images = wezterm.read_dir(images_dir)
+
+  local preferred_images = {
+    images_dir .. "/" .. "legs.png",
+    images_dir .. "/" .. "girl1.png",
+    images_dir .. "/" .. "girl2.png",
+    images_dir .. "/" .. "firewatch1.png",
+    images_dir .. "/" .. "firewatch2.png",
+    images_dir .. "/" .. "firewatch3.png",
+    images_dir .. "/" .. "nature1.png",
+    images_dir .. "/" .. "tyrande-transparent.png",
+  }
+
+  local image_pool = preferred_images
+  local tries = 0
+  local new_image = image_pool[math.random(#image_pool)]
+
+  while (new_image == global.background_image and tries < 10) do
+    new_image = image_pool[math.random(#image_pool)]
+    tries = tries + 1
+  end
+
+  return new_image
+end
+
 local function set_background_image()
   local color_scheme_name = scheme_for_appearance(get_appearance())
   local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
   local bg_color = wezterm.color.parse(color_scheme.background)
-  local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds"
 
-  local preferred_images = {
-    "legs.png",
-    "girl1.png",
-    "girl2.png",
-    "firewatch1.png",
-    "firewatch2.png",
-    "firewatch3.png",
-    "nature1.png",
-    "tyrande-transparent.png",
-  }
-
-  local image_pool = preferred_images
-  local new_image = image_pool[math.random(#image_pool)]
-
+  local new_image = get_random_image()
   if new_image == nil then
     return
   end
 
+  global.background_image = new_image
   config.background = {
     { source = { Color = bg_color }, width = '100%', height = '100%' },
     {
       source = {
-        File = images_dir .. "/" .. new_image
+        File = new_image
       },
       horizontal_align = "Right",
       vertical_align = "Bottom",

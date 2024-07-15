@@ -34,6 +34,16 @@ local function includes(table, value)
   return false
 end
 
+local function table_shuffle(t)
+  local s = {}
+  for i = 1, #t do s[i] = t[i] end
+  for i = #t, 2, -1 do
+    local j = math.random(i)
+    s[i], s[j] = s[j], s[i]
+  end
+  return s
+end
+
 -- wezterm.gui is not available to the mux server, so take care to
 -- do something reasonable when this config is evaluated by the mux
 local function get_appearance()
@@ -124,10 +134,11 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
     return
   end
 
-  table.insert(choices, { label = "Random image", id = "random" })
+  local shuffled = table_shuffle(images)
+  -- table.insert(choices, { label = "Random image", id = "random" })
 
   ---@diagnostic disable-next-line: unused-local
-  for i, image in ipairs(images) do
+  for i, image in ipairs(shuffled) do
     local split = split_str(image, "/")
     table.insert(choices, { label = split[#split], id = image })
   end

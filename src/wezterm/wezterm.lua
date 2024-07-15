@@ -126,6 +126,7 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
 
   table.insert(choices, { label = "Random image", id = "random" })
 
+  ---@diagnostic disable-next-line: unused-local
   for i, image in ipairs(images) do
     local split = split_str(image, "/")
     table.insert(choices, { label = split[#split], id = image })
@@ -138,10 +139,10 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
         if not id and not label then
           wezterm.log_info 'cancelled'
         else
+          global.randomize_background_image = false
           if (id == "random") then
-            global.randomize_background_image = true
+            global.background_image = get_random_image()
           else
-            global.randomize_background_image = false
             global.background_image = id
           end
 
@@ -270,7 +271,7 @@ wezterm.on(
 )
 
 -- Reload configuration every once in a while (setting a random wallpaper again)
-wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
+-- wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
 
 -- and finally, return the configuration to wezterm
 return config

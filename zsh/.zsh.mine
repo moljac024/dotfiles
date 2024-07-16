@@ -1,0 +1,14 @@
+function is_command {
+    local cmd="$1"
+    if command -v $cmd >/dev/null 2>&1; then
+        true; return
+    else
+        false; return
+    fi
+}
+
+# Starship prompt
+if is_command starship; then
+    eval "$(starship init zsh)"
+    eval "$(starship completions zsh)"
+fi

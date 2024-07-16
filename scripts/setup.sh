@@ -67,10 +67,12 @@ link wezterm $HOME/.config/wezterm
 link bash/.bash.mine $HOME/.bash.mine
 link bash/.bash_profile $HOME/.bash_profile
 link bash/.bashrc $HOME/.bashrc
-link bash/.inputrc $HOME/.inputrc
 link bash/.complete_alias $HOME/.bash_complete_alias
 
-link dircolors/solarized-ansi-light $HOME/.dir_colors
+link zsh/.zshrc $HOME/.zshrc
+link zsh/.zsh.mine $HOME/.zsh.mine
+
+link shell/.inputrc $HOME/.inputrc
 
 ################################################################################
 ### Git
@@ -102,11 +104,8 @@ link tmux/.tmux.conf $HOME/.tmux.conf
 link k9s $HOME/.config/k9s
 
 ################################################################################
-### Other
+### Other apps
 ################################################################################
-
-mkdir -p $HOME/.config/mpd
-link mpd/mpd.conf $HOME/.config/mpd/mpd.conf
 
 ################################################################################
 ### Version managers

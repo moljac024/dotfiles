@@ -41,72 +41,72 @@ fi
 ### Starship shell prompt
 ################################################################################
 
-link src/starship/starship.toml $HOME/.config/starship.toml
+link starship/starship.toml $HOME/.config/starship.toml
 
 ################################################################################
 ### Scripts
 ################################################################################
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    link src/scripts/osx $HOME/bin
+    link bin/osx $HOME/bin
 else
-    link src/scripts/linux $HOME/bin
+    link bin/linux $HOME/bin
 fi
 
 ################################################################################
 ### Terminals
 ################################################################################
 
-link src/kitty $HOME/.config/kitty
-link src/wezterm $HOME/.config/wezterm
+link kitty $HOME/.config/kitty
+link wezterm $HOME/.config/wezterm
 
 ################################################################################
 ### Shells
 ################################################################################
 
-link src/bash/.bash.mine $HOME/.bash.mine
-link src/bash/.bash_profile $HOME/.bash_profile
-link src/bash/.bashrc $HOME/.bashrc
-link src/bash/.inputrc $HOME/.inputrc
-link src/bash/.complete_alias $HOME/.bash_complete_alias
+link bash/.bash.mine $HOME/.bash.mine
+link bash/.bash_profile $HOME/.bash_profile
+link bash/.bashrc $HOME/.bashrc
+link bash/.inputrc $HOME/.inputrc
+link bash/.complete_alias $HOME/.bash_complete_alias
 
-link src/dircolors/solarized-ansi-light $HOME/.dir_colors
+link dircolors/solarized-ansi-light $HOME/.dir_colors
 
 ################################################################################
 ### Git
 ################################################################################
 
-link src/git/.gitconfig $HOME/.gitconfig
-link src/git/.gitignore_global $HOME/.gitignore_global
+link git/.gitconfig $HOME/.gitconfig
+link git/.gitignore_global $HOME/.gitignore_global
 
 ################################################################################
 ### Vim
 ################################################################################
 
 mkdir -p $HOME/.vim/autoload
-link src/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
-link src/vim/vimrc $HOME/.vim/vimrc
+link vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
+link vim/vimrc $HOME/.vim/vimrc
 # Neovim
-link src/nvim $HOME/.config/nvim
+link nvim $HOME/.config/nvim
 
 ################################################################################
 ### Tools
 ################################################################################
 
-link src/ripgrep/.ripgreprc $HOME/.ripgreprc
+link ripgrep/.ripgreprc $HOME/.ripgreprc
 
 mkdir -p $HOME/.tmux/plugins
 git_clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-link src/tmux/.tmux.conf $HOME/.tmux.conf
+link tmux/.tmux.conf $HOME/.tmux.conf
 
-link src/k9s $HOME/.config/k9s
+link k9s $HOME/.config/k9s
 
 ################################################################################
 ### Other
 ################################################################################
 
 mkdir -p $HOME/.config/mpd
-link src/mpd/mpd.conf $HOME/.config/mpd/mpd.conf
+link mpd/mpd.conf $HOME/.config/mpd/mpd.conf
 
 ################################################################################
 ### Version managers
@@ -126,4 +126,4 @@ fi
 ### Applications (.desktop files)
 ################################################################################
 mkdir -p $HOME/.local/share/applications &&\
-cp -r src/applications/*.desktop $HOME/.local/share/applications
+cp -r applications/*.desktop $HOME/.local/share/applications

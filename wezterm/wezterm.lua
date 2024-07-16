@@ -64,7 +64,7 @@ local function scheme_for_appearance(appearance)
 end
 
 local function get_background_images()
-  local images_dir = wezterm.home_dir .. "/dotfiles/src/backgrounds"
+  local images_dir = wezterm.home_dir .. "/dotfiles/backgrounds"
   local all_images_in_dir = wezterm.read_dir(images_dir)
 
   local preferred_images = {

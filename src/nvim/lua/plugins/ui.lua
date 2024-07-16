@@ -52,7 +52,7 @@ return {
     "folke/which-key.nvim",
     priority = 999,
     event = "VeryLazy",
-    enabled = false,
+    -- enabled = false,
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 350

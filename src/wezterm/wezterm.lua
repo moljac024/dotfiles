@@ -68,13 +68,14 @@ local function get_background_images()
   local all_images_in_dir = wezterm.read_dir(images_dir)
 
   local preferred_images = {
-    images_dir .. "/" .. "legs.png",
-    images_dir .. "/" .. "girl1.png",
-    images_dir .. "/" .. "girl2.png",
-    images_dir .. "/" .. "tyrande.png",
     images_dir .. "/" .. "firewatch1.png",
     images_dir .. "/" .. "firewatch2.png",
     images_dir .. "/" .. "firewatch3.png",
+    images_dir .. "/" .. "tyrande.png",
+    images_dir .. "/" .. "girl1.png",
+    images_dir .. "/" .. "girl2.png",
+    images_dir .. "/" .. "girl3.png",
+    images_dir .. "/" .. "legs.png",
   }
 
   local all_images = preferred_images
@@ -148,7 +149,7 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
       ---@diagnostic disable-next-line: unused-local
       action = wezterm.action_callback(function(_window, _pane, id, label)
         if not id and not label then
-          wezterm.log_info 'cancelled'
+          return
         else
           global.randomize_background_image = false
           if (id == "random") then
@@ -157,14 +158,11 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
             global.background_image = id
           end
 
-
           wezterm.reload_configuration()
         end
       end),
       title = 'Choose background image',
       choices = choices,
-      alphabet = '123456789',
-      description = 'Write the number you want to choose or press / to search.',
     },
     pane
   )

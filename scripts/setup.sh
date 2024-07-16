@@ -64,6 +64,9 @@ link wezterm $HOME/.config/wezterm
 ### Shells
 ################################################################################
 
+mkdir -p $HOME/.shell
+link shell/common $HOME/.shell/common
+
 link bash/.bash.mine $HOME/.bash.mine
 link bash/.bash_profile $HOME/.bash_profile
 link bash/.bashrc $HOME/.bashrc

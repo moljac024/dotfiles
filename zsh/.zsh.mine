@@ -1,13 +1,17 @@
-function is_command {
-    local cmd="$1"
-    if command -v $cmd >/dev/null 2>&1; then
-        true; return
-    else
-        false; return
-    fi
-}
+################################################################################
+### Source common shell setup
+################################################################################
 
-# Starship prompt
+if [[ ! -f $HOME/.shell/common ]]; then
+  return
+fi
+
+. $HOME/.shell/common
+
+################################################################################
+### Prompt
+################################################################################
+
 if is_command starship; then
     eval "$(starship init zsh)"
     eval "$(starship completions zsh)"

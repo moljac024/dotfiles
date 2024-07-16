@@ -56,14 +56,14 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# Asdf completions
-if [ -f $HOME/.asdf/completions/asdf.bash ]; then
-    source $HOME/.asdf/completions/asdf.bash
-fi
-
 # Direnv
 if is_command direnv; then
     eval "$(direnv hook bash)"
+fi
+
+# Asdf completions
+if [ -f $HOME/.asdf/completions/asdf.bash ]; then
+    source $HOME/.asdf/completions/asdf.bash
 fi
 
 if is_command kubectl; then

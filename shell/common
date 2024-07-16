@@ -89,16 +89,6 @@ export LANG=en_US.UTF-8
 export EDITOR='vi'
 export DOTFILES=$HOME/dotfiles
 
-# OS X
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    # Enable bash completion on OS X
-    if [ -f `brew --prefix`/etc/bash_completion ]; then
-        source `brew --prefix`/etc/bash_completion
-    fi
-
-    modify_path "/usr/local/sbin:/usr/local/bin" prepend
-fi
-
 # WSL
 if is_wsl; then
     export WSL_HOST=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)

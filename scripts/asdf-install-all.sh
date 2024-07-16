@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of plugins to install
-declare -a ASDF_PLUGINS=(
+declare -a TOOLS=(
   "starship"
   "fzf"
   "ripgrep"
@@ -23,19 +23,44 @@ declare -a ASDF_PLUGINS=(
   "zig"
 )
 
-# Install all the asdf managed programs
-for plugin in "${ASDF_PLUGINS[@]}"; do
+is_command () {
+    local cmd="$1"
+    if command -v $cmd >/dev/null 2>&1; then
+        true; return
+    else
+        false; return
+    fi
+}
+
+install_tool () {
+  local tool="$1"
+  if is_command mise; then
+    echo "installing $tool via mise"
+    mise use --global "$tool"@latest
+  elif is_command asdf; then
+    echo "installing $tool via asdf"
+    asdf plugin add "$tool"
+    asdf install "$tool" latest
+    asdf global "$tool" latest
+  else
+    echo "cannot install tools, no version manager found"
+    exit 1
+  fi
+}
+
+for tool in "${TOOLS[@]}"; do
   echo "================================================================================"
-  echo "$plugin"
+  echo "$tool"
   echo "================================================================================"
 
-  asdf plugin add "$plugin"
-  asdf install "$plugin" latest
-  asdf global "$plugin" latest
+  install_tool $tool
+
   echo "================================================================================"
   echo ""
 
   sleep 2
 done
 
-asdf reshim
+if is_command asdf; then
+  asdf reshim
+fi

@@ -7,26 +7,3 @@ if [[ ! -f $HOME/.shell/common ]]; then
 fi
 
 . $HOME/.shell/common
-
-################################################################################
-### Prompt
-################################################################################
-
-if is_command starship; then
-    eval "$(starship init zsh)"
-    eval "$(starship completions zsh)"
-fi
-
-################################################################################
-### Completions
-################################################################################
-
-# Asdf completions
-if [ -f $HOME/.asdf/completions/asdf.bash ]; then
-    source $HOME/.asdf/completions/asdf.bash
-fi
-
-if is_command kubectl; then
-    source <(kubectl completion zsh)
-    # complete -o default -F __start_kubectl k
-fi

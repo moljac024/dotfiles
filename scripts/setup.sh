@@ -114,15 +114,13 @@ link k9s $HOME/.config/k9s
 ### Version managers
 ################################################################################
 
-# Asdf
-if [ ! -d "$HOME/.asdf" ]; then
-    git_clone https://github.com/asdf-vm/asdf.git $HOME/.asdf --branch v0.14.0
-fi
 
 # Volta nodejs version manager
 if [ ! -d "$HOME/.volta" ]; then
     curl https://get.volta.sh | bash -s -- --skip-setup
 fi
+# Mise dev tool manager
+curl https://mise.run | sh
 
 ################################################################################
 ### Applications (.desktop files)

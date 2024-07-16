@@ -4,23 +4,25 @@
 ### Helper functions
 ################################################################################
 
-detect_shell() {
+get_running_shell() {
     if [ -n "$ZSH_VERSION" ]; then
         echo "zsh"
     elif [ -n "$BASH_VERSION" ]; then
         echo "bash"
+    elif [ -n "$fish_version" ]; then
+        echo "fish"
+    elif ps -p $$ -o comm= | grep -q fish; then
+        echo "fish"
     elif [ -n "$KSH_VERSION" ]; then
         echo "ksh"
     elif [ -n "$FCEDIT" ]; then
         echo "ksh"
-    elif [ -n "$PS3" ]; then
-        echo "unknown bourne-like shell"
     else
-        echo "unknown shell"
+        echo "unknown"
     fi
 }
 
-if [[ $(detect_shell) = "unknown shell" ]]; then
+if [[ $(get_running_shell) = "fish" || $(get_running_shell) = "unknown" ]]; then
   return
 fi
 
@@ -109,7 +111,7 @@ export LANG=en_US.UTF-8
 export EDITOR='vi'
 export DOTFILES=$HOME/dotfiles
 
-if [[ $(detect_shell) = "zsh" ]]; then
+if [[ $(get_running_shell) = "zsh" ]]; then
   autoload -Uz compinit && compinit
   autoload -U +X bashcompinit && bashcompinit
 fi
@@ -163,36 +165,15 @@ fi
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
 
-# Vector
-if [[ -d $HOME/.vector ]]; then
-    modify_path "$HOME/.vector/bin" prepend
-fi
-
-# Asdf version manager
-if [ -f $HOME/.asdf/asdf.sh ]; then
-    source $HOME/.asdf/asdf.sh
-fi
-
 # Volta nodejs version manager
 if [[ -d $HOME/.volta ]]; then
     export VOLTA_HOME="$HOME/.volta"
     modify_path "$VOLTA_HOME/bin" prepend
 fi
 
-# N node version manager
-if [[ -d $HOME/.n ]]; then
-    export N_PREFIX=$HOME/.n
-    modify_path "$N_PREFIX/bin" prepend
-fi
-
 # Fly.io
 export FLYCTL_INSTALL="$HOME/.fly"
 modify_path "$FLYCTL_INSTALL/bin" prepend
-
-# pnpm
-export PNPM_HOME="/home/bojan/.local/share/pnpm"
-modify_path "$PNPM_HOME" prepend
-# pnpm end
 
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
@@ -205,9 +186,25 @@ export XDG_DATA_DIRS=$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/e
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 
-# Cursor size
-if is_command gsettings; then
-    export XCURSOR_SIZE="$(gsettings get org.gnome.desktop.interface cursor-size)"
+###############################################################################
+# Mise dev tool manager
+###############################################################################
+
+if is_command mise; then
+  case $(get_running_shell) in
+  "zsh")
+    eval "$(mise activate zsh)"
+    ;;
+  "bash")
+    eval "$(mise activate bash)"
+    ;;
+  "fish")
+    mise activate fish | source
+    ;;
+  *)
+    :
+    ;;
+  esac
 fi
 
 ################################################################################
@@ -231,9 +228,7 @@ if is_command sudo; then
   alias sudo="sudo TERMINFO=\"$TERMINFO\""
 fi
 
-if is_command lazygit; then
-  alias lg='lazygit'
-fi
+alias lg='lazygit'
 
 # If running in kitty, alias ssh to kitten ssh
 if [[ "$TERM" == "xterm-kitty" ]]; then
@@ -252,25 +247,11 @@ alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([c
 alias serve-spa="npx --yes http-server-spa"
 alias emacs="flatpak run org.gnu.emacs"
 
-# Vim / Neovim
-if is_command vim; then
-  export EDITOR='vim'
-  export VISUAL='vim'
-  alias vi='vim'
-fi
-
-if is_command nvim; then
-    export EDITOR='nvim'
-    export VISUAL='nvim'
-    alias vi='nvim'
-    alias vim='nvim'
-    alias vimdiff='nvim -d'
-fi
-
-# Vscode
-if is_command code; then
-    alias vscode='code'
-fi
+export EDITOR='nvim'
+export VISUAL='nvim'
+alias vi='nvim'
+alias vim='nvim'
+alias vimdiff='nvim -d'
 
 # Git aliases
 alias gta='gitk --all'
@@ -283,18 +264,6 @@ if is_command podman; then
     alias docker-compose='podman-compose'
     export DOCKER_HOST="unix:///run/podman/podman.sock"
 fi
-
-# Distrobox & toolbox aliases
-if is_command distrobox; then
-  alias db='distrobox'
-  alias dbu='distrobox enter ubuntu-24-04'
-fi
-
-if is_command toolbox; then
-  alias tb='toolbox'
-  alias tbf='toolbox enter fedora-toolbox-39'
-fi
-alias docker-compose='docker compose'
 
 # k8s aliases
 alias k='kubectl'
@@ -319,6 +288,13 @@ export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 export FZF_DEFAULT_COMMAND="rg --files"
 export FZF_FIND_FILE_COMMAND="rg --files"
 
+# Catppuccin frappe theme for FZF
+export FZF_DEFAULT_OPTS=" \
+  --color=bg+:-1,bg:-1 \
+  --color=spinner:#f2d5cf,hl:#e78284 \
+  --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
+  --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
+
 # FZF
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 [[ -e "$HOME/.fzf-extras/fzf-extras.sh" ]] \
@@ -331,3 +307,27 @@ export FZF_FIND_FILE_COMMAND="rg --files"
 export_secret CR_PAT $DOTFILES/.credentials/github-token-registry
 export_secret DO_PAT $DOTFILES/.credentials/digital-ocean
 export_secret NPM_TOKEN_FOR_GITHUB $DOTFILES/.credentials/npm_token_for_github
+
+################################################################################
+### Other
+################################################################################
+
+# Cursor size
+if is_command gsettings; then
+    export XCURSOR_SIZE="$(gsettings get org.gnome.desktop.interface cursor-size)"
+fi
+
+################################################################################
+### Prompt
+################################################################################
+
+if is_command starship; then
+    eval "$(starship init $(get_running_shell))"
+    eval "$(starship completions $(get_running_shell))"
+# Mise has some quirks in the way it works by default and the above will not
+# work in case it's used in non-shim mode. That is because mise waits until
+# prompt is rendered to update PATH so we have a chicken-egg problem.
+elif ( is_command mise ) && ( mise which starship >/dev/null 2>&1 ); then
+    eval "$(mise exec starship -- starship init $(get_running_shell))"
+    eval "$(mise exec starship -- starship completions $(get_running_shell))"
+fi

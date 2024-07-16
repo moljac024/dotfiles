@@ -75,7 +75,6 @@ local function get_background_images()
     images_dir .. "/" .. "girl1.png",
     images_dir .. "/" .. "girl2.png",
     images_dir .. "/" .. "girl3.png",
-    images_dir .. "/" .. "legs.png",
   }
 
   local all_images = preferred_images

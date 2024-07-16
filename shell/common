@@ -4,7 +4,27 @@
 ### Helper functions
 ################################################################################
 
-function is_exported {
+detect_shell() {
+    if [ -n "$ZSH_VERSION" ]; then
+        echo "zsh"
+    elif [ -n "$BASH_VERSION" ]; then
+        echo "bash"
+    elif [ -n "$KSH_VERSION" ]; then
+        echo "ksh"
+    elif [ -n "$FCEDIT" ]; then
+        echo "ksh"
+    elif [ -n "$PS3" ]; then
+        echo "unknown bourne-like shell"
+    else
+        echo "unknown shell"
+    fi
+}
+
+if [[ $(detect_shell) = "unknown shell" ]]; then
+  return
+fi
+
+is_exported () {
     local name="$1"
     if [[ "${!name@a}" == *x* ]]; then
         true; return
@@ -13,7 +33,7 @@ function is_exported {
     fi
 }
 
-function is_wsl {
+is_wsl () {
     if grep -qi microsoft /proc/version; then
         true; return
     else
@@ -21,7 +41,7 @@ function is_wsl {
     fi
 }
 
-function is_command {
+is_command () {
     local cmd="$1"
     if command -v $cmd >/dev/null 2>&1; then
         true; return
@@ -30,7 +50,7 @@ function is_command {
     fi
 }
 
-function export_secret () {
+export_secret () {
     local var_name=$1
     local file=$2
     if [[ -f $file ]]; then
@@ -39,7 +59,7 @@ function export_secret () {
     fi
 }
 
-function ensure_symlink() {
+ensure_symlink () {
     local original=$1
     local path=$2
 
@@ -57,7 +77,7 @@ function ensure_symlink() {
     ln -s "$original_fullpath" "$path"
 }
 
-function modify_path () {
+modify_path () {
     # Check if the directory exists and return early if it doesn't
     # if [ ! -d "$1" ]; then
     #     # echo "The directory $1 does not exist"
@@ -89,13 +109,18 @@ export LANG=en_US.UTF-8
 export EDITOR='vi'
 export DOTFILES=$HOME/dotfiles
 
+if [[ $(detect_shell) = "zsh" ]]; then
+  autoload -Uz compinit && compinit
+  autoload -U +X bashcompinit && bashcompinit
+fi
+
 # WSL
 if is_wsl; then
     export WSL_HOST=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
     #export DISPLAY="$WSL_HOST:0"
     #export LIBGL_ALWAYS_INDIRECT=1
 
-    function wsl_ip {
+    wsl_ip () {
         ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
     }
     export WSL_GUEST=$(wsl_ip)
@@ -196,7 +221,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     alias ls='ls -FG'
-    function whoishoggingport () {
+    whoishoggingport () {
         lsof -n -iTCP:$1 | grep LISTEN
     }
 fi
@@ -213,7 +238,6 @@ fi
 # If running in kitty, alias ssh to kitten ssh
 if [[ "$TERM" == "xterm-kitty" ]]; then
     alias ssh='kitten ssh'
-    # gsettings set org.gnome.desktop.default-applications.terminal exec kitty
 fi
 
 alias update-npm-packages="npx npm-check-updates -i"
@@ -224,11 +248,8 @@ alias mkdir='mkdir -p -v'
 alias su='sudo -i'
 alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
 alias gs='git add . && git commit -m "Sync" && git push origin'
-
 alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
-
 alias serve-spa="npx --yes http-server-spa"
-
 alias emacs="flatpak run org.gnu.emacs"
 
 # Vim / Neovim
@@ -251,12 +272,11 @@ if is_command code; then
     alias vscode='code'
 fi
 
-# Xorg aliases:
+# Git aliases
 alias gta='gitk --all'
 alias gita='gitk --all'
 alias gg='git gui'
 
-# Use podman over docker
 # If podman is installed, use it instead of docker
 if is_command podman; then
     alias docker=podman
@@ -274,8 +294,8 @@ if is_command toolbox; then
   alias tb='toolbox'
   alias tbf='toolbox enter fedora-toolbox-39'
 fi
-
 alias docker-compose='docker compose'
+
 # k8s aliases
 alias k='kubectl'
 alias kcfg='kubectl config view --minify | grep name'

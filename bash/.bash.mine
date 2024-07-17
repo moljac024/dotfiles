@@ -4,11 +4,9 @@
 ### Source common shell setup
 ################################################################################
 
-if [[ ! -f $HOME/.shell/common ]]; then
-  return
+if [ -f $HOME/.shell/common.sh ]; then
+  . $HOME/.shell/common.sh
 fi
-
-. $HOME/.shell/common
 
 ################################################################################
 ### If not running interactively, stop here

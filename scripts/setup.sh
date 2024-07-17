@@ -4,20 +4,29 @@
 ### Baseline
 ################################################################################
 
-link () {
-    local original=$1
-    local path=$2
-    local original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
 
-    if [ -L "$path" ]; then
-        rm "$path"
-    fi
+ensure_symlink () {
+  local original=$1
 
-    if [ -e "$path" ]; then
-        mv "$path" "$path.old"
-    fi
+  if [ ! -e "$original" ]; then
+    return
+  fi
 
-    ln -s "$original_fullpath" "$path"
+  local path=$2
+  local original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
+
+  if [ -L "$path" ]; then
+    rm "$path"
+  fi
+
+  if [ -e "$path" ]; then
+    mv "$path" "$path.old"
+  fi
+
+  ln -s "$original_fullpath" "$path"
 }
 
 git_clone () {
@@ -41,70 +50,70 @@ fi
 ### Starship shell prompt
 ################################################################################
 
-link starship/starship.toml $HOME/.config/starship.toml
+ensure_symlink starship/starship.toml $HOME/.config/starship.toml
 
 ################################################################################
 ### Scripts
 ################################################################################
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    link bin/osx $HOME/bin
+    ensure_symlink bin/osx $HOME/bin
 else
-    link bin/linux $HOME/bin
+    ensure_symlink bin/linux $HOME/bin
 fi
 
 ################################################################################
 ### Terminals
 ################################################################################
 
-link kitty $HOME/.config/kitty
-link wezterm $HOME/.config/wezterm
+ensure_symlink kitty $HOME/.config/kitty
+ensure_symlink wezterm $HOME/.config/wezterm
 
 ################################################################################
 ### Shells
 ################################################################################
 
 mkdir -p $HOME/.shell
-link shell/common $HOME/.shell/common
+ensure_symlink shell/common.sh $HOME/.shell/common.sh
 
-link bash/.bash.mine $HOME/.bash.mine
-link bash/.bash_profile $HOME/.bash_profile
-link bash/.bashrc $HOME/.bashrc
-link bash/.complete_alias $HOME/.bash_complete_alias
+ensure_symlink bash/.bash.mine $HOME/.bash.mine
+ensure_symlink bash/.bash_profile $HOME/.bash_profile
+ensure_symlink bash/.bashrc $HOME/.bashrc
+ensure_symlink bash/.bash_complete_alias $HOME/.bash_complete_alias
 
-link zsh/.zshrc $HOME/.zshrc
-link zsh/.zsh.mine $HOME/.zsh.mine
+ensure_symlink zsh/.zshrc $HOME/.zshrc
+ensure_symlink zsh/.zsh.mine $HOME/.zsh.mine
 
-link shell/.inputrc $HOME/.inputrc
+ensure_symlink shell/.inputrc $HOME/.inputrc
 
 ################################################################################
 ### Git
 ################################################################################
 
-link git/.gitconfig $HOME/.gitconfig
-link git/.gitignore_global $HOME/.gitignore_global
+ensure_symlink git/.gitconfig $HOME/.gitconfig
+ensure_symlink git/.gitignore_global $HOME/.gitignore_global
 
 ################################################################################
 ### Vim
 ################################################################################
 
 mkdir -p $HOME/.vim/autoload
-link vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
-link vim/vimrc $HOME/.vim/vimrc
+ensure_symlink vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
+ensure_symlink vim/vimrc $HOME/.vim/vimrc
 # Neovim
-link nvim $HOME/.config/nvim
+ensure_symlink nvim $HOME/.config/nvim
 
 ################################################################################
 ### Tools
 ################################################################################
 
-link ripgrep/.ripgreprc $HOME/.ripgreprc
+ensure_symlink ripgrep/.ripgreprc $HOME/.ripgreprc
 
 mkdir -p $HOME/.tmux/plugins
 git_clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-link tmux/.tmux.conf $HOME/.tmux.conf
+ensure_symlink tmux/.tmux.conf $HOME/.tmux.conf
 
-link k9s $HOME/.config/k9s
+ensure_symlink k9s $HOME/.config/k9s
 
 ################################################################################
 ### Other apps
@@ -119,8 +128,11 @@ link k9s $HOME/.config/k9s
 if [ ! -d "$HOME/.volta" ]; then
     curl https://get.volta.sh | bash -s -- --skip-setup
 fi
-# Mise dev tool manager
-curl https://mise.run | sh
+
+if ! is_command mise; then
+  # Mise dev tool manager
+  curl https://mise.run | sh
+fi
 
 ################################################################################
 ### Applications (.desktop files)

@@ -67,7 +67,7 @@ export_var() {
 export_secret () {
   local var_name=$1
   local file=$2
-  if [[ -f $file ]]; then
+  if [ -f $file ]; then
     local content=$(cat $file)
     export_var "${var_name}" "$content"
   fi
@@ -76,16 +76,14 @@ export_secret () {
 ensure_symlink () {
   local original=$1
   local path=$2
-
-  if [ -e "$path" ]; then
-    mv "$path" "$path.old"
-    return
-  fi
-
   local original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
 
   if [ -L "$path" ]; then
     rm "$path"
+  fi
+
+  if [ -e "$path" ]; then
+    mv "$path" "$path.old"
   fi
 
   ln -s "$original_fullpath" "$path"
@@ -112,7 +110,7 @@ export_var LANG "en_US.UTF-8"
 export_var EDITOR "vi"
 export_var DOTFILES "$HOME/dotfiles"
 
-if [[ $(get_running_shell) = "zsh" ]]; then
+if [ $(get_running_shell) = "zsh" ]; then
   autoload -Uz compinit && compinit
   autoload -U +X bashcompinit && bashcompinit
 fi
@@ -209,12 +207,12 @@ fi
 ### Aliases
 ################################################################################
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+if [ "$OSTYPE" = "linux-gnu" ]; then
   alias ls='ls --color=auto --group-directories-first --sort=extension'
   alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
   alias update-fedora='sudo sh -c "yum update -y"'
   alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+elif [ "$OSTYPE" = "darwin"* ]; then
   alias ls='ls -FG'
   whoishoggingport () {
     lsof -n -iTCP:$1 | grep LISTEN
@@ -227,7 +225,7 @@ if is_command sudo; then
 fi
 
 # If running in kitty, alias ssh to kitten ssh
-if [[ "$TERM" == "xterm-kitty" ]]; then
+if [ "$TERM" = "xterm-kitty" ]; then
   alias ssh='kitten ssh'
 fi
 
@@ -276,7 +274,7 @@ alias kn='kubens'
 ################################################################################
 
 # Dircolors
-# if [[ -f $HOME/.dir_colors ]]; then
+# if [ -f $HOME/.dir_colors ]; then
 #     eval "$(dircolors $HOME/.dir_colors)"
 # fi
 
@@ -296,9 +294,9 @@ export_var FZF_DEFAULT_OPTS " \
   --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 # FZF
-if [[ "$(get_running_shell)" == "bash" ]]; then
+if [ "$(get_running_shell)" = "bash" ]; then
   [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-  [[ -e "$HOME/.fzf-extras/fzf-extras.sh" ]] \
+  [ -e "$HOME/.fzf-extras/fzf-extras.sh" ] \
     && source "$HOME/.fzf-extras/fzf-extras.sh"
 fi
 

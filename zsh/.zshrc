@@ -6,6 +6,6 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-if [[ -f $HOME/.zsh.mine ]]; then
-  . $HOME/.zsh.mine
+if [[ -f $HOME/.shell/common.sh ]]; then
+  . $HOME/.shell/common.sh
 fi

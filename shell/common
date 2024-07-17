@@ -26,30 +26,24 @@ if [[ $(get_running_shell) = "fish" || $(get_running_shell) = "unknown" ]]; then
   return
 fi
 
-is_exported () {
-    local name="$1"
-    if [[ "${!name@a}" == *x* ]]; then
-        true; return
-    else
-        false; return
-    fi
+is_wsl() {
+    grep -qi microsoft /proc/version
 }
 
-is_wsl () {
-    if grep -qi microsoft /proc/version; then
-        true; return
-    else
-        false; return
-    fi
+is_exported() {
+    [[ "${!1@a}" == *x* ]]
 }
 
-is_command () {
-    local cmd="$1"
-    if command -v $cmd >/dev/null 2>&1; then
-        true; return
-    else
-        false; return
-    fi
+is_command() {
+    command -v "$1" >/dev/null 2>&1
+}
+
+is_mise_command() {
+    is_command mise && mise which "$1" >/dev/null 2>&1
+}
+
+is_available() {
+    is_command "$1" || is_mise_command "$1"
 }
 
 export_secret () {
@@ -80,12 +74,6 @@ ensure_symlink () {
 }
 
 modify_path () {
-    # Check if the directory exists and return early if it doesn't
-    # if [ ! -d "$1" ]; then
-    #     # echo "The directory $1 does not exist"
-    #     return
-    # fi
-
     # Check if the directory is not already in PATH
     if [[ ":$PATH:" != *":$1:"* ]]; then
         # Append or prepend the directory to PATH based on the second argument
@@ -228,7 +216,6 @@ if is_command sudo; then
   alias sudo="sudo TERMINFO=\"$TERMINFO\""
 fi
 
-alias lg='lazygit'
 
 # If running in kitty, alias ssh to kitten ssh
 if [[ "$TERM" == "xterm-kitty" ]]; then
@@ -247,11 +234,15 @@ alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([c
 alias serve-spa="npx --yes http-server-spa"
 alias emacs="flatpak run org.gnu.emacs"
 
-export EDITOR='nvim'
-export VISUAL='nvim'
-alias vi='nvim'
-alias vim='nvim'
-alias vimdiff='nvim -d'
+if is_available nvim; then
+    export EDITOR='nvim'
+    export VISUAL='nvim'
+    alias vi='nvim'
+    alias vim='nvim'
+    alias vimdiff='nvim -d'
+fi
+
+alias lg='lazygit'
 
 # Git aliases
 alias gta='gitk --all'
@@ -327,7 +318,7 @@ if is_command starship; then
 # Mise has some quirks in the way it works by default and the above will not
 # work in case it's used in non-shim mode. That is because mise waits until
 # prompt is rendered to update PATH so we have a chicken-egg problem.
-elif ( is_command mise ) && ( mise which starship >/dev/null 2>&1 ); then
+elif is_mise_command starship; then
     eval "$(mise exec starship -- starship init $(get_running_shell))"
     eval "$(mise exec starship -- starship completions $(get_running_shell))"
 fi

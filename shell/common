@@ -7,24 +7,16 @@
 ################################################################################
 
 get_running_shell() {
-  if [ -n "$ZSH_VERSION" ]; then
-    echo "zsh"
-  elif [ -n "$BASH_VERSION" ]; then
-    echo "bash"
-  elif [ -n "$fish_version" ]; then
-    echo "fish"
-  elif ps -p $$ -o comm= | grep -q fish; then
-    echo "fish"
-  elif [ -n "$KSH_VERSION" ]; then
-    echo "ksh"
-  elif [ -n "$FCEDIT" ]; then
-    echo "ksh"
-  else
-    echo "unknown"
-  fi
+    if [ -n "$ZSH_VERSION" ]; then
+        echo "zsh"
+    elif [ -n "$BASH_VERSION" ]; then
+        echo "bash"
+    else
+        echo "unknown"
+    fi
 }
 
-if [[ $(get_running_shell) = "ksh" || $(get_running_shell) = "unknown" ]]; then
+if [ "$(get_running_shell)" = "unknown" ]; then
   return
 fi
 
@@ -32,9 +24,6 @@ is_interactive() {
   case "$(get_running_shell)" in
     bash|zsh)
       [[ $- == *i* ]]
-      ;;
-    fish)
-      status --is-interactive >/dev/null 2>&1
       ;;
     *)
       # Fallback for unknown shells
@@ -51,14 +40,7 @@ is_wsl() {
 }
 
 is_exported() {
-  case "$(get_running_shell)" in
-    fish)
-      set -q "$1"
-      ;;
-    *)
-      [ -n "$(export -p | grep "^export $1=")" ]
-      ;;
-  esac
+    [ -n "$(export -p | grep "^export $1=")" ]
 }
 
 is_command() {
@@ -77,18 +59,10 @@ export_var() {
   local var_name="$1"
   local var_value="$2"
 
-    # Replace spaces with underscores in variable name
-    var_name="${var_name// /_}"
-
-    case "$(get_running_shell)" in
-      fish)
-        set -gx "$var_name" "$var_value"
-        ;;
-      *)
-        export "$var_name=$var_value"
-        ;;
-    esac
-  }
+  # Replace spaces with underscores in variable name
+  var_name="${var_name// /_}"
+  export "$var_name=$var_value"
+}
 
 export_secret () {
   local var_name=$1
@@ -120,30 +94,13 @@ ensure_symlink () {
 modify_path() {
   local dir="$1"
   local action="$2"
-  case "$(get_running_shell)" in
-    fish)
-      # Fish-specific implementation
-      echo "
-      if not contains '$dir' \$PATH
-        if [ '$action' = 'prepend' ]
-          set -gx PATH '$dir' \$PATH
-        else
-          set -gx PATH \$PATH '$dir'
-        end
-      end
-      " | source
-      ;;
-    *)
-      # Bash/Zsh implementation
-      if [[ ":$PATH:" != *":$dir:"* ]]; then
-        if [ "$action" = "prepend" ]; then
-          export PATH="$dir:$PATH"
-        else
-          export PATH="$PATH:$dir"
-        fi
-      fi
-      ;;
-  esac
+  if [[ ":$PATH:" != *":$dir:"* ]]; then
+    if [ "$action" = "prepend" ]; then
+      export PATH="$dir:$PATH"
+    else
+      export PATH="$PATH:$dir"
+    fi
+  fi
 }
 
 ################################################################################
@@ -236,18 +193,15 @@ modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 
 if is_command mise; then
   case $(get_running_shell) in
-  "zsh")
-    eval "$(mise activate zsh)"
-    ;;
-  "bash")
-    eval "$(mise activate bash)"
-    ;;
-  "fish")
-    mise activate fish | source
-    ;;
-  *)
-    :
-    ;;
+    "zsh")
+      eval "$(mise activate zsh)"
+      ;;
+    "bash")
+      eval "$(mise activate bash)"
+      ;;
+    *)
+      :
+      ;;
   esac
 fi
 
@@ -256,15 +210,15 @@ fi
 ################################################################################
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    alias ls='ls --color=auto --group-directories-first --sort=extension'
-    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
-    alias update-fedora='sudo sh -c "yum update -y"'
-    alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
+  alias ls='ls --color=auto --group-directories-first --sort=extension'
+  alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
+  alias update-fedora='sudo sh -c "yum update -y"'
+  alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    alias ls='ls -FG'
-    whoishoggingport () {
-        lsof -n -iTCP:$1 | grep LISTEN
-    }
+  alias ls='ls -FG'
+  whoishoggingport () {
+    lsof -n -iTCP:$1 | grep LISTEN
+  }
 fi
 
 if is_command sudo; then
@@ -274,7 +228,7 @@ fi
 
 # If running in kitty, alias ssh to kitten ssh
 if [[ "$TERM" == "xterm-kitty" ]]; then
-    alias ssh='kitten ssh'
+  alias ssh='kitten ssh'
 fi
 
 alias update-npm-packages="npx npm-check-updates -i"
@@ -365,30 +319,16 @@ if is_command gsettings; then
     export_var XCURSOR_SIZE "$(gsettings get org.gnome.desktop.interface cursor-size)"
 fi
 
-
 ################################################################################
 ### Prompt
 ################################################################################
 
 if is_interactive; then
-  case "$(get_running_shell)" in
-    fish)
-      echo '
-      if command -v starship >/dev/null 2>&1
-        starship init fish | source
-      else if command -v mise >/dev/null 2>&1 && mise which starship >/dev/null 2>&1
-        mise exec starship -- starship init fish | source
-      end
-      ' | source
-      ;;
-    bash|zsh)
-      if is_command starship; then
-        eval "$(starship init "$(get_running_shell)")"
-        eval "$(starship completions "$(get_running_shell)")"
-      elif is_mise_command starship; then
-        eval "$(mise exec starship -- starship init "$(get_running_shell)")"
-        eval "$(mise exec starship -- starship completions "$(get_running_shell)")"
-      fi
-      ;;
-  esac
-      fi
+  if is_command starship; then
+    eval "$(starship init "$(get_running_shell)")"
+    eval "$(starship completions "$(get_running_shell)")"
+  elif is_mise_command starship; then
+    eval "$(mise exec starship -- starship init "$(get_running_shell)")"
+    eval "$(mise exec starship -- starship completions "$(get_running_shell)")"
+  fi
+fi

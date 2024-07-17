@@ -26,6 +26,24 @@ if [[ $(get_running_shell) = "fish" || $(get_running_shell) = "unknown" ]]; then
   return
 fi
 
+is_interactive() {
+    case "$(get_running_shell)" in
+        bash|zsh)
+            [[ $- == *i* ]]
+            ;;
+        fish)
+            status --is-interactive >/dev/null 2>&1
+            ;;
+        *)
+            # Fallback for unknown shells
+            case $- in
+                *i*) return 0 ;;
+                *) return 1 ;;
+            esac
+            ;;
+    esac
+}
+
 is_wsl() {
     grep -qi microsoft /proc/version
 }
@@ -308,17 +326,20 @@ if is_command gsettings; then
     export XCURSOR_SIZE="$(gsettings get org.gnome.desktop.interface cursor-size)"
 fi
 
+
 ################################################################################
 ### Prompt
 ################################################################################
 
-if is_command starship; then
-    eval "$(starship init $(get_running_shell))"
-    eval "$(starship completions $(get_running_shell))"
-# Mise has some quirks in the way it works by default and the above will not
-# work in case it's used in non-shim mode. That is because mise waits until
-# prompt is rendered to update PATH so we have a chicken-egg problem.
-elif is_mise_command starship; then
-    eval "$(mise exec starship -- starship init $(get_running_shell))"
-    eval "$(mise exec starship -- starship completions $(get_running_shell))"
+if is_interactive; then
+  if is_command starship; then
+      eval "$(starship init $(get_running_shell))"
+      eval "$(starship completions $(get_running_shell))"
+  # Mise has some quirks in the way it works by default and the above will not
+  # work in case it's used in non-shim mode. That is because mise waits until
+  # prompt is rendered to update PATH so we have a chicken-egg problem.
+  elif is_mise_command starship; then
+      eval "$(mise exec starship -- starship init $(get_running_shell))"
+      eval "$(mise exec starship -- starship completions $(get_running_shell))"
+  fi
 fi

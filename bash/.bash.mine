@@ -20,16 +20,6 @@ case $- in
 esac
 
 ################################################################################
-### Prompt
-################################################################################
-
-# Starship prompt
-if is_command starship; then
-    eval "$(starship init bash)"
-    eval "$(starship completions bash)"
-fi
-
-################################################################################
 ### Completions
 ################################################################################
 
@@ -56,10 +46,6 @@ if ! shopt -oq posix; then
     fi
 fi
 
-# Direnv
-if is_command direnv; then
-    eval "$(direnv hook bash)"
-fi
 
 # Asdf completions
 if [ -f $HOME/.asdf/completions/asdf.bash ]; then
@@ -76,3 +62,8 @@ fi
 # if is_command dagger; then
 #     source <(dagger completion bash)
 # fi
+
+# Direnv
+if is_command direnv; then
+    eval "$(direnv hook bash)"
+fi

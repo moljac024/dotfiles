@@ -1,105 +1,12 @@
 #/usr/bin/env sh
-
 # vim: filetype=sh
 
-################################################################################
-### Helper functions
-################################################################################
+# Full path of the current script
+THIS=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0)
+# The directory where current script resides
+DIR=$(dirname "${THIS}")
 
-get_running_shell() {
-    if [ -n "$ZSH_VERSION" ]; then
-        echo "zsh"
-    elif [ -n "$BASH_VERSION" ]; then
-        echo "bash"
-    else
-        echo "unknown"
-    fi
-}
-
-if [ "$(get_running_shell)" = "unknown" ]; then
-  return
-fi
-
-is_interactive() {
-  case "$(get_running_shell)" in
-    bash|zsh)
-      [[ $- == *i* ]]
-      ;;
-    *)
-      # Fallback for unknown shells
-      case $- in
-        *i*) return 0 ;;
-        *) return 1 ;;
-      esac
-      ;;
-  esac
-}
-
-is_wsl() {
-  grep -qi microsoft /proc/version
-}
-
-is_exported() {
-    [ -n "$(export -p | grep "^export $1=")" ]
-}
-
-is_command() {
-  command -v "$1" >/dev/null 2>&1
-}
-
-is_mise_command() {
-  is_command mise && mise which "$1" >/dev/null 2>&1
-}
-
-is_available() {
-  is_command "$1" || is_mise_command "$1"
-}
-
-export_var() {
-  local var_name="$1"
-  local var_value="$2"
-
-  # Replace spaces with underscores in variable name
-  var_name="${var_name// /_}"
-  export "$var_name=$var_value"
-}
-
-export_secret () {
-  local var_name=$1
-  local file=$2
-  if [ -f $file ]; then
-    local content=$(cat $file)
-    export_var "${var_name}" "$content"
-  fi
-}
-
-ensure_symlink () {
-  local original=$1
-  local path=$2
-  local original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
-
-  if [ -L "$path" ]; then
-    rm "$path"
-  fi
-
-  if [ -e "$path" ]; then
-    mv "$path" "$path.old"
-  fi
-
-  ln -s "$original_fullpath" "$path"
-}
-
-modify_path() {
-  local dir="$1"
-  local action="$2"
-  if [[ ":$PATH:" != *":$dir:"* ]]; then
-    if [ "$action" = "prepend" ]; then
-      export PATH="$dir:$PATH"
-    else
-      export PATH="$PATH:$dir"
-    fi
-  fi
-}
+source "$DIR/util.sh"
 
 ################################################################################
 ### Environment
@@ -118,8 +25,6 @@ fi
 # WSL
 if is_wsl; then
     export_var WSL_HOST $(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
-    #export DISPLAY="$WSL_HOST:0"
-    #export LIBGL_ALWAYS_INDIRECT=1
 
     wsl_ip () {
         ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'

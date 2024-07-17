@@ -65,31 +65,11 @@ end
 
 local function get_background_images()
   local images_dir = wezterm.home_dir .. "/dotfiles/backgrounds"
-  local all_images_in_dir = wezterm.read_dir(images_dir)
-
-  local preferred_images = {
-    images_dir .. "/" .. "firewatch1.png",
-    images_dir .. "/" .. "firewatch2.png",
-    images_dir .. "/" .. "firewatch3.png",
-    images_dir .. "/" .. "tyrande.png",
-    images_dir .. "/" .. "girl1.png",
-    images_dir .. "/" .. "girl2.png",
-    images_dir .. "/" .. "girl3.png",
-  }
-
-  local all_images = preferred_images
-  ---@diagnostic disable-next-line: unused-local
-  for i, image in ipairs(all_images_in_dir) do
-    if (not includes(all_images, image)) then
-      table.insert(all_images, image)
-    end
-  end
-
-  return { all_images = all_images, preferred_images = preferred_images }
+  return wezterm.read_dir(images_dir)
 end
 
 local function get_random_image()
-  local image_pool = get_background_images().preferred_images
+  local image_pool = get_background_images()
   local tries = 0
   local new_image = image_pool[math.random(#image_pool)]
 
@@ -111,7 +91,6 @@ local function set_background_image()
   local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
   local bg_color = wezterm.color.parse(color_scheme.background)
 
-  global.background_image = image
   config.background = {
     { source = { Color = bg_color }, width = '100%', height = '100%' },
     {
@@ -128,7 +107,7 @@ end
 
 local choose_background_image_action = wezterm.action_callback(function(window, pane)
   local choices = {}
-  local images = get_background_images().all_images
+  local images = get_background_images()
 
   if (#images == 0) then
     return

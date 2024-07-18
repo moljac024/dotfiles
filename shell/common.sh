@@ -1,10 +1,9 @@
 #/usr/bin/env sh
 # vim: filetype=sh
+# set -euo pipefail # Shell strict mode
 
-# Full path of the current script
-THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0)
-# The directory where current script resides
-DIR=$(dirname "${THIS}")
+THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0) # Full path of the current script
+DIR=$(dirname "${THIS}") # The directory where current script resides
 
 source "$DIR/util.sh"
 

@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
+set -euo pipefail # Shell strict mode
 
 ################################################################################
 ### Baseline
 ################################################################################
 
-# Full path of the current script
-THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0)
-# The directory where current script resides
-DIR=$(dirname "${THIS}")
+THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0) # Full path of the current script
+DIR=$(dirname "${THIS}") # The directory where current script resides
 ROOT_DIR=$(dirname "${DIR}../")
 
 source $ROOT_DIR/shell/util.sh

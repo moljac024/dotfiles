@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail # Shell strict mode
 
 # List of plugins to install
 declare -a TOOLS=(

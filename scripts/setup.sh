@@ -5,7 +5,7 @@
 ################################################################################
 
 # Full path of the current script
-THIS=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0)
+THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0)
 # The directory where current script resides
 DIR=$(dirname "${THIS}")
 ROOT_DIR=$(dirname "${DIR}../")

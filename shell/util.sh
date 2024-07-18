@@ -15,10 +15,6 @@ get_running_shell() {
     fi
 }
 
-if [ "$(get_running_shell)" = "unknown" ]; then
-  return
-fi
-
 is_interactive() {
   case "$(get_running_shell)" in
     bash|zsh)

@@ -2,11 +2,15 @@
 # vim: filetype=sh
 
 # Full path of the current script
-THIS=$(readlink -f "${BASH_SOURCE[0]}" 2>/dev/null||echo $0)
+THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0)
 # The directory where current script resides
 DIR=$(dirname "${THIS}")
 
 source "$DIR/util.sh"
+
+if [ "$(get_running_shell)" = "unknown" ]; then
+  return
+fi
 
 ################################################################################
 ### Environment

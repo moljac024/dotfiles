@@ -2,34 +2,29 @@
 
 # List of plugins to install
 declare -a TOOLS=(
-  "starship"
-  "fzf"
-  "ripgrep"
-  "lazygit"
-  "neovim"
-  "kubectl"
-  "kubectx"
-  "kubecm"
-  "minikube"
-  "kustomize"
-  "helm"
-  "k9s"
-  "dagger"
-  "doctl"
-  "opentofu"
-  "jq"
-  "yq"
-  "mkcert"
-  "zig"
+"starship"
+"fzf"
+"ripgrep"
+"lazygit"
+"neovim"
+"kubectl"
+"kubectx"
+"kubecm"
+"minikube"
+"kustomize"
+"helm"
+"k9s"
+"dagger"
+"doctl"
+"opentofu"
+"jq"
+"yq"
+"mkcert"
+"zig"
 )
 
 is_command () {
-    local cmd="$1"
-    if command -v $cmd >/dev/null 2>&1; then
-        true; return
-    else
-        false; return
-    fi
+  command -v $cmd >/dev/null 2>&1
 }
 
 install_tool () {

@@ -10,26 +10,11 @@ if [[ -f $HOME/.shell/common.sh ]]; then
   source $HOME/.shell/common.sh
 fi
 
-if [[ -f $DOTFILES/shell/antigen.zsh ]]; then
-  source $DOTFILES/shell/antigen.zsh
+# Antidote
+export ANTIDOTE_DIR=$HOME/.antidote
+if [ ! -e $ANTIDOTE_DIR ]; then
+  git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
 fi
 
-# Load the oh-my-zsh's library
-antigen use oh-my-zsh
-
-antigen bundle <<EOBUNDLES
-    # Bundles from the default repo (robbyrussell's oh-my-zsh)
-    git
-
-    # Syntax highlighting bundle.
-    zsh-users/zsh-syntax-highlighting
-
-    # Fish-like auto suggestions
-    zsh-users/zsh-autosuggestions
-
-    # Extra zsh completions
-    zsh-users/zsh-completions
-EOBUNDLES
-
-# Tell antigen that you're done
-antigen apply
+source $ANTIDOTE_DIR/antidote.zsh
+antidote load

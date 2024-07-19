@@ -52,7 +52,7 @@ ensure_symlink $ROOT_DIR/bash/.bashrc $HOME/.bashrc
 ensure_symlink $ROOT_DIR/bash/.bash_complete_alias $HOME/.bash_complete_alias
 
 ensure_symlink $ROOT_DIR/zsh/.zshrc $HOME/.zshrc
-ensure_symlink $ROOT_DIR/zsh/.zsh.mine $HOME/.zsh.mine
+ensure_symlink $ROOT_DIR/zsh/.zsh_plugins.txt $HOME/.zsh_plugins.txt
 
 ensure_symlink $ROOT_DIR/shell/.inputrc $HOME/.inputrc
 

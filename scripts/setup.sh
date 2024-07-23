@@ -44,16 +44,23 @@ ensure_symlink $ROOT_DIR/wezterm $HOME/.config/wezterm
 ### Shells
 ################################################################################
 
+# Common shell scripts, utilities and config
 ensure_symlink $ROOT_DIR/shell $HOME/.shell
 
+# Bash shell
 ensure_symlink $ROOT_DIR/bash/.bash.mine $HOME/.bash.mine
 ensure_symlink $ROOT_DIR/bash/.bash_profile $HOME/.bash_profile
 ensure_symlink $ROOT_DIR/bash/.bashrc $HOME/.bashrc
 ensure_symlink $ROOT_DIR/bash/.bash_complete_alias $HOME/.bash_complete_alias
 
+# Zsh shell
 ensure_symlink $ROOT_DIR/zsh/.zshrc $HOME/.zshrc
 ensure_symlink $ROOT_DIR/zsh/.zsh_plugins.txt $HOME/.zsh_plugins.txt
 
+# Fish shell
+ensure_symlink $ROOT_DIR/fish $HOME/.config/fish
+
+# Other shell related configs
 ensure_symlink $ROOT_DIR/shell/.inputrc $HOME/.inputrc
 
 ################################################################################

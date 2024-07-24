@@ -14,6 +14,14 @@ local log = {
 -- ==== Functions
 -- =============================================================================
 
+-- Function to check if program is available
+local function is_program_available(program)
+  local success, stdout, stderr = wezterm.run_child_process({ "which", program })
+
+  log.info(string.format("%s check: success=%s, stdout='%s', stderr='%s'", program, tostring(success), stdout, stderr))
+  return success
+end
+
 local function split_str(input_str, sep)
   if sep == nil then
     sep = "%s"
@@ -259,6 +267,11 @@ wezterm.on(
 
 -- Reload configuration every once in a while (setting a random wallpaper again)
 -- wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
+
+-- Set fish as default shell if it's available
+-- if is_program_available("fish") then
+--   config.default_prog = { "fish", "-l" }
+-- end
 
 -- and finally, return the configuration to wezterm
 return config

@@ -1,0 +1,31 @@
+@import "catppuccin/frappe.css";
+
+* {
+  color: @text;
+  border: none;
+  border-radius: 0;
+  font-family: "ZedMono NF", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: @base;
+  border: 2px solid @crust;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  background: transparent;
+  border-top: 3px solid transparent;
+}
+
+#workspaces button.focused {
+  border-top: 3px solid @mauve;
+  color: @mauve;
+}
+
+.module {
+  padding: 0 5px;
+  margin: 0;
+}

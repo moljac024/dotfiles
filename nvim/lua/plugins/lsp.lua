@@ -18,7 +18,7 @@ return {
   },
   {
     "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
+    ft = "lua",                                -- only load on lua files
     dependencies = {
       { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
     },
@@ -76,7 +76,6 @@ return {
       vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
     end,
   },
-
   {
     "stevearc/aerial.nvim",
     -- Optional dependencies
@@ -87,18 +86,24 @@ return {
     config = function()
       require("aerial").setup({
         backends = { "lsp", "treesitter" },
+        show_guides = true,
         layout = {
           max_width = { 40, 0.2 },
           width = nil,
           min_width = 20,
         },
+        float = {
+          -- relative = "editor",
+          max_height = 0.9,
+        }
       })
 
-      -- vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>")
+      -- vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>", { commander = {} })
     end,
   },
   {
     "hedyhli/outline.nvim",
+    -- enabled = false,
     config = function()
       local outline = require("outline")
       outline.setup({

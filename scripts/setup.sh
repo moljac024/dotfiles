@@ -111,6 +111,22 @@ if ! is_command mise; then
 fi
 
 ################################################################################
+### DEs and WMs
+################################################################################
+
+ensure_symlink $ROOT_DIR/waybar $HOME/.config/waybar
+
+ensure_symlink $ROOT_DIR/rofi $HOME/.config/rofi
+mkdir -p $HOME/.local/share/rofi
+ensure_symlink $ROOT_DIR/rofi/themes $HOME/.local/share/rofi/themes
+
+ensure_symlink $ROOT_DIR/mako $HOME/.config/mako
+ensure_symlink $ROOT_DIR/swaylock $HOME/.config/swaylock
+ensure_symlink $ROOT_DIR/sway $HOME/.config/sway
+
+ensure_symlink $ROOT_DIR/wlogout $HOME/.config/wlogout
+
+################################################################################
 ### Applications (.desktop files)
 ################################################################################
 mkdir -p $HOME/.local/share/applications &&\

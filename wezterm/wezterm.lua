@@ -72,7 +72,7 @@ local function scheme_for_appearance(appearance)
 end
 
 local function get_background_images()
-  local images_dir = wezterm.home_dir .. "/dotfiles/backgrounds"
+  local images_dir = wezterm.home_dir .. "/dotfiles/backgrounds/terminal"
   return wezterm.read_dir(images_dir)
 end
 
@@ -205,8 +205,11 @@ config.window_padding = {
 config.use_fancy_tab_bar = false
 -- config.show_tab_index_in_tab_bar = false
 config.enable_scroll_bar = true
-config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- Hide the title bar
+-- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE" -- Hide the title bar
+config.window_decorations = "RESIZE" -- Hide the title bar
 config.color_scheme = scheme_for_appearance(get_appearance())
+
+config.hide_tab_bar_if_only_one_tab = true
 
 -- If background image is not set, set a random one
 if global.background_image == nil or global.randomize_background_image == true then

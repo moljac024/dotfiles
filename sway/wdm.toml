@@ -1,0 +1,5 @@
+rules = [
+    "name=org.gnome.Nautilus",
+    "class=steam",
+    "app=re.sonny.Junction"
+]

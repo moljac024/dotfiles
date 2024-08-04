@@ -300,7 +300,8 @@ bar {
 ###############################################################################
 
 # Custom binary to manage window decorations
-exec_always ~/.config/sway/bin/wdm > ~/logs/window_decoration_manager.log 2>&1
+# exec_always ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml > ~/logs/window_decoration_manager.log 2>&1
+exec_always killall wdm; ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml
 
 # Gnome keyring
 exec eval $(gnome-keyring-daemon --start)

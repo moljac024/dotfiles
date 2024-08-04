@@ -5,24 +5,65 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
+  "flag"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/BurntSushi/toml"
 	"github.com/joshuarubin/go-sway"
 )
+
+type Config struct {
+	Rules []string `toml:"rules"`
+}
 
 type decorationHandler struct {
 	sway.EventHandler
 	client sway.Client
 	log    *log.Logger
 	mutex  sync.Mutex
+	config Config
+}
+
+func (dh *decorationHandler) printWindowInfo(ctx context.Context) {
+    tree, err := dh.client.GetTree(ctx)
+    if err != nil {
+        dh.log.Printf("Error getting tree: %v", err)
+        return
+    }
+
+    dh.printNodeInfo(tree, 0)
+}
+
+func (dh *decorationHandler) printNodeInfo(node *sway.Node, depth int) {
+    if node.Type == "con" || node.Type == "floating_con" {
+        indent := strings.Repeat("  ", depth)
+        appID := "N/A"
+        if node.AppID != nil {
+            appID = *node.AppID
+        }
+        class := "N/A"
+        if node.WindowProperties != nil {
+            class = node.WindowProperties.Class
+        }
+        fmt.Printf("%sWindow ID: %d\n", indent, node.ID)
+        fmt.Printf("%s  Name: %s\n", indent, node.Name)
+        fmt.Printf("%s  AppID: %s\n", indent, appID)
+        fmt.Printf("%s  Class: %s\n", indent, class)
+        fmt.Printf("%s  Type: %s\n", indent, node.Type)
+        fmt.Println()
+    }
+
+    for _, child := range append(node.Nodes, node.FloatingNodes...) {
+        dh.printNodeInfo(child, depth+1)
+    }
 }
 
 func (dh *decorationHandler) Window(ctx context.Context, e sway.WindowEvent) {
 	dh.log.Printf("Received window event: Change=%s, Container.ID=%d", e.Change, e.Container.ID)
 
-	// Handle all event types
 	go dh.handleWindowChange(ctx, e.Container.ID)
 }
 
@@ -113,33 +154,60 @@ func (dh *decorationHandler) updateWindowDecoration(ctx context.Context, node *s
 }
 
 func (dh *decorationHandler) hasCSD(node *sway.Node) bool {
-	csdApps := []string{"firefox", "chromium", "google-chrome", "electron", "nautilus", "org.gnome", "steam"}
+    var appID, class string
+    if node.AppID != nil {
+        appID = *node.AppID
+    }
+    if node.WindowProperties != nil {
+        class = node.WindowProperties.Class
+    }
 
-	if node.AppID != nil {
-		appID := strings.ToLower(*node.AppID)
-		for _, app := range csdApps {
-			if strings.Contains(appID, app) {
-				dh.log.Printf("Detected CSD for AppID: %s", *node.AppID)
-				return true
-			}
-		}
-	}
+    dh.log.Printf("Checking CSD for window ID=%d, AppID=%s, Class=%s", node.ID, appID, class)
 
-	if node.Shell != nil && strings.Contains(strings.ToLower(*node.Shell), "client_side_decorations") {
-		dh.log.Printf("Detected CSD from Shell: %s", *node.Shell)
-		return true
-	}
+    for _, rule := range dh.config.Rules {
+        parts := strings.SplitN(rule, "~", 2)
+        if len(parts) != 2 {
+            parts = strings.SplitN(rule, "=", 2)
+        }
+        if len(parts) != 2 {
+            dh.log.Printf("Invalid rule format: %s", rule)
+            continue
+        }
 
-	if node.WindowProperties != nil && node.WindowProperties.Class != "" {
-		class := strings.ToLower(node.WindowProperties.Class)
-		if strings.Contains(class, "gtk") {
-			dh.log.Printf("Detected CSD for GTK app: %s", node.WindowProperties.Class)
-			return true
-		}
-	}
+        ruleType, value := parts[0], parts[1]
+        isPartial := strings.Contains(rule, "~")
 
-	dh.log.Printf("No CSD detected for window ID=%d", node.ID)
-	return false
+        switch ruleType {
+        case "name":
+            if (isPartial && strings.Contains(strings.ToLower(node.Name), strings.ToLower(value))) ||
+                (!isPartial && strings.EqualFold(node.Name, value)) {
+                dh.log.Printf("Detected CSD: name match %s", rule)
+                return true
+            }
+        case "class":
+            if (isPartial && strings.Contains(strings.ToLower(class), strings.ToLower(value))) ||
+                (!isPartial && strings.EqualFold(class, value)) {
+                dh.log.Printf("Detected CSD: class match %s", rule)
+                return true
+            }
+        case "app":
+            if (isPartial && strings.Contains(strings.ToLower(appID), strings.ToLower(value))) ||
+                (!isPartial && strings.EqualFold(appID, value)) {
+                dh.log.Printf("Detected CSD: AppID match %s", rule)
+                return true
+            }
+        default:
+            dh.log.Printf("Unknown rule type: %s", ruleType)
+        }
+    }
+
+    if node.Shell != nil && strings.Contains(strings.ToLower(*node.Shell), "client_side_decorations") {
+        dh.log.Printf("Detected CSD from Shell: %s", *node.Shell)
+        return true
+    }
+
+    dh.log.Printf("No CSD detected for window ID=%d", node.ID)
+    return false
 }
 
 func (dh *decorationHandler) periodicCheck(ctx context.Context) {
@@ -179,9 +247,45 @@ func (dh *decorationHandler) checkNodeAndChildren(ctx context.Context, node *swa
 	}
 }
 
+func loadConfig(path string) (Config, error) {
+    var config Config
+    _, err := toml.DecodeFile(path, &config)
+    if err != nil {
+        log.Printf("Erroir loading config from %s", path)
+    }
+    return config, err
+}
+
 func main() {
 	logger := log.New(os.Stdout, "window-decorator: ", log.LstdFlags)
 	logger.Println("Window decoration manager started")
+
+  dumpInfo := flag.Bool("dump", false, "Dump window information and exit")
+  configFile := flag.String("config", "", "Path to the configuration file")
+  flag.Parse()
+
+  // Determine config file path
+  var configPath string
+  if *configFile != "" {
+      configPath = *configFile
+  } else {
+      configPath = filepath.Join(os.Getenv("HOME"), ".config", "wdm", "config.toml")
+  }
+
+	// Load configuration
+	config, err := loadConfig(configPath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			logger.Printf("Config file not found, using default configuration")
+			config = Config{
+				Rules: []string{
+					"name=org.gnome.Nautilus",
+				},
+			}
+		} else {
+			logger.Fatalf("Error loading config: %v", err)
+		}
+	}
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -194,7 +298,13 @@ func main() {
 	handler := &decorationHandler{
 		client: client,
 		log:    logger,
+		config: config,
 	}
+
+  if *dumpInfo {
+      handler.printWindowInfo(ctx)
+      return
+  }
 
 	go handler.periodicCheck(ctx)
 

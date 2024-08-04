@@ -29,3 +29,8 @@ window#waybar {
   padding: 0 5px;
   margin: 0;
 }
+
+#mode {
+  background-color: @mauve;
+  color: @base;
+}

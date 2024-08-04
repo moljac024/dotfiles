@@ -5,7 +5,7 @@
     "height": 30,
     "modules-left": ["custom/launcher", "sway/workspaces", "sway/mode"],
     "modules-center": [],
-    "modules-right": ["tray", "pulseaudio", "backlight", "network", "cpu", "memory", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "network", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
 
     "sway/language": {
         "format": "{}",
@@ -31,10 +31,18 @@
         "tooltip-format": "{:%Y-%m-%d}"
     },
     "cpu": {
-        "format": "  {usage}%"
+        "format": "  {usage}%",
+        "on-click": "flatpak run io.missioncenter.MissionCenter"
     },
     "memory": {
-        "format": "  {}%"
+        "format": "  {}%",
+        "on-click": "flatpak run io.missioncenter.MissionCenter"
+    },
+     "temperature": {
+      "critical-threshold": 80,
+      "format-critical": " {temperatureC}°C",
+      "format": " {temperatureC}°C",
+        "on-click": "flatpak run io.missioncenter.MissionCenter"
     },
     "battery": {
         "bat": "BAT0",
@@ -46,7 +54,7 @@
         "format-icons": [" ", " ", " ", " ", " "]
     },
     "network": {
-        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-wifi": "  {essid} ({signalStrength}%)",
         "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
         "format-disconnected": "⚠ Disconnected"
     },
@@ -86,7 +94,6 @@
     },
     "custom/power": {
         "format": "⏻ ",
-        // "on-click": "swaynag -t warning -m 'Power Menu Options' -b 'Logout' 'swaymsg exit' -b 'Restart' 'systemctl reboot' -b 'Shutdown' 'systemctl poweroff'"
         "on-click": "wlogout"
     }
 }

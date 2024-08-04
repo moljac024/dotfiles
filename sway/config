@@ -140,7 +140,8 @@ floating_modifier $mod normal
 bindsym $mod+Shift+c reload
 
 # Exit sway (logs you out of your Wayland session)
-bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+# bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+q exec wlogout
 
 # Move your focus around
 bindsym $mod+$left focus left
@@ -204,10 +205,10 @@ bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen
 
 # Toggle the current focus between tiling and floating mode
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+f floating toggle
 
 # Swap focus between the tiling area and the floating area
-bindsym $mod+space focus mode_toggle
+bindsym $mod+$alt+f focus mode_toggle
 
 # Move focus to the parent container
 bindsym $mod+a focus parent
@@ -257,6 +258,7 @@ bindsym --locked XF86MonBrightnessDown exec light -U 5
 
 # Middle click on titlebar closes application
 bindsym button2 kill
+# Right click on titlebar toggles floating of window
 bindsym button3 floating toggle
 
 ###############################################################################
@@ -292,13 +294,13 @@ exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
 exec --no-startup-id dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-exec blueman-applet &
-
 # Screen locking
 exec swayidle -w \
-  timeout 300 'swaylock' \
+  timeout 300 'swaylock -f' \
   timeout 600 'swaymsg "output * power off"' \
   resume 'swaymsg "output * power on"' \
   after-resume 'swaymsg "output * power on"' \
-  before-sleep 'swaylock' \
-  lock 'swaylock'
+  before-sleep 'swaylock -f' \
+  lock 'swaylock -f'
+
+exec blueman-applet

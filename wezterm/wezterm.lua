@@ -268,6 +268,15 @@ wezterm.on(
   end
 )
 
+wezterm.on(
+  'format-window-title',
+  ---@diagnostic disable-next-line: unused-local, redefined-local
+  function(tab, pane, tabs, panes, config)
+    local title = get_tab_title(tab)
+    return title
+  end
+)
+
 -- Reload configuration every once in a while (setting a random wallpaper again)
 -- wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
 

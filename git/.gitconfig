@@ -2,17 +2,7 @@
 	name = Bojan Matić
 	email = matic.bojan@gmail.com
 [core]
-	editor = vim
 	excludesfile = ~/.gitignore_global
-[diff]
-	tool = vimdiff
-[difftool]
-	prompt = false
-[merge]
-	tool = vimdiff
-	conflictstyle = diff3
-[mergetool]
-	prompt = false
 [alias]
 	d = difftool
 	u = fetch --all --prune

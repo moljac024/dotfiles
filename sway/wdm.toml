@@ -1,5 +1,6 @@
 rules = [
     "name=org.gnome.Nautilus",
     "class=steam",
+    "app~org.gnome",
     "app=re.sonny.Junction"
 ]

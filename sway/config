@@ -35,6 +35,13 @@ set $menu "rofi -show drun"
 
 font pango: ZedMono NF 12
 
+default_border normal
+default_floating_border normal
+
+# Default border style for new windows
+default_border pixel 2
+default_floating_border normal
+
 # target                 title     bg    text   indicator  border
 client.focused           $lavender $mauve $base  $rosewater $lavender
 client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
@@ -48,7 +55,8 @@ client.background        $base
 ###############################################################################
 
 focus_follows_mouse no
-workspace_layout tabbed
+# Default layout
+# workspace_layout tabbed
 workspace_auto_back_and_forth yes
 # smart|urgent|focus|none
 focus_on_window_activation urgent
@@ -127,7 +135,7 @@ bindsym $mod+Return exec $term
 bindsym $mod+q kill
 
 # Start your launcher
-bindsym $mod+d exec $menu
+bindsym $mod+p exec $menu
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -212,6 +220,8 @@ bindsym $mod+$alt+f focus mode_toggle
 
 # Move focus to the parent container
 bindsym $mod+a focus parent
+# Move focus to child
+bindsym $mod+d focus child
 
 # Sway has a "scratchpad", which is a bag of holding for windows.
 # You can send windows there and get them back later.
@@ -288,6 +298,9 @@ bar {
 ###############################################################################
 #### Startup applications
 ###############################################################################
+
+# Custom binary to manage window decorations
+exec_always ~/.config/sway/bin/wdm > ~/logs/window_decoration_manager.log 2>&1
 
 # Gnome keyring
 exec eval $(gnome-keyring-daemon --start)

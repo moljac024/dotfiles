@@ -21,8 +21,7 @@ window#waybar {
 }
 
 #workspaces button.focused {
-  border-top: 3px solid @mauve;
-  color: @mauve;
+  border-top: 3px solid @blue;
 }
 
 .module {
@@ -31,6 +30,6 @@ window#waybar {
 }
 
 #mode {
-  background-color: @mauve;
+  background-color: @blue;
   color: @base;
 }

@@ -37,6 +37,7 @@ fi
 ### Terminals
 ################################################################################
 
+ensure_symlink $ROOT_DIR/foot $HOME/.config/foot
 ensure_symlink $ROOT_DIR/kitty $HOME/.config/kitty
 ensure_symlink $ROOT_DIR/wezterm $HOME/.config/wezterm
 
@@ -117,6 +118,7 @@ fi
 ensure_symlink $ROOT_DIR/waybar $HOME/.config/waybar
 
 ensure_symlink $ROOT_DIR/rofi $HOME/.config/rofi
+ensure_symlink $ROOT_DIR/fuzzel $HOME/.config/fuzzel
 mkdir -p $HOME/.local/share/rofi
 ensure_symlink $ROOT_DIR/rofi/themes $HOME/.local/share/rofi/themes
 

@@ -23,10 +23,7 @@ button {
 button:focus,
 button:active,
 button:hover {
-  background-color: #ca9ee6;
-  /* border-color: #ca9ee6; */
-  /* color: #303446; */
-  /* text-decoration-color: #303446; */
+  background-color: #8caaee;
   outline-style: none;
 }
 

@@ -1,6 +1,8 @@
 rules = [
     "name=org.gnome.Nautilus",
+    "app=wdisplays",
     "class=steam",
+    "class=Xdg-desktop-portal-gtk",
     "app~org.gnome",
-    "app=re.sonny.Junction"
+    "app=re.sonny.Junction",
 ]

@@ -2,10 +2,11 @@
 {
     "layer": "bottom",
     "position": "top",
+    "output": ["eDP-1"],
     "height": 30,
     "modules-left": ["custom/launcher", "sway/workspaces", "sway/mode"],
     "modules-center": [],
-    "modules-right": ["tray", "pulseaudio", "backlight", "network", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
 
     "sway/language": {
         "format": "{}",
@@ -15,7 +16,6 @@
         "disable-scroll": false,
         "all-outputs": true
     },
-
     "tray": {
       "icon-size": 16,
       "spacing": 5
@@ -75,12 +75,6 @@
         "deactivated": " "
       }
     },
-    "custom/launcher": {
-        "format": "󰣛 ",
-        "on-click": "rofi -show drun",
-        "tooltip": true,
-        "tooltip-format": "Launch application"
-    },
     "power-profiles-daemon": {
       "format": "{icon}",
       "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
@@ -92,8 +86,18 @@
         "power-saver": " "
       }
     },
+    "custom/launcher": {
+        "format": "󰣛 ",
+        "on-click": "~/bin/sway-run",
+        "tooltip": true,
+        "tooltip-format": "Launch application"
+    },
+    "custom/displays": {
+        "format": "󰍹 ",
+        "on-click": "~/bin/sway-displays"
+    },
     "custom/power": {
         "format": "⏻ ",
-        "on-click": "wlogout"
+        "on-click": "~/bin/sway-power-menu"
     }
 }

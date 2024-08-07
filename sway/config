@@ -7,6 +7,10 @@ include /etc/sway/config.d/*
 # Theme
 include catppuccin-frappe
 
+# nwg-displays
+# include outputs
+# include workspaces
+
 ###############################################################################
 #### Variables
 ###############################################################################
@@ -15,6 +19,7 @@ include catppuccin-frappe
 set $mod Mod4
 set $super Mod4
 set $alt Mod1
+set $ctrl Control
 
 # Home row direction keys, like vim
 set $left h
@@ -27,7 +32,9 @@ set $term flatpak run org.wezfurlong.wezterm
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu "rofi -show drun"
+# set $menu "rofi -show drun"
+# set $menu "fuzzel"
+set $menu "~/bin/sway-run"
 
 ###############################################################################
 #### Look and feel
@@ -35,18 +42,15 @@ set $menu "rofi -show drun"
 
 font pango: ZedMono NF 12
 
-default_border normal
-default_floating_border normal
-
 # Default border style for new windows
 default_border pixel 2
 default_floating_border normal
 
 # target                 title     bg    text   indicator  border
-client.focused           $lavender $mauve $base  $rosewater $lavender
+client.focused           $blue $blue $base  $rosewater $blue
 client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
 client.unfocused         $overlay0 $base $text  $rosewater $overlay0
-client.urgent            $peach    $base $peach $overlay0  $peach
+client.urgent            $mauve    $mauve $base $overlay0  $mauve
 client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
 client.background        $base
 
@@ -57,7 +61,8 @@ client.background        $base
 focus_follows_mouse no
 # Default layout
 # workspace_layout tabbed
-workspace_auto_back_and_forth yes
+workspace_auto_back_and_forth no
+
 # smart|urgent|focus|none
 focus_on_window_activation urgent
 tiling_drag titlebar
@@ -198,11 +203,19 @@ bindsym $mod+Shift+0 move container to workspace number 10
 # Note: workspaces can have any name you want, not just numbers.
 # We just use 1-10 as the default.
 
+bindsym $mod+$ctrl+$left move workspace to output left
+bindsym $mod+$ctrl+$right move workspace to output right
+bindsym $mod+$ctrl+$down move workspace to output down
+bindsym $mod+$ctrl+$up move workspace to output up
+
 # You can "split" the current object of your focus with
 # $mod+b or $mod+v, for horizontal and vertical splits
 # respectively.
 bindsym $mod+b splith
 bindsym $mod+v splitv
+
+# Cancel a pending split
+# bindsym $mod+n split none
 
 # Switch the current container between different layout styles
 bindsym $mod+s layout stacking
@@ -216,7 +229,7 @@ bindsym $mod+f fullscreen
 bindsym $mod+Shift+f floating toggle
 
 # Swap focus between the tiling area and the floating area
-bindsym $mod+$alt+f focus mode_toggle
+bindsym $mod+Tab focus mode_toggle
 
 # Move focus to the parent container
 bindsym $mod+a focus parent

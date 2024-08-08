@@ -73,7 +73,7 @@ tiling_drag titlebar
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg ~/dotfiles/backgrounds/desktop/cat1.png fill
+output * bg ~/dotfiles/backgrounds/desktop/girl-in-pool.png fill
 #
 # Example configuration:
 #
@@ -283,6 +283,14 @@ bindsym --locked XF86MonBrightnessDown exec light -U 5
 bindsym button2 kill
 # Right click on titlebar toggles floating of window
 bindsym button3 floating toggle
+
+###############################################################################
+#### Window rules
+###############################################################################
+
+# Inhibit idle when fullscreen application is open
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
 
 ###############################################################################
 #### Status bar

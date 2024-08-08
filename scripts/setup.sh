@@ -123,6 +123,7 @@ mkdir -p $HOME/.local/share/rofi
 ensure_symlink $ROOT_DIR/rofi/themes $HOME/.local/share/rofi/themes
 
 ensure_symlink $ROOT_DIR/mako $HOME/.config/mako
+ensure_symlink $ROOT_DIR/dunst $HOME/.config/dunst
 ensure_symlink $ROOT_DIR/swaylock $HOME/.config/swaylock
 ensure_symlink $ROOT_DIR/sway $HOME/.config/sway
 

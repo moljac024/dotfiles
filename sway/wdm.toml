@@ -1,4 +1,6 @@
-rules = [
+border_width = 4
+
+csd_patterns = [
     "name=org.gnome.Nautilus",
     "app=wdisplays",
     "class=steam",

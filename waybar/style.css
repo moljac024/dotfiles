@@ -17,11 +17,15 @@ window#waybar {
 #workspaces button {
   padding: 0 5px;
   background: transparent;
-  border-top: 3px solid transparent;
+  border-top: 4px solid transparent;
 }
 
 #workspaces button.focused {
-  border-top: 3px solid @blue;
+  border-top: 4px solid @blue;
+}
+
+#workspaces button.urgent {
+  border-top: 4px solid @rosewater;
 }
 
 .module {

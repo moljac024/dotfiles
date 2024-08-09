@@ -43,15 +43,15 @@ set $menu "~/bin/sway-run"
 font pango: ZedMono NF 12
 
 # Default border style for new windows
-default_border pixel 2
+default_border pixel 4
 default_floating_border normal
 
-# target                 title     bg    text   indicator  border
-client.focused           $blue $blue $base  $rosewater $blue
-client.focused_inactive  $overlay0 $base $text  $rosewater $overlay0
-client.unfocused         $overlay0 $base $text  $rosewater $overlay0
-client.urgent            $mauve    $mauve $base $overlay0  $mauve
-client.placeholder       $overlay0 $base $text  $overlay0  $overlay0
+# target                 titlebar_border  background  text      indicator  border
+client.focused           $blue            $blue       $base     $mauve     $blue
+client.focused_inactive  $text            $text       $base     $mauve     $text
+client.unfocused         $overlay0        $base       $text     $mauve     $overlay0
+client.urgent            $rosewater       $rosewater  $base     $mauve     $rosewater
+client.placeholder       $overlay0        $base       $text     $mauve     $overlay0
 client.background        $base
 
 ###############################################################################
@@ -62,10 +62,12 @@ focus_follows_mouse no
 # Default layout
 # workspace_layout tabbed
 workspace_auto_back_and_forth no
+mouse_warping none
+focus_wrapping no
+force_display_urgency_hint 1000 ms
 
 # smart|urgent|focus|none
 focus_on_window_activation urgent
-tiling_drag titlebar
 
 ###############################################################################
 #### Output configuration
@@ -292,6 +294,10 @@ bindsym button3 floating toggle
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
 
+for_window [app_id="wdisplays"] floating enable
+for_window [app_id="nwg-displays"] floating enable
+for_window [app_id="re.sonny.Junction"] floating enable
+
 ###############################################################################
 #### Status bar
 ###############################################################################
@@ -321,8 +327,8 @@ bar {
 ###############################################################################
 
 # Custom binary to manage window decorations
-# exec_always ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml > ~/logs/window_decoration_manager.log 2>&1
-exec_always killall wdm; ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml
+# exec_always killall wdm; ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml -v > ~/logs/window_decoration_manager.log 2>&1
+exec ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml
 
 # Gnome keyring
 exec eval $(gnome-keyring-daemon --start)

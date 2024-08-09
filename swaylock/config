@@ -1,17 +1,18 @@
 image=~/dotfiles/backgrounds/lockscreen/locked-minimal-catppuccin-frappe.png
 scaling=fill
 font=ZedMono NF
+indicator-idle-visible
 
 # Catppuccin frappe colors
 color=303446
 bs-hl-color=f2d5cf
 caps-lock-bs-hl-color=f2d5cf
 caps-lock-key-hl-color=a6d189
-inside-color=00000000
-inside-clear-color=00000000
-inside-caps-lock-color=00000000
-inside-ver-color=00000000
-inside-wrong-color=00000000
+inside-color=#414559
+inside-clear-color=#414559
+inside-caps-lock-color=#414559
+inside-ver-color=#414559
+inside-wrong-color=#414559
 key-hl-color=a6d189
 layout-bg-color=00000000
 layout-border-color=00000000

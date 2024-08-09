@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
-  "flag"
 	"strings"
 	"sync"
 	"time"
@@ -16,53 +16,27 @@ import (
 )
 
 type Config struct {
-	Rules []string `toml:"rules"`
+	CSDPatterns []string `toml:"csd_patterns"`
+	BorderWidth int      `toml:"border_width"`
 }
 
 type decorationHandler struct {
 	sway.EventHandler
-	client sway.Client
-	log    *log.Logger
-	mutex  sync.Mutex
-	config Config
+	client  sway.Client
+	log     *log.Logger
+	mutex   sync.Mutex
+	config  Config
+	verbose bool
 }
 
-func (dh *decorationHandler) printWindowInfo(ctx context.Context) {
-    tree, err := dh.client.GetTree(ctx)
-    if err != nil {
-        dh.log.Printf("Error getting tree: %v", err)
-        return
-    }
-
-    dh.printNodeInfo(tree, 0)
-}
-
-func (dh *decorationHandler) printNodeInfo(node *sway.Node, depth int) {
-    if node.Type == "con" || node.Type == "floating_con" {
-        indent := strings.Repeat("  ", depth)
-        appID := "N/A"
-        if node.AppID != nil {
-            appID = *node.AppID
-        }
-        class := "N/A"
-        if node.WindowProperties != nil {
-            class = node.WindowProperties.Class
-        }
-        fmt.Printf("%sWindow ID: %d\n", indent, node.ID)
-        fmt.Printf("%s  Name: %s\n", indent, node.Name)
-        fmt.Printf("%s  AppID: %s\n", indent, appID)
-        fmt.Printf("%s  Class: %s\n", indent, class)
-        fmt.Printf("%s  Type: %s\n", indent, node.Type)
-        fmt.Println()
-    }
-
-    for _, child := range append(node.Nodes, node.FloatingNodes...) {
-        dh.printNodeInfo(child, depth+1)
-    }
+func (dh *decorationHandler) logf(format string, v ...interface{}) {
+	if dh.verbose {
+		dh.log.Printf(format, v...)
+	}
 }
 
 func (dh *decorationHandler) Window(ctx context.Context, e sway.WindowEvent) {
-	dh.log.Printf("Received window event: Change=%s, Container.ID=%d", e.Change, e.Container.ID)
+	dh.logf("Received window event: Change=%s, Container.ID=%d", e.Change, e.Container.ID)
 
 	go dh.handleWindowChange(ctx, e.Container.ID)
 }
@@ -76,13 +50,13 @@ func (dh *decorationHandler) handleWindowChange(ctx context.Context, id int64) {
 
 		tree, err := dh.client.GetTree(ctx)
 		if err != nil {
-			dh.log.Printf("Error getting tree: %v", err)
+			dh.logf("Error getting tree: %v", err)
 			continue
 		}
 
 		node := dh.findNode(tree, id)
 		if node == nil {
-			dh.log.Printf("Node not found: %d", id)
+			dh.logf("Node not found: %d", id)
 			continue
 		}
 
@@ -90,7 +64,7 @@ func (dh *decorationHandler) handleWindowChange(ctx context.Context, id int64) {
 			return // Successfully updated
 		}
 	}
-	dh.log.Printf("Failed to update window decoration after 5 attempts for ID: %d", id)
+	dh.logf("Failed to update window decoration after 5 attempts for ID: %d", id)
 }
 
 func (dh *decorationHandler) findNode(node *sway.Node, id int64) *sway.Node {
@@ -106,47 +80,47 @@ func (dh *decorationHandler) findNode(node *sway.Node, id int64) *sway.Node {
 }
 
 func (dh *decorationHandler) updateWindowDecoration(ctx context.Context, node *sway.Node) bool {
-	dh.log.Printf("Updating window: ID=%d, Type=%s, Layout=%s, AppID=%v", node.ID, node.Type, node.Layout, node.AppID)
+	dh.logf("Updating window: ID=%d, Type=%s, Layout=%s, AppID=%v", node.ID, node.Type, node.Layout, node.AppID)
 
 	var borderCmd string
 	if node.Type == "floating_con" {
 		if dh.hasCSD(node) {
-			borderCmd = fmt.Sprintf("[con_id=%d] border none", node.ID)
-			dh.log.Println("Setting border none for floating window with CSD")
+			borderCmd = fmt.Sprintf("[con_id=%d] border pixel %d", node.ID, dh.config.BorderWidth)
+			dh.logf("Ensuring no titlebar for floating window with CSD")
 		} else {
 			borderCmd = fmt.Sprintf("[con_id=%d] border normal", node.ID)
-			dh.log.Println("Setting border normal for floating window without CSD")
+			dh.logf("Setting border normal for floating window without CSD")
 		}
 	} else { // tiled, tabbed, or stacked
-		borderCmd = fmt.Sprintf("[con_id=%d] border pixel 2", node.ID)
-		dh.log.Println("Setting border pixel 2 for tiled/tabbed/stacked window")
+		borderCmd = fmt.Sprintf("[con_id=%d] border pixel %d", node.ID, dh.config.BorderWidth)
+		dh.logf("Setting border pixel %d for tiled/tabbed/stacked window", dh.config.BorderWidth)
 	}
 
 	_, err := dh.client.RunCommand(ctx, borderCmd)
 	if err != nil {
-		dh.log.Printf("Error setting border: %s", err)
+		dh.logf("Error setting border: %s", err)
 		return false
 	}
 
 	// Verify the border setting
 	tree, err := dh.client.GetTree(ctx)
 	if err != nil {
-		dh.log.Printf("Error getting tree: %v", err)
+		dh.logf("Error getting tree: %v", err)
 		return false
 	}
 	updatedNode := dh.findNode(tree, node.ID)
 	if updatedNode == nil {
-		dh.log.Printf("Updated node not found: %d", node.ID)
+		dh.logf("Updated node not found: %d", node.ID)
 		return false
 	}
 
-	dh.log.Printf("Updated border for window ID=%d: %s", updatedNode.ID, updatedNode.Border)
+	dh.logf("Updated border for window ID=%d: %s", updatedNode.ID, updatedNode.Border)
 
 	// Check if the update was successful
 	if (node.Type == "floating_con" && !dh.hasCSD(node) && updatedNode.Border != "normal") ||
-	   (node.Type == "floating_con" && dh.hasCSD(node) && updatedNode.Border != "none") ||
+	   (node.Type == "floating_con" && dh.hasCSD(node) && updatedNode.Border == "normal") ||
 	   (node.Type != "floating_con" && updatedNode.Border != "pixel") {
-		dh.log.Printf("Border update unsuccessful for window ID=%d", node.ID)
+		dh.logf("Border update unsuccessful for window ID=%d", node.ID)
 		return false
 	}
 
@@ -154,60 +128,60 @@ func (dh *decorationHandler) updateWindowDecoration(ctx context.Context, node *s
 }
 
 func (dh *decorationHandler) hasCSD(node *sway.Node) bool {
-    var appID, class string
-    if node.AppID != nil {
-        appID = *node.AppID
-    }
-    if node.WindowProperties != nil {
-        class = node.WindowProperties.Class
-    }
+	var appID, class string
+	if node.AppID != nil {
+		appID = *node.AppID
+	}
+	if node.WindowProperties != nil {
+		class = node.WindowProperties.Class
+	}
 
-    dh.log.Printf("Checking CSD for window ID=%d, AppID=%s, Class=%s", node.ID, appID, class)
+	dh.logf("Checking CSD for window ID=%d, AppID=%s, Class=%s", node.ID, appID, class)
 
-    for _, rule := range dh.config.Rules {
-        parts := strings.SplitN(rule, "~", 2)
-        if len(parts) != 2 {
-            parts = strings.SplitN(rule, "=", 2)
-        }
-        if len(parts) != 2 {
-            dh.log.Printf("Invalid rule format: %s", rule)
-            continue
-        }
+	for _, pattern := range dh.config.CSDPatterns {
+		parts := strings.SplitN(pattern, "~", 2)
+		if len(parts) != 2 {
+			parts = strings.SplitN(pattern, "=", 2)
+		}
+		if len(parts) != 2 {
+			dh.logf("Invalid pattern format: %s", pattern)
+			continue
+		}
 
-        ruleType, value := parts[0], parts[1]
-        isPartial := strings.Contains(rule, "~")
+		patternType, value := parts[0], parts[1]
+		isPartial := strings.Contains(pattern, "~")
 
-        switch ruleType {
-        case "name":
-            if (isPartial && strings.Contains(strings.ToLower(node.Name), strings.ToLower(value))) ||
-                (!isPartial && strings.EqualFold(node.Name, value)) {
-                dh.log.Printf("Detected CSD: name match %s", rule)
-                return true
-            }
-        case "class":
-            if (isPartial && strings.Contains(strings.ToLower(class), strings.ToLower(value))) ||
-                (!isPartial && strings.EqualFold(class, value)) {
-                dh.log.Printf("Detected CSD: class match %s", rule)
-                return true
-            }
-        case "app":
-            if (isPartial && strings.Contains(strings.ToLower(appID), strings.ToLower(value))) ||
-                (!isPartial && strings.EqualFold(appID, value)) {
-                dh.log.Printf("Detected CSD: AppID match %s", rule)
-                return true
-            }
-        default:
-            dh.log.Printf("Unknown rule type: %s", ruleType)
-        }
-    }
+		switch patternType {
+		case "name":
+			if (isPartial && strings.Contains(strings.ToLower(node.Name), strings.ToLower(value))) ||
+				(!isPartial && strings.EqualFold(node.Name, value)) {
+				dh.logf("Detected CSD: name match %s", pattern)
+				return true
+			}
+		case "class":
+			if (isPartial && strings.Contains(strings.ToLower(class), strings.ToLower(value))) ||
+				(!isPartial && strings.EqualFold(class, value)) {
+				dh.logf("Detected CSD: class match %s", pattern)
+				return true
+			}
+		case "app":
+			if (isPartial && strings.Contains(strings.ToLower(appID), strings.ToLower(value))) ||
+				(!isPartial && strings.EqualFold(appID, value)) {
+				dh.logf("Detected CSD: AppID match %s", pattern)
+				return true
+			}
+		default:
+			dh.logf("Unknown pattern type: %s", patternType)
+		}
+	}
 
-    if node.Shell != nil && strings.Contains(strings.ToLower(*node.Shell), "client_side_decorations") {
-        dh.log.Printf("Detected CSD from Shell: %s", *node.Shell)
-        return true
-    }
+	if node.Shell != nil && strings.Contains(strings.ToLower(*node.Shell), "client_side_decorations") {
+		dh.logf("Detected CSD from Shell: %s", *node.Shell)
+		return true
+	}
 
-    dh.log.Printf("No CSD detected for window ID=%d", node.ID)
-    return false
+	dh.logf("No CSD detected for window ID=%d", node.ID)
+	return false
 }
 
 func (dh *decorationHandler) periodicCheck(ctx context.Context) {
@@ -230,7 +204,7 @@ func (dh *decorationHandler) checkAllWindows(ctx context.Context) {
 
 	tree, err := dh.client.GetTree(ctx)
 	if err != nil {
-		dh.log.Printf("Error getting tree: %v", err)
+		dh.logf("Error getting tree: %v", err)
 		return
 	}
 
@@ -247,44 +221,107 @@ func (dh *decorationHandler) checkNodeAndChildren(ctx context.Context, node *swa
 	}
 }
 
+func (dh *decorationHandler) printWindowInfo(ctx context.Context) {
+	tree, err := dh.client.GetTree(ctx)
+	if err != nil {
+		dh.logf("Error getting tree: %v", err)
+		return
+	}
+
+	dh.printNodeInfo(tree, 0)
+}
+
+func (dh *decorationHandler) printNodeInfo(node *sway.Node, depth int) {
+	if node.Type == "con" || node.Type == "floating_con" {
+		indent := strings.Repeat("  ", depth)
+		appID := "N/A"
+		if node.AppID != nil {
+			appID = *node.AppID
+		}
+		class := "N/A"
+		if node.WindowProperties != nil {
+			class = node.WindowProperties.Class
+		}
+		fmt.Printf("%sWindow ID: %d\n", indent, node.ID)
+		fmt.Printf("%s  Name: %s\n", indent, node.Name)
+		fmt.Printf("%s  AppID: %s\n", indent, appID)
+		fmt.Printf("%s  Class: %s\n", indent, class)
+		fmt.Printf("%s  Type: %s\n", indent, node.Type)
+		fmt.Println()
+	}
+
+	for _, child := range append(node.Nodes, node.FloatingNodes...) {
+		dh.printNodeInfo(child, depth+1)
+	}
+}
+
 func loadConfig(path string) (Config, error) {
-    var config Config
-    _, err := toml.DecodeFile(path, &config)
-    if err != nil {
-        log.Printf("Erroir loading config from %s", path)
-    }
-    return config, err
+	var config Config
+	_, err := toml.DecodeFile(path, &config)
+	return config, err
 }
 
 func main() {
+	dumpInfo := flag.Bool("dump", false, "Dump window information and exit")
+	configFile := flag.String("config", "", "Path to the configuration file")
+	borderWidth := flag.Int("border", 0, "Set the border width (overrides config file)")
+	verbose := flag.Bool("v", false, "Enable verbose logging")
+	flag.Parse()
+
 	logger := log.New(os.Stdout, "window-decorator: ", log.LstdFlags)
-	logger.Println("Window decoration manager started")
 
-  dumpInfo := flag.Bool("dump", false, "Dump window information and exit")
-  configFile := flag.String("config", "", "Path to the configuration file")
-  flag.Parse()
+	if *verbose {
+		logger.Println("Window decoration manager started")
+	}
 
-  // Determine config file path
-  var configPath string
-  if *configFile != "" {
-      configPath = *configFile
-  } else {
-      configPath = filepath.Join(os.Getenv("HOME"), ".config", "wdm", "config.toml")
-  }
+	// Determine config file path
+	var configPath string
+	if *configFile != "" {
+		configPath = *configFile
+	} else {
+		configPath = filepath.Join(os.Getenv("HOME"), ".config", "wdm", "config.toml")
+	}
 
 	// Load configuration
 	config, err := loadConfig(configPath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			logger.Printf("Config file not found, using default configuration")
+			if *verbose {
+				logger.Printf("Config file not found at %s, using default configuration", configPath)
+			}
 			config = Config{
-				Rules: []string{
+				CSDPatterns: []string{
+					"name~firefox",
+					"name~chromium",
+					"name~google-chrome",
+					"name~electron",
 					"name=org.gnome.Nautilus",
+					"class~gtk",
+					"class=Steam",
+					"app=org.mozilla.firefox",
 				},
+				BorderWidth: 2, // Default border width
 			}
 		} else {
-			logger.Fatalf("Error loading config: %v", err)
+			logger.Fatalf("Error loading config from %s: %v", configPath, err)
 		}
+	} else if *verbose {
+		logger.Printf("Loaded configuration from %s", configPath)
+	}
+
+	// Override border width if specified in command line
+	if *borderWidth != 0 {
+		config.BorderWidth = *borderWidth
+		if *verbose {
+			logger.Printf("Border width set to %d from command line", config.BorderWidth)
+		}
+	} else if config.BorderWidth == 0 {
+		config.BorderWidth = 2 // Default if not set in config file
+		if *verbose {
+			logger.Printf("Using default border width of %d", config.BorderWidth)
+		}
+	} else if *verbose {
+		logger.Printf("Using border width of %d from config file", config.BorderWidth)
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -296,15 +333,16 @@ func main() {
 	}
 
 	handler := &decorationHandler{
-		client: client,
-		log:    logger,
-		config: config,
+		client:  client,
+		log:     logger,
+		config:  config,
+		verbose: *verbose,
 	}
 
-  if *dumpInfo {
-      handler.printWindowInfo(ctx)
-      return
-  }
+	if *dumpInfo {
+		handler.printWindowInfo(ctx)
+		return
+	}
 
 	go handler.periodicCheck(ctx)
 
@@ -316,6 +354,8 @@ func main() {
 	// Keep the program running
 	select {
 	case <-ctx.Done():
-		logger.Println("Context cancelled, shutting down")
+		if *verbose {
+			logger.Println("Context cancelled, shutting down")
+		}
 	}
 }

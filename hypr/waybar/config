@@ -1,0 +1,104 @@
+// vim: syntax=jsonc
+{
+    "layer": "bottom",
+    "position": "top",
+    "output": ["eDP-1"],
+    "height": 30,
+    "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/submap"],
+    "modules-center": ["hyprland/window"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "hyprland/language", "clock", "custom/power"],
+    // Module configs
+    "hyprland/workspaces": {
+       "format": "{name}",
+       "on-scroll-up": "hyprctl dispatch workspace e+1",
+       "on-scroll-down": "hyprctl dispatch workspace e-1"
+    },
+    "hyprland/window": {
+        "format": "{}",
+        // "separate-outputs": true
+    },
+    "tray": {
+      "icon-size": 16,
+      "spacing": 5
+    },
+    "backlight": {
+      // "format": "󰳲  {percent}%",
+      "format": "{icon} {percent}%",
+      "format-icons": ["󰃚 ", "󰃛 ", "󰃜 ", "󰃝 ", "󰃞 ", "󰃟 ", "󰃠 "]
+    },
+    "clock": {
+        "format": "{:%Y-%m-%d %H:%M}",
+        "tooltip": false,
+        "tooltip-format": "{:%Y-%m-%d}"
+    },
+    "cpu": {
+        "format": "  {usage}%",
+        "on-click": "flatpak run io.missioncenter.MissionCenter"
+    },
+    "memory": {
+        "format": "  {}%",
+        "on-click": "flatpak run io.missioncenter.MissionCenter"
+    },
+     "temperature": {
+      "critical-threshold": 80,
+      "format-critical": " {temperatureC}°C",
+      "format": " {temperatureC}°C",
+        "on-click": "flatpak run io.missioncenter.MissionCenter"
+    },
+    "battery": {
+        "bat": "BAT0",
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-icons": [" ", " ", " ", " ", " "]
+    },
+    "network": {
+        "format-wifi": "  {essid} ({signalStrength}%)",
+        "format-ethernet": " {ifname}: {ipaddr}/{cidr}",
+        "format-disconnected": "⚠ Disconnected"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": " ",
+        "format-icons": {
+            "headphones": " ",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol"
+    },
+    "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+        "activated": "󰅶 ",
+        "deactivated": "󰛊 "
+      }
+    },
+    "power-profiles-daemon": {
+      "format": "{icon}",
+      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+      "tooltip": true,
+      "format-icons": {
+        "default": " ",
+        "performance": " ",
+        "balanced": " ",
+        "power-saver": " "
+      }
+    },
+    "custom/launcher": {
+        "format": "󰣛 ",
+        "on-click": "~/bin/sway-run",
+        "tooltip": true,
+        "tooltip-format": "Launch application"
+    },
+    "custom/displays": {
+        "format": "󰍹 ",
+        "on-click": "wdisplays"
+    },
+    "custom/power": {
+        "format": "⏻ ",
+        "on-click": "wlogout"
+    }
+}

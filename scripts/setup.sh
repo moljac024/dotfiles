@@ -115,8 +115,7 @@ fi
 ### DEs and WMs
 ################################################################################
 
-ensure_symlink $ROOT_DIR/waybar $HOME/.config/waybar
-
+ensure_symlink $ROOT_DIR/wofi $HOME/.config/wofi
 ensure_symlink $ROOT_DIR/rofi $HOME/.config/rofi
 ensure_symlink $ROOT_DIR/fuzzel $HOME/.config/fuzzel
 mkdir -p $HOME/.local/share/rofi
@@ -125,6 +124,8 @@ ensure_symlink $ROOT_DIR/rofi/themes $HOME/.local/share/rofi/themes
 ensure_symlink $ROOT_DIR/mako $HOME/.config/mako
 ensure_symlink $ROOT_DIR/dunst $HOME/.config/dunst
 ensure_symlink $ROOT_DIR/wlogout $HOME/.config/wlogout
+
+ensure_symlink $ROOT_DIR/waybar $HOME/.config/waybar
 
 ensure_symlink $ROOT_DIR/swaylock $HOME/.config/swaylock
 ensure_symlink $ROOT_DIR/sway $HOME/.config/sway

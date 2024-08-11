@@ -2,3 +2,6 @@ fish/fish_variables
 
 sway/outputs
 sway/workspaces
+
+hypr/monitors.conf
+hypr/workspaces.conf

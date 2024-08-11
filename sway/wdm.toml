@@ -1,10 +1,11 @@
 border_width = 4
+csd_border = true
 
 csd_patterns = [
     "name=org.gnome.Nautilus",
-    "app=wdisplays",
-    "class=steam",
     "class=Xdg-desktop-portal-gtk",
     "app~org.gnome",
+    "app=wdisplays",
     "app=re.sonny.Junction",
+    "app=org.pulseaudio.pavucontrol",
 ]

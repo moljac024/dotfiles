@@ -18,6 +18,7 @@ import (
 type Config struct {
 	CSDPatterns []string `toml:"csd_patterns"`
 	BorderWidth int      `toml:"border_width"`
+	CSDBorder   bool     `toml:"csd_border"`
 }
 
 type decorationHandler struct {
@@ -80,48 +81,66 @@ func (dh *decorationHandler) findNode(node *sway.Node, id int64) *sway.Node {
 }
 
 func (dh *decorationHandler) updateWindowDecoration(ctx context.Context, node *sway.Node) bool {
-	dh.logf("Updating window: ID=%d, Type=%s, Layout=%s, AppID=%v", node.ID, node.Type, node.Layout, node.AppID)
+	dh.logf("Updating window: ID=%d, Type=%s, Layout=%s, AppID=%v, Current Border=%s", node.ID, node.Type, node.Layout, node.AppID, node.Border)
 
-	var borderCmd string
+	// If Sway has already set the border to "csd", respect that decision
+	if node.Border == "csd" && !dh.config.CSDBorder {
+		dh.logf("Sway has set border to 'csd' for window ID=%d, respecting this setting", node.ID)
+		return true
+	}
+
+	var desiredBorder sway.Border = "pixel"
+
 	if node.Type == "floating_con" {
 		if dh.hasCSD(node) {
-			borderCmd = fmt.Sprintf("[con_id=%d] border pixel %d", node.ID, dh.config.BorderWidth)
-			dh.logf("Ensuring no titlebar for floating window with CSD")
+			desiredBorder = "none"
+
+			if dh.config.CSDBorder {
+				desiredBorder = "pixel"
+			}
+
 		} else {
-			borderCmd = fmt.Sprintf("[con_id=%d] border normal", node.ID)
-			dh.logf("Setting border normal for floating window without CSD")
+			desiredBorder = "pixel"
 		}
 	} else { // tiled, tabbed, or stacked
-		borderCmd = fmt.Sprintf("[con_id=%d] border pixel %d", node.ID, dh.config.BorderWidth)
-		dh.logf("Setting border pixel %d for tiled/tabbed/stacked window", dh.config.BorderWidth)
+		desiredBorder = "pixel"
 	}
 
-	_, err := dh.client.RunCommand(ctx, borderCmd)
-	if err != nil {
-		dh.logf("Error setting border: %s", err)
-		return false
-	}
+	// Only update if the current border is different from the desired border
+	if node.Border != desiredBorder {
+		borderCmd := fmt.Sprintf("[con_id=%d] border %s", node.ID, desiredBorder)
+		if desiredBorder == "pixel" {
+			borderCmd += fmt.Sprintf(" %d", dh.config.BorderWidth)
+		}
 
-	// Verify the border setting
-	tree, err := dh.client.GetTree(ctx)
-	if err != nil {
-		dh.logf("Error getting tree: %v", err)
-		return false
-	}
-	updatedNode := dh.findNode(tree, node.ID)
-	if updatedNode == nil {
-		dh.logf("Updated node not found: %d", node.ID)
-		return false
-	}
+		dh.logf("Setting border to %s for window ID=%d", desiredBorder, node.ID)
+		_, err := dh.client.RunCommand(ctx, borderCmd)
+		if err != nil {
+			dh.logf("Error setting border: %s", err)
+			return false
+		}
 
-	dh.logf("Updated border for window ID=%d: %s", updatedNode.ID, updatedNode.Border)
+		// Verify the border setting
+		tree, err := dh.client.GetTree(ctx)
+		if err != nil {
+			dh.logf("Error getting tree: %v", err)
+			return false
+		}
+		updatedNode := dh.findNode(tree, node.ID)
+		if updatedNode == nil {
+			dh.logf("Updated node not found: %d", node.ID)
+			return false
+		}
 
-	// Check if the update was successful
-	if (node.Type == "floating_con" && !dh.hasCSD(node) && updatedNode.Border != "normal") ||
-	   (node.Type == "floating_con" && dh.hasCSD(node) && updatedNode.Border == "normal") ||
-	   (node.Type != "floating_con" && updatedNode.Border != "pixel") {
-		dh.logf("Border update unsuccessful for window ID=%d", node.ID)
-		return false
+		dh.logf("Updated border for window ID=%d: %s", updatedNode.ID, updatedNode.Border)
+
+		// Check if the update was successful
+		if updatedNode.Border != desiredBorder && updatedNode.Border != "csd" {
+			dh.logf("Border update unsuccessful for window ID=%d", node.ID)
+			return false
+		}
+	} else {
+		dh.logf("Border already set to %s for window ID=%d, no update needed", desiredBorder, node.ID)
 	}
 
 	return true
@@ -177,6 +196,12 @@ func (dh *decorationHandler) hasCSD(node *sway.Node) bool {
 
 	if node.Shell != nil && strings.Contains(strings.ToLower(*node.Shell), "client_side_decorations") {
 		dh.logf("Detected CSD from Shell: %s", *node.Shell)
+		return true
+	}
+
+	// Check if Sway has identified this as a CSD window
+	if node.Border == "csd" {
+		dh.logf("Detected CSD: Sway reports Border as 'csd' for window ID=%d", node.ID)
 		return true
 	}
 
@@ -247,6 +272,7 @@ func (dh *decorationHandler) printNodeInfo(node *sway.Node, depth int) {
 		fmt.Printf("%s  AppID: %s\n", indent, appID)
 		fmt.Printf("%s  Class: %s\n", indent, class)
 		fmt.Printf("%s  Type: %s\n", indent, node.Type)
+		fmt.Printf("%s  Border: %s\n", indent, node.Border)
 		fmt.Println()
 	}
 
@@ -290,17 +316,9 @@ func main() {
 				logger.Printf("Config file not found at %s, using default configuration", configPath)
 			}
 			config = Config{
-				CSDPatterns: []string{
-					"name~firefox",
-					"name~chromium",
-					"name~google-chrome",
-					"name~electron",
-					"name=org.gnome.Nautilus",
-					"class~gtk",
-					"class=Steam",
-					"app=org.mozilla.firefox",
-				},
+				CSDPatterns: []string{},
 				BorderWidth: 2, // Default border width
+				CSDBorder:   false,
 			}
 		} else {
 			logger.Fatalf("Error loading config from %s: %v", configPath, err)

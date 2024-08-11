@@ -277,6 +277,8 @@ wezterm.on(
   end
 )
 
+-- config.enable_wayland = false
+
 -- Reload configuration every once in a while (setting a random wallpaper again)
 -- wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
 

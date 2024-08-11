@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DIR=$HOME/.local/share/mise/shims
+BIN=$DIR/papersway
+
+if [ -x $BIN ]; then
+  exec $BIN $@
+fi

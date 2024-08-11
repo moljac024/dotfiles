@@ -44,7 +44,7 @@ font pango: ZedMono NF 12
 
 # Default border style for new windows
 default_border pixel 4
-default_floating_border normal
+# default_floating_border normal
 
 # target                 titlebar_border  background  text      indicator  border
 client.focused           $blue            $blue       $base     $mauve     $blue
@@ -323,12 +323,21 @@ bar {
 
 
 ###############################################################################
+#### Papersway
+###############################################################################
+
+# include papersway
+
+###############################################################################
 #### Startup applications
 ###############################################################################
 
 # Custom binary to manage window decorations
-# exec_always killall wdm; ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml -v > ~/logs/window_decoration_manager.log 2>&1
-exec ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml
+exec_always killall wdm; ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml -v > ~/logs/window_decoration_manager.log 2>&1
+# exec_always killall wdm; ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml
+
+# Wallpaper daemon
+# exec ~/.config/sway/bin/swww-daemon
 
 # Gnome keyring
 exec eval $(gnome-keyring-daemon --start)

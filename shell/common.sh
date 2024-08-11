@@ -69,6 +69,9 @@ if [ -d "$HOME/Applications/flutter" ]; then
     modify_path "$HOME/Applications/flutter/bin" append
 fi
 
+# Dotnet
+modify_path "$HOME/.dotnet/tools" append
+
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
 

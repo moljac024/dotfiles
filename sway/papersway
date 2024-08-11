@@ -1,0 +1,81 @@
+# vim ft=swayconfig
+
+set $papersway ~/.config/sway/bin/papersway
+set $papersway-msg ~/.config/sway/bin/papersway-msg
+
+# Clear the bindings that conflict with papersway
+unbindsym $mod+b
+unbindsym $mod+v
+unbindsym $mod+s
+unbindsym $mod+w
+unbindsym $mod+e
+unbindsym $mod+a
+unbindsym $mod+d
+
+unbindsym $mod+$left
+unbindsym $mod+$down
+unbindsym $mod+$up
+unbindsym $mod+$right
+unbindsym $mod+Left
+unbindsym $mod+Down
+unbindsym $mod+Up
+unbindsym $mod+Right
+
+unbindsym $mod+Shift+$left
+unbindsym $mod+Shift+$down
+unbindsym $mod+Shift+$up
+unbindsym $mod+Shift+$right
+unbindsym $mod+Shift+Left
+unbindsym $mod+Shift+Down
+unbindsym $mod+Shift+Up
+unbindsym $mod+Shift+Right
+
+bindsym $mod+$left exec $papersway-msg focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right exec $papersway-msg focus right
+
+bindsym $mod+Left exec $papersway-msg focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right exec $papersway-msg focus right
+
+bindsym $mod+Shift+$left exec $papersway-msg move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move exec $papersway-msg right
+
+bindsym $mod+Shift+Left exec $papersway-msg move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move exec $papersway-msg right
+
+unbindsym $mod+f
+bindsym $mod+f exec $papersway-msg monocle toggle
+bindsym $mod+o exec $papersway-msg other column
+
+bindsym $mod+a exec $papersway-msg fresh-workspace
+bindsym $mod+n exec $papersway-msg fresh-workspace send
+bindsym $mod+t exec $papersway-msg fresh-workspace take
+
+bindsym $mod+e exec $papersway-msg absorb_expel left
+unbindsym $mod+r
+bindsym $mod+r exec $papersway-msg absorb_expel right
+
+unbindsym $mod+minus
+bindsym $mod+minus exec $papersway-msg cols decr
+bindsym $mod+equal exec $papersway-msg cols incr
+
+bindsym $mod+u exec $papersway-msg workspace prev
+bindsym $mod+i exec $papersway-msg workspace next
+
+# bindsym $mod+Shift+$left exec papersway-msg move_workspace prev
+# bindsym $mod+Shift+$right exec papersway-msg move_workspace next
+
+# bindsym $mod+c [con_mark=caffeinated] inhibit_idle none; \
+#     inhibit_idle open, mark caffeinated
+# bindsym $mod+Shift+c [con_mark=caffeinated] inhibit_idle none, \
+#     mark --toggle caffeinated
+for_window [con_mark=caffeinated] inhibit_idle open
+
+exec $papersway &

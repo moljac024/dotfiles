@@ -1,0 +1,49 @@
+@import "catppuccin/frappe.css";
+
+* {
+  color: @text;
+  border: none;
+  border-radius: 0;
+  font-family: "ZedMono NF", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: @base;
+  border: 2px solid @crust;
+
+  margin: 5px;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  background: transparent;
+  color: @text;
+  /* border-top: 4px solid transparent; */
+}
+
+#workspaces button.persistent {
+  color: @text;
+}
+
+#workspaces button.active {
+  /* border-top: 4px solid @blue; */
+  color: @base;
+  background: @blue;
+}
+
+#workspaces button.urgent {
+  /* border-top: 4px solid @rosewater; */
+  background: @rosewater;
+}
+
+.module {
+  padding: 0 5px;
+  margin: 0;
+}
+
+#submap {
+  background-color: @blue;
+  color: @base;
+}

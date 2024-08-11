@@ -178,8 +178,12 @@ return {
         eslint = {},
         -- tsserver = {} -- Default typescript LSP,
         vtsls = {}, -- Alternative typescript LSP
+
         pyright = {},
         elixirls = {},
+        rust_analyzer = {},
+        gopls = {},
+        csharp_ls = {},
       }
 
       local servers_to_install = vim.tbl_filter(function(key)

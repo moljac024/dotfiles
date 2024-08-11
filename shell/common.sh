@@ -89,6 +89,7 @@ modify_path "$FLYCTL_INSTALL/bin" prepend
 modify_path "$HOME/.local/bin" prepend
 # Home binaries (systems should do this already)
 modify_path "$HOME/bin" prepend
+modify_path "$HOME/.config/sway/bin" prepend
 
 # Flatpak paths
 export_var XDG_DATA_DIRS $HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
@@ -101,6 +102,7 @@ modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 ###############################################################################
 
 if is_command mise; then
+  modify_path $HOME/.local/share/mise/shims prepend
   case $(get_running_shell) in
     "zsh")
       eval "$(mise activate zsh)"

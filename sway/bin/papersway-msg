@@ -1,8 +1,0 @@
-#!/bin/sh
-
-DIR=$HOME/.local/share/mise/shims
-BIN=$DIR/papersway-msg
-
-if [ -x $BIN ]; then
-  exec $BIN $@
-fi

@@ -6,7 +6,7 @@
     "height": 30,
     "modules-left": ["custom/launcher", "sway/workspaces", "sway/mode"],
     "modules-center": [],
-    "modules-right": ["custom/kill_window", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
+    "modules-right": ["custom/kill_window", "custom/floating_toggle", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
 
     "sway/language": {
         "format": "{}",
@@ -91,6 +91,12 @@
         "on-click": "swaymsg kill",
         "tooltip": true,
         "tooltip-format": "Kill focused application"
+    },
+    "custom/floating_toggle": {
+        "format": " ",
+        "on-click": "swaymsg floating toggle",
+        "tooltip": true,
+        "tooltip-format": "Toggle floating of focused application"
     },
     "custom/launcher": {
         "format": "󰣛 ",

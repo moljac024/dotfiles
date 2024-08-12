@@ -1,0 +1,5 @@
+directory: "~/Pictures/Wallpapers"
+recursive: true
+interval: 20s
+order: "random"  # Can be "alphabetical" or "random"
+command: "swww img {{img}} -t any"

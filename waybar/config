@@ -4,9 +4,9 @@
     "position": "top",
     "output": ["eDP-1"],
     "height": 30,
-    "modules-left": ["custom/launcher", "sway/workspaces", "sway/mode"],
+    "modules-left": ["custom/launcher", "custom/prev_workspace", "sway/workspaces", "custom/next_workspace", "sway/mode"],
     "modules-center": [],
-    "modules-right": ["custom/kill_window", "custom/floating_toggle", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
+    "modules-right": ["sway/window", "custom/kill_window", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
 
     "sway/language": {
         "format": "{}",
@@ -16,9 +16,12 @@
         "disable-scroll": false,
         "all-outputs": true
     },
+    "sway/window": {
+        "on-click-right": "swaymsg floating toggle"
+    },
     "tray": {
-      "icon-size": 16,
-      "spacing": 5
+        "icon-size": 16,
+        "spacing": 5
     },
     "backlight": {
       // "format": "󰳲  {percent}%",
@@ -26,9 +29,25 @@
       "format-icons": ["󰃚 ", "󰃛 ", "󰃜 ", "󰃝 ", "󰃞 ", "󰃟 ", "󰃠 "]
     },
     "clock": {
-        "format": "{:%H:%M}",
+        "format": "{:%a %b %d %H:%M}",
         "tooltip": true,
-        "tooltip-format": "{:%Y-%m-%d}"
+        "tooltip-format": "{calendar}",
+        "calendar": {
+            "mode"          : "year",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click": "mode"
+        }
     },
     "cpu": {
         "format": "  {usage}%",
@@ -38,10 +57,10 @@
         "format": "  {}%",
         "on-click": "flatpak run io.missioncenter.MissionCenter"
     },
-     "temperature": {
-      "critical-threshold": 80,
-      "format-critical": " {temperatureC}°C",
-      "format": " {temperatureC}°C",
+    "temperature": {
+        "critical-threshold": 80,
+        "format-critical": " {temperatureC}°C",
+        "format": " {temperatureC}°C",
         "on-click": "flatpak run io.missioncenter.MissionCenter"
     },
     "battery": {
@@ -69,28 +88,36 @@
         "on-click": "pavucontrol"
     },
     "idle_inhibitor": {
-      "format": "{icon}",
-      "format-icons": {
-        "activated": "󰅶 ",
-        "deactivated": "󰛊 "
-      }
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰅶 ",
+            "deactivated": "󰛊 "
+        }
     },
     "power-profiles-daemon": {
-      "format": "{icon}",
-      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-      "tooltip": true,
-      "format-icons": {
-        "default": " ",
-        "performance": " ",
-        "balanced": " ",
-        "power-saver": " "
-      }
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": " ",
+            "performance": " ",
+            "balanced": " ",
+            "power-saver": " "
+        }
     },
     "custom/kill_window": {
         "format": "󱎘 ",
         "on-click": "swaymsg kill",
         "tooltip": true,
         "tooltip-format": "Kill focused application"
+    },
+    "custom/prev_workspace": {
+        "format": "󰜱 ",
+        "on-click": "~/.config/sway/bin/sway-ws-nav prev"
+    },
+    "custom/next_workspace": {
+        "format": "󰜴 ",
+        "on-click": "~/.config/sway/bin/sway-ws-nav next"
     },
     "custom/floating_toggle": {
         "format": " ",

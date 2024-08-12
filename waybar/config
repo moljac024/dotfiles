@@ -21,7 +21,8 @@
     },
     "tray": {
         "icon-size": 16,
-        "spacing": 5
+        "spacing": 5,
+        "reverse-direction": true
     },
     "backlight": {
       // "format": "󰳲  {percent}%",

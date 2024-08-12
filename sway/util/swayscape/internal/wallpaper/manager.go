@@ -13,6 +13,22 @@ type WallpaperManager struct {
 	mu               sync.RWMutex
 }
 
+func (wm *WallpaperManager) UpdateWallpapers(newWallpapers []string) {
+	wm.mu.Lock()
+	defer wm.mu.Unlock()
+
+	wm.wallpapers = newWallpapers
+	wm.resetUnusedWallpapers()
+}
+
+func (wm *WallpaperManager) SetOrder(newOrder string) {
+	wm.mu.Lock()
+	defer wm.mu.Unlock()
+
+	wm.order = newOrder
+	wm.resetUnusedWallpapers()
+}
+
 func NewWallpaperManager(wallpapers []string, order string) *WallpaperManager {
 	wm := &WallpaperManager{
 		wallpapers: wallpapers,

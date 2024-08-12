@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"path/filepath"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
@@ -26,8 +27,22 @@ type Config struct {
 	Command   string        `yaml:"command"`
 }
 
+var (
+	config     Config
+	configPath string
+	configLock sync.RWMutex
+)
+
 func main() {
-	config := loadConfig()
+	flag.StringVar(&configPath, "config", "config.yaml", "Path to configuration file")
+	flag.StringVar(&config.Directory, "dir", "", "Directory containing wallpapers")
+	flag.BoolVar(&config.Recursive, "recursive", false, "Scan directory recursively")
+	flag.DurationVar(&config.Interval, "interval", 5*time.Minute, "Interval between wallpaper changes (e.g., 30s, 5m, 1h)")
+	flag.StringVar(&config.Order, "order", "random", "Wallpaper order (alphabetical or random)")
+	flag.StringVar(&config.Command, "command", "swww img {{img}}", "Command to change wallpaper. Use {{img}} as a placeholder for the wallpaper path.")
+	flag.Parse()
+
+	loadConfig()
 
 	wallpapers, err := scanDirectory(config.Directory, config.Recursive)
 	if err != nil {
@@ -54,6 +69,17 @@ func main() {
 	// Start watching the directory
 	go watchDirectory(watcher, config.Directory, config.Recursive, manager)
 
+	// Setup config file watcher
+	configWatcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		log.Fatalf("Error creating config watcher: %v", err)
+	}
+	defer configWatcher.Close()
+
+	if err := configWatcher.Add(configPath); err != nil {
+		log.Fatalf("Error watching config file: %v", err)
+	}
+
 	ticker := time.NewTicker(config.Interval)
 	defer ticker.Stop()
 
@@ -71,41 +97,53 @@ func main() {
 			if err := changeWallpaper(manager, config.Command); err != nil {
 				log.Printf("Error changing wallpaper: %v", err)
 			}
+		case event := <-configWatcher.Events:
+			if event.Op&fsnotify.Write == fsnotify.Write {
+				log.Println("Config file modified. Reloading...")
+				oldConfig := config
+				loadConfig()
+				updateConfig(manager, &oldConfig)
+				ticker.Reset(config.Interval)
+				log.Printf("Config reloaded. New interval: %v", config.Interval)
+			}
+		case err := <-configWatcher.Errors:
+			log.Printf("Error watching config file: %v", err)
 		}
 	}
 }
 
-func loadConfig() Config {
-	configPath := flag.String("config", "config.yaml", "Path to configuration file")
-	flag.Parse()
-
-	config := Config{
-		Directory: "",
-		Recursive: false,
-		Interval:  5 * time.Minute,
-		Order:     "random",
-		Command:   "swww img {{img}}",
-	}
+func loadConfig() {
+	configLock.Lock()
+	defer configLock.Unlock()
 
 	// Load configuration from file
-	data, err := os.ReadFile(*configPath)
+	data, err := os.ReadFile(configPath)
 	if err == nil {
-		err = yaml.Unmarshal(data, &config)
+		var fileConfig Config
+		err = yaml.Unmarshal(data, &fileConfig)
 		if err != nil {
 			log.Printf("Error parsing configuration file: %v", err)
+		} else {
+			// Only override non-empty values from file
+			if fileConfig.Directory != "" {
+				config.Directory = fileConfig.Directory
+			}
+			if fileConfig.Recursive {
+				config.Recursive = fileConfig.Recursive
+			}
+			if fileConfig.Interval != 0 {
+				config.Interval = fileConfig.Interval
+			}
+			if fileConfig.Order != "" {
+				config.Order = fileConfig.Order
+			}
+			if fileConfig.Command != "" {
+				config.Command = fileConfig.Command
+			}
 		}
 	} else {
 		log.Printf("Error reading configuration file: %v", err)
 	}
-
-	// Override with command-line flags
-	flag.StringVar(&config.Directory, "dir", config.Directory, "Directory containing wallpapers")
-	flag.BoolVar(&config.Recursive, "recursive", config.Recursive, "Scan directory recursively")
-	flag.DurationVar(&config.Interval, "interval", config.Interval, "Interval between wallpaper changes (e.g., 30s, 5m, 1h)")
-	flag.StringVar(&config.Order, "order", config.Order, "Wallpaper order (alphabetical or random)")
-	flag.StringVar(&config.Command, "command", config.Command, "Command to change wallpaper. Use {{img}} as a placeholder for the wallpaper path.")
-
-	flag.Parse()
 
 	if config.Directory == "" {
 		log.Fatal("Directory must be specified either in config file or as a command-line argument")
@@ -121,8 +159,34 @@ func loadConfig() Config {
 		log.Fatalf("Error expanding directory path: %v", err)
 	}
 	config.Directory = expandedDir
+}
 
-	return config
+func updateConfig(manager *wallpaper.WallpaperManager, oldConfig *Config) {
+	configLock.Lock()
+	defer configLock.Unlock()
+
+	if config.Directory != oldConfig.Directory || config.Recursive != oldConfig.Recursive {
+		wallpapers, err := scanDirectory(config.Directory, config.Recursive)
+		if err != nil {
+			log.Printf("Error scanning directory: %v", err)
+		} else {
+			manager.UpdateWallpapers(wallpapers)
+			log.Printf("Updated wallpaper list. Now monitoring %d wallpapers in %s", len(wallpapers), config.Directory)
+		}
+	}
+
+	if config.Order != oldConfig.Order {
+		manager.SetOrder(config.Order)
+		log.Printf("Updated wallpaper order to: %s", config.Order)
+	}
+
+	if config.Interval != oldConfig.Interval {
+		log.Printf("Updated interval from %v to %v", oldConfig.Interval, config.Interval)
+	}
+
+	if config.Command != oldConfig.Command {
+		log.Printf("Updated command to: %s", config.Command)
+	}
 }
 
 func scanDirectory(dir string, recursive bool) ([]string, error) {

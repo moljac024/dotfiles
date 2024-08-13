@@ -14,6 +14,11 @@ window#waybar {
   border: 2px solid @crust;
 }
 
+# workspaces {
+  padding: 0px 0px 0px 0px;
+  margin: 0 0 0 0;
+}
+
 #workspaces button {
   padding: 0 5px;
   background: transparent;
@@ -36,4 +41,18 @@ window#waybar {
 #mode {
   background-color: @blue;
   color: @base;
+}
+
+#custom-next_workspace {
+  padding: 0;
+  margin-right: 5px;
+}
+
+#custom-prev_workspace {
+  padding: 0;
+  margin-left: 5px;
+}
+
+#custom-kill_window {
+  margin-right: 5px;
 }

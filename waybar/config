@@ -93,12 +93,14 @@
         "format-icons": {
             "activated": "󰅶 ",
             "deactivated": "󰛊 "
-        }
+        },
+        "tooltip": true,
+        "tooltip-format": "Idle inhibitor: {}"
     },
     "power-profiles-daemon": {
         "format": "{icon}",
-        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
         "tooltip": true,
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
         "format-icons": {
             "default": " ",
             "performance": " ",
@@ -148,6 +150,8 @@
     },
     "custom/power": {
         "format": "⏻ ",
-        "on-click": "~/bin/sway-power-menu"
+        "on-click": "~/bin/sway-power-menu",
+        "tooltip": true,
+        "tooltip-format": "Power menu"
     }
 }

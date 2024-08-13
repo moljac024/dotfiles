@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Log the execution
+# echo "Nautilus script executed at $(date)" >> /tmp/sway_wallpaper.log
+# echo "Arguments received: $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" >> /tmp/sway_wallpaper.log
+
+# Check if an file is selected
+if [ -z "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]; then
+    echo "No file selected"
+    exit 1
+fi
+
+# Get the first selected file
+selected_file=$(echo "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" | head -n1)
+
+# Call your wallpaper setting script
+~/.config/sway/bin/set-wallpaper "$selected_file"
+
+# Log the result
+# echo "Wallpaper setting script called with: $selected_file" >> /tmp/sway_wallpaper.log
+# echo "------------------------" >> /tmp/sway_wallpaper.log

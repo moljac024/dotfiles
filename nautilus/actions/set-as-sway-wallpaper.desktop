@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Action
+Name=Set as Wallpaper (Sway)
+Icon=preferences-desktop-wallpaper
+Profiles=set_wallpaper;
+
+[X-Action-Profile set_wallpaper]
+MimeTypes=image/jpeg;image/png;image/gif;image/bmp;image/tiff;
+Exec=bash -c '~/.config/sway/bin/set-wallpaper "%f"'
+Name=Set as Wallpaper (Sway)

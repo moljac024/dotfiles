@@ -137,3 +137,8 @@ ensure_symlink $ROOT_DIR/hypr $HOME/.config/hypr
 ################################################################################
 mkdir -p $HOME/.local/share/applications &&\
 cp -r $ROOT_DIR/applications/*.desktop $HOME/.local/share/applications
+
+
+mkdir -p $HOME/.local/share/nautilus/
+ensure_symlink $ROOT_DIR/nautilus/scripts $HOME/.local/share/nautilus/scripts
+ensure_symlink $ROOT_DIR/nautilus/actions $HOME/.local/share/nautilus/actions

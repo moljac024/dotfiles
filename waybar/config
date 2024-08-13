@@ -6,7 +6,7 @@
     "height": 30,
     "modules-left": ["custom/prev_workspace", "sway/workspaces", "custom/next_workspace", "sway/mode", "custom/app_launcher", "custom/file_manager", "sway/window", "custom/kill_window"],
     "modules-center": [],
-    "modules-right": ["tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
+    "modules-right": ["custom/change_wallpaper", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
 
     "sway/language": {
         "format": "{}",
@@ -143,6 +143,12 @@
         "on-click": "~/bin/sway-run",
         "tooltip": true,
         "tooltip-format": "Launch application"
+    },
+    "custom/change_wallpaper": {
+        "format": "󱧾 ",
+        "tooltip": true,
+        "tooltip-format": "Change wallpaper",
+        "on-click": "killall -SIGUSR1 swayscape"
     },
     "custom/displays": {
         "format": "󰍹 ",

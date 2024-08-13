@@ -1,4 +1,0 @@
-#!/bin/sh
-set -euo pipefail # Shell strict mode
-
-exec distrobox enter opensuse-tumbleweed -- nwg-displays $@

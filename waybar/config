@@ -4,9 +4,9 @@
     "position": "top",
     "output": ["eDP-1"],
     "height": 30,
-    "modules-left": ["custom/launcher", "custom/prev_workspace", "sway/workspaces", "custom/next_workspace", "sway/mode"],
+    "modules-left": ["custom/prev_workspace", "sway/workspaces", "custom/next_workspace", "sway/mode", "custom/app_launcher", "custom/file_manager", "sway/window", "custom/kill_window"],
     "modules-center": [],
-    "modules-right": ["sway/window", "custom/kill_window", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
 
     "sway/language": {
         "format": "{}",
@@ -114,11 +114,15 @@
     },
     "custom/prev_workspace": {
         "format": "󰜱 ",
-        "on-click": "~/.config/sway/bin/sway-ws-nav prev"
+        "on-click": "~/.config/sway/bin/sway-ws-nav prev",
+        "tooltip": true,
+        "tooltip-format": "Go to previous workspace"
     },
     "custom/next_workspace": {
         "format": "󰜴 ",
-        "on-click": "~/.config/sway/bin/sway-ws-nav next"
+        "on-click": "~/.config/sway/bin/sway-ws-nav next",
+        "tooltip": true,
+        "tooltip-format": "Go to next workspace"
     },
     "custom/floating_toggle": {
         "format": " ",
@@ -126,7 +130,13 @@
         "tooltip": true,
         "tooltip-format": "Toggle floating of focused application"
     },
-    "custom/launcher": {
+    "custom/file_manager": {
+        "format": " ",
+        "on-click": "nautilus --new-window",
+        "tooltip": true,
+        "tooltip-format": "Launch file manager"
+    },
+    "custom/app_launcher": {
         "format": "󰣛 ",
         "on-click": "~/bin/sway-run",
         "tooltip": true,

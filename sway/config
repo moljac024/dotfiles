@@ -45,7 +45,7 @@ font pango: ZedMono NF 12
 
 # Default border style for new windows
 default_border pixel 4
-# default_floating_border normal
+default_floating_border pixel 4
 
 # target                 titlebar_border  background  text      indicator  border
 client.focused           $blue            $blue       $base     $mauve     $blue
@@ -299,6 +299,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 for_window [app_id="wdisplays"] floating enable
 for_window [app_id="nwg-displays"] floating enable
 for_window [app_id="re.sonny.Junction"] floating enable
+for_window [app_id="blueman-manager"] floating enable
 
 ###############################################################################
 #### Status bar

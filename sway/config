@@ -328,7 +328,7 @@ bar {
 ###############################################################################
 
 # Custom binary to manage window decorations
-# exec_always killall wdm; ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml -v > ~/logs/window_decoration_manager.log 2>&1
+# exec ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml -v > ~/logs/window_decoration_manager.log 2>&1
 exec ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml
 
 # Wallpaper (swww)

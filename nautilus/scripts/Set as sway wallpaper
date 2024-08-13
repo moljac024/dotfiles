@@ -13,6 +13,19 @@ fi
 # Get the first selected file
 selected_file=$(echo "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" | head -n1)
 
+# Check if the file is a valid image
+mime_type=$(file -b --mime-type "$selected_file")
+case "$mime_type" in
+    image/jpeg|image/png|image/gif|image/bmp|image/tiff)
+        # File is a valid image type
+        ;;
+    *)
+        echo "Invalid file type: $mime_type" >> /tmp/sway_wallpaper.log
+        notify-send "Sway Wallpaper" "Invalid file type. Please select a valid image file." -u critical
+        exit 1
+        ;;
+esac
+
 # Call your wallpaper setting script
 ~/.config/sway/bin/set-wallpaper "$selected_file"
 

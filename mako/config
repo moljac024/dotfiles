@@ -8,5 +8,5 @@ progress-color=over #414559
 [urgency=high]
 border-color=#ef9f76
 
-[mode=do-not-disturb]
+[mode=dnd]
 invisible=1

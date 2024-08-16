@@ -1,9 +1,9 @@
-local vault_path = "My Documents/Notebook"
+local vault_path = "MyDocuments/Notebook"
 
 return {
   {
     "epwalsh/obsidian.nvim",
-    version = "*", -- recommended, use latest release instead of latest commit
+    version = "*",   -- recommended, use latest release instead of latest commit
     lazy = false,
     ft = "markdown", -- Load when opening a markdown file
     -- event = {

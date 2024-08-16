@@ -25,7 +25,7 @@ declare -a TOOLS=(
 )
 
 is_command () {
-  command -v $cmd >/dev/null 2>&1
+  command -v $1 >/dev/null 2>&1
 }
 
 install_tool () {

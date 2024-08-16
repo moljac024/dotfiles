@@ -55,12 +55,6 @@ if is_command kubectl; then
     complete -o default -F __start_kubectl k
 fi
 
-# For some reason, this is very slow
-# Dagger completions
-# if is_command dagger; then
-#     source <(dagger completion bash)
-# fi
-
 # Direnv
 if is_command direnv; then
     eval "$(direnv hook bash)"

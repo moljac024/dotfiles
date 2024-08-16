@@ -4,7 +4,7 @@
     "position": "top",
     "output": ["eDP-1"],
     "height": 30,
-    "modules-left": ["custom/prev_workspace", "sway/workspaces", "custom/next_workspace", "sway/mode", "custom/app_launcher", "custom/file_manager", "sway/window", "custom/kill_window"],
+    "modules-left": ["custom/prev_workspace", "sway/workspaces", "custom/next_workspace", "sway/mode", "custom/app_launcher", "custom/file_manager", "sway/window", "custom/kill_active_window"],
     "modules-center": [],
     "modules-right": ["custom/change_wallpaper", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "sway/language", "clock", "custom/power"],
 
@@ -108,7 +108,7 @@
             "power-saver": " "
         }
     },
-    "custom/kill_window": {
+    "custom/kill_active_window": {
         "format": "󱎘 ",
         "on-click": "swaymsg kill",
         "tooltip": true,

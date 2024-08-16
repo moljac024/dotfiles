@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Use wezterm start --always-new-process to get a new instance every time
+exec flatpak run org.wezfurlong.wezterm $@

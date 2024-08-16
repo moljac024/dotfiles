@@ -12,30 +12,25 @@
 window#waybar {
   background-color: @base;
   border: 2px solid @crust;
+}
 
-  margin: 5px;
+# workspaces {
+  padding: 0px 0px 0px 0px;
+  margin: 0 0 0 0;
 }
 
 #workspaces button {
   padding: 0 5px;
   background: transparent;
-  color: @text;
-  /* border-top: 4px solid transparent; */
-}
-
-#workspaces button.persistent {
-  color: @text;
+  border-top: 4px solid transparent;
 }
 
 #workspaces button.active {
-  /* border-top: 4px solid @blue; */
-  color: @base;
-  background: @blue;
+  border-top: 4px solid @blue;
 }
 
 #workspaces button.urgent {
-  /* border-top: 4px solid @rosewater; */
-  background: @rosewater;
+  border-top: 4px solid @rosewater;
 }
 
 .module {
@@ -43,7 +38,23 @@ window#waybar {
   margin: 0;
 }
 
-#submap {
+#mode {
   background-color: @blue;
   color: @base;
+}
+
+#custom-next_workspace {
+  padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#custom-prev_workspace {
+  padding: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#custom-kill_window {
+  margin-right: 5px;
 }

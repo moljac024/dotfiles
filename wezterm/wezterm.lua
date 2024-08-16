@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")      -- Pull in the wezterm API
+local mux = wezterm.mux
 local config = wezterm.config_builder() -- This will hold the configuration.
 local act = wezterm.action
 local global = wezterm.GLOBAL
@@ -235,6 +236,8 @@ config.keys = {
   { key = '>', mods = main_mod, action = act.MoveTabRelative(1) },
   { key = 'h', mods = main_mod, action = act.ActivateTabRelative(-1) },
   { key = 'l', mods = main_mod, action = act.ActivateTabRelative(1) },
+  -- { key = 'Left',  mods = main_mod, action = act.ActivateTabRelative(-1) },
+  -- { key = 'Right', mods = main_mod, action = act.ActivateTabRelative(1) },
   { key = 'k', mods = main_mod, action = act.ScrollByPage(-0.5) },
   { key = 'j', mods = main_mod, action = act.ScrollByPage(0.5) },
 
@@ -277,15 +280,25 @@ wezterm.on(
   end
 )
 
+-- wezterm.on('gui-startup', function(cmd)
+--   local tab, pane, window = mux.spawn_window(cmd or {})
+--   window:gui_window():maximize()
+-- end)
+
+wezterm.on('gui-attached', function(domain)
+  -- maximize all displayed windows on startup
+  local workspace = mux.get_active_workspace()
+  for _, window in ipairs(mux.all_windows()) do
+    if window:get_workspace() == workspace then
+      window:gui_window():maximize()
+    end
+  end
+end)
+
 -- config.enable_wayland = false
 
 -- Reload configuration every once in a while (setting a random wallpaper again)
 -- wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
-
--- Set fish as default shell if it's available
--- if is_program_available("fish") then
---   config.default_prog = { "fish", "-l" }
--- end
 
 -- and finally, return the configuration to wezterm
 return config

@@ -1,3 +1,14 @@
 #!/bin/bash
 
-exec ~/.config/sway/bin/swww img -t random "$1"
+SWWW_BIN="$HOME/.config/sway/bin/swww"
+
+get_random_transition() {
+  TRANSITIONS=(wave bottom top left right any)
+  size=${#TRANSITIONS[@]}
+  index=$(($RANDOM % $size))
+  TRANSITION=${TRANSITIONS[$index]}
+
+  echo $TRANSITION
+}
+
+exec $SWWW_BIN img -t $(get_random_transition) "$1"

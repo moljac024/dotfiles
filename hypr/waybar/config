@@ -4,9 +4,9 @@
     "position": "top",
     "output": ["eDP-1"],
     "height": 30,
-    "modules-left": ["custom/launcher", "hyprland/workspaces", "hyprland/submap"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "hyprland/language", "clock", "custom/power"],
+    "modules-left": ["custom/prev_workspace", "custom/next_workspace", "hyprland/workspaces", "hyprland/submap", "custom/app_launcher", "custom/file_manager", "hyprland/window", "custom/kill_active_window"],
+    "modules-center": [],
+    "modules-right": ["custom/change_wallpaper", "tray", "pulseaudio", "backlight", "network", "custom/displays", "cpu", "memory", "temperature", "battery", "power-profiles-daemon", "idle_inhibitor", "hyprland/language", "clock", "custom/power"],
     // Module configs
     "hyprland/workspaces": {
        "format": "{name}",
@@ -15,6 +15,7 @@
     },
     "hyprland/window": {
         "format": "{}",
+        "on-click-right": "hyprctl dispatch togglefloating",
         // "separate-outputs": true
     },
     "tray": {
@@ -27,9 +28,25 @@
       "format-icons": ["󰃚 ", "󰃛 ", "󰃜 ", "󰃝 ", "󰃞 ", "󰃟 ", "󰃠 "]
     },
     "clock": {
-        "format": "{:%Y-%m-%d %H:%M}",
-        "tooltip": false,
-        "tooltip-format": "{:%Y-%m-%d}"
+        "format": "{:%a %b %d %H:%M}",
+        "tooltip": true,
+        "tooltip-format": "{calendar}",
+        "calendar": {
+            "mode"          : "year",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click": "mode"
+        }
     },
     "cpu": {
         "format": "  {usage}%",
@@ -87,18 +104,56 @@
         "power-saver": " "
       }
     },
-    "custom/launcher": {
+    "custom/kill_active_window": {
+        "format": "󱎘 ",
+        "on-click": "hyprctl dispatch killactive",
+        "tooltip": true,
+        "tooltip-format": "Kill focused application"
+    },
+    "custom/prev_workspace": {
+        "format": "󰜱 ",
+        "on-click": "hyprctl dispatch workspace -1",
+        "tooltip": true,
+        "tooltip-format": "Go to previous workspace"
+    },
+    "custom/next_workspace": {
+        "format": "󰜴 ",
+        "on-click": "hyprctl dispatch workspace +1",
+        "tooltip": true,
+        "tooltip-format": "Go to next workspace"
+    },
+    "custom/floating_toggle": {
+        "format": " ",
+        "on-click": "hyprctl dispatch togglefloating",
+        "tooltip": true,
+        "tooltip-format": "Toggle floating of focused application"
+    },
+    "custom/file_manager": {
+        "format": " ",
+        "on-click": "nautilus --new-window",
+        "tooltip": true,
+        "tooltip-format": "Launch file manager"
+    },
+    "custom/app_launcher": {
         "format": "󰣛 ",
         "on-click": "~/bin/sway-run",
         "tooltip": true,
         "tooltip-format": "Launch application"
     },
+    "custom/change_wallpaper": {
+        "format": "󱧾 ",
+        "tooltip": true,
+        "tooltip-format": "Change wallpaper",
+        "on-click": "killall -SIGUSR1 swayscape"
+    },
     "custom/displays": {
         "format": "󰍹 ",
-        "on-click": "wdisplays"
+        "on-click": "~/bin/sway-displays"
     },
     "custom/power": {
         "format": "⏻ ",
-        "on-click": "wlogout"
+        "on-click": "~/bin/sway-power-menu",
+        "tooltip": true,
+        "tooltip-format": "Power menu"
     }
 }

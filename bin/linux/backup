@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Check if restic is installed and executable
+if ! command -v restic &> /dev/null; then
+  echo "Error: 'restic' command not found. Please ensure Restic is installed and available in your PATH."
+  exit 1
+fi
+
+EXPECTED_DIR="$HOME"
+CURRENT_DIR=$(pwd)
+
+# Determine the repository location
+REPO=${RESTIC_REPOSITORY:-$1}
+
+# Check if the repository is set
+if [ -z "$REPO" ]; then
+  echo "Error: No repository specified. Please set the RESTIC_REPOSITORY environment variable or provide a repository path as the first argument."
+  exit 1
+fi
+
+# Check if the repository location exists
+if [ ! -d "$REPO" ]; then
+  echo "Error: Repository location '$REPO' does not exist or is not accessible. Ensure the correct path is specified and the drive is connected."
+  exit 1
+fi
+
+# Set the backup repository include/exclude files
+INCLUDES="$HOME/dotfiles/backup/restic/include.txt"
+EXCLUDES="$HOME/dotfiles/backup/restic/exclude.txt"
+
+if [ "$CURRENT_DIR" != "$EXPECTED_DIR" ]; then
+    echo "Error: Script must be run from $EXPECTED_DIR. Exiting."
+    exit 1
+fi
+
+# # Perform a dry run and check if there are any new or modified files
+# CHANGES=$(restic -r "$REPO" backup --files-from "$INCLUDES" --exclude-file "$EXCLUDES" --dry-run --verbose 2>&1 | grep -E "new|modified" | wc -l)
+#
+# # Check if there are any new or modified files to back up
+# if [ "$CHANGES" -eq 0 ]; then
+#   echo "No new or modified files detected. Exiting without creating a snapshot."
+#   exit 0
+# fi
+
+# Run the backup
+restic -r $REPO backup --files-from "$INCLUDES" --exclude-file "$EXCLUDES"

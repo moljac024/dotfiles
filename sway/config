@@ -132,7 +132,7 @@ set $screenshot_cmd ~/.config/sway/bin/grimshot --notify savecopy anything $HOME
 # on the original workspace that the command was run on.
 # set $menu "rofi -show drun"
 # set $menu "fuzzel"
-set $menu "~/bin/sway-run"
+set $menu "~/.config/sway/bin/sway-run"
 
 ###############################################################################
 #### Key bindings

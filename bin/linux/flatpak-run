@@ -1,5 +1,0 @@
-#!/bin/bash
-
-PROGRAM="$1"
-
-flatpak run $PROGRAM >> $HOME/logs/$PROGRAM.txt 2>&1 &

@@ -1,0 +1,10 @@
+# Files relative to the home directory
+
+./.ssh
+./dotfiles
+./projects
+./Downloads
+./Documents
+./MyDocuments
+./Pictures
+./Videos

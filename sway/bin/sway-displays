@@ -1,0 +1,16 @@
+#!/bin/sh
+set -euo pipefail # Shell strict mode
+
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if is_command nwg-displays; then
+  exec nwg-displays
+elif is_command my-nwg-displays; then
+  exec my-nwg-displays
+elif [[ -x $HOME/bin/my-nwg-displays ]]; then
+  exec $HOME/bin/my-nwg-displays
+elif is_command wdisplays; then
+  exec wdisplays
+fi

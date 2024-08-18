@@ -1,0 +1,28 @@
+#!/bin/bash
+set -euo pipefail # Shell strict mode
+
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+swaynag_power_menu() {
+  exec swaynag \
+    --background="#303446" \
+    --border-bottom="#737994" \
+    --border="#949cbb" \
+    --text="#c6d0f5" \
+    --button-background="#8caaee" \
+    --button-text="#303446" \
+    -t warning -m 'Power menu' \
+    -Z 'Lock' 'loginctl lock-session' \
+    -Z 'Logout' 'swaymsg exit' \
+    -Z 'Suspend' 'systemctl suspend' \
+    -Z 'Reboot' 'systemctl reboot' \
+    -Z 'Shutdown' 'systemctl poweroff'
+}
+
+if is_command wlogout; then
+  exec wlogout
+else
+  swaynag_power_menu
+fi

@@ -140,7 +140,7 @@
     },
     "custom/app_launcher": {
         "format": "󰣛 ",
-        "on-click": "~/bin/sway-run",
+        "on-click": "~/.config/sway/bin/sway-run",
         "tooltip": true,
         "tooltip-format": "Launch application"
     },
@@ -152,11 +152,11 @@
     },
     "custom/displays": {
         "format": "󰍹 ",
-        "on-click": "~/bin/sway-displays"
+        "on-click": "~/.config/sway/bin/sway-displays"
     },
     "custom/power": {
         "format": "⏻ ",
-        "on-click": "~/bin/sway-power-menu",
+        "on-click": "~/.config/sway/bin/sway-power-menu",
         "tooltip": true,
         "tooltip-format": "Power menu"
     }

@@ -93,6 +93,11 @@ ensure_symlink $ROOT_DIR/tmux/.tmux.conf $HOME/.tmux.conf
 
 ensure_symlink $ROOT_DIR/k9s $HOME/.config/k9s
 
+# Midnight commander
+mkdir -p $HOME/.local/share/mc
+ensure_symlink $ROOT_DIR/mc $HOME/.config/mc
+ensure_symlink $ROOT_DIR/mc/skins $HOME/.local/share/mc/skins
+
 ################################################################################
 ### Other apps
 ################################################################################

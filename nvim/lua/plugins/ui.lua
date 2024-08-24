@@ -331,6 +331,10 @@ return {
     "rcarriga/nvim-notify",
     config = function()
       local notify = require("notify")
+      ---@diagnostic disable-next-line: missing-fields
+      notify.setup({
+        background_colour = "#000000"
+      })
 
       -- Make this the default notify fn
       vim.notify = notify

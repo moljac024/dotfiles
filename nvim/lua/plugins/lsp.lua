@@ -29,21 +29,6 @@ return {
     },
   },
   {
-    "Bekaboo/dropbar.nvim",
-    -- optional, but required for fuzzy finder support
-    dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
-    },
-    config = function()
-      require("dropbar").setup()
-
-      vim.keymap.set({ "n" }, "<leader>o", function()
-        require("dropbar.api").pick()
-      end, { noremap = true, desc = "Pick from dropbar", commander = { cat = "dropbar" } })
-    end,
-  },
-
-  {
     "lewis6991/hover.nvim",
     config = function()
       require("hover").setup({
@@ -74,62 +59,6 @@ return {
 
       -- Setup keymaps
       vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
-    end,
-  },
-  {
-    "stevearc/aerial.nvim",
-    -- Optional dependencies
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("aerial").setup({
-        backends = { "lsp", "treesitter" },
-        show_guides = true,
-        layout = {
-          max_width = { 40, 0.2 },
-          width = nil,
-          min_width = 20,
-        },
-        float = {
-          -- relative = "editor",
-          max_height = 0.9,
-        }
-      })
-
-      -- vim.keymap.set({ "n" }, "<A-o>", "<CMD>AerialToggle float<CR>", { commander = {} })
-    end,
-  },
-  {
-    "hedyhli/outline.nvim",
-    -- enabled = false,
-    config = function()
-      local outline = require("outline")
-      outline.setup({
-        -- Your setup opts here (leave empty to use defaults)
-      })
-
-      local toggle = function()
-        -- Fix an issue with stickybuf where calling toggle while focus is in
-        -- outline raises an error
-        if outline.is_focus_in_outline() then
-          outline.focus_toggle()
-        end
-        -- Sleep for a bit before calling the toggle function. There is a
-        -- weird race condition where if it's called too soon after changing
-        -- focus an error is raised. It has something to do with stickybuf IMO.
-        vim.defer_fn(function()
-          outline.toggle()
-        end, 200)
-      end
-
-      vim.keymap.set(
-        { "n", "i", "v", "x" },
-        "<A-o>",
-        toggle,
-        { desc = "Toggle outline", commander = { cat = "outline" } }
-      )
     end,
   },
   {

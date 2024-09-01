@@ -71,6 +71,8 @@ vim.keymap.set("n", "<leader>bR", "<CMD>e!<CR>", { desc = "Reload/Refresh curren
 vim.keymap.set("n", "<leader>tk", "<CMD>tabclose<CR>", { desc = "Close tab", commander = {} })
 vim.keymap.set("n", "<leader>tK", "<CMD>tabonly<CR>", { desc = "Close other tabs", commander = {} })
 vim.keymap.set("n", "<leader>tn", "<CMD>tabnew<CR>", { desc = "New tab", commander = {} })
+vim.keymap.set({ "n" }, "<leader>t<", "<CMD>tabprevious<CR>", { desc = "Previous tab", })
+vim.keymap.set({ "n" }, "<leader>t>", "<CMD>tabnext<CR>", { desc = "Next tab", })
 
 -- Initiate search
 vim.keymap.set("n", "<leader>s", ":%s@", { desc = "Search in buffer", commander = {} })

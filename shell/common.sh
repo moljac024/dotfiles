@@ -183,6 +183,11 @@ alias kcfg='kubectl config view --minify | grep name'
 alias kc='kubectx'
 alias kn='kubens'
 
+# Print out k8s secret
+ksecret () {
+  kubectl get secret $@ -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
+}
+
 ################################################################################
 ### Other
 ################################################################################
@@ -218,9 +223,9 @@ fi
 ### Secrets
 ################################################################################
 
-export_secret CR_PAT "$DOTFILES/.credentials/github-token-registry"
-export_secret DO_PAT "$DOTFILES/.credentials/digital-ocean"
-export_secret NPM_TOKEN_FOR_GITHUB "$DOTFILES/.credentials/npm_token_for_github"
+export_secret CR_PAT "$DOTFILES/secrets/github-token-registry"
+export_secret DO_PAT "$DOTFILES/secrets/digital-ocean"
+export_secret NPM_TOKEN_FOR_GITHUB "$DOTFILES/secrets/npm-token-for-github"
 
 ################################################################################
 ### Other

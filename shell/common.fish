@@ -178,9 +178,9 @@ export_var FZF_DEFAULT_OPTS " \
 ### Secrets
 ################################################################################
 
-export_secret CR_PAT "$DOTFILES/.credentials/github-token-registry"
-export_secret DO_PAT "$DOTFILES/.credentials/digital-ocean"
-export_secret NPM_TOKEN_FOR_GITHUB "$DOTFILES/.credentials/npm_token_for_github"
+export_secret CR_PAT "$DOTFILES/secrets/github-token-registry"
+export_secret DO_PAT "$DOTFILES/secrets/digital-ocean"
+export_secret NPM_TOKEN_FOR_GITHUB "$DOTFILES/secrets/npm-token-for-github"
 
 ################################################################################
 ### Other

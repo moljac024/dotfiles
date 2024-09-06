@@ -14,6 +14,48 @@ local log = {
 -- =============================================================================
 -- ==== Functions
 -- =============================================================================
+--
+function string:contains(sub)
+  ---@diagnostic disable-next-line: param-type-mismatch
+  return self:find(sub, 1, true) ~= nil
+end
+
+function string:startswith(start)
+  ---@diagnostic disable-next-line: param-type-mismatch
+  return self:sub(1, #start) == start
+end
+
+function string:endswith(ending)
+  ---@diagnostic disable-next-line: param-type-mismatch
+  return ending == "" or self:sub(- #ending) == ending
+end
+
+function string:replace(old, new)
+  local s = self
+  local search_start_idx = 1
+
+  while true do
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local start_idx, end_idx = s:find(old, search_start_idx, true)
+    if (not start_idx) then
+      break
+    end
+
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local postfix = s:sub(end_idx + 1)
+    ---@diagnostic disable-next-line: param-type-mismatch
+    s = s:sub(1, (start_idx - 1)) .. new .. postfix
+
+    search_start_idx = -1 * postfix:len()
+  end
+
+  return s
+end
+
+function string:insert(pos, text)
+  ---@diagnostic disable-next-line: param-type-mismatch
+  return self:sub(1, pos - 1) .. text .. self:sub(pos)
+end
 
 -- Function to check if program is available
 local function is_program_available(program)
@@ -41,6 +83,31 @@ local function includes(table, value)
     end
   end
   return false
+end
+
+
+local function filter(t, func)
+  local out = {}
+  for i = 1, #t do
+    if func(t[i]) then
+      table.insert(out, t[i])
+    end
+  end
+  return out
+end
+
+local function array_concat(a1, a2)
+  local t = {}
+
+  for i = 1, #a1 do
+    t[#t + 1] = a1[i]
+  end
+
+  for i = 1, #a2 do
+    t[#t + 1] = a2[i]
+  end
+
+  return t
 end
 
 local function table_shuffle(t)
@@ -72,13 +139,27 @@ local function scheme_for_appearance(appearance)
   end
 end
 
-local function get_background_images()
-  local images_dir = wezterm.home_dir .. "/dotfiles/backgrounds/terminal"
-  return wezterm.read_dir(images_dir)
+local function get_images_from_dir(dir)
+  return filter(wezterm.read_dir(dir), function(file)
+    return file:endswith(".jpg") or file:endswith(".jpeg") or file:endswith(".png")
+  end)
 end
 
-local function get_random_image()
-  local image_pool = get_background_images()
+local function get_background_images(opts)
+  local images_dir = wezterm.home_dir .. "/dotfiles/backgrounds/terminal"
+  local images = get_images_from_dir(images_dir)
+
+  if (opts and opts.include_sketchy) then
+    local sketchy_images = get_images_from_dir(images_dir .. "/sketchy")
+
+    -- Combine images and sketchy images
+    return array_concat(images, sketchy_images)
+  end
+
+  return images
+end
+
+local function get_random_image(image_pool)
   local tries = 0
   local new_image = image_pool[math.random(#image_pool)]
 
@@ -116,7 +197,7 @@ end
 
 local choose_background_image_action = wezterm.action_callback(function(window, pane)
   local choices = {}
-  local images = get_background_images()
+  local images = get_background_images({ include_sketchy = true })
 
   if (#images == 0) then
     return
@@ -139,11 +220,7 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
           return
         else
           global.randomize_background_image = false
-          if (id == "random") then
-            global.background_image = get_random_image()
-          else
-            global.background_image = id
-          end
+          global.background_image = id
 
           wezterm.reload_configuration()
         end
@@ -214,7 +291,7 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- If background image is not set, set a random one
 if global.background_image == nil or global.randomize_background_image == true then
-  global.background_image = get_random_image()
+  global.background_image = get_random_image(get_background_images())
 end
 set_background_image()
 

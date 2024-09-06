@@ -110,13 +110,25 @@ local function array_concat(a1, a2)
   return t
 end
 
-local function table_shuffle(t)
+local function shuffle(t)
   local s = {}
   for i = 1, #t do s[i] = t[i] end
   for i = #t, 2, -1 do
     local j = math.random(i)
     s[i], s[j] = s[j], s[i]
   end
+  return s
+end
+
+
+-- Take the first n entries from table or the whole table if n is larger than
+-- the length
+local function take(t, n)
+  local s = {}
+  for i = 1, math.min(n, #t) do
+    s[i] = t[i]
+  end
+
   return s
 end
 
@@ -203,11 +215,11 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
     return
   end
 
-  local shuffled = table_shuffle(images)
-  -- table.insert(choices, { label = "Random image", id = "random" })
+  local shuffled = shuffle(images)
+  local limited = take(shuffled, 5)
 
   ---@diagnostic disable-next-line: unused-local
-  for i, image in ipairs(shuffled) do
+  for i, image in ipairs(limited) do
     local split = split_str(image, "/")
     table.insert(choices, { label = split[#split], id = image })
   end

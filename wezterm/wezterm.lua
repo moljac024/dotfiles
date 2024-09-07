@@ -216,7 +216,7 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
   end
 
   local shuffled = shuffle(images)
-  local limited = take(shuffled, 5)
+  local limited = take(shuffled, 10)
 
   ---@diagnostic disable-next-line: unused-local
   for i, image in ipairs(limited) do

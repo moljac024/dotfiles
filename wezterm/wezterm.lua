@@ -163,9 +163,11 @@ local function get_background_images(opts)
 
   if (opts and opts.include_sketchy) then
     local sketchy_images = get_images_from_dir(images_dir .. "/sketchy")
+    local really_sketchy_images = get_images_from_dir(images_dir .. "/really-sketchy")
+    local all_sketchy_images = array_concat(sketchy_images, really_sketchy_images)
 
     -- Combine images and sketchy images
-    return array_concat(images, sketchy_images)
+    return array_concat(images, all_sketchy_images)
   end
 
   return images

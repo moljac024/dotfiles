@@ -158,16 +158,17 @@ local function get_images_from_dir(dir)
 end
 
 local function get_background_images(opts)
-  local images_dir = wezterm.home_dir .. "/dotfiles/backgrounds/terminal"
-  local images = get_images_from_dir(images_dir)
+  local base_images_dir = wezterm.home_dir .. "/dotfiles/backgrounds/terminal"
+  local images = get_images_from_dir(base_images_dir .. "/main")
 
   if (opts and opts.include_sketchy) then
-    local sketchy_images = get_images_from_dir(images_dir .. "/sketchy")
-    local really_sketchy_images = get_images_from_dir(images_dir .. "/really-sketchy")
-    local all_sketchy_images = array_concat(sketchy_images, really_sketchy_images)
+    local sketchy_images = get_images_from_dir(base_images_dir .. "/sketchy")
+    images = array_concat(images, sketchy_images)
+  end
 
-    -- Combine images and sketchy images
-    return array_concat(images, all_sketchy_images)
+  if (opts and opts.include_secret) then
+    local secret_images = get_images_from_dir(base_images_dir .. "/secret")
+    images = array_concat(images, secret_images)
   end
 
   return images
@@ -211,7 +212,7 @@ end
 
 local choose_background_image_action = wezterm.action_callback(function(window, pane)
   local choices = {}
-  local images = get_background_images({ include_sketchy = true })
+  local images = get_background_images({ include_sketchy = true, include_secret = true })
 
   if (#images == 0) then
     return

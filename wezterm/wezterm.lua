@@ -159,16 +159,18 @@ end
 
 local function get_background_images(opts)
   local base_images_dir = wezterm.home_dir .. "/dotfiles/backgrounds/terminal"
-  local images = get_images_from_dir(base_images_dir .. "/main")
+  local images = get_images_from_dir(base_images_dir .. "/simple")
+
+  if (opts and opts.include_main) then
+    images = array_concat(images, get_images_from_dir(base_images_dir .. "/main"))
+  end
 
   if (opts and opts.include_sketchy) then
-    local sketchy_images = get_images_from_dir(base_images_dir .. "/sketchy")
-    images = array_concat(images, sketchy_images)
+    images = array_concat(images, get_images_from_dir(base_images_dir .. "/sketchy"))
   end
 
   if (opts and opts.include_secret) then
-    local secret_images = get_images_from_dir(base_images_dir .. "/secret")
-    images = array_concat(images, secret_images)
+    images = array_concat(images, get_images_from_dir(base_images_dir .. "/secret"))
   end
 
   return images
@@ -212,7 +214,7 @@ end
 
 local choose_background_image_action = wezterm.action_callback(function(window, pane)
   local choices = {}
-  local images = get_background_images({ include_sketchy = true, include_secret = true })
+  local images = get_background_images({ include_main = true, include_sketchy = true, include_secret = true })
 
   if (#images == 0) then
     return
@@ -234,7 +236,6 @@ local choose_background_image_action = wezterm.action_callback(function(window, 
         if not id and not label then
           return
         else
-          global.randomize_background_image = false
           global.background_image = id
 
           wezterm.reload_configuration()
@@ -305,7 +306,7 @@ config.color_scheme = scheme_for_appearance(get_appearance())
 config.hide_tab_bar_if_only_one_tab = true
 
 -- If background image is not set, set a random one
-if global.background_image == nil or global.randomize_background_image == true then
+if global.background_image == nil then
   global.background_image = get_random_image(get_background_images())
 end
 set_background_image()

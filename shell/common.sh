@@ -163,6 +163,10 @@ if is_available nvim; then
   alias vimdiff="nvim -d"
 fi
 
+if is_available eza; then
+  alias ls="eza"
+fi
+
 alias lg='lazygit'
 
 # Git aliases

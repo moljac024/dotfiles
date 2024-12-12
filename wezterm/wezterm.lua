@@ -159,7 +159,11 @@ end
 
 local function get_background_images(opts)
   local base_images_dir = wezterm.home_dir .. "/dotfiles/backgrounds/terminal"
-  local images = get_images_from_dir(base_images_dir .. "/simple")
+  local images = {}
+
+  if (opts and opts.include_simple) then
+    images = array_concat(images, get_images_from_dir(base_images_dir .. "/simple"))
+  end
 
   if (opts and opts.include_main) then
     images = array_concat(images, get_images_from_dir(base_images_dir .. "/main"))
@@ -212,42 +216,46 @@ local function set_background_image()
   }
 end
 
-local choose_background_image_action = wezterm.action_callback(function(window, pane)
-  local choices = {}
-  local images = get_background_images({ include_main = true, include_sketchy = true, include_secret = true })
+local function get_background_image_chooser(images, opts)
+  local choose_background_image_action = wezterm.action_callback(function(window, pane)
+    opts = opts or {}
+    local choices = {}
+    -- local images = get_background_images({ include_main = true, include_sketchy = true, include_secret = true })
 
-  if (#images == 0) then
-    return
-  end
+    if (#images == 0) then
+      return
+    end
 
-  local shuffled = shuffle(images)
-  local limited = take(shuffled, 10)
+    local shuffled = shuffle(images)
+    local limited = take(shuffled, opts.max or 4)
 
-  ---@diagnostic disable-next-line: unused-local
-  for i, image in ipairs(limited) do
-    local split = split_str(image, "/")
-    table.insert(choices, { label = split[#split], id = image })
-  end
+    ---@diagnostic disable-next-line: unused-local
+    for i, image in ipairs(limited) do
+      local split = split_str(image, "/")
+      table.insert(choices, { label = split[#split], id = image })
+    end
 
-  window:perform_action(
-    act.InputSelector {
-      ---@diagnostic disable-next-line: unused-local
-      action = wezterm.action_callback(function(_window, _pane, id, label)
-        if not id and not label then
-          return
-        else
-          global.background_image = id
+    window:perform_action(
+      act.InputSelector {
+        ---@diagnostic disable-next-line: unused-local
+        action = wezterm.action_callback(function(_window, _pane, id, label)
+          if not id and not label then
+            return
+          else
+            global.background_image = id
 
-          wezterm.reload_configuration()
-        end
-      end),
-      title = 'Choose background image',
-      choices = choices,
-    },
-    pane
-  )
-end)
+            wezterm.reload_configuration()
+          end
+        end),
+        title = 'Choose background image',
+        choices = choices,
+      },
+      pane
+    )
+  end)
 
+  return choose_background_image_action
+end
 
 local function get_tab_title(tab_info)
   local title = tab_info.tab_title
@@ -340,8 +348,33 @@ config.keys = {
     mods = main_mod,
     action = rename_tab_action
   },
-  -- Choose background image
-  { key = "b", mods = main_mod, action = choose_background_image_action },
+  -- Choose secret background image
+  {
+    key = "r",
+    mods = main_mod,
+    action = get_background_image_chooser(
+      get_background_images({ include_simple = false, include_main = false, include_sketchy = false, include_secret = true }),
+      { max = 30 }
+    )
+  },
+  -- Choose sketchy background image
+  {
+    key = "o",
+    mods = main_mod,
+    action = get_background_image_chooser(
+      get_background_images({ include_simple = false, include_main = false, include_sketchy = true, include_secret = false }),
+      { max = 10 }
+    )
+  },
+  -- Choose any non-secret background image
+  {
+    key = "b",
+    mods = main_mod,
+    action = get_background_image_chooser(
+      get_background_images({ include_simple = true, include_main = true, include_sketchy = false, include_secret = false }),
+      { max = 10 }
+    )
+  },
 
   { key = "d", mods = main_mod, action = act.ShowDebugOverlay },
   { key = ":", mods = main_mod, action = act.ShowLauncher },

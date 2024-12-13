@@ -217,8 +217,8 @@ local function set_background_image()
   }
 end
 
-local function get_background_image_chooser(image_opts, opts)
-  local choose_background_image_action = wezterm.action_callback(function(window, pane)
+local function make_background_image_chooser(image_opts, opts)
+  local function get_choices()
     opts = opts or {}
     local choices = {}
     local images = get_background_images(image_opts)
@@ -228,7 +228,7 @@ local function get_background_image_chooser(image_opts, opts)
     end
 
     local shuffled = shuffle(images)
-    local limited = take(shuffled, opts.max or 4)
+    local limited = take(shuffled, opts.max or 5)
 
     ---@diagnostic disable-next-line: unused-local
     for i, image in ipairs(limited) do
@@ -236,6 +236,10 @@ local function get_background_image_chooser(image_opts, opts)
       table.insert(choices, { label = split[#split], id = image })
     end
 
+    return choices
+  end
+
+  local function action(window, pane)
     window:perform_action(
       act.InputSelector {
         ---@diagnostic disable-next-line: unused-local
@@ -244,19 +248,19 @@ local function get_background_image_chooser(image_opts, opts)
             return
           else
             global.background_image = id
-
             wezterm.reload_configuration()
           end
         end),
         title = 'Choose background image',
-        choices = choices,
+        choices = get_choices(),
       },
       pane
     )
-  end)
+  end
 
-  return choose_background_image_action
+  return wezterm.action_callback(action)
 end
+
 
 local function get_tab_title(tab_info)
   local title = tab_info.tab_title
@@ -353,7 +357,7 @@ config.keys = {
   {
     key = "i",
     mods = main_mod,
-    action = get_background_image_chooser(
+    action = make_background_image_chooser(
       { include_simple = false, include_main = false, include_sketchy = false, include_secret = true },
       { max = 30 }
     )
@@ -362,7 +366,7 @@ config.keys = {
   {
     key = "o",
     mods = main_mod,
-    action = get_background_image_chooser(
+    action = make_background_image_chooser(
       { include_simple = false, include_main = false, include_sketchy = true, include_secret = false },
       { max = 10 }
     )
@@ -371,9 +375,9 @@ config.keys = {
   {
     key = "b",
     mods = main_mod,
-    action = get_background_image_chooser(
+    action = make_background_image_chooser(
       { include_simple = true, include_main = true, include_sketchy = false, include_secret = false },
-      { max = 10 }
+      { max = 20 }
     )
   },
 

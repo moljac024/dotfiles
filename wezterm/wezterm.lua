@@ -58,6 +58,7 @@ function string:insert(pos, text)
 end
 
 -- Function to check if program is available
+---@diagnostic disable-next-line: unused-function, unused-local
 local function is_program_available(program)
   local success, stdout, stderr = wezterm.run_child_process({ "which", program })
 
@@ -216,11 +217,11 @@ local function set_background_image()
   }
 end
 
-local function get_background_image_chooser(images, opts)
+local function get_background_image_chooser(image_opts, opts)
   local choose_background_image_action = wezterm.action_callback(function(window, pane)
     opts = opts or {}
     local choices = {}
-    -- local images = get_background_images({ include_main = true, include_sketchy = true, include_secret = true })
+    local images = get_background_images(image_opts)
 
     if (#images == 0) then
       return
@@ -350,10 +351,10 @@ config.keys = {
   },
   -- Choose secret background image
   {
-    key = "r",
+    key = "i",
     mods = main_mod,
     action = get_background_image_chooser(
-      get_background_images({ include_simple = false, include_main = false, include_sketchy = false, include_secret = true }),
+      { include_simple = false, include_main = false, include_sketchy = false, include_secret = true },
       { max = 30 }
     )
   },
@@ -362,7 +363,7 @@ config.keys = {
     key = "o",
     mods = main_mod,
     action = get_background_image_chooser(
-      get_background_images({ include_simple = false, include_main = false, include_sketchy = true, include_secret = false }),
+      { include_simple = false, include_main = false, include_sketchy = true, include_secret = false },
       { max = 10 }
     )
   },
@@ -371,7 +372,7 @@ config.keys = {
     key = "b",
     mods = main_mod,
     action = get_background_image_chooser(
-      get_background_images({ include_simple = true, include_main = true, include_sketchy = false, include_secret = false }),
+      { include_simple = true, include_main = true, include_sketchy = false, include_secret = false },
       { max = 10 }
     )
   },
@@ -411,6 +412,7 @@ wezterm.on(
 --   window:gui_window():maximize()
 -- end)
 
+---@diagnostic disable-next-line: unused-local, redefined-local
 wezterm.on('gui-attached', function(domain)
   -- maximize all displayed windows on startup
   local workspace = mux.get_active_workspace()

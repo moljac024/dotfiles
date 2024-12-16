@@ -320,7 +320,7 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- If background image is not set, set a random one
 if global.background_image == nil then
-  global.background_image = get_random_image(get_background_images())
+  global.background_image = get_random_image(get_background_images({ include_simple = true }))
 end
 set_background_image()
 

@@ -1,0 +1,5 @@
+theme = "catppuccin_frappe_transparent"
+
+[editor]
+line-number = "relative"
+mouse = false

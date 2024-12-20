@@ -72,14 +72,19 @@ ensure_symlink $ROOT_DIR/git/.gitconfig $HOME/.gitconfig
 ensure_symlink $ROOT_DIR/git/.gitignore_global $HOME/.gitignore_global
 
 ################################################################################
-### Vim
+### Text editors
 ################################################################################
 
+# Vim
 mkdir -p $HOME/.vim/autoload
 ensure_symlink $ROOT_DIR/vim/autoload/plug.vim $HOME/.vim/autoload/plug.vim
 ensure_symlink $ROOT_DIR/vim/vimrc $HOME/.vim/vimrc
+
 # Neovim
 ensure_symlink $ROOT_DIR/nvim $HOME/.config/nvim
+
+# Helix
+ensure_symlink $ROOT_DIR/helix $HOME/.config/helix
 
 ################################################################################
 ### Tools

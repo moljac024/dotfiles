@@ -74,7 +74,7 @@ return {
 
       vim.keymap.set(
         "n",
-        "<A-b>",
+        "<leader>uf",
         "<CMD>NvimTreeToggle<CR>",
         { desc = "Toggle file tree", commander = { cat = "nvim-tree" } }
       )

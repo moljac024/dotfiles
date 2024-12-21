@@ -19,17 +19,11 @@ return {
       toggleterm.setup({})
 
       function _G.set_terminal_keymaps()
-        local opts = { buffer = 0 }
         vim.keymap.set("t", "<C-g>n", [[<C-\><C-n>]], { buffer = 0, noremap = true, desc = "Go to normal mode" })
         vim.keymap.set("t", "<C-g>g", [[<C-\><C-g>]],
           { buffer = 0, noremap = true, desc = "Send CTRL-G to terminal" })
         vim.keymap.set("t", "<C-g><C-g>", [[<C-\><C-g>]],
           { buffer = 0, noremap = true, desc = "Send CTRL-G to terminal" })
-        vim.keymap.set("t", "<A-h>", [[<Cmd>wincmd h<CR>]], opts)
-        vim.keymap.set("t", "<A-j>", [[<Cmd>wincmd j<CR>]], opts)
-        vim.keymap.set("t", "<A-k>", [[<Cmd>wincmd k<CR>]], opts)
-        vim.keymap.set("t", "<A-l>", [[<Cmd>wincmd l<CR>]], opts)
-        vim.keymap.set("t", "<A-w>", [[<C-\><C-n><C-w>]], opts)
       end
 
       vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
@@ -75,16 +69,20 @@ return {
       end
 
       -- Global keybind to toggle main terminal
-      vim.keymap.set({ "n" }, "<A-i>", function()
+      vim.keymap.set({ "n" }, "<leader>t1", function()
         main_terminal:toggle()
       end, { noremap = true, silent = true, desc = "Toggle terminal 1", commander = { cat = "toggleterm" } })
-      vim.keymap.set({ "n" }, "<leader>t1", function()
+      vim.keymap.set({ "n" }, "<A-i>", function()
         main_terminal:toggle()
       end, { noremap = true, silent = true, desc = "Toggle terminal 1" })
 
-      vim.keymap.set("n", "<A-g>", function()
+      -- Toggle lazygit terminal
+      vim.keymap.set("n", "<leader>tg", function()
         lazygit:toggle()
       end, { noremap = true, silent = true, desc = "Toggle lazygit terminal", commander = { cat = "toggleterm" } })
+      vim.keymap.set("n", "<A-g>", function()
+        lazygit:toggle()
+      end, { noremap = true, silent = true, desc = "Toggle lazygit terminal" })
     end,
   },
 }

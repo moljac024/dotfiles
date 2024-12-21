@@ -10,15 +10,10 @@ vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
 vim.keymap.set("n", ";", ":", { noremap = true })
 
 -- Basic movement keybinds, these make navigating splits easy for me
-vim.keymap.set("n", "<A-j>", "<c-w><c-j>", { desc = "Focus window down" })
-vim.keymap.set("n", "<A-k>", "<c-w><c-k>", { desc = "Focus window up" })
-vim.keymap.set("n", "<A-l>", "<c-w><c-l>", { desc = "Focus window right" })
-vim.keymap.set("n", "<A-h>", "<c-w><c-h>", { desc = "Focus window left" })
-
-vim.keymap.set("i", "<A-j>", "<esc><c-w><c-j>", { desc = "Focus window down" })
-vim.keymap.set("i", "<A-k>", "<esc><c-w><c-k>", { desc = "Focus window up" })
-vim.keymap.set("i", "<A-l>", "<esc><c-w><c-l>", { desc = "Focus window right" })
-vim.keymap.set("i", "<A-h>", "<esc><c-w><c-h>", { desc = "Focus window left" })
+vim.keymap.set({ "n", "i" }, "<A-j>", "<c-c><c-w><c-j>", { desc = "Focus window down" })
+vim.keymap.set({ "n", "i" }, "<A-k>", "<c-c><c-w><c-k>", { desc = "Focus window up" })
+vim.keymap.set({ "n", "i" }, "<A-l>", "<c-c><c-w><c-l>", { desc = "Focus window right" })
+vim.keymap.set({ "n", "i" }, "<A-h>", "<c-c><c-w><c-h>", { desc = "Focus window left" })
 
 vim.keymap.set("n", "<BS>", "<c-^>", { desc = "Go to alternate file", commander = {} })
 vim.keymap.set("n", "g;", "<c-o>", { desc = "Go back", commander = {} }) -- Go back
@@ -52,11 +47,6 @@ vim.keymap.set({ "n" }, "<A-3>", "<CMD>vsp<CR>", { desc = "Split window vertical
 vim.keymap.set({ "n" }, "<A-1>", "<c-w>o", { desc = "Close other windows", commander = {} })
 vim.keymap.set({ "n" }, "<A-4>", "<c-w>c", { desc = "Close current window", commander = {} })
 vim.keymap.set({ "n" }, "<A-0>", "<c-w>c", { desc = "Close current window", commander = {} })
-
-vim.keymap.set({ "n" }, "<A-left>", "<CMD>bprev<CR>", { desc = "Previous buffer", commander = {} })
-vim.keymap.set({ "n" }, "<A-right>", "<CMD>bnext<CR>", { desc = "Next buffer", commander = {} })
-vim.keymap.set({ "n" }, "<A-,>", "<CMD>tabprevious<CR>", { desc = "Previous tab", commander = {} })
-vim.keymap.set({ "n" }, "<A-.>", "<CMD>tabnext<CR>", { desc = "Next tab", commander = {} })
 
 -- Buffers
 -- If these are commented out that means they are implemented by a plugin with expanded functionality

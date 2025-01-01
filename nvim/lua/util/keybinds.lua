@@ -13,6 +13,26 @@ M.patch_keymap_set_for_commander = function()
     local rhs = args[3]
     local opts = args[4] or {}
 
+    -- Which key integration
+    local misc = require("util/misc")
+    local which_key_ok, which_key = pcall(require, "which-key")
+    local should_configure_which_key = which_key_ok
+        and type(opts.which_key) == "table"
+        and type(opts.which_key.keys) == "string"
+        and opts.which_key.keys ~= ""
+
+    if should_configure_which_key then
+      local original_rhs = rhs
+      rhs = function()
+        local which_key_show_args = misc.deep_copy_table(opts.which_key)
+        which_key.show(which_key_show_args)
+
+        return original_rhs()
+      end
+      -- Remove extra keys from opts
+      opts.which_key = nil
+    end
+
     -- Commander integration
     local commander_ok, commander = pcall(require, "commander")
     local should_add_to_commander = commander_ok

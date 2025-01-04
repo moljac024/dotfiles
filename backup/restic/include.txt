@@ -1,8 +1,8 @@
 # Files relative to the home directory
 
-./.ssh
 ./dotfiles
 ./projects
+./Desktop
 ./Downloads
 ./Documents
 ./MyDocuments

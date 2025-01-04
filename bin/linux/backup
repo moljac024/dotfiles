@@ -33,14 +33,5 @@ if [ "$CURRENT_DIR" != "$EXPECTED_DIR" ]; then
     exit 1
 fi
 
-# # Perform a dry run and check if there are any new or modified files
-# CHANGES=$(restic -r "$REPO" backup --files-from "$INCLUDES" --exclude-file "$EXCLUDES" --dry-run --verbose 2>&1 | grep -E "new|modified" | wc -l)
-#
-# # Check if there are any new or modified files to back up
-# if [ "$CHANGES" -eq 0 ]; then
-#   echo "No new or modified files detected. Exiting without creating a snapshot."
-#   exit 0
-# fi
-
 # Run the backup
 restic -r $REPO backup --files-from "$INCLUDES" --exclude-file "$EXCLUDES"

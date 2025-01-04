@@ -184,8 +184,8 @@ fi
 # k8s aliases
 alias k='kubectl'
 alias kcfg='kubectl config view --minify | grep name'
-alias kc='kubectx'
-alias kn='kubens'
+alias kc='kubectl ctx'
+alias kn='kubectl ns'
 
 # Print out k8s secret
 ksecret () {

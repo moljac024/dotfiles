@@ -42,7 +42,8 @@ ensure_symlink $ROOT_DIR/kitty $HOME/.config/kitty
 ensure_symlink $ROOT_DIR/wezterm $HOME/.config/wezterm
 
 mkdir -p $HOME/.local/share
-ensure_symlink $ROOT_DIR/konsolze $HOME/.local/share/konsole
+ensure_symlink $ROOT_DIR/konsole/konsolerc $HOME/.config/konsolerc
+ensure_symlink $ROOT_DIR/konsole/local $HOME/.local/share/konsole
 
 ################################################################################
 ### Shells

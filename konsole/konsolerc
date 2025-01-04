@@ -1,0 +1,11 @@
+[Desktop Entry]
+DefaultProfile=main.profile
+
+[General]
+ConfigVersion=1
+
+[MainWindow]
+ToolBarsMovable=Disabled
+
+[UiSettings]
+ColorScheme=

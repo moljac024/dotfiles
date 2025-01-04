@@ -163,6 +163,18 @@ ensure_symlink $ROOT_DIR/sway $HOME/.config/sway
 ensure_symlink $ROOT_DIR/hypr $HOME/.config/hypr
 
 ################################################################################
+### Kando
+################################################################################
+
+mkdir -p $HOME/.config/kando
+ensure_symlink $ROOT_DIR/kando/config.json $HOME/.config/kando/config.json
+ensure_symlink $ROOT_DIR/kando/menus.json $HOME/.config/kando/menus.json
+
+mkdir -p $HOME/.var/app/menu.kando.Kando/config/kando/
+ensure_symlink $ROOT_DIR/kando/config.json $HOME/.var/app/menu.kando.Kando/config/kando/config.json
+ensure_symlink $ROOT_DIR/kando/menus.json $HOME/.var/app/menu.kando.Kando/config/kando/menus.json
+
+################################################################################
 ### Applications (.desktop files)
 ################################################################################
 mkdir -p $HOME/.local/share/applications &&\

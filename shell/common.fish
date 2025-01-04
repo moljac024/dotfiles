@@ -96,7 +96,7 @@ end
 if test "$OSTYPE" = "linux-gnu"
     alias ls='ls --color=auto --group-directories-first --sort=extension'
     alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
-    alias update-fedora='sudo sh -c "yum update -y"'
+    alias update-fedora='sudo sh -c "dnf update -y"'
     alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
 else if string match -q "darwin*" "$OSTYPE"
     alias ls='ls -FG'

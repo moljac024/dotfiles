@@ -1,13 +1,6 @@
 #!/bin/bash
 
-if type podman >/dev/null 2>&1; then
-    PROGRAM=podman
-else
-    PROGRAM=docker
-fi
-
 VOLUME=postgres
 
-$PROGRAM volume create $VOLUME
-
-$PROGRAM run --rm --replace --network local-dev --name postgres -e POSTGRES_PASSWORD=admin -p 5432:5432 -v $VOLUME:/var/lib/postgresql/data postgres
+docker volume create $VOLUME
+docker run --rm --replace --network local-dev --name postgres -e POSTGRES_PASSWORD=admin -p 5432:5432 -v $VOLUME:/var/lib/postgresql/data postgres

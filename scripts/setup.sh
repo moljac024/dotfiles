@@ -41,6 +41,9 @@ ensure_symlink $ROOT_DIR/foot $HOME/.config/foot
 ensure_symlink $ROOT_DIR/kitty $HOME/.config/kitty
 ensure_symlink $ROOT_DIR/wezterm $HOME/.config/wezterm
 
+mkdir -p $HOME/.local/share
+ensure_symlink $ROOT_DIR/konsolze $HOME/.local/share/konsole
+
 ################################################################################
 ### Shells
 ################################################################################
@@ -70,6 +73,18 @@ ensure_symlink $ROOT_DIR/shell/.inputrc $HOME/.inputrc
 
 ensure_symlink $ROOT_DIR/git/.gitconfig $HOME/.gitconfig
 ensure_symlink $ROOT_DIR/git/.gitignore_global $HOME/.gitignore_global
+
+################################################################################
+### SSH
+################################################################################
+
+ensure_symlink $ROOT_DIR/ssh $HOME/.ssh
+
+################################################################################
+### K8S
+################################################################################
+
+ensure_symlink $ROOT_DIR/kube $HOME/.kube
 
 ################################################################################
 ### Text editors
@@ -123,6 +138,7 @@ if ! is_command mise; then
   # Mise dev tool manager
   curl https://mise.run | sh
 fi
+ensure_symlink $ROOT_DIR/mise $HOME/.config/mise
 
 ################################################################################
 ### DEs and WMs
@@ -151,7 +167,9 @@ ensure_symlink $ROOT_DIR/hypr $HOME/.config/hypr
 mkdir -p $HOME/.local/share/applications &&\
 cp -r $ROOT_DIR/applications/*.desktop $HOME/.local/share/applications
 
-
+################################################################################
+### Other
+################################################################################
 mkdir -p $HOME/.local/share/nautilus/
 ensure_symlink $ROOT_DIR/nautilus/scripts $HOME/.local/share/nautilus/scripts
 ensure_symlink $ROOT_DIR/nautilus/actions $HOME/.local/share/nautilus/actions

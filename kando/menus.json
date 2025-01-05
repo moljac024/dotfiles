@@ -7,8 +7,8 @@
       "root": {
         "type": "submenu",
         "name": "main",
-        "icon": "award_star",
-        "iconTheme": "material-symbols-rounded",
+        "icon": "fedora",
+        "iconTheme": "simple-icons",
         "children": [
           {
             "type": "submenu",
@@ -59,7 +59,7 @@
                   {
                     "type": "hotkey",
                     "data": {
-                      "hotkey": "MetaLeft+ArrowUp",
+                      "hotkey": "MetaLeft+PageUp",
                       "delayed": true
                     },
                     "name": "Toggle Maximize",

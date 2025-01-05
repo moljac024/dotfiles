@@ -20,7 +20,7 @@
                 "type": "submenu",
                 "data": {},
                 "name": "Manage",
-                "icon": "arrow_range",
+                "icon": "rectangle",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
@@ -41,7 +41,7 @@
                       "delayed": true
                     },
                     "name": "Tile Right",
-                    "icon": "text_select_jump_to_end",
+                    "icon": "splitscreen_right",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 90
                   },
@@ -52,7 +52,7 @@
                       "delayed": true
                     },
                     "name": "Tile Left",
-                    "icon": "text_select_jump_to_beginning",
+                    "icon": "splitscreen_left",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 270
                   },
@@ -84,7 +84,7 @@
                       "delayed": true
                     },
                     "name": "Screen up",
-                    "icon": "keyboard_external_input",
+                    "icon": "arrow_upward",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 0
                   },
@@ -95,7 +95,7 @@
                       "delayed": true
                     },
                     "name": "Screen right",
-                    "icon": "keyboard_external_input",
+                    "icon": "arrow_forward",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 90
                   },
@@ -106,7 +106,7 @@
                       "delayed": true
                     },
                     "name": "Screen down",
-                    "icon": "keyboard_external_input",
+                    "icon": "arrow_downward",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 180
                   },
@@ -117,7 +117,7 @@
                       "delayed": true
                     },
                     "name": "Screen left",
-                    "icon": "keyboard_external_input",
+                    "icon": "arrow_back",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 270
                   }
@@ -128,7 +128,7 @@
                 "type": "submenu",
                 "data": {},
                 "name": "Workspaces",
-                "icon": "workspaces",
+                "icon": "background_dot_small",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {

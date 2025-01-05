@@ -12,72 +12,149 @@
         "children": [
           {
             "type": "submenu",
-            "data": {},
-            "name": "Workspaces",
-            "icon": "apps",
+            "name": "Window",
+            "icon": "select_window",
             "iconTheme": "material-symbols-rounded",
             "children": [
               {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "ControlLeft+AltLeft+ArrowRight",
-                  "delayed": false
-                },
-                "name": "Next Workspace",
-                "icon": "arrow_forward",
+                "type": "submenu",
+                "data": {},
+                "name": "Manage",
+                "icon": "arrow_range",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 90
+                "children": [
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "AltLeft+F4",
+                      "delayed": true
+                    },
+                    "name": "Close Window",
+                    "icon": "cancel_presentation",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 45
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+ArrowRight",
+                      "delayed": true
+                    },
+                    "name": "Tile Right",
+                    "icon": "text_select_jump_to_end",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 90
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+ArrowLeft",
+                      "delayed": true
+                    },
+                    "name": "Tile Left",
+                    "icon": "text_select_jump_to_beginning",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 270
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+ArrowUp",
+                      "delayed": true
+                    },
+                    "name": "Toggle Maximize",
+                    "icon": "open_in_full",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 315
+                  }
+                ],
+                "angle": 0
               },
               {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "ControlLeft+AltLeft+ArrowLeft",
-                  "delayed": false
-                },
-                "name": "Previous Workspace",
-                "icon": "arrow_back",
+                "type": "submenu",
+                "data": {},
+                "name": "Move",
+                "icon": "move_group",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 270
-              }
-            ],
-            "angle": 0
-          },
-          {
-            "type": "submenu",
-            "name": "Clipboard",
-            "icon": "assignment",
-            "iconTheme": "material-symbols-rounded",
-            "children": [
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "ControlLeft+KeyV",
-                  "delayed": true
-                },
-                "name": "Paste",
-                "icon": "content_paste_go",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 90
+                "children": [
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+ShiftLeft+ArrowUp",
+                      "delayed": true
+                    },
+                    "name": "Screen up",
+                    "icon": "keyboard_external_input",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 0
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+ShiftLeft+ArrowRight",
+                      "delayed": true
+                    },
+                    "name": "Screen right",
+                    "icon": "keyboard_external_input",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 90
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+ShiftLeft+ArrowDown",
+                      "delayed": true
+                    },
+                    "name": "Screen down",
+                    "icon": "keyboard_external_input",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 180
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+ShiftLeft+ArrowLeft",
+                      "delayed": true
+                    },
+                    "name": "Screen left",
+                    "icon": "keyboard_external_input",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 270
+                  }
+                ],
+                "angle": 45
               },
               {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "ControlLeft+KeyC",
-                  "delayed": true
-                },
-                "name": "Copy",
-                "icon": "content_copy",
-                "iconTheme": "material-symbols-rounded"
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "ControlLeft+KeyX",
-                  "delayed": true
-                },
-                "name": "Cut",
-                "icon": "cut",
-                "iconTheme": "material-symbols-rounded"
+                "type": "submenu",
+                "data": {},
+                "name": "Workspaces",
+                "icon": "workspaces",
+                "iconTheme": "material-symbols-rounded",
+                "children": [
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "ControlLeft+AltLeft+ArrowRight",
+                      "delayed": false
+                    },
+                    "name": "Next Workspace",
+                    "icon": "arrow_forward",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 90
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "ControlLeft+AltLeft+ArrowLeft",
+                      "delayed": false
+                    },
+                    "name": "Previous Workspace",
+                    "icon": "arrow_back",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 270
+                  }
+                ],
+                "angle": 180
               }
             ],
             "angle": 90
@@ -107,7 +184,8 @@
                 },
                 "name": "Play / Pause",
                 "icon": "play_pause",
-                "iconTheme": "material-symbols-rounded"
+                "iconTheme": "material-symbols-rounded",
+                "angle": 150
               },
               {
                 "type": "hotkey",
@@ -117,7 +195,8 @@
                 },
                 "name": "Mute",
                 "icon": "music_off",
-                "iconTheme": "material-symbols-rounded"
+                "iconTheme": "material-symbols-rounded",
+                "angle": 210
               },
               {
                 "type": "hotkey",
@@ -152,12 +231,12 @@
               {
                 "type": "command",
                 "data": {
-                  "command": "xdg-open \"$(xdg-user-dir MUSIC)\""
+                  "command": "xdg-open \"$(xdg-user-dir PICTURES)\""
                 },
-                "name": "Music",
-                "icon": "music_note",
+                "name": "Pictures",
+                "icon": "imagesmode",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 90
+                "angle": 45
               },
               {
                 "type": "command",
@@ -182,10 +261,10 @@
               {
                 "type": "command",
                 "data": {
-                  "command": "xdg-open \"$(xdg-user-dir PICTURES)\""
+                  "command": "xdg-open \"$(xdg-user-dir MUSIC)\""
                 },
-                "name": "Pictures",
-                "icon": "imagesmode",
+                "name": "Music",
+                "icon": "music_note",
                 "iconTheme": "material-symbols-rounded",
                 "angle": 225
               },
@@ -197,63 +276,10 @@
                 "name": "Documents",
                 "icon": "text_ad",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 270
+                "angle": 315
               }
             ],
-            "angle": 225
-          },
-          {
-            "type": "submenu",
-            "name": "Windows",
-            "icon": "select_window",
-            "iconTheme": "material-symbols-rounded",
-            "children": [
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+ArrowUp",
-                  "delayed": true
-                },
-                "name": "Toggle Maximize",
-                "icon": "open_in_full",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 0
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "AltLeft+F4",
-                  "delayed": true
-                },
-                "name": "Close Window",
-                "icon": "cancel_presentation",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 45
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+ArrowRight",
-                  "delayed": true
-                },
-                "name": "Tile Right",
-                "icon": "text_select_jump_to_end",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 90
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+ArrowLeft",
-                  "delayed": true
-                },
-                "name": "Tile Left",
-                "icon": "text_select_jump_to_beginning",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 270
-              }
-            ],
-            "angle": 315
+            "angle": 270
           }
         ]
       }

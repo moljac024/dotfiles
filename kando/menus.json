@@ -43,7 +43,7 @@
                     "name": "Tile Right",
                     "icon": "splitscreen_right",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 90
+                    "angle": 112.5
                   },
                   {
                     "type": "hotkey",
@@ -54,7 +54,7 @@
                     "name": "Tile Left",
                     "icon": "splitscreen_left",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 270
+                    "angle": 247.5
                   },
                   {
                     "type": "hotkey",

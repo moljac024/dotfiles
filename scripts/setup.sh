@@ -41,7 +41,7 @@ ensure_symlink $ROOT_DIR/wezterm $HOME/.config/wezterm
 # Konsole
 mkdir -p $HOME/.local/share
 ensure_symlink $ROOT_DIR/konsole/konsolerc $HOME/.config/konsolerc
-ensure_symlink $ROOT_DIR/konsole/local $HOME/.local/share/konsole
+ensure_symlink $ROOT_DIR/konsole/local/share $HOME/.local/share/konsole
 
 ################################################################################
 ### Shells
@@ -189,6 +189,11 @@ cp -r $ROOT_DIR/applications/*.desktop $HOME/.local/share/applications
 ### Other
 ################################################################################
 
+# Nautilus scripts
 mkdir -p $HOME/.local/share/nautilus/
 ensure_symlink $ROOT_DIR/nautilus/scripts $HOME/.local/share/nautilus/scripts
 ensure_symlink $ROOT_DIR/nautilus/actions $HOME/.local/share/nautilus/actions
+
+# KDE google accounts fix
+mkdir -p $HOME/.local/share/accounts/providers
+ensure_symlink $ROOT_DIR/local/share/accounts/providers/google.provider $HOME/.local/share/accounts/providers/google.provider

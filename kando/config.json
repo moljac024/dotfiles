@@ -1,6 +1,6 @@
 {
   "locale": "auto",
-  "menuTheme": "rainbow-labels",
+  "menuTheme": "default",
   "darkMenuTheme": "default",
   "menuThemeColors": {
     "rainbow-labels": {

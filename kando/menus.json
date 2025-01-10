@@ -2,14 +2,165 @@
   "menus": [
     {
       "shortcut": "Control+Space",
-      "shortcutID": "main-menu",
+      "shortcutID": "main-kde",
       "centered": false,
       "root": {
         "type": "submenu",
-        "name": "main",
+        "name": "main-kde",
         "icon": "fedora",
         "iconTheme": "simple-icons",
         "children": [
+          {
+            "type": "submenu",
+            "data": {},
+            "name": "Apps",
+            "icon": "apps",
+            "iconTheme": "material-symbols-rounded",
+            "children": [
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit1",
+                  "delayed": true
+                },
+                "name": "App 1",
+                "icon": "looks_one",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 0
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit2",
+                  "delayed": true
+                },
+                "name": "App 2",
+                "icon": "looks_two",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 30
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit3",
+                  "delayed": true
+                },
+                "name": "App 3",
+                "icon": "counter_3",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 75
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit4",
+                  "delayed": true
+                },
+                "name": "App 4",
+                "icon": "counter_4",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 105
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit5",
+                  "delayed": true
+                },
+                "name": "App 5",
+                "icon": "counter_5",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 150
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit6",
+                  "delayed": true
+                },
+                "name": "App 6",
+                "icon": "counter_6",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 210
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit7",
+                  "delayed": true
+                },
+                "name": "App 7",
+                "icon": "counter_7",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 255
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit8",
+                  "delayed": true
+                },
+                "name": "App 8",
+                "icon": "counter_8",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 285
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Digit9",
+                  "delayed": true
+                },
+                "name": "App 9",
+                "icon": "counter_9",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 330
+              }
+            ],
+            "angle": 0
+          },
+          {
+            "type": "submenu",
+            "data": {},
+            "name": "Tools",
+            "icon": "precision_manufacturing",
+            "iconTheme": "material-symbols-rounded",
+            "children": [
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+ControlLeft+Escape",
+                  "delayed": true
+                },
+                "name": "Kill window",
+                "icon": "skull",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 0
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+Period",
+                  "delayed": true
+                },
+                "name": "Emoji selector",
+                "icon": "🙂",
+                "iconTheme": "emoji",
+                "angle": 270
+              },
+              {
+                "type": "command",
+                "data": {
+                  "command": "kcalc",
+                  "delayed": false
+                },
+                "name": "Calculator",
+                "icon": "calculate",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 315
+              }
+            ]
+          },
           {
             "type": "submenu",
             "name": "Window",
@@ -29,7 +180,7 @@
                       "hotkey": "AltLeft+F4",
                       "delayed": true
                     },
-                    "name": "Close Window",
+                    "name": "Close window",
                     "icon": "cancel_presentation",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 45
@@ -40,10 +191,10 @@
                       "hotkey": "MetaLeft+ArrowRight",
                       "delayed": true
                     },
-                    "name": "Tile Right",
+                    "name": "Tile right",
                     "icon": "splitscreen_right",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 112.5
+                    "angle": 90
                   },
                   {
                     "type": "hotkey",
@@ -51,10 +202,10 @@
                       "hotkey": "MetaLeft+ArrowLeft",
                       "delayed": true
                     },
-                    "name": "Tile Left",
+                    "name": "Tile left",
                     "icon": "splitscreen_left",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 247.5
+                    "angle": 270
                   },
                   {
                     "type": "hotkey",
@@ -62,7 +213,7 @@
                       "hotkey": "MetaLeft+PageUp",
                       "delayed": true
                     },
-                    "name": "Toggle Maximize",
+                    "name": "Toggle maximize",
                     "icon": "open_in_full",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 315
@@ -73,7 +224,7 @@
               {
                 "type": "submenu",
                 "data": {},
-                "name": "Move",
+                "name": "Move Window",
                 "icon": "move_group",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
@@ -125,9 +276,20 @@
                 "angle": 45
               },
               {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+KeyD",
+                  "delayed": false
+                },
+                "name": "Peek at desktop",
+                "icon": "desktop_windows",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 120
+              },
+              {
                 "type": "submenu",
                 "data": {},
-                "name": "Workspaces",
+                "name": "Navigation",
                 "icon": "background_dot_small",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
@@ -155,6 +317,17 @@
                   }
                 ],
                 "angle": 180
+              },
+              {
+                "type": "hotkey",
+                "data": {
+                  "hotkey": "MetaLeft+KeyW",
+                  "delayed": false
+                },
+                "name": "Window overview",
+                "icon": "window",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 315
               }
             ],
             "angle": 90

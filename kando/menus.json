@@ -18,103 +18,123 @@
             "iconTheme": "material-symbols-rounded",
             "children": [
               {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit1",
-                  "delayed": true
-                },
-                "name": "App 1",
-                "icon": "looks_one",
+                "type": "submenu",
+                "data": {},
+                "name": "Apps 5-9",
+                "icon": "apps",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 0
+                "children": [
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit5",
+                      "delayed": true
+                    },
+                    "name": "App 5",
+                    "icon": "counter_5",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 0
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit6",
+                      "delayed": true
+                    },
+                    "name": "App 6",
+                    "icon": "counter_6",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 45
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit7",
+                      "delayed": true
+                    },
+                    "name": "App 7",
+                    "icon": "counter_7",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 135
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit8",
+                      "delayed": true
+                    },
+                    "name": "App 8",
+                    "icon": "counter_8",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 180
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit9",
+                      "delayed": true
+                    },
+                    "name": "App 9",
+                    "icon": "counter_9",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 225
+                  }
+                ],
+                "angle": 90
               },
               {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit2",
-                  "delayed": true
-                },
-                "name": "App 2",
-                "icon": "looks_two",
+                "type": "submenu",
+                "data": {},
+                "name": "Apps 1 - 4",
+                "icon": "apps",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 30
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit3",
-                  "delayed": true
-                },
-                "name": "App 3",
-                "icon": "counter_3",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 75
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit4",
-                  "delayed": true
-                },
-                "name": "App 4",
-                "icon": "counter_4",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 105
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit5",
-                  "delayed": true
-                },
-                "name": "App 5",
-                "icon": "counter_5",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 150
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit6",
-                  "delayed": true
-                },
-                "name": "App 6",
-                "icon": "counter_6",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 210
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit7",
-                  "delayed": true
-                },
-                "name": "App 7",
-                "icon": "counter_7",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 255
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit8",
-                  "delayed": true
-                },
-                "name": "App 8",
-                "icon": "counter_8",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 285
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Digit9",
-                  "delayed": true
-                },
-                "name": "App 9",
-                "icon": "counter_9",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 330
+                "children": [
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit1",
+                      "delayed": true
+                    },
+                    "name": "App 1",
+                    "icon": "counter_1",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 0
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit4",
+                      "delayed": true
+                    },
+                    "name": "App 4",
+                    "icon": "counter_4",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 180
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit3",
+                      "delayed": true
+                    },
+                    "name": "App 3",
+                    "icon": "counter_3",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 240
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Digit2",
+                      "delayed": true
+                    },
+                    "name": "App 2",
+                    "icon": "counter_2",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 300
+                  }
+                ],
+                "angle": 270
               }
             ],
             "angle": 0
@@ -140,12 +160,23 @@
               {
                 "type": "hotkey",
                 "data": {
+                  "hotkey": "MetaLeft+KeyV",
+                  "delayed": true
+                },
+                "name": "Clipboard menu",
+                "icon": "note_alt",
+                "iconTheme": "material-symbols-rounded",
+                "angle": 90
+              },
+              {
+                "type": "hotkey",
+                "data": {
                   "hotkey": "MetaLeft+Period",
                   "delayed": true
                 },
                 "name": "Emoji selector",
-                "icon": "🙂",
-                "iconTheme": "emoji",
+                "icon": "emoji_language",
+                "iconTheme": "material-symbols-rounded",
                 "angle": 270
               },
               {
@@ -159,7 +190,8 @@
                 "iconTheme": "material-symbols-rounded",
                 "angle": 315
               }
-            ]
+            ],
+            "angle": 45
           },
           {
             "type": "submenu",
@@ -284,7 +316,7 @@
                 "name": "Peek at desktop",
                 "icon": "desktop_windows",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 120
+                "angle": 135
               },
               {
                 "type": "submenu",
@@ -387,69 +419,125 @@
           },
           {
             "type": "submenu",
+            "data": {},
             "name": "Bookmarks",
-            "icon": "folder_special",
+            "icon": "bookmark",
             "iconTheme": "material-symbols-rounded",
             "children": [
               {
-                "type": "command",
-                "data": {
-                  "command": "xdg-open ~"
-                },
-                "name": "Home",
-                "icon": "home",
+                "type": "submenu",
+                "data": {},
+                "name": "Web",
+                "icon": "globe",
                 "iconTheme": "material-symbols-rounded",
+                "children": [
+                  {
+                    "type": "uri",
+                    "data": {
+                      "uri": "https://reddit.com"
+                    },
+                    "name": "Reddit",
+                    "icon": "reddit",
+                    "iconTheme": "simple-icons"
+                  },
+                  {
+                    "type": "uri",
+                    "data": {
+                      "uri": "https://instagram.com"
+                    },
+                    "name": "Instagram",
+                    "icon": "instagram",
+                    "iconTheme": "simple-icons"
+                  },
+                  {
+                    "type": "uri",
+                    "data": {
+                      "uri": "https://mail.google.com/mail/u/0/#inbox"
+                    },
+                    "name": "Gmail",
+                    "icon": "gmail",
+                    "iconTheme": "simple-icons"
+                  },
+                  {
+                    "type": "uri",
+                    "data": {
+                      "uri": "https://youtube.com"
+                    },
+                    "name": "Youtube",
+                    "icon": "youtube",
+                    "iconTheme": "simple-icons"
+                  }
+                ],
                 "angle": 0
               },
               {
-                "type": "command",
-                "data": {
-                  "command": "xdg-open \"$(xdg-user-dir PICTURES)\""
-                },
-                "name": "Pictures",
-                "icon": "imagesmode",
+                "type": "submenu",
+                "name": "Local",
+                "icon": "folder_special",
                 "iconTheme": "material-symbols-rounded",
-                "angle": 45
-              },
-              {
-                "type": "command",
-                "data": {
-                  "command": "xdg-open \"$(xdg-user-dir VIDEOS)\""
-                },
-                "name": "Videos",
-                "icon": "video_camera_front",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 135
-              },
-              {
-                "type": "command",
-                "data": {
-                  "command": "xdg-open \"$(xdg-user-dir DOWNLOAD)\""
-                },
-                "name": "Downloads",
-                "icon": "download",
-                "iconTheme": "material-symbols-rounded",
+                "children": [
+                  {
+                    "type": "command",
+                    "data": {
+                      "command": "xdg-open ~/MyDocuments"
+                    },
+                    "name": "Documents",
+                    "icon": "text_ad",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 45
+                  },
+                  {
+                    "type": "command",
+                    "data": {
+                      "command": "xdg-open ~"
+                    },
+                    "name": "Home",
+                    "icon": "home",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 90
+                  },
+                  {
+                    "type": "command",
+                    "data": {
+                      "command": "xdg-open \"$(xdg-user-dir DOWNLOAD)\""
+                    },
+                    "name": "Downloads",
+                    "icon": "download",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 135
+                  },
+                  {
+                    "type": "command",
+                    "data": {
+                      "command": "xdg-open \"$(xdg-user-dir VIDEOS)\""
+                    },
+                    "name": "Videos",
+                    "icon": "video_camera_front",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 225
+                  },
+                  {
+                    "type": "command",
+                    "data": {
+                      "command": "xdg-open \"$(xdg-user-dir PICTURES)\""
+                    },
+                    "name": "Pictures",
+                    "icon": "imagesmode",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 270
+                  },
+                  {
+                    "type": "command",
+                    "data": {
+                      "command": "xdg-open \"$(xdg-user-dir MUSIC)\""
+                    },
+                    "name": "Music",
+                    "icon": "music_note",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 315
+                  }
+                ],
                 "angle": 180
-              },
-              {
-                "type": "command",
-                "data": {
-                  "command": "xdg-open \"$(xdg-user-dir MUSIC)\""
-                },
-                "name": "Music",
-                "icon": "music_note",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 225
-              },
-              {
-                "type": "command",
-                "data": {
-                  "command": "xdg-open ~/MyDocuments"
-                },
-                "name": "Documents",
-                "icon": "text_ad",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 315
               }
             ],
             "angle": 270

@@ -224,7 +224,7 @@
               {
                 "type": "submenu",
                 "data": {},
-                "name": "Move Window",
+                "name": "Move window",
                 "icon": "move_group",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
@@ -299,7 +299,7 @@
                       "hotkey": "ControlLeft+AltLeft+ArrowRight",
                       "delayed": false
                     },
-                    "name": "Next Workspace",
+                    "name": "Next workspace",
                     "icon": "arrow_forward",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 90
@@ -310,7 +310,7 @@
                       "hotkey": "ControlLeft+AltLeft+ArrowLeft",
                       "delayed": false
                     },
-                    "name": "Previous Workspace",
+                    "name": "Previous workspace",
                     "icon": "arrow_back",
                     "iconTheme": "material-symbols-rounded",
                     "angle": 270

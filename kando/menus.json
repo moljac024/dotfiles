@@ -12,9 +12,305 @@
         "children": [
           {
             "type": "submenu",
+            "name": "Window",
+            "icon": "select_window",
+            "iconTheme": "material-symbols-rounded",
+            "children": [
+              {
+                "type": "submenu",
+                "data": {},
+                "name": "Manage",
+                "icon": "rectangle",
+                "iconTheme": "material-symbols-rounded",
+                "children": [
+                  {
+                    "type": "submenu",
+                    "data": {},
+                    "name": "Close or maximize",
+                    "icon": "select_window_2",
+                    "iconTheme": "material-symbols-rounded",
+                    "children": [
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "AltLeft+F4",
+                          "delayed": true
+                        },
+                        "name": "Close window",
+                        "icon": "cancel_presentation",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 90
+                      },
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+PageUp",
+                          "delayed": true
+                        },
+                        "name": "Toggle maximize",
+                        "icon": "open_in_full",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 270
+                      }
+                    ],
+                    "angle": 0
+                  },
+                  {
+                    "type": "submenu",
+                    "data": {},
+                    "name": "Tile",
+                    "icon": "splitscreen_landscape",
+                    "iconTheme": "material-symbols-rounded",
+                    "children": [
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+ArrowLeft",
+                          "delayed": true
+                        },
+                        "name": "Tile left",
+                        "icon": "splitscreen_left",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 90
+                      },
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+ArrowRight",
+                          "delayed": true
+                        },
+                        "name": "Tile right",
+                        "icon": "splitscreen_right",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 270
+                      }
+                    ],
+                    "angle": 180
+                  }
+                ],
+                "angle": 90
+              },
+              {
+                "type": "submenu",
+                "data": {},
+                "name": "Actions",
+                "icon": "browse",
+                "iconTheme": "material-symbols-rounded",
+                "children": [
+                  {
+                    "type": "submenu",
+                    "data": {},
+                    "name": "Move window",
+                    "icon": "move_group",
+                    "iconTheme": "material-symbols-rounded",
+                    "children": [
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+ShiftLeft+ArrowRight",
+                          "delayed": true
+                        },
+                        "name": "Screen right",
+                        "icon": "arrow_forward",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 90
+                      },
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+ShiftLeft+ArrowDown",
+                          "delayed": true
+                        },
+                        "name": "Screen down",
+                        "icon": "arrow_downward",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 225
+                      },
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+ShiftLeft+ArrowLeft",
+                          "delayed": true
+                        },
+                        "name": "Screen left",
+                        "icon": "arrow_back",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 270
+                      },
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+ShiftLeft+ArrowUp",
+                          "delayed": true
+                        },
+                        "name": "Screen up",
+                        "icon": "arrow_upward",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 315
+                      }
+                    ],
+                    "angle": 0
+                  },
+                  {
+                    "type": "submenu",
+                    "data": {},
+                    "name": "Other",
+                    "icon": "menu",
+                    "iconTheme": "material-symbols-rounded",
+                    "children": [
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+ControlLeft+Escape",
+                          "delayed": true
+                        },
+                        "name": "Kill window",
+                        "icon": "skull",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 90
+                      },
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+KeyD",
+                          "delayed": false
+                        },
+                        "name": "Peek at desktop",
+                        "icon": "desktop_windows",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 150
+                      },
+                      {
+                        "type": "hotkey",
+                        "data": {
+                          "hotkey": "MetaLeft+KeyW",
+                          "delayed": false
+                        },
+                        "name": "Window overview",
+                        "icon": "window",
+                        "iconTheme": "material-symbols-rounded",
+                        "angle": 270
+                      }
+                    ],
+                    "angle": 180
+                  }
+                ],
+                "angle": 270
+              }
+            ],
+            "angle": 0
+          },
+          {
+            "type": "submenu",
+            "data": {},
+            "name": "Other",
+            "icon": "hive",
+            "iconTheme": "material-symbols-rounded",
+            "children": [
+              {
+                "type": "submenu",
+                "data": {},
+                "name": "Tools",
+                "icon": "precision_manufacturing",
+                "iconTheme": "material-symbols-rounded",
+                "children": [
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+Period",
+                      "delayed": true
+                    },
+                    "name": "Emoji selector",
+                    "icon": "emoji_language",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 90
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MetaLeft+KeyV",
+                      "delayed": true
+                    },
+                    "name": "Clipboard menu",
+                    "icon": "note_alt",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 270
+                  },
+                  {
+                    "type": "command",
+                    "data": {
+                      "command": "kcalc",
+                      "delayed": false
+                    },
+                    "name": "Calculator",
+                    "icon": "calculate",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 315
+                  }
+                ],
+                "angle": 0
+              },
+              {
+                "type": "submenu",
+                "name": "Audio",
+                "icon": "play_circle",
+                "iconTheme": "material-symbols-rounded",
+                "children": [
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MediaTrackNext",
+                      "delayed": false
+                    },
+                    "name": "Next Track",
+                    "icon": "skip_next",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 90
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MediaPlayPause",
+                      "delayed": false
+                    },
+                    "name": "Play / Pause",
+                    "icon": "play_pause",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 150
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "AudioVolumeMute",
+                      "delayed": false
+                    },
+                    "name": "Mute",
+                    "icon": "music_off",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 210
+                  },
+                  {
+                    "type": "hotkey",
+                    "data": {
+                      "hotkey": "MediaTrackPrevious",
+                      "delayed": false
+                    },
+                    "name": "Previous Track",
+                    "icon": "skip_previous",
+                    "iconTheme": "material-symbols-rounded",
+                    "angle": 270
+                  }
+                ],
+                "angle": 180
+              }
+            ],
+            "angle": 90
+          },
+          {
+            "type": "submenu",
             "data": {},
             "name": "Apps",
-            "icon": "apps",
+            "icon": "grain",
             "iconTheme": "material-symbols-rounded",
             "children": [
               {
@@ -134,284 +430,6 @@
                     "angle": 300
                   }
                 ],
-                "angle": 270
-              }
-            ],
-            "angle": 0
-          },
-          {
-            "type": "submenu",
-            "data": {},
-            "name": "Tools",
-            "icon": "precision_manufacturing",
-            "iconTheme": "material-symbols-rounded",
-            "children": [
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+ControlLeft+Escape",
-                  "delayed": true
-                },
-                "name": "Kill window",
-                "icon": "skull",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 0
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+KeyV",
-                  "delayed": true
-                },
-                "name": "Clipboard menu",
-                "icon": "note_alt",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 90
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+Period",
-                  "delayed": true
-                },
-                "name": "Emoji selector",
-                "icon": "emoji_language",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 270
-              },
-              {
-                "type": "command",
-                "data": {
-                  "command": "kcalc",
-                  "delayed": false
-                },
-                "name": "Calculator",
-                "icon": "calculate",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 315
-              }
-            ],
-            "angle": 45
-          },
-          {
-            "type": "submenu",
-            "name": "Window",
-            "icon": "select_window",
-            "iconTheme": "material-symbols-rounded",
-            "children": [
-              {
-                "type": "submenu",
-                "data": {},
-                "name": "Manage",
-                "icon": "rectangle",
-                "iconTheme": "material-symbols-rounded",
-                "children": [
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "AltLeft+F4",
-                      "delayed": true
-                    },
-                    "name": "Close window",
-                    "icon": "cancel_presentation",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 45
-                  },
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+ArrowRight",
-                      "delayed": true
-                    },
-                    "name": "Tile right",
-                    "icon": "splitscreen_right",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 90
-                  },
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+ArrowLeft",
-                      "delayed": true
-                    },
-                    "name": "Tile left",
-                    "icon": "splitscreen_left",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 270
-                  },
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+PageUp",
-                      "delayed": true
-                    },
-                    "name": "Toggle maximize",
-                    "icon": "open_in_full",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 315
-                  }
-                ],
-                "angle": 0
-              },
-              {
-                "type": "submenu",
-                "data": {},
-                "name": "Move window",
-                "icon": "move_group",
-                "iconTheme": "material-symbols-rounded",
-                "children": [
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+ShiftLeft+ArrowUp",
-                      "delayed": true
-                    },
-                    "name": "Screen up",
-                    "icon": "arrow_upward",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 0
-                  },
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+ShiftLeft+ArrowRight",
-                      "delayed": true
-                    },
-                    "name": "Screen right",
-                    "icon": "arrow_forward",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 90
-                  },
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+ShiftLeft+ArrowDown",
-                      "delayed": true
-                    },
-                    "name": "Screen down",
-                    "icon": "arrow_downward",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 180
-                  },
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+ShiftLeft+ArrowLeft",
-                      "delayed": true
-                    },
-                    "name": "Screen left",
-                    "icon": "arrow_back",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 270
-                  }
-                ],
-                "angle": 45
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+KeyD",
-                  "delayed": false
-                },
-                "name": "Peek at desktop",
-                "icon": "desktop_windows",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 135
-              },
-              {
-                "type": "submenu",
-                "data": {},
-                "name": "Navigation",
-                "icon": "background_dot_small",
-                "iconTheme": "material-symbols-rounded",
-                "children": [
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "ControlLeft+AltLeft+ArrowRight",
-                      "delayed": false
-                    },
-                    "name": "Next workspace",
-                    "icon": "arrow_forward",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 90
-                  },
-                  {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "ControlLeft+AltLeft+ArrowLeft",
-                      "delayed": false
-                    },
-                    "name": "Previous workspace",
-                    "icon": "arrow_back",
-                    "iconTheme": "material-symbols-rounded",
-                    "angle": 270
-                  }
-                ],
-                "angle": 180
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MetaLeft+KeyW",
-                  "delayed": false
-                },
-                "name": "Window overview",
-                "icon": "window",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 315
-              }
-            ],
-            "angle": 90
-          },
-          {
-            "type": "submenu",
-            "name": "Audio",
-            "icon": "play_circle",
-            "iconTheme": "material-symbols-rounded",
-            "children": [
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MediaTrackNext",
-                  "delayed": false
-                },
-                "name": "Next Track",
-                "icon": "skip_next",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 90
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MediaPlayPause",
-                  "delayed": false
-                },
-                "name": "Play / Pause",
-                "icon": "play_pause",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 150
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "AudioVolumeMute",
-                  "delayed": false
-                },
-                "name": "Mute",
-                "icon": "music_off",
-                "iconTheme": "material-symbols-rounded",
-                "angle": 210
-              },
-              {
-                "type": "hotkey",
-                "data": {
-                  "hotkey": "MediaTrackPrevious",
-                  "delayed": false
-                },
-                "name": "Previous Track",
-                "icon": "skip_previous",
-                "iconTheme": "material-symbols-rounded",
                 "angle": 270
               }
             ],

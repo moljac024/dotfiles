@@ -104,6 +104,7 @@ if ! is_command mise; then
   curl https://mise.run | sh
 fi
 ensure_symlink $ROOT_DIR/mise $HOME/.config/mise
+ensure_symlink $ROOT_DIR/node/mise-default-npm-packages $HOME/.default-npm-packages
 
 ################################################################################
 ### CLI Tools

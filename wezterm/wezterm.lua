@@ -335,6 +335,7 @@ config.visual_bell = {
 -- ==== Keybindings
 -- =============================================================================
 
+config.enable_kitty_keyboard = true
 local main_mod = "CTRL|SHIFT"
 
 config.keys = {

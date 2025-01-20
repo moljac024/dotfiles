@@ -2,6 +2,10 @@ theme = "catppuccin_frappe_transparent"
 
 [editor]
 line-number = "relative"
+end-of-line-diagnostics = "hint"
+
+[editor.inline-diagnostics]
+cursor-line = "error"
 
 [editor.cursor-shape]
 insert = "bar"

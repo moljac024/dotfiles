@@ -1,7 +1,7 @@
 return {
   {
     "zbirenbaum/copilot.lua",
-    enabled = false,
+    enabled = true,
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
@@ -13,10 +13,10 @@ return {
   },
   {
     "zbirenbaum/copilot-cmp",
-    enabled = false,
+    enabled = true,
     config = function()
       require("copilot_cmp").setup()
     end,
   },
-  { "AndreM222/copilot-lualine", enabled = false },
+  { "AndreM222/copilot-lualine", enabled = true },
 }

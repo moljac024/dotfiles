@@ -273,19 +273,6 @@ return {
     end,
   },
   {
-    "AckslD/muren.nvim",
-    config = function()
-      require("muren").setup({})
-
-      vim.keymap.set(
-        "n",
-        "<leader>r",
-        "<CMD>:MurenToggle<CR>",
-        { desc = "Toggle muren (search and replace)", commander = {} }
-      )
-    end,
-  },
-  {
     -- Pretty quickfix window
     "yorickpeterse/nvim-pqf",
     config = function()

@@ -1,3 +1,7 @@
+[language-server.gpt]
+command = "helix-gpt"
+args = ["--handler", "copilot"]
+
 [language-server.tailwindcss-ls]
 command = "tailwindcss-language-server"
 args = ["--stdio"]
@@ -17,11 +21,11 @@ language-servers = [ "vscode-css-language-server", "tailwindcss-ls" ]
 
 [[language]]
 name = "jsx"
-language-servers = [ "typescript-language-server", "tailwindcss-ls" ]
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "gpt" ]
 
 [[language]]
 name = "tsx"
-language-servers = [ "typescript-language-server", "tailwindcss-ls" ]
+language-servers = [ "typescript-language-server", "tailwindcss-ls", "gpt" ]
 auto-format = true
 formatter = { command = "prettier", args = ["--parser", "typescript"] }
 
@@ -31,5 +35,6 @@ language-servers = [ "svelteserver", "tailwindcss-ls" ]
 
 [[language]]
 name = "typescript"
+language-servers = [ "typescript-language-server", "gpt" ]
 auto-format = true
 formatter = { command = "prettier", args = ["--parser", "typescript"] }

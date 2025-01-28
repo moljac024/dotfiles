@@ -94,6 +94,12 @@ ensure_symlink $ROOT_DIR/nvim $HOME/.config/nvim
 # Helix
 ensure_symlink $ROOT_DIR/helix $HOME/.config/helix
 
+# Kakoune
+ensure_symlink $ROOT_DIR/kakoune $HOME/.config/kak
+
+# Bat
+ensure_symlink $ROOT_DIR/bat $HOME/.config/bat
+
 # Volta nodejs version manager
 if [ ! -d "$HOME/.volta" ]; then
     curl https://get.volta.sh | bash -s -- --skip-setup

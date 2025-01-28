@@ -192,6 +192,10 @@ ksecret () {
   kubectl get secret $@ -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
 }
 
+if is_command zide; then
+  export_var ZIDE_DIR $HOME/.config/zide
+fi
+
 ################################################################################
 ### Other
 ################################################################################

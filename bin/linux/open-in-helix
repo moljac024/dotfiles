@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Path to the temporary file for storing the selected file
+YAZI_SELECTED_FILE="/tmp/yazi-selected-file"
+
+# Launch yazi and store the selected file path in the temporary file
+yazi --chooser-file "$YAZI_SELECTED_FILE"
+
+# Check if a file was selected
+if [[ -s $YAZI_SELECTED_FILE ]]; then
+    # Read the selected file path
+    FILE=$(cat "$YAZI_SELECTED_FILE")
+
+    # Get the PID of the suspended helix process
+    HX_PID=$(pgrep -u "$USER" hx | head -n 1)
+
+    # Send the :open command to the helix process via /proc
+    printf ":open %s\n" "$FILE" > "/proc/$HX_PID/fd/0"
+else
+    echo "No file selected."
+fi
+
+# Clean up the temporary file
+rm -f "$YAZI_SELECTED_FILE"

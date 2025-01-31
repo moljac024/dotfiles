@@ -47,7 +47,7 @@ return {
 
       -- Setup keymaps
       vim.keymap.set("n", "K", require("hover").hover)
-      vim.keymap.set("n", "<leader>k", require("hover").hover, { desc = "Hover - Show docs for item under cursor" })
+      vim.keymap.set("n", "<leader>k", require("hover").hover, { desc = "Hover, show docs for item under cursor" })
     end,
   },
   {

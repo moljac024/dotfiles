@@ -17,13 +17,14 @@ return {
     "lewis6991/gitsigns.nvim",
     config = function()
       local gitsigns = require("gitsigns")
+      local c = require("util/commands")
       gitsigns.setup()
 
-      vim.keymap.set(
-        { "n" },
-        "<leader>gb",
-        gitsigns.toggle_current_line_blame,
-        { desc = "Toggle git blame for current line", commander = { cat = "gitsigns" } }
+      c.add_command(
+        {
+          desc = "Toggle git blame for current line",
+          cmd = gitsigns.toggle_current_line_blame
+        }
       )
     end,
   },

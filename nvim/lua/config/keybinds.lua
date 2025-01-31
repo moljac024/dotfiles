@@ -2,10 +2,7 @@
 -- Keybindings
 -- ############################################################################
 
-vim.keymap.set({ "i", "c" }, "jj", "<C-c><Esc>", {
-  silent = true,
-  noremap = true,
-})
+local c = require("util/commands")
 
 vim.keymap.set("n", ";", ":", { noremap = true })
 
@@ -49,13 +46,32 @@ vim.keymap.set({ "n" }, "<A-4>", "<c-w>c", { desc = "Close current window", comm
 vim.keymap.set({ "n" }, "<A-0>", "<c-w>c", { desc = "Close current window", commander = {} })
 
 -- Buffers
--- If these are commented out that means they are implemented by a plugin with expanded functionality
--- vim.keymap.set("n", "<leader>bk", "<CMD>bw<CR>", { desc = "Kill current buffer", commander = {} })
--- vim.keymap.set("n", "<leader>bK", "<CMD>bw!<CR>", { desc = "Kill current buffer (force)", commander = {} })
-vim.keymap.set("n", "<leader>bs", "<CMD>w<CR>", { desc = "Save current buffer", commander = {} })
-vim.keymap.set("n", "<leader>bS", "<CMD>wa<CR>", { desc = "Save all buffers", commander = {} })
-vim.keymap.set("n", "<leader>br", "<CMD>e<CR>", { desc = "Reload/Refresh current buffer", commander = {} })
-vim.keymap.set("n", "<leader>bR", "<CMD>e!<CR>", { desc = "Reload/Refresh current buffer (force)", commander = {} })
+c.add_command({
+  -- {
+  --   desc = "Kill current buffer",
+  --   cmd = "<CMD>bw<CR>"
+  -- },
+  -- {
+  --   desc = "Kill current buffer (force)",
+  --   cmd = "<CMD>bw!<CR>"
+  -- },
+  {
+    desc = "Save current buffer",
+    cmd = "<CMD>w<CR>"
+  },
+  {
+    desc = "Save all buffers",
+    cmd = "<CMD>wa<CR>"
+  },
+  {
+    desc = "Refresh current buffer",
+    cmd = "<CMD>e<CR>"
+  },
+  {
+    desc = "Refresh current buffer (force)",
+    cmd = "<CMD>e!<CR>"
+  },
+})
 
 -- Tabs
 vim.keymap.set("n", "<leader>tk", "<CMD>tabclose<CR>", { desc = "Close tab", commander = {} })
@@ -63,6 +79,3 @@ vim.keymap.set("n", "<leader>tK", "<CMD>tabonly<CR>", { desc = "Close other tabs
 vim.keymap.set("n", "<leader>tn", "<CMD>tabnew<CR>", { desc = "New tab", commander = {} })
 vim.keymap.set({ "n" }, "<leader>t<", "<CMD>tabprevious<CR>", { desc = "Previous tab", })
 vim.keymap.set({ "n" }, "<leader>t>", "<CMD>tabnext<CR>", { desc = "Next tab", })
-
--- Initiate search
-vim.keymap.set("n", "<leader>s", ":%s@", { desc = "Search in buffer", commander = {} })

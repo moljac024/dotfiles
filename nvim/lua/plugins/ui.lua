@@ -98,8 +98,7 @@ return {
         },
       })
 
-      vim.keymap.set({ "n" }, "<leader>fc", "<CMD>Telescope commander<CR>", { desc = "Open commander" })
-      vim.keymap.set({ "n" }, "<leader>p", "<CMD>Telescope commander<CR>", { desc = "Open commander" })
+      vim.keymap.set({ "n" }, "<leader><leader>", "<CMD>Telescope commander<CR>", { desc = "Open commander" })
 
       commander.add({
         {
@@ -116,82 +115,57 @@ return {
         {
           desc = "Resume previous search",
           keys = {
-            { "n", "<leader>fr" },
+            { "n", "<leader>'" },
           },
           cmd = telescope_builtin.resume,
         },
         {
           desc = "Search files",
           keys = {
-            { "n", "<leader>ff" },
+            { "n", "<leader>f" },
           },
           cmd = telescope_builtin.find_files,
         },
         {
           desc = "Search buffers",
           keys = {
-            { "n", "<leader>fb" },
+            { "n", "<leader>b" },
           },
           cmd = telescope_builtin.buffers,
         },
         {
           desc = "Search help",
           keys = {
-            { "n", "<leader>fh" },
+            { "n", "<leader>?" },
           },
           cmd = telescope_builtin.help_tags,
         },
         {
-          desc = "Search for string (live grep)",
+          desc = "Search for string",
           keys = {
-            { "n", "<leader>fg" },
+            { "n", "<leader>/" },
           },
           cmd = telescope_builtin.live_grep,
         },
         {
-          desc = "Search for string under cursor",
-          keys = {
-            { "n", "<leader>fs" },
-          },
-          cmd = telescope_builtin.grep_string,
-        },
-        {
-          desc = "Search keymaps",
-          keys = {
-
-            { "n", "<leader>fk" },
-          },
-          cmd = telescope_builtin.keymaps,
-        },
-        {
           desc = "Search jumplist",
           keys = {
-            { "n", "<leader>fj" },
+            { "n", "<leader>j" },
           },
           cmd = telescope_builtin.jumplist,
         },
         {
           desc = "Find in buffer",
           keys = {
-            { "n", "<leader>/" },
+            { "n", "<leader>\\" },
           },
           cmd = telescope_builtin.current_buffer_fuzzy_find,
         },
         {
-          desc = "Search emoji",
-          keys = {
-            { "n", "<leader>fe" },
-          },
+          desc = "Insert emoji",
           cmd = function()
             telescope_builtin.symbols({ sources = { "emoji" } })
           end,
-        },
-        {
-          desc = "Switch to project",
-          keys = {
-            { "n", "<leader>fp" },
-          },
-          cmd = "<CMD>Telescope projects<CR>",
         },
       }, { set = true, show = true, cat = "telescope" })
     end,
@@ -351,8 +325,18 @@ return {
   {
     "famiu/bufdelete.nvim",
     config = function()
-      vim.keymap.set("n", "<leader>bk", ":Bwipeout<CR>", { desc = "Kill current buffer", commander = {} })
-      vim.keymap.set("n", "<leader>bK", ":Bwipeout!<CR>", { desc = "Kill current buffer (force)", commander = {} })
+      local c = require("util/commands")
+
+      c.add_command({
+        {
+          desc = "Kill current buffer",
+          cmd = "<CMD>Bwipeout<CR>"
+        },
+        {
+          desc = "Kill current buffer (force)",
+          cmd = "<CMD>Bwipeout!<CR>"
+        }
+      })
     end,
   },
   {

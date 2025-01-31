@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 vim.g.skip_ts_context_commentstring_module = true
 
 return {
@@ -101,6 +102,8 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local harpoon = require("harpoon")
+      local c = require("util/commands")
+
       harpoon:setup({
         settings = {
           key = function()
@@ -134,15 +137,24 @@ return {
             :find()
       end
 
-      vim.keymap.set("n", "<leader>ha", function()
-        harpoon:list():add()
-      end, { desc = "Add current file to harpoon", commander = {} })
       vim.keymap.set("n", "<C-e>", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end, { desc = "Open harpoon quick menu" })
-      vim.keymap.set("n", "<leader>ht", function()
-        toggle_telescope(harpoon:list())
-      end, { desc = "Open harpoon window" })
+
+      c.add_command({
+        {
+          desc = "Add current file to list",
+          cmd = function()
+            harpoon:list():add()
+          end
+        },
+        {
+          desc = "Open harpoon window",
+          cmd = function()
+            toggle_telescope(harpoon:list())
+          end
+        }
+      }, { cat = "harpoon" })
     end,
   },
   {
@@ -226,9 +238,20 @@ return {
     },
     init = function()
       local tidy = require("tidy")
+      local c = require("util/commands")
 
-      vim.keymap.set("n", "<leader>tt", tidy.toggle, { desc = "(tidy) Toggle" })
-      vim.keymap.set("n", "<leader>tr", tidy.run, { desc = "(tidy) Format file" })
+      c.add_command({
+        {
+          desc = "Toggle tidy",
+          cmd = tidy.toggle
+        },
+        {
+          desc = "Format file",
+          cmd = tidy.toggle
+        },
+      }, {
+        cat = "tidy"
+      })
     end,
   },
   {

@@ -3,18 +3,6 @@ return {
     "folke/trouble.nvim",
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
-    keys = {
-      {
-        "<leader>xx",
-        "<cmd>Trouble<cr>",
-        desc = "Open trouble",
-      },
-      {
-        "<leader>xc",
-        "<cmd>Trouble close<cr>",
-        desc = "Close trouble",
-      },
-    },
   },
   {
     "folke/lazydev.nvim",
@@ -58,7 +46,8 @@ return {
       })
 
       -- Setup keymaps
-      vim.keymap.set("n", "K", require("hover").hover, { desc = "hover.nvim" })
+      vim.keymap.set("n", "K", require("hover").hover)
+      vim.keymap.set("n", "<leader>k", require("hover").hover, { desc = "Hover - Show docs for item under cursor" })
     end,
   },
   {
@@ -158,10 +147,8 @@ return {
             { buffer = 0, desc = "Go to type definition(s)" }
           )
 
-          -- vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover (LSP)", buffer = 0 })
-
-          vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })
-          vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = 0, desc = "Code actions" })
+          vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })
+          vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { buffer = 0, desc = "Code actions" })
 
           local filetype = vim.bo[bufnr].filetype
           if disable_semantic_tokens[filetype] then

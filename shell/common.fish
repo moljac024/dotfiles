@@ -93,12 +93,13 @@ end
 ### Aliases
 ################################################################################
 
-if test "$OSTYPE" = "linux-gnu"
+set -l OS (uname)
+if test "$OS" = "Linux"
     alias ls='ls --color=auto --group-directories-first --sort=extension'
     alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
     alias update-fedora='sudo sh -c "dnf update -y"'
     alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
-else if string match -q "darwin*" "$OSTYPE"
+else if test "$OS" = Darwin
     alias ls='ls -FG'
     function whoishoggingport
         lsof -n -iTCP:$argv[1] | grep LISTEN

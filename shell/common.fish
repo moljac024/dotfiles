@@ -119,7 +119,7 @@ end
 alias update-npm-packages="npx npm-check-updates -i"
 alias c='clear'
 alias ..='cd ..'
-alias back='cd "$OLDPWD"'
+alias back='cd -'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'
 alias duf="du -sk * | sort -n | perl -ne '\$s,\$f=split(m{\t});for (qw(K M G)) {if(\$s<1024) {printf(\"%.1f\",\$s);print \"\$_\t\$f\"; last};\$s=\$s/1024}'"

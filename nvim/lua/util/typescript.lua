@@ -7,7 +7,7 @@ M.find_tsc_bin = function()
     return node_modules_tsc_binary
   end
 
-  return "npx tsc"
+  return "tsc"
 end
 
 return M

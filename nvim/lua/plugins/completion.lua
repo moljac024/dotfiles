@@ -8,9 +8,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
-      { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
-      "rafamadriz/friendly-snippets",
-      "saadparwaiz1/cmp_luasnip",
     },
     config = function()
       vim.opt.completeopt = { "menu", "menuone", "preview", "noselect", "noinsert" }
@@ -20,9 +17,8 @@ return {
       lspkind.init({})
 
       local cmp = require("cmp")
-      local luasnip = require("luasnip")
-      require("luasnip.loaders.from_vscode").lazy_load()
 
+      ---@diagnostic disable-next-line: unused-local
       local down_mapping = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
@@ -68,7 +64,6 @@ return {
             menu = {
               buffer = "[Buffer]",
               nvim_lsp = "[LSP]",
-              luasnip = "[LuaSnip]",
               nvim_lua = "[Lua]",
               latex_symbols = "[Latex]",
             },
@@ -81,47 +76,19 @@ return {
           { name = "nvim_lsp", group_index = 2 },
           { name = "path",     group_index = 2 },
           { name = "buffer",   group_index = 2 },
-          { name = "luasnip",  group_index = 2 },
         },
         mapping = {
           ["<C-d>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-n>"] = down_mapping,
           ["<C-p>"] = up_mapping,
-          -- Make it possible to manually trigger completion
-          ---@diagnostic disable-next-line: unused-local
           ["<C-j>"] = down_mapping,
-          -- Make it possible to manually trigger completion
-          ---@diagnostic disable-next-line: unused-local
           ["<C-k>"] = up_mapping,
           ["<CR>"] = accept_mapping,
           ["<C-CR>"] = accept_mapping,
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "s" }),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.locally_jumpable(1) then
-              luasnip.jump(1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-        },
-
-        -- Enable luasnip to handle snippet expansion for nvim-cmp
-        snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
-          end,
+          ["<Tab>"] = down_mapping,
+          ["<S-Tab>"] = up_mapping,
         },
       })
 
@@ -132,15 +99,6 @@ return {
       cmp.event:on("menu_closed", function()
         vim.b.copilot_suggestion_hidden = false
       end)
-
-      luasnip.config.set_config({
-        history = false,
-        updateevents = "TextChanged,TextChangedI",
-      })
-
-      for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/snippets/*.lua", true)) do
-        loadfile(ft_path)()
-      end
     end,
   },
 }

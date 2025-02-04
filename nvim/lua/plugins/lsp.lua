@@ -19,7 +19,9 @@ return {
   {
     "lewis6991/hover.nvim",
     config = function()
-      require("hover").setup({
+      local hover = require("hover")
+
+      hover.setup({
         init = function()
           -- Require providers
           require("hover.providers.lsp")
@@ -46,8 +48,8 @@ return {
       })
 
       -- Setup keymaps
-      vim.keymap.set("n", "K", require("hover").hover)
-      vim.keymap.set("n", "<leader>k", require("hover").hover, { desc = "Show docs for item under cursor (hover)" })
+      vim.keymap.set("n", "K", hover.hover)
+      vim.keymap.set("n", "<leader>k", hover.hover, { desc = "Show docs for item under cursor (hover)" })
     end,
   },
   {

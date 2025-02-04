@@ -14,3 +14,13 @@ select = "block"
 
 [editor.file-picker]
 hidden = false
+
+[keys.normal]
+"A-h" = "jump_view_left"
+"A-j" = "jump_view_down"
+"A-k" = "jump_view_up"
+"A-l" = "jump_view_right"
+"A-2" = "hsplit"
+"A-3" = "vsplit"
+"A-4" = "wclose"
+"A-o" = "wonly"

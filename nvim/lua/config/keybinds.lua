@@ -37,13 +37,11 @@ vim.keymap.set({ "n" }, "<leader>2", "<CMD>sp<CR>", { desc = "Split window horiz
 vim.keymap.set({ "n" }, "<leader>3", "<CMD>vsp<CR>", { desc = "Split window vertically" })
 vim.keymap.set({ "n" }, "<leader>1", "<c-w>o", { desc = "Close other windows" })
 vim.keymap.set({ "n" }, "<leader>4", "<c-w>c", { desc = "Close current window" })
-vim.keymap.set({ "n" }, "<leader>0", "<c-w>c", { desc = "Close current window" })
 --
 vim.keymap.set({ "n" }, "<A-2>", "<CMD>sp<CR>", { desc = "Split window horizontally", commander = {} })
 vim.keymap.set({ "n" }, "<A-3>", "<CMD>vsp<CR>", { desc = "Split window vertically", commander = {} })
 vim.keymap.set({ "n" }, "<A-1>", "<c-w>o", { desc = "Close other windows", commander = {} })
 vim.keymap.set({ "n" }, "<A-4>", "<c-w>c", { desc = "Close current window", commander = {} })
-vim.keymap.set({ "n" }, "<A-0>", "<c-w>c", { desc = "Close current window", commander = {} })
 
 -- Buffers
 c.add_command({

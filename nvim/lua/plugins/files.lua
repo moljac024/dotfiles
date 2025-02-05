@@ -28,7 +28,6 @@ return {
           ["-"] = "actions.close",
           ["<Backspace>"] = "actions.parent",
           ["_"] = "actions.open_cwd",
-          ["g."] = "actions.toggle_hidden",
         },
       })
 

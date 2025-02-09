@@ -106,11 +106,16 @@ return {
         rust_analyzer = {},
         gopls = {},
         csharp_ls = {},
+        fennel_ls = {
+          manual_install = true
+        }
       }
 
       local servers_to_install = vim.tbl_filter(function(key)
         local t = servers[key]
-        return not t.manual_install
+        local should_install = not t.manual_install
+        t.should_install = nil
+        return should_install
       end, vim.tbl_keys(servers))
 
       require("mason").setup()

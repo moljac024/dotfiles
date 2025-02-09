@@ -35,7 +35,8 @@ return {
     end,
   },
   -- Fennel
-  "jaawerth/fennel.vim",
+  { "jaawerth/fennel.vim" },
   -- REPLs for lisps
-  { "Olical/conjure" }
+  { "Olical/conjure" },
+  { "PaterJason/cmp-conjure" },
 }

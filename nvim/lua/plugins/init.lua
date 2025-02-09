@@ -8,8 +8,7 @@ local lsp = import("./lsp")
 local ui = import("./ui")
 local util = import("./util")
 local terminal = import("./terminal")
-local fennel = import("./fennel")
-local webdev = import("./webdev")
+local dev = import("./dev")
 
 return {
   ui,
@@ -21,8 +20,6 @@ return {
   lsp,
   terminal,
   util,
-  fennel,
-
   ai,
-  webdev,
+  dev,
 }

@@ -1,3 +1,0 @@
-return {
-  "jaawerth/fennel.vim"
-}

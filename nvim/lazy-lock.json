@@ -8,6 +8,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "commander.nvim": { "branch": "main", "commit": "84101e8eb1613a72bbdec655b734f891d8a00694" },
   "conform.nvim": { "branch": "master", "commit": "363243c03102a531a8203311d4f2ae704c620d9b" },
+  "conjure": { "branch": "main", "commit": "95b067e1356fb5b0143c9487ffc9950ddaa7df3a" },
   "copilot-cmp": { "branch": "master", "commit": "15fc12af3d0109fa76b60b5cffa1373697e261d1" },
   "copilot-lualine": { "branch": "main", "commit": "dc4b8ed0f75bc2557b3158c526624bf04ad233ea" },
   "copilot.lua": { "branch": "master", "commit": "886ee73b6d464b2b3e3e6a7ff55ce87feac423a9" },

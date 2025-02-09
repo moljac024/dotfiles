@@ -1,3 +1,4 @@
+local c = require("util/commands")
 local logo = [[
 ⠀⠀⠀⠀⠀⠀⠀⣠⡤⠶⡄⠀⠀⠀⠀⠀⠀⠀⢠⠶⣦⣀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⢀⣴⣿⡟⠀⠈⣀⣾⣝⣯⣿⣛⣷⣦⡀⠀⠈⢿⣿⣦⡀⠀⠀⠀⠀
@@ -20,7 +21,7 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    priority = 1100,
+    priority = 999,
     config = function()
       require("catppuccin").setup({
         flavour = "frappe",
@@ -50,7 +51,7 @@ return {
   },
   {
     "folke/which-key.nvim",
-    priority = 999,
+    priority = 998,
     event = "VeryLazy",
     -- enabled = false,
     init = function()
@@ -70,7 +71,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     lazy = false,
-    priority = 998,
+    priority = 997,
     keys = {},
     config = function()
       local commander = require("commander")
@@ -325,8 +326,6 @@ return {
   {
     "famiu/bufdelete.nvim",
     config = function()
-      local c = require("util/commands")
-
       c.add_command({
         {
           desc = "Kill current buffer",

@@ -1,3 +1,4 @@
+local c = require("util/commands")
 ---@diagnostic disable: missing-fields
 vim.g.skip_ts_context_commentstring_module = true
 
@@ -96,68 +97,6 @@ return {
     end,
   },
   {
-    -- Project file navigation
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      local harpoon = require("harpoon")
-      local c = require("util/commands")
-
-      harpoon:setup({
-        settings = {
-          key = function()
-            local cwd = vim.loop.cwd() or ""
-            -- If cwd starts with /var/home, replace it to start with /home
-            if cwd:sub(1, 8) == "/var/home" then
-              cwd = "/home" .. cwd:sub(9)
-            end
-            return cwd
-          end,
-        },
-      })
-
-      -- basic telescope configuration
-      local conf = require("telescope.config").values
-      local function toggle_telescope(harpoon_files)
-        local file_paths = {}
-        for _, item in ipairs(harpoon_files.items) do
-          table.insert(file_paths, item.value)
-        end
-
-        require("telescope.pickers")
-            .new({}, {
-              prompt_title = "Harpoon",
-              finder = require("telescope.finders").new_table({
-                results = file_paths,
-              }),
-              previewer = conf.file_previewer({}),
-              sorter = conf.generic_sorter({}),
-            })
-            :find()
-      end
-
-      vim.keymap.set("n", "<C-e>", function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
-      end, { desc = "Open harpoon quick menu" })
-
-      c.add_command({
-        {
-          desc = "Add current file to list",
-          cmd = function()
-            harpoon:list():add()
-          end
-        },
-        {
-          desc = "Open harpoon window",
-          cmd = function()
-            toggle_telescope(harpoon:list())
-          end
-        }
-      }, { cat = "harpoon" })
-    end,
-  },
-  {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
     config = true,
@@ -238,7 +177,6 @@ return {
     },
     init = function()
       local tidy = require("tidy")
-      local c = require("util/commands")
 
       c.add_command({
         {
@@ -301,5 +239,30 @@ return {
     config = function()
       require("pqf").setup()
     end,
-  }
+  },
+  -- Search and replace
+  {
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      require('grug-far').setup({
+        -- options, see Configuration section below
+        -- there are no required options atm
+        -- engine = 'ripgrep' is default, but 'astgrep' can be specified
+      });
+
+      c.add_command({
+        {
+          desc = "Search and replace",
+          cmd = "<CMD>GrugFar<CR>"
+        }
+      })
+    end
+  },
+  -- Lisp
+  {
+    "julienvincent/nvim-paredit",
+    config = function()
+      require("nvim-paredit").setup()
+    end
+  },
 }

@@ -1,3 +1,5 @@
+local c = require("util/commands")
+
 return {
   {
     "stevearc/oil.nvim",
@@ -31,6 +33,15 @@ return {
         },
       })
 
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "OilActionsPost",
+        callback = function(event)
+          if event.data.actions.type == "move" then
+            Snacks.rename.on_rename_file(event.data.actions.src_url, event.data.actions.dest_url)
+          end
+        end,
+      })
+
       -- Open parent directory in current window
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory", commander = { cat = "oil" } })
       -- Open parent directory in floating window
@@ -43,8 +54,17 @@ return {
     end,
   },
   {
+    'skardyy/neo-img',
+    dependencies = {
+      "stevearc/oil.nvim",
+    },
+    config = function()
+      require('neo-img').setup()
+    end,
+  },
+  {
     "nvim-tree/nvim-tree.lua",
-    priority = 898,
+    priority = 900,
     version = "*",
     lazy = false,
     dependencies = {
@@ -66,6 +86,67 @@ return {
         "<CMD>NvimTreeToggle<CR>",
         { desc = "Toggle file tree", commander = { cat = "nvim-tree" } }
       )
+    end,
+  },
+  {
+    -- Project file navigation
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      local harpoon = require("harpoon")
+
+      harpoon:setup({
+        settings = {
+          key = function()
+            local cwd = vim.loop.cwd() or ""
+            -- If cwd starts with /var/home, replace it to start with /home
+            if cwd:sub(1, 8) == "/var/home" then
+              cwd = "/home" .. cwd:sub(9)
+            end
+            return cwd
+          end,
+        },
+      })
+
+      -- basic telescope configuration
+      local conf = require("telescope.config").values
+      local function toggle_telescope(harpoon_files)
+        local file_paths = {}
+        for _, item in ipairs(harpoon_files.items) do
+          table.insert(file_paths, item.value)
+        end
+
+        require("telescope.pickers")
+            .new({}, {
+              prompt_title = "Harpoon",
+              finder = require("telescope.finders").new_table({
+                results = file_paths,
+              }),
+              previewer = conf.file_previewer({}),
+              sorter = conf.generic_sorter({}),
+            })
+            :find()
+      end
+
+      vim.keymap.set("n", "<C-e>", function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end, { desc = "Open harpoon quick menu" })
+
+      c.add_command({
+        {
+          desc = "Add current file to list",
+          cmd = function()
+            harpoon:list():add()
+          end
+        },
+        {
+          desc = "Open harpoon window",
+          cmd = function()
+            toggle_telescope(harpoon:list())
+          end
+        }
+      }, { cat = "harpoon" })
     end,
   },
 }

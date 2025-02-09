@@ -1,3 +1,5 @@
+local c = require("util/commands")
+
 return {
   {
     "f-person/git-blame.nvim",
@@ -17,7 +19,6 @@ return {
     "lewis6991/gitsigns.nvim",
     config = function()
       local gitsigns = require("gitsigns")
-      local c = require("util/commands")
       gitsigns.setup()
 
       c.add_command(

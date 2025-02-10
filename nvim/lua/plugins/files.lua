@@ -54,15 +54,6 @@ return {
     end,
   },
   {
-    'skardyy/neo-img',
-    dependencies = {
-      "stevearc/oil.nvim",
-    },
-    config = function()
-      require('neo-img').setup()
-    end,
-  },
-  {
     "nvim-tree/nvim-tree.lua",
     priority = 900,
     version = "*",

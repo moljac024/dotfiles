@@ -1,4 +1,4 @@
-local c = require("util/commands")
+local c = require("lib.commands")
 ---@diagnostic disable: missing-fields
 vim.g.skip_ts_context_commentstring_module = true
 

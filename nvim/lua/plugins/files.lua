@@ -1,4 +1,4 @@
-local c = require("util/commands")
+local c = require("lib.commands")
 
 return {
   {

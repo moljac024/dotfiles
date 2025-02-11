@@ -40,12 +40,7 @@ M.init = function()
   require("hotpot")
 
   -- Load list of plugins
-  local plugins = {}
-  if vim.g.vscode then
-    plugins = require("vscode/plugins")
-  else
-    plugins = require("plugins")
-  end
+  local plugins = require("plugins")
 
   require("lazy").setup({
     spec = vim.list_extend({ "rktjmp/hotpot.nvim" }, plugins),

@@ -30,7 +30,7 @@ return {
       tsc.setup({
         auto_open_qflist = true,
         use_trouble_qflist = true,
-        bin_path = require("util.typescript").find_tsc_bin(),
+        bin_path = require("lib.typescript").find_tsc_bin(),
       })
     end,
   },

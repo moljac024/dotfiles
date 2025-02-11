@@ -14,7 +14,7 @@ M.patch_keymap_set_for_commander = function()
     local opts = args[4] or {}
 
     -- Which key integration
-    local misc = require("util/misc")
+    local util = require("lib.util")
     local which_key_ok, which_key = pcall(require, "which-key")
     local should_configure_which_key = which_key_ok
         and type(opts.which_key) == "table"
@@ -24,7 +24,7 @@ M.patch_keymap_set_for_commander = function()
     if should_configure_which_key then
       local original_rhs = rhs
       rhs = function()
-        local which_key_show_args = misc.deep_copy_table(opts.which_key)
+        local which_key_show_args = util.deep_copy_table(opts.which_key)
         which_key.show(which_key_show_args)
 
         return original_rhs()

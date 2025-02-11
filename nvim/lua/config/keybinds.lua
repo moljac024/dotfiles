@@ -2,7 +2,7 @@
 -- Keybindings
 -- ############################################################################
 
-local c = require("util/commands")
+local c = require("lib.commands")
 
 vim.keymap.set("n", ";", ":", { noremap = true })
 

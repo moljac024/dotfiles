@@ -1,20 +1,29 @@
+local util = require("lib.util")
+
 local M = {}
 
 -- Monkey patch keymap set so that it supports additional functionality and
 -- integration with plugins
 M.patch_keymap_set_for_commander = function()
-  local vim_keymap_set = vim.keymap.set
+  local original_vim_keymap_set = vim.keymap.set
 
-  ---@diagnostic disable-next-line: duplicate-set-field
-  vim.keymap.set = function(...)
+  local function patched_keymap_set(...)
     local args = { ... }
     local modes = args[1]
     local lhs = args[2]
     local rhs = args[3]
     local opts = args[4] or {}
 
+    if vim.islist(lhs) then
+      -- Loop through all rhs and apply the same opts
+      for _, l in ipairs(lhs) do
+        patched_keymap_set(modes, l, rhs, opts)
+      end
+
+      return
+    end
+
     -- Which key integration
-    local util = require("lib.util")
     local has_which_key, which_key = pcall(require, "which-key")
     local should_configure_which_key = has_which_key
         and type(opts.which_key) == "table"
@@ -58,8 +67,10 @@ M.patch_keymap_set_for_commander = function()
     -- Remove extra keys from opts
     opts.commander = nil
 
-    vim_keymap_set(...)
+    original_vim_keymap_set(...)
   end
+
+  vim.keymap.set = patched_keymap_set
 end
 
 return M

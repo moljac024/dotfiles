@@ -54,6 +54,17 @@ return {
       vim.keymap.set("n", "<leader>k", hover.hover, { desc = "Show docs for item under cursor (hover)" })
     end,
   },
+  {
+    "hedyhli/outline.nvim",
+    config = function()
+      -- Example mapping to toggle outline
+      vim.keymap.set("n", { "<leader>o", "<A-o>" }, "<CMD>Outline<CR>",
+        { desc = "Toggle Outline", commander = {} }
+      )
+
+      require("outline").setup()
+    end,
+  },
   { 'kosayoda/nvim-lightbulb' },
   {
     "neovim/nvim-lspconfig",

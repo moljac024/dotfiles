@@ -51,18 +51,7 @@ return {
       vim.keymap.set("n", "K", function()
         -- No op
       end)
-      vim.keymap.set("n", "<leader>k", hover.hover, { desc = "Show docs for item under cursor (hover)" })
-    end,
-  },
-  {
-    "hedyhli/outline.nvim",
-    config = function()
-      -- Example mapping to toggle outline
-      vim.keymap.set("n", { "<leader>o", "<A-o>" }, "<CMD>Outline<CR>",
-        { desc = "Toggle Outline", commander = {} }
-      )
-
-      require("outline").setup()
+      vim.keymap.set("n", { "<leader>k", "K" }, hover.hover, { desc = "Show docs for item under cursor (hover)" })
     end,
   },
   { 'kosayoda/nvim-lightbulb' },
@@ -150,25 +139,31 @@ return {
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
-          local telescope_builtin = require("telescope.builtin")
+          local has_telescope, telescope_builtin = pcall(require, "telescope.builtin")
           local bufnr = args.buf
           local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
 
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
-          vim.keymap.set(
-            "n",
-            "gd",
-            telescope_builtin.lsp_implementations,
-            { buffer = 0, desc = "Go to implementation(s)" }
-          )
-          vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0, desc = "Go to reference(s)" })
-          vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0, desc = "Go to definition(s)" })
-          vim.keymap.set(
-            "n",
-            "gt",
-            telescope_builtin.lsp_type_definitions,
-            { buffer = 0, desc = "Go to type definition(s)" }
-          )
+
+          if has_telescope then
+            vim.keymap.set(
+              "n",
+              "gd",
+              telescope_builtin.lsp_implementations,
+              { buffer = 0, desc = "Go to implementation(s)" }
+            )
+            vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0, desc = "Go to reference(s)" })
+            vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0, desc = "Go to definition(s)" })
+            vim.keymap.set(
+              "n",
+              "gt",
+              telescope_builtin.lsp_type_definitions,
+              { buffer = 0, desc = "Go to type definition(s)" }
+            )
+
+            vim.keymap.set("n", "<leader>d", telescope_builtin.diagnostics,
+              { buffer = 0, desc = "Open diagnostics", })
+          end
 
           vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })
           vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { buffer = 0, desc = "Code actions" })

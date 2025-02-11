@@ -1,6 +1,4 @@
 local c = require("lib.commands")
----@diagnostic disable: missing-fields
-vim.g.skip_ts_context_commentstring_module = true
 
 return {
   {
@@ -73,6 +71,8 @@ return {
     -- Sane commenting for JSX/TSX and other mixed language files
     "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
+      ---@diagnostic disable: missing-fields
+      vim.g.skip_ts_context_commentstring_module = true
       ---@diagnostic disable-next-line: missing-fields
       require("ts_context_commentstring").setup({
         enable_autocmd = false,
@@ -97,13 +97,6 @@ return {
     end,
   },
   {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
-    -- use opts = {} for passing setup options
-    -- this is equalent to setup({}) function
-  },
-  {
     "windwp/nvim-ts-autotag",
     config = function()
       require("nvim-ts-autotag").setup({
@@ -122,52 +115,6 @@ return {
           -- },
         },
       })
-    end,
-  },
-  {
-    "ggandor/leap.nvim",
-    config = function()
-      local leap = require("leap")
-      local notify = vim.notify
-
-      -- Disable auto-jumping to the first match
-      leap.opts.safe_labels = {}
-
-      leap.opts.equivalence_classes = {
-        "aá",
-        "eé",
-        "ií",
-        "sš",
-        "cć",
-        "cč",
-      }
-
-      local function activateKeymaps(variant)
-        if variant == "default" then
-          vim.keymap.set({ "n", "x", "o" }, "s", "<Plug>(leap-forward)")
-          vim.keymap.set({ "n", "x", "o" }, "S", "<Plug>(leap-backward)")
-          vim.keymap.set({ "n", "x", "o" }, "gs", "<Plug>(leap-from-window)")
-
-          return
-        end
-
-        if variant == "alternative" then
-          vim.keymap.set("n", "s", "<Plug>(leap)")
-          vim.keymap.set("n", "S", "<Plug>(leap-from-window)")
-          vim.keymap.set({ "x", "o" }, "s", "<Plug>(leap)")
-
-          -- vim.keymap.set({ "x", "o" }, "s", "<Plug>(leap-forward)")
-          -- vim.keymap.set({ "x", "o" }, "S", "<Plug>(leap-backward)")
-          return
-        end
-
-        -- Show warning about unknown variant
-        if variant ~= nil then
-          notify("Unknown leap variant: " .. variant)
-        end
-      end
-
-      activateKeymaps("alternative") -- "default" or "alternative"
     end,
   },
   {

@@ -1,20 +1,5 @@
 local c = require("lib.commands")
-local logo = [[
-⠀⠀⠀⠀⠀⠀⠀⣠⡤⠶⡄⠀⠀⠀⠀⠀⠀⠀⢠⠶⣦⣀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢀⣴⣿⡟⠀⠈⣀⣾⣝⣯⣿⣛⣷⣦⡀⠀⠈⢿⣿⣦⡀⠀⠀⠀⠀
-⠀⠀⠀⣴⣿⣿⣿⡇⠀⢼⣿⣽⣿⢻⣿⣻⣿⣟⣷⡄⠀⢸⣿⣿⣾⣄⠀⠀⠀
-⠀⠀⣞⣿⣿⣿⣿⣷⣤⣸⣟⣿⣿⣻⣯⣿⣿⣿⣿⣀⣴⣿⣿⣿⣿⣯⣆⠀⠀
-⠀⡼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣜⡆⠀
-⢠⣟⣯⣿⣿⣿⣷⢿⣫⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣬⣟⠿⣿⣿⣿⣿⡷⣾⠀
-⢸⣯⣿⣿⡏⠙⡇⣾⣟⣿⡿⢿⣿⣿⣿⣿⣿⢿⣟⡿⣿⠀⡟⠉⢹⣿⣿⢿⡄
-⢸⣯⡿⢿⠀⠀⠱⢈⣿⢿⣿⡿⣏⣿⣿⣿⣿⣿⣿⣿⣿⣀⠃⠀⢸⡿⣿⣿⡇
-⢸⣿⣇⠈⢃⣴⠟⠛⢉⣸⣇⣹⣿⣿⠚⡿⣿⣉⣿⠃⠈⠙⢻⡄⠎⠀⣿⡷⠃
-⠈⡇⣿⠀⠀⠻⣤⠠⣿⠉⢻⡟⢷⣝⣷⠉⣿⢿⡻⣃⢀⢤⢀⡏⠀⢠⡏⡼⠀
-⠀⠘⠘⡅⠀⣔⠚⢀⣉⣻⡾⢡⡾⣻⣧⡾⢃⣈⣳⢧⡘⠤⠞⠁⠀⡼⠁⠀⠀
-⠀⠀⠀⠸⡀⠀⢠⡎⣝⠉⢰⠾⠿⢯⡘⢧⡧⠄⠀⡄⢻⠀⠀⠀⢰⠁⠀⠀⠀
-⠀⠀⠀⠀⠁⠀⠈⢧⣈⠀⠘⢦⠀⣀⠇⣼⠃⠰⣄⣡⠞⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⢤⠼⠁⠀⠀⠳⣤⡼⠀⠀⠀⠀⠀⠀
-    ]]
+local logo = require("lib.ui").logo
 local lualine_theme = "auto"
 
 return {
@@ -29,24 +14,6 @@ return {
         -- transparent_background = vim.g.transparent_enabled,
       })
       vim.cmd.colorscheme("catppuccin")
-    end,
-  },
-  {
-    "xiyaowong/transparent.nvim",
-    enabled = false,
-    -- enabled = not vim.g.neovide,
-    config = function()
-      require("transparent").setup()
-      -- require("transparent").clear_prefix("lualine")
-
-      vim.keymap.set("n", "<leader>utt", "<CMD>TransparentToggle<CR>", { desc = "Transparency toggle", commander = {} })
-      vim.keymap.set("n", "<leader>ut1", "<CMD>TransparentEnable<CR>", { desc = "Transparency enable", commander = {} })
-      vim.keymap.set(
-        "n",
-        "<leader>ut0",
-        "<CMD>TransparentDisable<CR>",
-        { desc = "Transparency disable", commander = {} }
-      )
     end,
   },
   {
@@ -174,7 +141,6 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     dependencies = {
-      "nvim-tree/nvim-web-devicons",
       "axkirillov/hbac.nvim",
     },
     config = function()
@@ -214,25 +180,11 @@ return {
         },
       })
     end,
-    dependencies = { { "nvim-tree/nvim-web-devicons" } },
   },
   -- improve the default vim.ui interfaces
   {
     "stevearc/dressing.nvim",
     opts = {},
-  },
-  -- LSP progress notifications
-  {
-    "j-hui/fidget.nvim",
-    opts = {
-      notification = {
-        window = {
-          -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
-          border = "none",
-          winblend = 0, -- Make sure window is transparent
-        },
-      },
-    },
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -377,7 +329,6 @@ return {
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("bufferline").setup({
         options = {

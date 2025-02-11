@@ -4,8 +4,6 @@ return {
   {
     "stevearc/oil.nvim",
     opts = {},
-    -- Optional dependencies
-    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       local oil = require("oil")
       oil.setup({
@@ -58,9 +56,6 @@ return {
     priority = 900,
     version = "*",
     lazy = false,
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
     config = function()
       require("nvim-tree").setup({
         sync_root_with_cwd = true,

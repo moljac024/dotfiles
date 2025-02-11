@@ -17,6 +17,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
+    enabled = false,
     config = function()
       local gitsigns = require("gitsigns")
       gitsigns.setup()

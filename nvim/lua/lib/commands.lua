@@ -4,9 +4,9 @@ M.add_command = function(...)
   local args = { ... }
   local cmds = args[1] or {}
   local props = args[2] or {}
-  local commander_ok, commander = pcall(require, "commander")
+  local has_commander, commander = pcall(require, "commander")
 
-  if not commander_ok then
+  if not has_commander then
     return
   end
 

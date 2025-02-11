@@ -15,8 +15,8 @@ M.patch_keymap_set_for_commander = function()
 
     -- Which key integration
     local util = require("lib.util")
-    local which_key_ok, which_key = pcall(require, "which-key")
-    local should_configure_which_key = which_key_ok
+    local has_which_key, which_key = pcall(require, "which-key")
+    local should_configure_which_key = has_which_key
         and type(opts.which_key) == "table"
         and type(opts.which_key.keys) == "string"
         and opts.which_key.keys ~= ""
@@ -34,8 +34,8 @@ M.patch_keymap_set_for_commander = function()
     end
 
     -- Commander integration
-    local commander_ok, commander = pcall(require, "commander")
-    local should_add_to_commander = commander_ok
+    local has_commander, commander = pcall(require, "commander")
+    local should_add_to_commander = has_commander
         and type(opts.desc) == "string"
         and opts.desc ~= ""
         and type(opts.commander) == "table"

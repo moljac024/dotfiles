@@ -35,6 +35,7 @@
   "nerdy.nvim": { "branch": "main", "commit": "719ed52244b34ea9de08f074e0d22fd67d615640" },
   "nvim-cmp": { "branch": "main", "commit": "12509903a5723a876abd65953109f926f4634c30" },
   "nvim-colorizer.lua": { "branch": "master", "commit": "9b5fe0450bfb2521c6cea29391e5ec571f129136" },
+  "nvim-lightbulb": { "branch": "master", "commit": "f7f61c47af5bf701b1f4af127bc565ab6491acbf" },
   "nvim-lint": { "branch": "master", "commit": "6e9dd545a1af204c4022a8fcd99727ea41ffdcc8" },
   "nvim-lspconfig": { "branch": "master", "commit": "6c17f8656f667727b27f5f598463afedb7791b18" },
   "nvim-neoclip.lua": { "branch": "main", "commit": "831a97c7697736411a05ff8b91e8798ea4c2d6fb" },

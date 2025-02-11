@@ -9,8 +9,8 @@ return {
       require('mini.icons').setup()
 
       -- Git
-      require('mini.git').setup()
-      require('mini.diff').setup()
+      -- require('mini.git').setup()
+      -- require('mini.diff').setup()
 
       -- Jump to any 2 characters
       require('mini.jump2d').setup()

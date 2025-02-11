@@ -54,6 +54,7 @@ return {
       vim.keymap.set("n", "<leader>k", hover.hover, { desc = "Show docs for item under cursor (hover)" })
     end,
   },
+  { 'kosayoda/nvim-lightbulb' },
   {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -85,7 +86,10 @@ return {
           settings = {
             yaml = {
               schemaStore = {
+                -- You must disable built-in schemaStore support if you want to use
+                -- this plugin and its advanced options like `ignore`.
                 enable = false,
+                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
                 url = "",
               },
               schemas = require("schemastore").yaml.schemas(),
@@ -105,7 +109,6 @@ return {
         elixirls = {},
         rust_analyzer = {},
         gopls = {},
-        csharp_ls = {},
         fennel_ls = {
           manual_install = true
         }
@@ -166,15 +169,18 @@ return {
         end,
       })
 
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        callback = function(args)
-          require("conform").format({
-            bufnr = args.buf,
-            lsp_fallback = true,
-            quiet = true,
-          })
-        end,
-      })
+      local has_conform, conform = pcall(require, "conform")
+      if has_conform then
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          callback = function(args)
+            conform.format({
+              bufnr = args.buf,
+              lsp_fallback = true,
+              quiet = true,
+            })
+          end,
+        })
+      end
     end,
   },
 }

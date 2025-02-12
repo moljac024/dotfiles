@@ -122,22 +122,6 @@ return {
     end
   },
   {
-    -- Clipboard manager
-    "AckslD/nvim-neoclip.lua",
-    dependencies = {
-      { "nvim-telescope/telescope.nvim" },
-    },
-    config = function()
-      require("neoclip").setup()
-      c.add_command({
-        {
-          desc = "Paste from clipboard",
-          cmd = "<CMD>Telescope neoclip<CR>"
-        }
-      })
-    end,
-  },
-  {
     "windwp/nvim-ts-autotag",
     config = function()
       require("nvim-ts-autotag").setup({

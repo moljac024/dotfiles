@@ -53,7 +53,7 @@
   "oil.nvim": { "branch": "master", "commit": "abbfbd0dbcaa78c3dcdada191ea23e50a41e5806" },
   "plenary.nvim": { "branch": "master", "commit": "857c5ac632080dba10aae49dba902ce3abf91b35" },
   "promise-async": { "branch": "main", "commit": "119e8961014c9bfaf1487bf3c2a393d254f337e2" },
-  "snacks.nvim": { "branch": "main", "commit": "12848356c4fd672476f47d9dea9999784c140c05" },
+  "snacks.nvim": { "branch": "main", "commit": "70afc4225ac8ae3e6c8af88d205b03991a173af3" },
   "stickybuf.nvim": { "branch": "master", "commit": "bf7221321e9b762d4deaef3aaaaa7ae5f3a7f902" },
   "tailwind-tools.nvim": { "branch": "master", "commit": "1d735ea28538c37e71b2b9ae9b0efa3fd71db2d7" },
   "telescope-symbols.nvim": { "branch": "master", "commit": "a6d0127a53d39b9fc2af75bd169d288166118aec" },

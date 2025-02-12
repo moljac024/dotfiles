@@ -18,8 +18,7 @@ require("config")
 -- Lazy (plugin manager)
 -- ############################################################################
 
-local lazy = require("lib.lazy")
-lazy.init()
+require("lib.lazy").init()
 
 -- ############################################################################
 -- Keybindings

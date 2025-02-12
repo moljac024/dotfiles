@@ -4,10 +4,11 @@ return {
     lazy = false,
     priority = 100,
     dependencies = {
-      "onsails/lspkind.nvim",
-      "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-cmdline",
+      "hrsh7th/cmp-nvim-lsp",
+      "onsails/lspkind.nvim",
     },
     config = function()
       vim.opt.completeopt = { "menu", "menuone", "preview", "noselect", "noinsert" }
@@ -91,6 +92,24 @@ return {
           ["<Tab>"] = down_mapping,
           ["<S-Tab>"] = up_mapping,
         },
+      })
+
+      -- Command line completions
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources(
+          {
+            { name = 'path' }
+          },
+          {
+            {
+              name = 'cmdline',
+              option = {
+                ignore_cmds = { 'Man', '!' }
+              }
+            }
+          }
+        )
       })
 
       -- Disable copilot panel when nvim-cmp menu is opened

@@ -22,7 +22,7 @@ return {
           ["g?"] = "actions.show_help",
           ["<CR>"] = "actions.select",
           ["<C-p>"] = "actions.preview",
-          ["<C-c>"] = "actions.close",
+          ["<C-c>"] = function() vim.cmd("noh") end,
           ["<Esc>"] = "actions.close",
           ["<C-r>"] = "actions.refresh",
           ["-"] = "actions.close",

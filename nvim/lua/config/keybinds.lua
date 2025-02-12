@@ -30,7 +30,7 @@ vim.keymap.set({ "v", "x" }, "<", "<gv", { desc = "Shift selection left" })
 vim.keymap.set({ "v", "x" }, ">", ">gv", { desc = "Shift selection right" })
 
 vim.keymap.set("v", "Q", "gw", { desc = "Format selected text", commander = {} })
-vim.keymap.set("n", "<leader>c", "<CMD>noh<CR>", { desc = "Clear search highlight", commander = {} })
+vim.keymap.set("n", "<C-c>", "<CMD>noh<CR>", { desc = "Clear search highlight", commander = {} })
 
 -- Window splits
 vim.keymap.set({ "n" }, { "<leader>2", "<A-2>" }, "<CMD>sp<CR>", { desc = "Split window horizontally", commander = {} })

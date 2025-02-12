@@ -78,42 +78,42 @@ return {
       local telescope_builtin = require("telescope.builtin")
       commander.add({
         {
-          desc = "Resume previous search",
+          desc = "Open last picker",
           keys = {
             { "n", "<leader>'" },
           },
           cmd = telescope_builtin.resume,
         },
         {
-          desc = "Search files",
+          desc = "Open file picker",
           keys = {
             { "n", "<leader>f" },
           },
           cmd = telescope_builtin.find_files,
         },
         {
-          desc = "Search buffers",
+          desc = "Open buffer picker",
           keys = {
             { "n", "<leader>b" },
           },
           cmd = telescope_builtin.buffers,
         },
         {
-          desc = "Search help",
+          desc = "Open help picker",
           keys = {
             { "n", "<leader>?" },
           },
           cmd = telescope_builtin.help_tags,
         },
         {
-          desc = "Search for string",
+          desc = "Global search in workspace",
           keys = {
             { "n", "<leader>/" },
           },
           cmd = telescope_builtin.live_grep,
         },
         {
-          desc = "Search jumplist",
+          desc = "Open jumplist picker",
           keys = {
             { "n", "<leader>j" },
           },
@@ -125,6 +125,20 @@ return {
             { "n", "<leader>\\" },
           },
           cmd = telescope_builtin.current_buffer_fuzzy_find,
+        },
+        {
+          desc = "Open symbol picker",
+          keys = {
+            { "n", "<leader>s" },
+          },
+          cmd = telescope_builtin.lsp_document_symbols,
+        },
+        {
+          desc = "Open workspace symbol picker",
+          keys = {
+            { "n", "<leader>S" },
+          },
+          cmd = telescope_builtin.lsp_workspace_symbols
         },
         {
           desc = "Insert emoji",

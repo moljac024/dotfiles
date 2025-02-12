@@ -34,11 +34,8 @@ return {
   {
     -- Keybindings helper
     "FeiyouG/commander.nvim",
-    dependencies = {
-      "nvim-telescope/telescope.nvim",
-    },
     lazy = false,
-    priority = 997,
+    priority = 996,
     keys = {},
     config = function()
       local commander = require("commander")
@@ -188,6 +185,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
+    priority = 997,
     -- tag = "0.1.8",
     branch = "0.1.x",
     dependencies = {

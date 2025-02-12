@@ -253,20 +253,6 @@ return {
       pcall(require("telescope").load_extension, "ui-select")
     end,
   },
-  -- Improve notifications
-  {
-    "rcarriga/nvim-notify",
-    config = function()
-      local notify = require("notify")
-      ---@diagnostic disable-next-line: missing-fields
-      notify.setup({
-        background_colour = "#000000"
-      })
-
-      -- Make this the default notify fn
-      vim.notify = notify
-    end,
-  },
   {
     "2kabhishek/nerdy.nvim",
     dependencies = {
@@ -339,16 +325,41 @@ return {
       })
     end,
   },
+  -- Notifications
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      local notify = require("notify")
+      ---@diagnostic disable-next-line: missing-fields
+      notify.setup({
+        background_colour = "#000000"
+      })
+
+      -- Make this the default notify fn
+      vim.notify = notify
+    end,
+  },
   {
     "j-hui/fidget.nvim",
-    opts = {
-      notification = {
-        window = {
-          -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
-          border = "none",
-          winblend = 0, -- Make sure window is transparent
+    config = function()
+      local fidget = require("fidget")
+      fidget.setup({
+        notification = {
+          window = {
+            -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
+            border = "none",
+            winblend = 0, -- Make sure window is transparent
+          },
         },
-      },
-    },
+      })
+
+      -- Make this the default notify fn
+      -- vim.notify = fidget.notify
+
+      local has_telescope, telescope = pcall(require, "telescope")
+      if has_telescope then
+        telescope.load_extension("fidget")
+      end
+    end
   },
 }

@@ -30,18 +30,13 @@ vim.keymap.set({ "v", "x" }, "<", "<gv", { desc = "Shift selection left" })
 vim.keymap.set({ "v", "x" }, ">", ">gv", { desc = "Shift selection right" })
 
 vim.keymap.set("v", "Q", "gw", { desc = "Format selected text", commander = {} })
-vim.keymap.set("n", "<Esc>", "<CMD>noh<CR>", { desc = "Clear search highlight", commander = {} })
+vim.keymap.set("n", "<leader>c", "<CMD>noh<CR>", { desc = "Clear search highlight", commander = {} })
 
 -- Window splits
-vim.keymap.set({ "n" }, "<leader>2", "<CMD>sp<CR>", { desc = "Split window horizontally" })
-vim.keymap.set({ "n" }, "<leader>3", "<CMD>vsp<CR>", { desc = "Split window vertically" })
-vim.keymap.set({ "n" }, "<leader>1", "<c-w>o", { desc = "Close other windows" })
-vim.keymap.set({ "n" }, "<leader>4", "<c-w>c", { desc = "Close current window" })
---
-vim.keymap.set({ "n" }, "<A-2>", "<CMD>sp<CR>", { desc = "Split window horizontally", commander = {} })
-vim.keymap.set({ "n" }, "<A-3>", "<CMD>vsp<CR>", { desc = "Split window vertically", commander = {} })
-vim.keymap.set({ "n" }, "<A-1>", "<c-w>o", { desc = "Close other windows", commander = {} })
-vim.keymap.set({ "n" }, "<A-4>", "<c-w>c", { desc = "Close current window", commander = {} })
+vim.keymap.set({ "n" }, { "<leader>2", "<A-2>" }, "<CMD>sp<CR>", { desc = "Split window horizontally", commander = {} })
+vim.keymap.set({ "n" }, { "<leader>3", "<A-3>" }, "<CMD>vsp<CR>", { desc = "Split window vertically", commander = {} })
+vim.keymap.set({ "n" }, { "<leader>4", "<A-4>" }, "<c-w>c", { desc = "Close current window", commander = {} })
+vim.keymap.set({ "n" }, { "<leader>1", "<A-1>" }, "<c-w>o", { desc = "Close other windows", commander = {} })
 
 -- Buffers
 c.add_command({

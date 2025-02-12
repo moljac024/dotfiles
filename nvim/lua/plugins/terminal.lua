@@ -18,15 +18,11 @@ return {
       }
       toggleterm.setup({})
 
-      function _G.set_terminal_keymaps()
-        vim.keymap.set("t", "<C-g>n", [[<C-\><C-n>]], { buffer = 0, noremap = true, desc = "Go to normal mode" })
-        vim.keymap.set("t", "<C-g>g", [[<C-\><C-g>]],
-          { buffer = 0, noremap = true, desc = "Send CTRL-G to terminal" })
-        vim.keymap.set("t", "<C-g><C-g>", [[<C-\><C-g>]],
-          { buffer = 0, noremap = true, desc = "Send CTRL-G to terminal" })
-      end
-
-      vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+      vim.keymap.set("t", "<C-g>n", [[<C-\><C-n>]], { noremap = true, desc = "Go to normal mode" })
+      vim.keymap.set("t", "<C-g>g", [[<C-\><C-g>]],
+        { noremap = true, desc = "Send CTRL-G to terminal" })
+      vim.keymap.set("t", "<C-g><C-g>", [[<C-\><C-g>]],
+        { noremap = true, desc = "Send CTRL-G to terminal" })
 
       -- Local terminal keybind to toggle
       local on_terminal_open = function(t)

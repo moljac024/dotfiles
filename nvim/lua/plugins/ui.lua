@@ -339,4 +339,16 @@ return {
       })
     end,
   },
+  {
+    "j-hui/fidget.nvim",
+    opts = {
+      notification = {
+        window = {
+          -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
+          border = "none",
+          winblend = 0, -- Make sure window is transparent
+        },
+      },
+    },
+  },
 }

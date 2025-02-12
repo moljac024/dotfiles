@@ -360,7 +360,11 @@ return {
           window = {
             -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
             border = "double",
-            winblend = 0, -- Make sure window is transparent
+            -- Make sure window is transparent
+            winblend = 0,
+            -- Make sure notifications are high enough (the default 45 doesn't
+            -- cover telescope, for example)
+            zindex = 250,
           },
         },
       })

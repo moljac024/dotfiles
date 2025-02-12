@@ -347,7 +347,7 @@ return {
         notification = {
           window = {
             -- border: "none"|"single"|"double"|"rounded"|"solid"|"shadow"|string[]
-            border = "none",
+            border = "double",
             winblend = 0, -- Make sure window is transparent
           },
         },

@@ -191,7 +191,6 @@ return {
     -- tag = "0.1.8",
     branch = "0.1.x",
     dependencies = {
-      "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
       "nvim-telescope/telescope-symbols.nvim",
     },
@@ -328,6 +327,7 @@ return {
   -- Notifications
   {
     "rcarriga/nvim-notify",
+    enabled = false,
     config = function()
       local notify = require("notify")
       ---@diagnostic disable-next-line: missing-fields
@@ -354,7 +354,17 @@ return {
       })
 
       -- Make this the default notify fn
-      -- vim.notify = fidget.notify
+      local function notify(msg, level, opts)
+        -- Fidget uses key where some other implementations use id. Standardize
+        -- and make both behave the same
+        if opts and opts.id ~= nil then
+          opts.key = opts.id
+        elseif opts and opts.key ~= nil then
+          opts.id = opts.key
+        end
+        return fidget.notify(msg, level, opts)
+      end
+      vim.notify = notify
 
       local has_telescope, telescope = pcall(require, "telescope")
       if has_telescope then

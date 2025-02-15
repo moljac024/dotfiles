@@ -1,11 +1,11 @@
-#/usr/bin/env sh
+#!/usr/bin/bash
 # vim: filetype=sh
 # set -euo pipefail # Shell strict mode
 
 THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0) # Full path of the current script
 DIR=$(dirname "${THIS}") # The directory where current script resides
 
-source "$DIR/util.sh"
+. "$DIR/util.sh"
 
 if [ "$(get_running_shell)" = "unknown" ]; then
   return
@@ -33,7 +33,7 @@ if is_wsl; then
     wsl_ip () {
         ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
     }
-    export_var WSL_GUEST $(wsl_ip)
+    export_var WSL_GUEST "$(wsl_ip)"
 fi
 
 # Android dev
@@ -121,12 +121,12 @@ fi
 ### Aliases
 ################################################################################
 
-if [ "$OSTYPE" = "linux-gnu" ]; then
+if [[ "$OSTYPE" = "linux-gnu" ]]; then
   alias ls='ls --color=auto --group-directories-first --sort=extension'
   alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
   alias update-fedora='sudo sh -c "dnf update -y"'
   alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
-elif [ "$OSTYPE" = "darwin"* ]; then
+elif [[ "$OSTYPE" = "darwin"* ]]; then
   alias ls='ls -FG'
   whoishoggingport () {
     lsof -n -iTCP:$1 | grep LISTEN
@@ -189,11 +189,11 @@ alias kn='kubectl ns'
 
 # Print out k8s secret
 ksecret () {
-  kubectl get secret $@ -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
+  kubectl get secret "$@" -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
 }
 
 if is_command zide; then
-  export_var ZIDE_DIR $HOME/.config/zide
+  export_var ZIDE_DIR "$HOME/.config/zide"
 fi
 
 ################################################################################
@@ -222,9 +222,9 @@ export_var FZF_DEFAULT_OPTS " \
 
 # FZF
 if [ "$(get_running_shell)" = "bash" ]; then
-  [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+  [ -f ~/.fzf.bash ] && . ~/.fzf.bash
   [ -e "$HOME/.fzf-extras/fzf-extras.sh" ] \
-    && source "$HOME/.fzf-extras/fzf-extras.sh"
+    && . "$HOME/.fzf-extras/fzf-extras.sh"
 fi
 
 ################################################################################

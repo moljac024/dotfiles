@@ -6,6 +6,7 @@ return {
     lazy = false,
     opts = {
       rename = { enabled = true },
+      input = { enabled = true },
     }
   },
   {

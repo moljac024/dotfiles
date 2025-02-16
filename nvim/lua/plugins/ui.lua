@@ -192,11 +192,6 @@ return {
       })
     end,
   },
-  -- improve the default vim.ui interfaces
-  {
-    "stevearc/dressing.nvim",
-    opts = {},
-  },
   {
     "nvim-telescope/telescope.nvim",
     priority = 997,
@@ -266,10 +261,6 @@ return {
   },
   {
     "2kabhishek/nerdy.nvim",
-    dependencies = {
-      "stevearc/dressing.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
     cmd = "Nerdy",
   },
   {

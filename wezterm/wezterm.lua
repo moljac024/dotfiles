@@ -450,7 +450,7 @@ wezterm.on('open-scrollback-in-neovim', function(window, pane)
 
   -- Generate a file for the current scrollback
   local formatted_time = os.date('%Y-%m-%d-%H-%M-%S', os.time())
-  local file_name = wezterm.home_dir .. "/dotfiles/scrollbacks/" .. formatted_time
+  local file_name = wezterm.home_dir .. "/dotfiles/data/scrollbacks/" .. formatted_time
 
   local f = io.open(file_name, 'w+')
 

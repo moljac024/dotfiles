@@ -1,4 +1,7 @@
-local wezterm = require("wezterm")      -- Pull in the wezterm API
+local wezterm = require("wezterm") -- Pull in the wezterm API
+local io = require('io')
+local os = require('os')
+
 local mux = wezterm.mux
 local config = wezterm.config_builder() -- This will hold the configuration.
 local act = wezterm.action
@@ -348,9 +351,19 @@ config.keys = {
   { key = 'k', mods = main_mod, action = act.ScrollByPage(-0.5) },
   { key = 'j', mods = main_mod, action = act.ScrollByPage(0.5) },
 
+  { key = '%', mods = main_mod, action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },
+  { key = '"', mods = main_mod, action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
+
+  -- Open scrollback in neovim
+  {
+    key = 'E',
+    mods = 'CTRL',
+    action = act.EmitEvent 'open-scrollback-in-neovim',
+  },
+
   -- Rename tab title
   {
-    key = '"',
+    key = '?',
     mods = main_mod,
     action = rename_tab_action
   },
@@ -426,6 +439,41 @@ wezterm.on('gui-attached', function(domain)
       window:gui_window():maximize()
     end
   end
+end)
+
+wezterm.on('open-scrollback-in-neovim', function(window, pane)
+  -- Retrieve the text from the pane
+  local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
+
+  -- Create a temporary file to pass to vim
+  local name = os.tmpname()
+  local f = io.open(name, 'w+')
+
+  if f == nil then
+    return
+  end
+
+  f:write(text)
+  f:flush()
+  f:close()
+
+  -- Open a new window running vim and tell it to open the file
+  window:perform_action(
+    act.SpawnCommandInNewTab {
+      label = "Open scrollback in neovim",
+      args = { 'nvim', name },
+    },
+    pane
+  )
+
+  -- Wait "enough" time for vim to read the file before we remove it.
+  -- The window creation and process spawn are asynchronous wrt. running
+  -- this script and are not awaitable, so we just pick a number.
+  --
+  -- Note: We don't strictly need to remove this file, but it is nice
+  -- to avoid cluttering up the temporary directory.
+  wezterm.sleep_ms(2000)
+  os.remove(name)
 end)
 
 -- config.enable_wayland = false

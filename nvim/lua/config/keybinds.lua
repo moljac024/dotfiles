@@ -4,8 +4,6 @@
 
 local c = require("lib.commands")
 
-vim.keymap.set("n", ";", ":", { noremap = true })
-
 -- Basic movement keybinds, these make navigating splits easy for me
 vim.keymap.set({ "n", "i" }, "<A-j>", "<c-c><c-w><c-j>", { desc = "Focus window down" })
 vim.keymap.set({ "n", "i" }, "<A-k>", "<c-c><c-w><c-k>", { desc = "Focus window up" })
@@ -13,7 +11,6 @@ vim.keymap.set({ "n", "i" }, "<A-l>", "<c-c><c-w><c-l>", { desc = "Focus window 
 vim.keymap.set({ "n", "i" }, "<A-h>", "<c-c><c-w><c-h>", { desc = "Focus window left" })
 
 vim.keymap.set("n", "<BS>", "<c-^>", { desc = "Go to alternate file", commander = {} })
-vim.keymap.set("n", "g;", "<c-o>", { desc = "Go back", commander = {} }) -- Go back
 
 -- Some heresy (emacs/readline keybinds)
 vim.keymap.set({ "i", "c" }, "<C-a>", "<Home>", { noremap = true })

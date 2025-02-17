@@ -446,8 +446,13 @@ wezterm.on('open-scrollback-in-neovim', function(window, pane)
   local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
 
   -- Create a temporary file to pass to vim
-  local name = os.tmpname()
-  local f = io.open(name, 'w+')
+  -- local file_name = os.tmpname()
+
+  -- Generate a file for the current scrollback
+  local formatted_time = os.date('%Y-%m-%d-%H-%M-%S', os.time())
+  local file_name = wezterm.home_dir .. "/dotfiles/scrollbacks/" .. formatted_time
+
+  local f = io.open(file_name, 'w+')
 
   if f == nil then
     return
@@ -461,7 +466,7 @@ wezterm.on('open-scrollback-in-neovim', function(window, pane)
   window:perform_action(
     act.SpawnCommandInNewTab {
       label = "Open scrollback in neovim",
-      args = { 'nvim', name },
+      args = { 'nvim', file_name },
     },
     pane
   )
@@ -473,7 +478,7 @@ wezterm.on('open-scrollback-in-neovim', function(window, pane)
   -- Note: We don't strictly need to remove this file, but it is nice
   -- to avoid cluttering up the temporary directory.
   wezterm.sleep_ms(2000)
-  os.remove(name)
+  os.remove(file_name)
 end)
 
 -- config.enable_wayland = false

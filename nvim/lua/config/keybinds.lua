@@ -35,6 +35,9 @@ vim.keymap.set({ "n" }, { "<leader>3", "<A-3>" }, "<CMD>vsp<CR>", { desc = "Spli
 vim.keymap.set({ "n" }, { "<leader>4", "<A-4>" }, "<c-w>c", { desc = "Close current window", commander = {} })
 vim.keymap.set({ "n" }, { "<leader>1", "<A-1>" }, "<c-w>o", { desc = "Close other windows", commander = {} })
 
+-- Map "U" to additional redo, like in helix
+vim.keymap.set({ "n" }, "U", "<C-r>")
+
 -- Buffers
 c.add_command({
   -- {

@@ -80,6 +80,7 @@ local function split_str(input_str, sep)
   return t
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function includes(table, value)
   for i = 1, #table do
     if (table[i] == value) then
@@ -358,7 +359,7 @@ config.keys = {
   {
     key = 'E',
     mods = 'CTRL',
-    action = act.EmitEvent 'open-scrollback-in-neovim',
+    action = act.EmitEvent 'open-scrollback-in-neovim-tab',
   },
 
   -- Rename tab title
@@ -441,45 +442,70 @@ wezterm.on('gui-attached', function(domain)
   end
 end)
 
-wezterm.on('open-scrollback-in-neovim', function(window, pane)
-  -- Retrieve the text from the pane
-  local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
 
-  -- Create a temporary file to pass to vim
-  -- local file_name = os.tmpname()
+local function make_scrollback_opener(input)
+  local props = input or {}
+  local open_in_pane = props.open_in_pane or false
 
-  -- Generate a file for the current scrollback
-  local formatted_time = os.date('%Y-%m-%d-%H-%M-%S', os.time())
-  local file_name = wezterm.home_dir .. "/dotfiles/data/scrollbacks/" .. formatted_time
+  return function(window, pane)
+    -- Retrieve the text from the pane
+    local text = pane:get_lines_as_text(pane:get_dimensions().scrollback_rows)
 
-  local f = io.open(file_name, 'w+')
+    -- Create a temporary file to pass to vim
+    -- local file_name = os.tmpname()
 
-  if f == nil then
-    return
+    -- Generate a file for the current scrollback
+    local formatted_time = os.date('%Y-%m-%d-%H-%M-%S', os.time())
+    local file_name = wezterm.home_dir .. "/dotfiles/data/scrollbacks/" .. formatted_time
+
+    local f = io.open(file_name, 'w+')
+
+    if f == nil then
+      return
+    end
+
+    f:write(text)
+    f:flush()
+    f:close()
+
+    if not open_in_pane then
+      -- Open in new tab
+      window:perform_action(
+        act.SpawnCommandInNewTab {
+          label = "Open scrollback in neovim tab",
+          args = { 'nvim', file_name },
+        },
+        pane
+      )
+    else
+      -- Open in new pane
+      window:perform_action(
+        act.SplitPane {
+          direction = "Down",
+          size = { Percent = 70 },
+          -- top_level = true,
+          command = {
+            label = "Open scrollback in neovim pane",
+            args = { 'nvim', file_name },
+          },
+        },
+        pane
+      )
+    end
+
+    -- Wait "enough" time for vim to read the file before we remove it.
+    -- The window creation and process spawn are asynchronous wrt. running
+    -- this script and are not awaitable, so we just pick a number.
+    --
+    -- Note: We don't strictly need to remove this file, but it is nice
+    -- to avoid cluttering up the temporary directory.
+    wezterm.sleep_ms(2000)
+    os.remove(file_name)
   end
+end
 
-  f:write(text)
-  f:flush()
-  f:close()
-
-  -- Open a new window running vim and tell it to open the file
-  window:perform_action(
-    act.SpawnCommandInNewTab {
-      label = "Open scrollback in neovim",
-      args = { 'nvim', file_name },
-    },
-    pane
-  )
-
-  -- Wait "enough" time for vim to read the file before we remove it.
-  -- The window creation and process spawn are asynchronous wrt. running
-  -- this script and are not awaitable, so we just pick a number.
-  --
-  -- Note: We don't strictly need to remove this file, but it is nice
-  -- to avoid cluttering up the temporary directory.
-  wezterm.sleep_ms(2000)
-  os.remove(file_name)
-end)
+wezterm.on('open-scrollback-in-neovim-tab', make_scrollback_opener({ open_in_pane = false }))
+wezterm.on('open-scrollback-in-neovim-pane', make_scrollback_opener({ open_in_pane = true }))
 
 -- config.enable_wayland = false
 

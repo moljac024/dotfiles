@@ -7,6 +7,7 @@ return {
     opts = {
       rename = { enabled = true },
       input = { enabled = true },
+      image = {},
     }
   },
   {

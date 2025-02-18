@@ -359,7 +359,7 @@ config.keys = {
   {
     key = 'E',
     mods = 'CTRL',
-    action = act.EmitEvent 'open-scrollback-in-neovim-tab',
+    action = act.EmitEvent 'open-scrollback-in-neovim-pane',
   },
 
   -- Rename tab title
@@ -479,17 +479,14 @@ local function make_scrollback_opener(input)
       )
     else
       -- Open in new pane
+      local new_pane = pane:split {
+        direction = "Bottom",
+        args = { 'nvim', file_name },
+      }
+
       window:perform_action(
-        act.SplitPane {
-          direction = "Down",
-          size = { Percent = 70 },
-          -- top_level = true,
-          command = {
-            label = "Open scrollback in neovim pane",
-            args = { 'nvim', file_name },
-          },
-        },
-        pane
+        act.SetPaneZoomState(true),
+        new_pane
       )
     end
 

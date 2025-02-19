@@ -28,7 +28,7 @@ return {
       require('mini.comment').setup()
       require('mini.pairs').setup()
       require('mini.icons').setup()
-      require('mini.git').setup()
+      -- require('mini.git').setup()
       -- require('mini.diff').setup()
     end
   },

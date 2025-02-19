@@ -1,21 +1,19 @@
+local base = import("./base")
 local completion = import("./completion")
 local editing = import("./editing")
 local files = import("./files")
-local git = import("./git")
 local lsp = import("./lsp")
 local ui = import("./ui")
-local util = import("./util")
 local terminal = import("./terminal")
 local dev = import("./dev")
 local ai = import("./ai")
 
 return {
-  util,
+  base,
   ui,
   files,
-  git,
-  completion,
   editing,
+  completion,
   terminal,
   dev,
   lsp,

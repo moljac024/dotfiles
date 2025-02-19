@@ -5,8 +5,9 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
-      rename = { enabled = true },
-      input = { enabled = true },
+      rename = {},
+      input = {},
+      git = {},
       picker = {
         win = {
           input = {
@@ -25,10 +26,10 @@ return {
     config = function()
       require('mini.ai').setup()
       require('mini.comment').setup()
-      -- require('mini.pairs').setup()
+      require('mini.pairs').setup()
       require('mini.icons').setup()
       require('mini.git').setup()
-      -- require('mini.jump2d').setup() -- Jump to any 2 character location
+      -- require('mini.diff').setup()
     end
   },
 }

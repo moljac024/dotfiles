@@ -20,7 +20,6 @@ return {
     "folke/which-key.nvim",
     priority = 998,
     event = "VeryLazy",
-    -- enabled = false,
     init = function()
       vim.o.timeout = true
       vim.o.timeoutlen = 350
@@ -151,9 +150,6 @@ return {
   },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = {
-      "axkirillov/hbac.nvim",
-    },
     config = function()
       require("lualine").setup({
         options = {
@@ -167,8 +163,13 @@ return {
           lualine_c = {
             {
               function()
+                local has_hbac, hbac_state = pcall(require, "hbac.state")
+                if not has_hbac then
+                  return ""
+                end
+
                 local cur_buf = vim.api.nvim_get_current_buf()
-                return require("hbac.state").is_pinned(cur_buf) and "📍" or ""
+                return hbac_state.is_pinned(cur_buf) and "📍" or ""
                 -- tip: nerd fonts have pinned/unpinned icons!
               end,
               color = { fg = "#ef5f6b", gui = "bold" },

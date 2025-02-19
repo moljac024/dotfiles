@@ -1,4 +1,22 @@
+local c = require("lib.commands")
+
 return {
+  -- Git signs
+  {
+    "lewis6991/gitsigns.nvim",
+    -- enabled = false,
+    config = function()
+      local gitsigns = require("gitsigns")
+      gitsigns.setup()
+
+      c.add_command(
+        {
+          desc = "Toggle git blame for current line",
+          cmd = gitsigns.toggle_current_line_blame
+        }
+      )
+    end,
+  },
   -- Tailwind and typescript
   {
     "luckasRanarison/tailwind-tools.nvim",

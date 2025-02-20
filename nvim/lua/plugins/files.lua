@@ -52,29 +52,6 @@ return {
     end,
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    priority = 900,
-    version = "*",
-    lazy = false,
-    config = function()
-      require("nvim-tree").setup({
-        sync_root_with_cwd = true,
-        respect_buf_cwd = true,
-        update_focused_file = {
-          enable = true,
-          update_root = true,
-        },
-      })
-
-      vim.keymap.set(
-        "n",
-        "<leader>F",
-        "<CMD>NvimTreeToggle<CR>",
-        { desc = "Toggle file tree", commander = { cat = "nvim-tree" } }
-      )
-    end,
-  },
-  {
     -- Project file navigation
     "ThePrimeagen/harpoon",
     branch = "harpoon2",

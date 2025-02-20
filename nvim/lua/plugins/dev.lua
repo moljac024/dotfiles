@@ -1,4 +1,4 @@
-local c = require("lib.commands")
+local c = require("lib.command")
 
 return {
   -- Git signs

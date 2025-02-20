@@ -1,8 +1,8 @@
-local c = require("lib.commands")
-local logo = require("lib.ui").logo
+local c = require("lib.command")
 local lualine_theme = "auto"
 
 return {
+  -- Catppuccin theme
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -182,18 +182,6 @@ return {
     end,
   },
   {
-    "nvimdev/dashboard-nvim",
-    event = "VimEnter",
-    config = function()
-      logo = string.rep("\n", 2) .. logo
-      require("dashboard").setup({
-        config = {
-          header = vim.split(logo, "\n"),
-        },
-      })
-    end,
-  },
-  {
     "nvim-telescope/telescope.nvim",
     priority = 997,
     -- tag = "0.1.8",
@@ -205,7 +193,6 @@ return {
     config = function()
       local data = assert(vim.fn.stdpath("data")) --[[@as string]]
       local telescope = require("telescope")
-      -- local themes = require("telescope.themes")
       local actions = require("telescope.actions")
 
       local default_vertical_layout_config = {
@@ -260,89 +247,7 @@ return {
       pcall(require("telescope").load_extension, "ui-select")
     end,
   },
-  {
-    "2kabhishek/nerdy.nvim",
-    cmd = "Nerdy",
-  },
-  {
-    "famiu/bufdelete.nvim",
-    config = function()
-      c.add_command({
-        {
-          desc = "Kill current buffer",
-          cmd = "<CMD>Bwipeout<CR>"
-        },
-        {
-          desc = "Kill current buffer (force)",
-          cmd = "<CMD>Bwipeout!<CR>"
-        }
-      })
-    end,
-  },
-  {
-    "stevearc/stickybuf.nvim",
-    opts = {},
-    config = function()
-      require("stickybuf").setup({
-        get_auto_pin = function(bufnr)
-          local buftype = vim.bo[bufnr].buftype
-          local filetype = vim.bo[bufnr].filetype
-          local bufname = vim.api.nvim_buf_get_name(bufnr)
-          -- You can return "bufnr", "buftype", "filetype", or a custom function to set how the window will be pinned.
-          -- You can instead return an table that will be passed in as "opts" to `stickybuf.pin`.
-          -- The function below encompasses the default logic. Inspect the source to see what it does.
-          local default = require("stickybuf").should_auto_pin(bufnr)
-
-          if default ~= nil then
-            return default
-          elseif filetype == "Outline" then
-            return nil -- There are some issues with using stickybuf with outline plugin
-            -- return "filetype"
-          else
-            return nil
-          end
-        end,
-      })
-
-      vim.api.nvim_create_autocmd("BufEnter", {
-        desc = "Pin the buffer to any window that is fixed width or height",
-        callback = function(args)
-          local stickybuf = require("stickybuf")
-          if not stickybuf.is_pinned() and (vim.wo.winfixwidth or vim.wo.winfixheight) then
-            stickybuf.pin()
-          end
-        end,
-      })
-    end,
-  },
-  {
-    "akinsho/bufferline.nvim",
-    version = "*",
-    config = function()
-      require("bufferline").setup({
-        options = {
-          always_show_bufferline = false, -- Don't show bufferline if there is only one item
-          mode = "tabs",                  -- Show only tabs, no buffers
-          diagnostics = "nvim_lsp",
-        },
-      })
-    end,
-  },
   -- Notifications
-  {
-    "rcarriga/nvim-notify",
-    enabled = false,
-    config = function()
-      local notify = require("notify")
-      ---@diagnostic disable-next-line: missing-fields
-      notify.setup({
-        background_colour = "#000000"
-      })
-
-      -- Make this the default notify fn
-      vim.notify = notify
-    end,
-  },
   {
     "j-hui/fidget.nvim",
     config = function()
@@ -379,5 +284,12 @@ return {
         telescope.load_extension("fidget")
       end
     end
+  },
+  {
+    -- Pretty quickfix window
+    "yorickpeterse/nvim-pqf",
+    config = function()
+      require("pqf").setup()
+    end,
   },
 }

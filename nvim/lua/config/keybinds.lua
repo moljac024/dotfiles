@@ -2,7 +2,7 @@
 -- Keybindings
 -- ############################################################################
 
-local c = require("lib.commands")
+local c = require("lib.command")
 
 -- Basic movement keybinds, these make navigating splits easy for me
 vim.keymap.set({ "n", "i" }, "<A-j>", "<c-c><c-w><c-j>", { desc = "Focus window down" })
@@ -40,14 +40,20 @@ vim.keymap.set({ "n" }, "U", "<C-r>")
 
 -- Buffers
 c.add_command({
-  -- {
-  --   desc = "Kill current buffer",
-  --   cmd = "<CMD>bw<CR>"
-  -- },
-  -- {
-  --   desc = "Kill current buffer (force)",
-  --   cmd = "<CMD>bw!<CR>"
-  -- },
+  {
+    desc = "Kill current buffer",
+    -- cmd = "<CMD>bw<CR>",
+    cmd = function()
+      Snacks.bufdelete()
+    end,
+  },
+  {
+    desc = "Kill current buffer (force)",
+    -- cmd = "<CMD>bw!<CR>",
+    cmd = function()
+      Snacks.bufdelete({ force = true })
+    end,
+  },
   {
     desc = "Save current buffer",
     cmd = "<CMD>w<CR>"

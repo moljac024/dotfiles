@@ -6,7 +6,7 @@
 require("lib.import")
 
 -- Monkey patch vim's keybind.set so that it supports integration with commander
-require("lib.keybinds").patch_keymap_set_for_commander()
+require("lib.command").patch_keymap_set_for_commander()
 
 -- ############################################################################
 -- Config

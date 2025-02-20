@@ -409,10 +409,19 @@ wezterm.on(
   ---@diagnostic disable-next-line: unused-local, redefined-local
   function(tab, tabs, panes, config, hover, max_width)
     local title = get_tab_title(tab)
+
+    if tab.active_pane.is_zoomed then
+      local subtitle = "*"
+      -- local subtitle = tab.active_pane.title
+
+      return title .. "[" .. subtitle .. "] "
+    end
+
     if tab.is_active then
       --  Do some more processing if active tab
       return title
     end
+
     return title
   end
 )

@@ -1,6 +1,6 @@
 {
-    "diagnostics.globals": [
-        "import",
-        "Snacks"
-    ]
+  "diagnostics.globals": [
+    "import",
+    "Snacks"
+  ]
 }

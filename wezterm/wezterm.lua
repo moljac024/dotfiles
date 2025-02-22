@@ -347,8 +347,6 @@ config.keys = {
   { key = '>', mods = main_mod, action = act.MoveTabRelative(1) },
   { key = 'h', mods = main_mod, action = act.ActivateTabRelative(-1) },
   { key = 'l', mods = main_mod, action = act.ActivateTabRelative(1) },
-  -- { key = 'Left',  mods = main_mod, action = act.ActivateTabRelative(-1) },
-  -- { key = 'Right', mods = main_mod, action = act.ActivateTabRelative(1) },
   { key = 'k', mods = main_mod, action = act.ScrollByPage(-0.5) },
   { key = 'j', mods = main_mod, action = act.ScrollByPage(0.5) },
 
@@ -358,7 +356,7 @@ config.keys = {
   -- Open scrollback in neovim
   {
     key = 'E',
-    mods = 'CTRL',
+    mods = 'CTRL|SHIFT',
     action = act.EmitEvent 'open-scrollback-in-neovim-pane',
   },
 

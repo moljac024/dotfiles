@@ -153,7 +153,7 @@ end
 # k8s aliases
 alias k='kubectl'
 alias kcfg='kubectl config view --minify | grep name'
-alias kc='kubectx'
+alias kc='kubectl ctx'
 alias kn='kubens'
 
 ################################################################################

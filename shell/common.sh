@@ -2,7 +2,7 @@
 # vim: filetype=sh
 # set -euo pipefail # Shell strict mode
 
-THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0) # Full path of the current script
+THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo "$0") # Full path of the current script
 DIR=$(dirname "${THIS}") # The directory where current script resides
 
 . "$DIR/util.sh"
@@ -21,7 +21,7 @@ export_var EDITOR "vi"
 export_var DOTFILES "$HOME/dotfiles"
 export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
 
-if [ $(get_running_shell) = "zsh" ]; then
+if [ "$(get_running_shell)" = "zsh" ]; then
   autoload -Uz compinit && compinit
   autoload -U +X bashcompinit && bashcompinit
 fi
@@ -31,7 +31,7 @@ stty -ixon
 
 # WSL
 if is_wsl; then
-    export_var WSL_HOST $(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
+    export_var WSL_HOST "$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
 
     wsl_ip () {
         ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
@@ -40,7 +40,7 @@ if is_wsl; then
 fi
 
 # Android dev
-if [ -d $HOME/Android/Sdk ]; then
+if [ -d "$HOME/Android/Sdk" ]; then
     export_var ANDROID_HOME "$HOME/Android/Sdk"
     export_var ANDROID_SDK_ROOT "$ANDROID_HOME"
 
@@ -80,7 +80,7 @@ modify_path "$HOME/.dotnet/tools" append
 modify_path "$HOME/.cargo/bin" prepend
 
 # Volta nodejs version manager
-if [ -d $HOME/.volta ]; then
+if [ -d "$HOME"/.volta ]; then
     export_var VOLTA_HOME "$HOME/.volta"
     modify_path "$VOLTA_HOME/bin" prepend
 fi
@@ -96,7 +96,7 @@ modify_path "$HOME/bin" prepend
 modify_path "$HOME/.config/sway/bin" prepend
 
 # Flatpak paths
-export_var XDG_DATA_DIRS $HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS
+export_var XDG_DATA_DIRS "$HOME"/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:"$XDG_DATA_DIRS"
 
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
@@ -106,7 +106,7 @@ modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 ###############################################################################
 
 if is_command mise; then
-  modify_path $HOME/.local/share/mise/shims prepend
+  modify_path "$HOME"/.local/share/mise/shims prepend
   case $(get_running_shell) in
     "zsh")
       eval "$(mise activate zsh)"

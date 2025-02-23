@@ -339,10 +339,24 @@ config.visual_bell = {
 -- ==== Keybindings
 -- =============================================================================
 
+-- config.disable_default_key_bindings = true
 config.enable_kitty_keyboard = true
 local main_mod = "CTRL|SHIFT"
 
+config.leader = { key = 's', mods = 'CTRL', timeout_milliseconds = 2000 }
 config.keys = {
+  -- Send "CTRL-S" to the terminal when pressing CTRL-S, CTRL-S
+  {
+    key = 's',
+    mods = 'LEADER|CTRL',
+    action = wezterm.action.SendKey { key = 's', mods = 'CTRL' },
+  },
+
+  { key = 'h', mods = 'LEADER', action = act.ActivatePaneDirection 'Left' },
+  { key = 'j', mods = 'LEADER', action = act.ActivatePaneDirection 'Down' },
+  { key = 'k', mods = 'LEADER', action = act.ActivatePaneDirection 'Up' },
+  { key = 'l', mods = 'LEADER', action = act.ActivatePaneDirection 'Right' },
+
   { key = '<', mods = main_mod, action = act.MoveTabRelative(-1) },
   { key = '>', mods = main_mod, action = act.MoveTabRelative(1) },
   { key = 'h', mods = main_mod, action = act.ActivateTabRelative(-1) },

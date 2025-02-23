@@ -204,7 +204,7 @@ local function set_background_image()
   end
 
   local color_scheme_name = scheme_for_appearance(get_appearance())
-  local color_scheme = wezterm.get_builtin_color_schemes()[color_scheme_name]
+  local color_scheme = wezterm.color.get_builtin_schemes()[color_scheme_name]
   local bg_color = wezterm.color.parse(color_scheme.background)
 
   config.background = {
@@ -313,6 +313,7 @@ config.window_padding = {
   bottom = "0.5cell",
 }
 
+-- Render the tab bar using the main terminal font
 config.use_fancy_tab_bar = false
 -- config.show_tab_index_in_tab_bar = false
 config.enable_scroll_bar = true
@@ -320,7 +321,7 @@ config.enable_scroll_bar = true
 config.window_decorations = "RESIZE" -- Hide the title bar
 config.color_scheme = scheme_for_appearance(get_appearance())
 
-config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = false
 
 -- If background image is not set, set a random one
 if global.background_image == nil then
@@ -447,6 +448,42 @@ wezterm.on(
   end
 )
 
+---@diagnostic disable-next-line: unused-local
+wezterm.on("update-status", function(window, pane)
+  local current_config = window:effective_config()
+  local scheme_name = current_config.color_scheme
+  local builtins = wezterm.color.get_builtin_schemes()
+  local colors = builtins[scheme_name] or {}
+  local active_bg = colors.tab_bar.active_tab.bg_color
+  local active_fg = colors.tab_bar.active_tab.fg_color
+
+  local left = ""
+  local right = ""
+
+  -- If not in normal mode, show the current mode
+  if window:active_key_table() then
+    local mode_text = window:active_key_table():upper()
+    right = wezterm.format({
+      { Foreground = { Color = active_fg } },
+      { Background = { Color = active_bg } },
+      { Text = mode_text },
+    })
+  end
+
+  if window:leader_is_active() then
+    left = wezterm.format({
+      { Foreground = { Color = active_fg } },
+      { Background = { Color = active_bg } },
+      { Text = " LEADER " },
+      'ResetAttributes',
+      { Text = " " },
+    })
+  end
+
+  window:set_left_status(left)
+  window:set_right_status(right)
+end)
+
 -- wezterm.on('gui-startup', function(cmd)
 --   local tab, pane, window = mux.spawn_window(cmd or {})
 --   window:gui_window():maximize()
@@ -462,7 +499,6 @@ wezterm.on('gui-attached', function(domain)
     end
   end
 end)
-
 
 local function make_scrollback_opener(input)
   local props = input or {}

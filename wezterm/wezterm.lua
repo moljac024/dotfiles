@@ -291,7 +291,7 @@ local rename_tab_action = act.PromptInputLine {
 }
 
 -- =============================================================================
--- ==== Appearance
+-- ==== Config
 -- =============================================================================
 
 -- config.font = wezterm.font('FiraCode Nerd Font')
@@ -335,6 +335,11 @@ config.visual_bell = {
   fade_out_duration_ms = 75,
   target = "CursorColor",
 }
+
+-- config.enable_wayland = false
+
+-- Reload configuration every once in a while (setting a random wallpaper again)
+-- wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
 
 -- =============================================================================
 -- ==== Keybindings
@@ -560,11 +565,6 @@ end
 
 wezterm.on('open-scrollback-in-neovim-tab', make_scrollback_opener({ open_in_pane = false }))
 wezterm.on('open-scrollback-in-neovim-pane', make_scrollback_opener({ open_in_pane = true }))
-
--- config.enable_wayland = false
-
--- Reload configuration every once in a while (setting a random wallpaper again)
--- wezterm.time.call_after(60 * 15, wezterm.reload_configuration)
 
 -- and finally, return the configuration to wezterm
 return config

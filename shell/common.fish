@@ -188,6 +188,9 @@ export_secret COPILOT_API_KEY "$DOTFILES/data/secrets/copilot-api-key"
 ### Other
 ################################################################################
 
+# Disable flow control
+stty -ixon
+
 # Cursor size
 if is_command gsettings
     export_var XCURSOR_SIZE (gsettings get org.gnome.desktop.interface cursor-size)

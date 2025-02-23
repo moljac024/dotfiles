@@ -26,6 +26,9 @@ if [ $(get_running_shell) = "zsh" ]; then
   autoload -U +X bashcompinit && bashcompinit
 fi
 
+# Disable flow control
+stty -ixon
+
 # WSL
 if is_wsl; then
     export_var WSL_HOST $(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)

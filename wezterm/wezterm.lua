@@ -537,11 +537,11 @@ wezterm.on("update-status", function(window, pane)
 
   -- If not in normal mode, show the current mode
   if window:active_key_table() then
-    local mode_text = window:active_key_table():upper()
+    local mode_text = window:active_key_table():lower():gsub("_", " ")
     right = wezterm.format({
       { Foreground = { Color = active_fg } },
       { Background = { Color = active_bg } },
-      { Text = mode_text },
+      { Text = " " .. mode_text .. "" },
     })
   end
 

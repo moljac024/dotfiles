@@ -433,6 +433,14 @@ config.keys = {
       one_shot = false,
     },
   },
+  {
+    key = 'f',
+    mods = 'LEADER',
+    action = act.ActivateKeyTable {
+      name = 'focus_pane',
+      one_shot = false,
+    },
+  },
 }
 
 config.key_tables = {
@@ -461,7 +469,7 @@ config.key_tables = {
   -- Defines the keys that are active in our activate-pane mode.
   -- 'activate_pane' here corresponds to the name="activate_pane" in
   -- the key assignments above.
-  activate_pane = {
+  focus_pane = {
     { key = 'LeftArrow',  action = act.ActivatePaneDirection 'Left' },
     { key = 'h',          action = act.ActivatePaneDirection 'Left' },
 
@@ -473,6 +481,9 @@ config.key_tables = {
 
     { key = 'DownArrow',  action = act.ActivatePaneDirection 'Down' },
     { key = 'j',          action = act.ActivatePaneDirection 'Down' },
+
+    -- Cancel the mode by pressing escape
+    { key = 'Escape',     action = 'PopKeyTable' },
   },
 }
 

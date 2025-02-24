@@ -266,15 +266,23 @@ local function make_background_image_chooser(image_opts, opts)
 end
 
 
-local function get_tab_title(tab_info)
+-- Tab title
+local function get_tab_title(tab_info, opts)
   local title = tab_info.tab_title
+  opts = opts or {}
+
   -- if the tab title is explicitly set, take that
   if title and #title > 0 then
     return " " .. title .. " "
   end
-  -- Otherwise, use the title from the active pane
-  -- in that tab
-  return " " .. tab_info.active_pane.title .. " "
+
+  if opts.include_pane_title then
+    -- Use the title from the active pane in that tab
+    return " " .. tab_info.active_pane.title .. " "
+  end
+
+  -- Fallback to tab index
+  return " " .. tab_info.tab_index + 1 .. " "
 end
 
 local rename_tab_action = act.PromptInputLine {

@@ -9,12 +9,19 @@ return {
       local gitsigns = require("gitsigns")
       gitsigns.setup()
 
-      c.add_command(
+      vim.keymap.set("n", "<leader>g", "<CMD>Gitsigns blame_line<CR>",
+        { desc = "Hover git blame for current line", commander = {} })
+
+      c.add_command({
         {
-          desc = "Toggle git blame for current line",
+          desc = "Toggle git blame on cursor line",
           cmd = gitsigns.toggle_current_line_blame
+        },
+        {
+          desc = "Open git blame",
+          cmd = "<CMD>Gitsigns blame<CR>"
         }
-      )
+      })
     end,
   },
   -- Tailwind and typescript

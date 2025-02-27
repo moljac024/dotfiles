@@ -234,10 +234,7 @@ fi
 ### Secrets
 ################################################################################
 
-export_secret CR_PAT "$DOTFILES/data/secrets/github-token-registry"
-export_secret DO_PAT "$DOTFILES/data/secrets/digital-ocean"
-export_secret NPM_TOKEN_FOR_GITHUB "$DOTFILES/data/secrets/npm-token-for-github"
-export_secret COPILOT_API_KEY "$DOTFILES/data/secrets/copilot-api-key"
+export_secrets_from_dir "$DOTFILES/data/secrets"
 
 ################################################################################
 ### Other

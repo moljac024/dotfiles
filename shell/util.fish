@@ -47,6 +47,24 @@ function export_secret
     end
 end
 
+function export_secrets_from_dir
+    set dir $argv[1]
+
+    if not test -d "$dir"
+        echo "Error: '$dir' is not a directory" >&2
+        return 1
+    end
+
+    for file in $dir/*
+        if test -f "$file"
+            set var_name (basename "$file")
+            set -l content (cat "$file")
+            set -x $var_name "$content"
+        end
+    end
+end
+
+
 function ensure_symlink
     set -l original $argv[1]
     set -l path $argv[2]

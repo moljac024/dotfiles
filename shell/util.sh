@@ -68,6 +68,24 @@ export_secret () {
   fi
 }
 
+export_secrets_from_dir() {
+    local dir=$1
+    if [[ ! -d "$dir" ]]; then
+        echo "Error: '$dir' is not a directory" >&2
+        return 1
+    fi
+
+    for file in "$dir"/*; do
+        if [[ -f "$file" ]]; then
+            local var_name
+            var_name=$(basename "$file")
+            local content
+            content=$(<"$file") # Read file content efficiently
+            export_var "$var_name" "$content"
+        fi
+    done
+}
+
 ensure_symlink () {
   local original=$1
   local path=$2

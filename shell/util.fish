@@ -58,8 +58,12 @@ function export_secrets_from_dir
     for file in $dir/*
         if test -f "$file"
             set var_name (basename "$file")
-            set -l content (cat "$file")
-            set -x $var_name "$content"
+
+            # Read the file contents properly without Fish breaking on special characters
+            set -l content (cat "$file" | string collect --no-trim)
+
+            # Export while wrapping the content in quotes to preserve special characters
+            set -gx $var_name "$content"
         end
     end
 end

@@ -81,3 +81,15 @@ function git_clone
         git clone "$repo" "$location_fullpath"
     end
 end
+
+function cdr
+    set dir (pwd)
+    while test "$dir" != "/"  # Stop at the root
+        if test -d "$dir/.git"
+            cd "$dir"
+            return
+        end
+        set dir (dirname "$dir")
+    end
+    echo "No .git directory found" >&2
+end

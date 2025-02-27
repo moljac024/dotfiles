@@ -105,3 +105,15 @@ git_clone () {
         git clone "$repo" "$location_fullpath"
     fi
 }
+
+cdr() {
+    dir="$PWD"
+    while [[ "$dir" != "/" ]]; do
+        if [[ -d "$dir/.git" ]]; then
+            cd "$dir" || return
+            return
+        fi
+        dir=$(dirname "$dir")
+    done
+    echo "No .git directory found" >&2
+}

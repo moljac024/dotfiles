@@ -1,0 +1,13 @@
+#!/bin/bash
+
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if is_command code; then
+  exec code "$@"
+elif is_command nvim; then
+  exec nvim "$@"
+else
+  exec "$EDITOR" "$@"
+fi

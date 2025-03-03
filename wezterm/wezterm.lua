@@ -604,8 +604,8 @@ local function make_scrollback_opener(input)
       -- Open in new tab
       window:perform_action(
         act.SpawnCommandInNewTab {
-          label = "Open scrollback in neovim tab",
-          args = { 'nvim', file_name },
+          label = "Open scrollback in editor",
+          args = { 'my-editor', file_name },
         },
         pane
       )
@@ -613,7 +613,7 @@ local function make_scrollback_opener(input)
       -- Open in new pane
       local new_pane = pane:split {
         direction = "Bottom",
-        args = { 'nvim', file_name },
+        args = { 'my-editor', file_name },
       }
 
       window:perform_action(

@@ -1,3 +1,15 @@
 #!/bin/bash
 
-exec podman $@
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if is_command podman; then
+  exec podman "$@"
+elif is_command nerdctl; then
+  exec nerdctl "$@"
+elif is_command docker; then
+  exec docker "$@"
+else
+  echo "No container runtime found. Please install nerdctl, podman or docker."
+fi

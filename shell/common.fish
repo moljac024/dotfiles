@@ -144,11 +144,11 @@ alias gita='gitk --all'
 alias gg='git gui'
 
 # If podman is installed, use it instead of docker
-if is_command podman
-    alias docker=podman
-    alias docker-compose='podman-compose'
-    export_var DOCKER_HOST "unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
-end
+# if is_command podman
+#     alias docker=podman
+#     alias docker-compose='podman-compose'
+#     export_var DOCKER_HOST "unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
+# end
 
 # k8s aliases
 alias k='kubectl'

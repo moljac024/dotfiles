@@ -179,7 +179,8 @@ local function scheme_for_appearance(appearance)
   end
 end
 
-local function generate_unique_name(tab_info, existing_names)
+local function generate_unique_name(tab_info, existing_names, opts)
+  opts = opts or {}
   existing_names = existing_names or {}
 
   local colors = { "red", "blue", "green", "yellow", "purple", "orange", "black", "white", "gray", "pink" }
@@ -194,7 +195,16 @@ local function generate_unique_name(tab_info, existing_names)
     local adjective = adjectives[math.random(#adjectives)]
     local animal = animals[math.random(#animals)]
 
-    local name = color .. "-" .. adjective .. "-" .. animal
+    local parts = {
+      color,
+      animal
+    }
+
+    if opts.with_adjective then
+      table.insert(parts, 2, adjective)
+    end
+
+    local name = table.concat(parts, "-")
 
     if not includes(existing_names, name) then
       return name
@@ -350,7 +360,7 @@ local function get_tab_title(tab_info, opts)
   end
 
   -- Generate a random unique name for the tab
-  title = generate_unique_name(tab_info, existing_names)
+  title = generate_unique_name(tab_info, existing_names, { with_adjective = false })
   global.tab_names[tab_id] = title
 
   -- Clean up the global tab names

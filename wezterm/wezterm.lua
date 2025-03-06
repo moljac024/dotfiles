@@ -91,6 +91,7 @@ local function includes(table, value)
 end
 
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function filter(t, func)
   local out = {}
   for i = 1, #t do
@@ -101,6 +102,26 @@ local function filter(t, func)
   return out
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
+local function map(tbl, f)
+  local t = {}
+  for k, v in pairs(tbl) do
+    t[k] = f(v, k)
+  end
+  return t
+end
+
+
+---@diagnostic disable-next-line: unused-function, unused-local
+local function values(tbl)
+  local t = {}
+  for _, v in pairs(tbl) do
+    table.insert(t, v)
+  end
+  return t
+end
+
+---@diagnostic disable-next-line: unused-function, unused-local
 local function array_concat(a1, a2)
   local t = {}
 
@@ -115,6 +136,7 @@ local function array_concat(a1, a2)
   return t
 end
 
+---@diagnostic disable-next-line: unused-function, unused-local
 local function shuffle(t)
   local s = {}
   for i = 1, #t do s[i] = t[i] end
@@ -128,6 +150,7 @@ end
 
 -- Take the first n entries from table or the whole table if n is larger than
 -- the length
+---@diagnostic disable-next-line: unused-function, unused-local
 local function take(t, n)
   local s = {}
   for i = 1, math.min(n, #t) do
@@ -154,6 +177,37 @@ local function scheme_for_appearance(appearance)
     -- return "Catppuccin Latte"
     return "Catppuccin Frappe"
   end
+end
+
+local function generate_unique_name(tab_info, existing_names)
+  existing_names = existing_names or {}
+
+  local colors = { "red", "blue", "green", "yellow", "purple", "orange", "black", "white", "gray", "pink" }
+  local adjectives = { "swift", "lazy", "brave", "fierce", "sneaky", "silent", "gentle", "wild", "bold", "clever" }
+  local animals = { "fox", "wolf", "eagle", "panther", "tiger", "hawk", "bear", "lion", "rabbit", "owl" }
+
+  local tries = 0
+  local max_tries = 100 -- Prevent infinite loops
+
+  while tries < max_tries do
+    local color = colors[math.random(#colors)]
+    local adjective = adjectives[math.random(#adjectives)]
+    local animal = animals[math.random(#animals)]
+
+    local name = color .. "-" .. adjective .. "-" .. animal
+
+    if not includes(existing_names, name) then
+      return name
+    end
+
+    tries = tries + 1
+  end
+
+  -- Fallback: return the next number in sequence
+  return tostring(tab_info.tab_id)
+
+  -- Fallback: return the next number in sequence
+  -- return tostring(#existing_names + 1)
 end
 
 local function get_images_from_dir(dir)
@@ -265,24 +319,48 @@ local function make_background_image_chooser(image_opts, opts)
   return wezterm.action_callback(action)
 end
 
-
 -- Tab title
 local function get_tab_title(tab_info, opts)
-  local title = tab_info.tab_title
   opts = opts or {}
-
-  -- if the tab title is explicitly set, take that
-  if title and #title > 0 then
-    return " " .. title .. " "
+  local tabs = opts.tabs or {}
+  if (global.tab_names == nil) then
+    global.tab_names = {}
   end
+
+  local all_tab_ids = map(tabs, function(tab)
+    return tostring(tab.tab_id)
+  end)
+  local tab_id = tostring(tab_info.tab_id)
+  local existing_names = values(global.tab_names)
+  local existing_title = tab_info.tab_title
+  local title = tab_id
 
   if opts.include_pane_title then
     -- Use the title from the active pane in that tab
-    return " " .. tab_info.active_pane.title .. " "
+    return tab_info.active_pane.title
   end
 
-  -- Fallback to tab index
-  return " " .. tab_info.tab_index + 1 .. " "
+  -- if the tab title is explicitly set, take that
+  if existing_title and #existing_title > 1 then
+    return existing_title
+  end
+
+  if global.tab_names[tab_id] ~= nil then
+    return global.tab_names[tab_id]
+  end
+
+  -- Generate a random unique name for the tab
+  title = generate_unique_name(tab_info, existing_names)
+  global.tab_names[tab_id] = title
+
+  -- Clean up the global tab names
+  for _, t in pairs(global.tab_names) do
+    if not includes(all_tab_ids, t) then
+      global.tab_names[t] = nil
+    end
+  end
+
+  return title
 end
 
 local rename_tab_action = act.PromptInputLine {
@@ -496,7 +574,7 @@ wezterm.on(
   'format-tab-title',
   ---@diagnostic disable-next-line: unused-local, redefined-local
   function(tab, tabs, panes, config, hover, max_width)
-    local title = get_tab_title(tab)
+    local title = " " .. get_tab_title(tab, { tabs = tabs }) .. " "
 
     if tab.active_pane.is_zoomed then
       local subtitle = "*"

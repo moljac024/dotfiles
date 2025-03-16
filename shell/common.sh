@@ -146,7 +146,7 @@ if [ "$TERM" = "xterm-kitty" ]; then
   alias ssh='kitten ssh'
 fi
 
-alias update-npm-packages="npx npm-check-updates -i"
+alias update-npm-packages="npx -y npm-check-updates -i"
 alias c='clear'
 alias ..='cd ..'
 alias back='cd "$OLDPWD"'

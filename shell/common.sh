@@ -20,6 +20,7 @@ export_var LANG "en_US.UTF-8"
 export_var EDITOR "vi"
 export_var DOTFILES "$HOME/dotfiles"
 export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+export_var LIBVIRT_DEFAULT_URI "qemu:///system"
 
 if [ "$(get_running_shell)" = "zsh" ]; then
   autoload -Uz compinit && compinit

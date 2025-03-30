@@ -18,7 +18,6 @@ return {
       require("copilot_cmp").setup()
     end,
   },
-  { "AndreM222/copilot-lualine", enabled = true },
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     enabled = false,

@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# CONFIG
+SHARE_PATH="/home/bojan/MyDocuments/VMs/shared"
+SAVED_SMB_CONF="/home/bojan/dotfiles/samba/smb.conf"
+SAMBA_USER="bojan"
+FIREWALL_ZONE="libvirt"
+
+# Dynamically get the host-side IP of virbr0 from libvirt
+VIRBR0_IP=$(virsh net-dumpxml default 2>/dev/null | grep -oP "ip address='\K[^']+")
+
+if [[ -z "$VIRBR0_IP" ]]; then
+  echo "❌ Could not determine virbr0 IP from libvirt. Is the 'default' network active?"
+  exit 1
+fi
+
+# 1. Ensure the shared directory exists and has correct permissions
+mkdir -p "$SHARE_PATH"
+chmod 755 "$SHARE_PATH"
+chown "$SAMBA_USER:$SAMBA_USER" "$SHARE_PATH"
+
+# 2. Set SELinux context (if enforcing)
+if command -v getenforce &>/dev/null && [[ "$(getenforce)" == "Enforcing" ]]; then
+    echo "Setting SELinux context..."
+    sudo chcon -Rt samba_share_t "$SHARE_PATH"
+    sudo setsebool -P samba_enable_home_dirs on
+fi
+
+# 3. Ensure Samba is installed and running
+sudo dnf install -y samba samba-client
+sudo systemctl enable --now smb nmb
+
+# 4. Add Samba user if not already added
+if ! sudo pdbedit -L | grep -q "^$SAMBA_USER:"; then
+    echo "Creating Samba user '$SAMBA_USER'"
+    sudo smbpasswd -a "$SAMBA_USER"
+    sudo smbpasswd -e "$SAMBA_USER"
+fi
+
+# 5. Overwrite smb.conf with saved known-good config
+if [[ -f "$SAVED_SMB_CONF" ]]; then
+    echo "Applying known-good Samba config from $SAVED_SMB_CONF"
+    sudo cp /etc/samba/smb.conf "/etc/samba/smb.conf.bak.$(date +%s)"
+    sudo cp "$SAVED_SMB_CONF" /etc/samba/smb.conf
+else
+    echo "ERROR: Saved Samba config not found at: $SAVED_SMB_CONF"
+    exit 1
+fi
+
+# 6. Allow Samba through firewall on virbr0
+sudo firewall-cmd --zone="$FIREWALL_ZONE" --add-service=samba --permanent
+sudo firewall-cmd --reload
+
+# 7. Restart Samba to apply everything
+sudo systemctl restart smb nmb
+
+echo "✅ Samba share is ready at: \\\\$VIRBR0_IP\\vmshare"

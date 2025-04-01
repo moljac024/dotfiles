@@ -38,6 +38,9 @@ ensure_symlink $ROOT_DIR/kitty $HOME/.config/kitty
 # Wezterm
 ensure_symlink $ROOT_DIR/wezterm $HOME/.config/wezterm
 
+# Ghostty
+ensure_symlink $ROOT_DIR/ghostty $HOME/.config/ghostty
+
 # Konsole
 mkdir -p $HOME/.local/share
 ensure_symlink $ROOT_DIR/konsole/konsolerc $HOME/.config/konsolerc

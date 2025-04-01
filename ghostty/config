@@ -2,7 +2,7 @@ theme = catppuccin-frappe.conf
 font-family = Zed Mono NF
 font-size = 16
 background-blur = 0
-background-opacity = 0.95
+# background-opacity = 0.95
 
 # window-decoration = client
 # custom-shader = shaders/bettercrt.glsl

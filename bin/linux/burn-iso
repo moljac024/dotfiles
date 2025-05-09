@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+# Must be root
+if [[ $EUID -ne 0 ]]; then
+  echo "❌ Please run as root or with sudo."
+  exit 1
+fi
+
+# Show removable drives
+echo "🔍 Available removable drives:"
+lsblk -dpo NAME,SIZE,MODEL,TRAN | grep -Ei 'usb|removable' || echo "⚠️ No USB drives detected."
+
+read -rp "👉 Enter target device (e.g. /dev/sdX): " target
+if [[ ! -b "$target" ]]; then
+  echo "❌ '$target' is not a valid block device."
+  exit 1
+fi
+
+# Confirm action
+echo "⚠️ You are about to ERASE all data on '$target'."
+read -rp "Type 'YES' to continue: " confirm
+if [[ "$confirm" != "YES" ]]; then
+  echo "❌ Aborted."
+  exit 1
+fi
+
+read -rp "💿 Enter path to ISO file: " iso
+if [[ ! -f "$iso" ]]; then
+  echo "❌ ISO file not found."
+  exit 1
+fi
+
+echo "🚀 Writing '$iso' to '$target'..."
+dd if="$iso" of="$target" bs=4M status=progress conv=fsync
+
+echo "🧼 Flushing buffers with sync..."
+sync
+
+echo "⏳ Waiting for device to finish all I/O..."
+udevadm settle
+
+# Optional safe eject if available
+if command -v udisksctl &>/dev/null; then
+  echo "🔌 Powering off USB device for safe removal..."
+  udisksctl power-off -b "$target" || echo "⚠️ Failed to power off. You may remove it manually."
+  echo "✅ Device powered off safely."
+else
+  echo "ℹ️ udisksctl not found. Skipping auto eject."
+  echo "✅ It is now safe to remove '$target'."
+fi

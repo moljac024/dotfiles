@@ -12,7 +12,7 @@ fi
 echo "🔍 Available removable drives:"
 lsblk -dpo NAME,SIZE,MODEL,TRAN | grep -Ei 'usb|removable' || echo "⚠️ No USB drives detected."
 
-read -rp "👉 Enter target device (e.g. /dev/sdX): " target
+read -rep "👉 Enter target device (e.g. /dev/sdX): " target
 if [[ ! -b "$target" ]]; then
   echo "❌ '$target' is not a valid block device."
   exit 1
@@ -26,9 +26,11 @@ if [[ "$confirm" != "YES" ]]; then
   exit 1
 fi
 
-read -rp "💿 Enter path to ISO file: " iso
+read -rep "💿 Enter path to ISO file: " iso_raw
+iso="${iso_raw/#\~/$HOME}"  # expand ~ manually
+
 if [[ ! -f "$iso" ]]; then
-  echo "❌ ISO file not found."
+  echo "❌ ISO file not found: $iso"
   exit 1
 fi
 

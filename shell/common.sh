@@ -150,6 +150,7 @@ fi
 alias update-npm-packages="npx -y npm-check-updates -i"
 alias c='clear'
 alias ..='cd ..'
+alias cdn='cd $HOME/MyDocuments/Notebook/'
 alias back='cd "$OLDPWD"'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'

@@ -7,7 +7,7 @@
   "cmp-conjure": { "branch": "master", "commit": "8c9a88efedc0e5bf3165baa6af8a407afe29daf6" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "a8912b88ce488f411177fc8aed358b04dc246d7b" },
   "cmp-path": { "branch": "main", "commit": "c6635aae33a50d6010bf1aa756ac2398a2d54c32" },
-  "codecompanion.nvim": { "branch": "main", "commit": "621c734737801d9556cf0b50c27ef502a94b9cca" },
+  "codecompanion.nvim": { "branch": "main", "commit": "f0e5ec927081474465e9c08f42112c19995f94a9" },
   "commander.nvim": { "branch": "main", "commit": "84101e8eb1613a72bbdec655b734f891d8a00694" },
   "conform.nvim": { "branch": "master", "commit": "8132ec733eed3bf415b97b76797ca41b59f51d7d" },
   "conjure": { "branch": "main", "commit": "8edc78f7cf2cd49c0feba3ddd9a29eca1673a8ce" },

@@ -182,6 +182,23 @@ return {
     end,
   },
   {
+    'nanozuki/tabby.nvim',
+    config = function()
+      require('tabby').setup({
+        preset = "active_wins_at_tail",
+        lualine_theme = lualine_theme,
+        tab_name = {
+          name_fallback = function(tabid)
+            return tabid
+          end,
+        },
+        buf_name = {
+          mode = 'unique', -- or 'relative', 'tail', 'shorten'
+        },
+      })
+    end,
+  },
+  {
     "nvim-telescope/telescope.nvim",
     priority = 997,
     -- tag = "0.1.8",

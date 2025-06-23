@@ -58,6 +58,8 @@ return {
       })
     end,
   },
+  -- KMonad syntax
+  { 'kmonad/kmonad-vim' },
   -- Fennel
   { "jaawerth/fennel.vim" },
 }

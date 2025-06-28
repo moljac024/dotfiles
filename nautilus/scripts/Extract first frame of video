@@ -26,5 +26,11 @@ for video in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS; do
           ;;
   esac
 
- ffmpeg -i $video -vframes 1 -f image2 /tmp/$i.jpg; i=$((i+1))
+  output_dir=$(dirname "$video")
+  base_name=$(basename "$video")
+  base_name_no_ext="${base_name%.*}"
+  output_file="$output_dir/$base_name_no_ext.png"
+
+  echo "Processing $video, saving to $output_file"
+  ffmpeg -i "$video" -vframes 1 -f image2 "$output_file"
 done

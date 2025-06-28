@@ -219,7 +219,7 @@ return {
                 line.sep('', hl, theme.fill),
                 tab.is_current() and '' or '',
                 ' ',
-                tab.number(),
+                tab.in_jump_mode() and tab.jump_key() or tab.number(),
                 tab.name(),
                 tab.close_btn(''),
                 line.sep(' ', hl, theme.fill),
@@ -247,6 +247,10 @@ return {
           }
         end,
       })
+
+      -- Set up keybinds
+      vim.keymap.set("n", "<leader>tr", ":Tabby rename_tab ", { desc = "Rename tab", commander = {} })
+      vim.keymap.set("n", "<leader>tj", "<CMD>Tabby pick_window<CR>", { desc = "Pick window", commander = {} })
     end,
   },
   {

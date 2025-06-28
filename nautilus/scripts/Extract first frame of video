@@ -1,0 +1,30 @@
+#!/bin/bash
+
+LOG_FILE=/tmp/nautilus_frame_extract_script.log
+
+# Check if an file is selected
+if [ -z "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]; then
+    echo "No file selected"
+    exit 1
+fi
+
+i=1
+
+for video in $NAUTILUS_SCRIPT_SELECTED_FILE_PATHS; do
+  echo "Checking file $video" >> $LOG_FILE
+  # Check if the file is a valid image
+  mime_type=$(file -b --mime-type "$video")
+  echo "File type of $video: $mime_type" >> $LOG_FILE
+  case "$mime_type" in
+      video/mp4|video/mkv|video/avi)
+          # File is a valid video type
+          ;;
+      *)
+          echo "Invalid file type of $video: $mime_type" >> $LOG_FILE
+          notify-send "Video frame extractor" "Invalid file type. Please select a valid video file." -u critical
+          exit 1
+          ;;
+  esac
+
+ ffmpeg -i $video -vframes 1 -f image2 /tmp/$i.jpg; i=$((i+1))
+done

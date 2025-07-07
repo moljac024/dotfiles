@@ -133,6 +133,9 @@ ensure_symlink $ROOT_DIR/zellij $HOME/.config/zellij
 # K9s
 ensure_symlink $ROOT_DIR/k9s $HOME/.config/k9s
 
+# Opencode
+ensure_symlink $ROOT_DIR/opencode $HOME/.config/opencode
+
 # Midnight commander
 mkdir -p $HOME/.local/share/mc
 ensure_symlink $ROOT_DIR/mc $HOME/.config/mc

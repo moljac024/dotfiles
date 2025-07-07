@@ -90,6 +90,9 @@ fi
 export_var FLYCTL_INSTALL "$HOME/.fly"
 modify_path "$FLYCTL_INSTALL/bin" prepend
 
+# opencode
+modify_path $HOME/.opencode/bin prepend
+
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
 # Home binaries (systems should do this already)

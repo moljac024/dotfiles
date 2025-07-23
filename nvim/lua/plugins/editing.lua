@@ -232,24 +232,6 @@ return {
       { "R", mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     },
   },
-  -- Search and replace
-  {
-    'MagicDuck/grug-far.nvim',
-    config = function()
-      require('grug-far').setup({
-        -- options, see Configuration section below
-        -- there are no required options atm
-        -- engine = 'ripgrep' is default, but 'astgrep' can be specified
-      });
-
-      c.add_command({
-        {
-          desc = "Search and replace",
-          cmd = "<CMD>GrugFar<CR>"
-        }
-      })
-    end
-  },
   -- Lisp
   {
     "julienvincent/nvim-paredit",

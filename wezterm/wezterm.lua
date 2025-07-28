@@ -307,7 +307,7 @@ local function make_background_image_chooser(image_opts, opts)
     return choices
   end
 
-  local function action(window, pane)
+  return wezterm.action_callback(function(window, pane)
     window:perform_action(
       act.InputSelector {
         ---@diagnostic disable-next-line: unused-local
@@ -324,9 +324,7 @@ local function make_background_image_chooser(image_opts, opts)
       },
       pane
     )
-  end
-
-  return wezterm.action_callback(action)
+  end)
 end
 
 -- Tab title
@@ -345,14 +343,14 @@ local function get_tab_title(tab_info, opts)
   local existing_title = tab_info.tab_title
   local title = tab_id
 
-  if opts.include_pane_title then
-    -- Use the title from the active pane in that tab
-    return tab_info.active_pane.title
-  end
-
   -- if the tab title is explicitly set, take that
   if existing_title and #existing_title > 1 then
     return existing_title
+  end
+
+  if opts.include_pane_title then
+    -- Use the title from the active pane in that tab
+    return tab_info.active_pane.title
   end
 
   if global.tab_names[tab_id] ~= nil then

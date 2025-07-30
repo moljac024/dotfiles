@@ -1,6 +1,7 @@
 local base = import("./base")
 local completion = import("./completion")
 local editing = import("./editing")
+local notes = import("./notes")
 local files = import("./files")
 local util = import("./util")
 local lsp = import("./lsp")
@@ -11,13 +12,14 @@ local ai = import("./ai")
 
 return {
   base,
-  ui,
-  files,
-  editing,
   completion,
+  editing,
+  notes,
+  files,
   util,
+  lsp,
+  ui,
   terminal,
   dev,
-  lsp,
   ai,
 }

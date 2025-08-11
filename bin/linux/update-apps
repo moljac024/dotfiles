@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if command -v mise >/dev/null 2>&1; then
+    mise self-update --yes && mise up
+fi
+
+if command -v flatpak >/dev/null 2>&1; then
+    flatpak update -y
+fi

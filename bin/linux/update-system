@@ -8,10 +8,6 @@ if command -v dnf >/dev/null 2>&1; then
     sudo sh -c "dnf update -y"
 fi
 
-if command -v flatpak >/dev/null 2>&1; then
-    flatpak update -y
-fi
-
 if command -v rpm-ostree >/dev/null 2>&1; then
     rpm-ostree upgrade
 fi

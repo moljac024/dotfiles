@@ -8,7 +8,9 @@ local lsp = import("./lsp")
 local ui = import("./ui")
 local terminal = import("./terminal")
 local dev = import("./dev")
+
 local ai = import("./ai")
+local copilot = import("./copilot")
 
 return {
   base,
@@ -21,5 +23,7 @@ return {
   ui,
   terminal,
   dev,
+
   ai,
+  copilot,
 }

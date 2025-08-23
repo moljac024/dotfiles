@@ -106,7 +106,6 @@ return {
         vtsls = {}, -- Alternative typescript LSP
 
         pyright = {},
-        elixirls = {},
         rust_analyzer = {},
         gopls = {},
         fennel_ls = {

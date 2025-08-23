@@ -10,8 +10,10 @@ return {
     config = function()
       local configs = require("nvim-treesitter.configs")
 
-      ---@diagnostic disable-next-line: missing-fields
       configs.setup({
+        auto_install = true,
+        ignore_install = {},
+        modules = {},
         ensure_installed = {
           "c",
           "lua",
@@ -34,7 +36,6 @@ return {
         sync_install = false,
         highlight = { enable = true },
         indent = { enable = true },
-        ---@diagnostic disable-next-line: unused-local
         disable = function(lang, buf)
           local max_filesize = 200 * 1024 -- Max file size in KB
           local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -44,18 +45,18 @@ return {
         end,
       })
     end,
-    {
-      "hedyhli/outline.nvim",
-      config = function()
-        -- Example mapping to toggle outline
-        vim.keymap.set("n", { "<leader>o", "<A-o>" }, "<cmd>Outline<CR>",
-          { desc = "Toggle Outline" })
+  },
+  {
+    "hedyhli/outline.nvim",
+    config = function()
+      -- Example mapping to toggle outline
+      vim.keymap.set("n", { "<leader>o", "<A-o>" }, "<cmd>Outline<CR>",
+        { desc = "Toggle Outline" })
 
-        require("outline").setup {
-          -- Your setup opts here (leave empty to use defaults)
-        }
-      end,
-    },
+      require("outline").setup {
+        -- Your setup opts here (leave empty to use defaults)
+      }
+    end,
   },
   {
     "kylechui/nvim-surround",

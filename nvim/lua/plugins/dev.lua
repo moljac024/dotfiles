@@ -1,7 +1,14 @@
 local c = require("lib.command")
 
 return {
-  -- Git signs
+  {
+    "NvChad/nvim-colorizer.lua",
+    opts = {
+      user_default_options = {
+        tailwind = true,
+      },
+    },
+  },
   {
     "lewis6991/gitsigns.nvim",
     -- enabled = false,
@@ -46,36 +53,6 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     opts = {},
   },
-  {
-    "NvChad/nvim-colorizer.lua",
-    opts = {
-      user_default_options = {
-        tailwind = true,
-      },
-    },
-  },
-  { "dmmulroy/ts-error-translator.nvim" },
-  {
-    "dmmulroy/tsc.nvim",
-    lazy = true,
-    cmd = "TSC",
-    commander = {
-      {
-        cmd = "<CMD>TSC<CR>",
-        desc = "Typecheck typescript project",
-      },
-    },
-    config = function()
-      local tsc = require("tsc")
-      ---@diagnostic disable-next-line: missing-fields
-      tsc.setup({
-        auto_open_qflist = true,
-        use_trouble_qflist = true,
-      })
-    end,
-  },
-  -- KMonad syntax
-  { 'kmonad/kmonad-vim' },
   -- Fennel
   { "jaawerth/fennel.vim" },
 }

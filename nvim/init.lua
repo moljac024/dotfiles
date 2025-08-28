@@ -28,3 +28,5 @@ require("lib.lazy").init()
 -- plugins don't override any of our custom keybinds.
 
 require("config.keybinds")
+
+require("config.commands")

@@ -15,6 +15,31 @@ local function run_command(x)
   end
 end
 
+local function get_command_keys(item)
+  -- If item keys is a non-empty table of keybinds, show those in parens next to desc
+  if type(item.keys) == "table" and #item.keys > 0 then
+    local keys_strs = {}
+    for _, keybind in ipairs(item.keys) do
+      if type(keybind) == "table" and #keybind == 2 then
+        local mode = keybind[1]
+
+        -- if mode is table, join all elems with comma
+        if type(mode) == "table" then
+          mode = table.concat(mode, ", ")
+        end
+
+        local lhs = keybind[2]
+        table.insert(keys_strs, string.format("[%s] %s", mode, lhs))
+      end
+    end
+    if #keys_strs > 0 then
+      return table.concat(keys_strs, ", ")
+    end
+
+    return nil
+  end
+end
+
 M.add_commands = function(cmds)
   commands = vim.list_extend(commands, cmds)
 end
@@ -23,25 +48,9 @@ M.open_command_picker = function()
   vim.ui.select(commands, {
     prompt = 'Run command',
     format_item = function(item)
-      -- If item keys is a non-empty table of keybinds, show those in parens next to desc
-      if type(item.keys) == "table" and #item.keys > 0 then
-        local keys_strs = {}
-        for _, keybind in ipairs(item.keys) do
-          if type(keybind) == "table" and #keybind == 2 then
-            local mode = keybind[1]
-
-            -- if mode is table, join all elems with comma
-            if type(mode) == "table" then
-              mode = table.concat(mode, ", ")
-            end
-
-            local lhs = keybind[2]
-            table.insert(keys_strs, string.format("%s: %s", mode, lhs))
-          end
-        end
-        if #keys_strs > 0 then
-          return string.format("%s (%s)", item.desc, table.concat(keys_strs, ", "))
-        end
+      local keys = get_command_keys(item)
+      if keys ~= nil then
+        return string.format("%s (%s)", item.desc, keys)
       end
 
       return item.desc

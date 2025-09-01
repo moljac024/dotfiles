@@ -1,3 +1,5 @@
+local util = import("./util")
+
 local M = {}
 
 local commands = {}
@@ -5,13 +7,11 @@ local commands = {}
 local function run_command(x)
   if type(x) == "function" then
     x()
+  elseif type(x) == "string" then
+    local cmd = vim.api.nvim_replace_termcodes(x, true, false, true)
+    vim.api.nvim_feedkeys(cmd, "t", true)
   else
-    if type(x) == "string" then
-      local cmd = vim.api.nvim_replace_termcodes(x, true, false, true)
-      vim.api.nvim_feedkeys(cmd, "t", true)
-    else
-      error("Invalid command type: " .. type(x))
-    end
+    error("Invalid command type: " .. type(x))
   end
 end
 
@@ -40,7 +40,28 @@ local function get_command_keys(item)
 end
 
 M.add_commands = function(cmds)
-  commands = vim.list_extend(commands, cmds)
+  for _, item in ipairs(cmds) do
+    local existing_index = util.find_index(commands, function(c)
+      return c.desc == item.desc
+    end)
+
+    if (existing_index ~= -1) then
+      local existing_item = commands[existing_index]
+      -- Merge keys
+      if type(item.keys) == "table" and #item.keys > 0 then
+        if type(existing_item.keys) ~= "table" then
+          existing_item.keys = {}
+        end
+        for _, keybind in ipairs(item.keys) do
+          if not util.includes(existing_item.keys, keybind) then
+            table.insert(existing_item.keys, keybind)
+          end
+        end
+      end
+    else
+      table.insert(commands, item)
+    end
+  end
 end
 
 M.open_command_picker = function()

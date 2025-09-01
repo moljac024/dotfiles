@@ -7,6 +7,7 @@ return {
       require('mini.ai').setup()
       require('mini.comment').setup()
       require('mini.icons').setup()
+      require('mini.diff').setup()
       require('mini.pick').setup({
         mappings = {
           move_down = '<C-j>',

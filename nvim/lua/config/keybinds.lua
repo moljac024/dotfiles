@@ -36,7 +36,6 @@ vim.keymap.set({ "n" }, { "<leader>1", "<A-1>" }, "<c-w>o", { desc = "Close othe
 -- Map "U" to additional redo, like in helix
 vim.keymap.set({ "n" }, "U", "<C-r>")
 
-
 -- Tabs
 vim.keymap.set("n", "<leader>tk", "<CMD>tabclose<CR>", { desc = "Close tab", commander = {} })
 vim.keymap.set("n", "<leader>tK", "<CMD>tabonly<CR>", { desc = "Close other tabs", commander = {} })

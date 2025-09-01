@@ -6,10 +6,6 @@ vim.keymap.set("n", "<leader><leader>", c.open_command_picker, { desc = "Run com
 
 -- Commands
 c.add_commands({
-  {
-    desc = "Quit/Exit",
-    cmd = "<CMD>qall!<CR>",
-  },
   -- Buffers
   {
     desc = "Kill current buffer",
@@ -47,5 +43,10 @@ c.add_commands({
     cmd = function()
       util.copy_relative_file_path_of_active_buffer()
     end,
+  },
+  -- Quit, closing all windows
+  {
+    desc = "Quit/Exit",
+    cmd = "<CMD>qall!<CR>",
   },
 })

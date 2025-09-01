@@ -1,4 +1,3 @@
-local c = require("lib.command")
 local lualine_theme = "auto"
 
 return {

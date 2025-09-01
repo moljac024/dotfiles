@@ -10,7 +10,6 @@ local terminal = import("./terminal")
 local dev = import("./dev")
 
 local ai = import("./ai")
-local copilot = import("./copilot")
 
 return {
   base,
@@ -25,5 +24,4 @@ return {
   dev,
 
   ai,
-  copilot,
 }

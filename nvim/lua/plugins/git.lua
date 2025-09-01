@@ -8,9 +8,6 @@ return {
       local gitsigns = require("gitsigns")
       gitsigns.setup()
 
-      vim.keymap.set("n", "<leader>g", "<CMD>Gitsigns blame_line<CR>",
-        { desc = "Hover git blame for current line", commander = {} })
-
       c.add_commands({
         {
           desc = "Toggle git blame on cursor line",

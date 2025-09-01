@@ -75,37 +75,13 @@ M.patch_keymap_set = function()
     local rhs = args[3]
     local opts = args[4] or {}
 
-    if vim.islist(lhs) then
-      -- Loop through all rhs and apply the same opts
-      for _, l in ipairs(lhs) do
-        patched_keymap_set(modes, l, rhs, opts)
-      end
-
-      return
-    end
-
-    -- Which key integration
-    local has_which_key, which_key = pcall(require, "which-key")
-    local should_configure_which_key = has_which_key
-        and type(opts.which_key) == "table"
-        and type(opts.which_key.keys) == "string"
-        and opts.which_key.keys ~= ""
-
-    if should_configure_which_key then
-      local original_rhs = rhs
-      rhs = function()
-        local which_key_show_args = vim.deepcopy(opts.which_key)
-        which_key.show(which_key_show_args)
-
-        return original_rhs()
-      end
-      -- Remove extra keys from opts
-      opts.which_key = nil
-    end
+    -- Should add command?
+    local should_add_command =
+        type(opts.desc) == 'string'
+        and opts.desc ~= ""
+        and type(opts.commander) == "table"
 
     -- Add command
-    local should_add_command = type(opts.desc) == 'string' and opts.desc ~= "" and type(opts.commander) == "table"
-
     if should_add_command then
       M.add_commands({
         {

@@ -51,7 +51,8 @@ return {
       vim.keymap.set("n", "K", function()
         -- No op
       end)
-      vim.keymap.set("n", { "<leader>k", "K" }, hover.hover, { desc = "Show docs for item under cursor (hover)" })
+      vim.keymap.set("n", "<leader>k", hover.hover, { desc = "Show docs for item under cursor (hover)" })
+      vim.keymap.set("n", "K", hover.hover, { desc = "Show docs for item under cursor (hover)" })
     end,
   },
   { 'kosayoda/nvim-lightbulb' },

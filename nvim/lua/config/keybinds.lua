@@ -28,10 +28,10 @@ vim.keymap.set("v", "Q", "gw", { desc = "Format selected text", commander = {} }
 vim.keymap.set("n", "<C-c>", "<CMD>noh<CR>", { desc = "Clear search highlight", commander = {} })
 
 -- Window splits
-vim.keymap.set({ "n" }, { "<leader>2", "<A-2>" }, "<CMD>sp<CR>", { desc = "Split window horizontally", commander = {} })
-vim.keymap.set({ "n" }, { "<leader>3", "<A-3>" }, "<CMD>vsp<CR>", { desc = "Split window vertically", commander = {} })
-vim.keymap.set({ "n" }, { "<leader>4", "<A-4>" }, "<c-w>c", { desc = "Close current window", commander = {} })
-vim.keymap.set({ "n" }, { "<leader>1", "<A-1>" }, "<c-w>o", { desc = "Close other windows", commander = {} })
+vim.keymap.set("n", "<A-2>", "<CMD>sp<CR>", { desc = "Split window horizontally", commander = {} })
+vim.keymap.set("n", "<A-3>", "<CMD>vsp<CR>", { desc = "Split window vertically", commander = {} })
+vim.keymap.set("n", "<A-4>", "<c-w>c", { desc = "Close current window", commander = {} })
+vim.keymap.set("n", "<A-1>", "<c-w>o", { desc = "Close other windows", commander = {} })
 
 -- Map "U" to additional redo, like in helix
 vim.keymap.set({ "n" }, "U", "<C-r>")
@@ -40,5 +40,5 @@ vim.keymap.set({ "n" }, "U", "<C-r>")
 vim.keymap.set("n", "<leader>tk", "<CMD>tabclose<CR>", { desc = "Close tab", commander = {} })
 vim.keymap.set("n", "<leader>tK", "<CMD>tabonly<CR>", { desc = "Close other tabs", commander = {} })
 vim.keymap.set("n", "<leader>tn", "<CMD>tabnew<CR>", { desc = "New tab", commander = {} })
-vim.keymap.set({ "n" }, "<leader>th", "<CMD>tabprevious<CR>", { desc = "Previous tab", })
-vim.keymap.set({ "n" }, "<leader>tl", "<CMD>tabnext<CR>", { desc = "Next tab", })
+vim.keymap.set("n", "<leader>th", "<CMD>tabprevious<CR>", { desc = "Previous tab", })
+vim.keymap.set("n", "<leader>tl", "<CMD>tabnext<CR>", { desc = "Next tab", })

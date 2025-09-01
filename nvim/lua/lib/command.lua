@@ -22,8 +22,6 @@ local function get_command_keys(item)
     for _, keybind in ipairs(item.keys) do
       if type(keybind) == "table" and #keybind == 2 then
         local mode = keybind[1]
-
-        -- if mode is table, join all elems with comma
         if type(mode) == "table" then
           mode = table.concat(mode, ", ")
         end
@@ -32,8 +30,9 @@ local function get_command_keys(item)
         table.insert(keys_strs, string.format("[%s] %s", mode, lhs))
       end
     end
+
     if #keys_strs > 0 then
-      return table.concat(keys_strs, ", ")
+      return table.concat(keys_strs, " | ")
     end
 
     return nil

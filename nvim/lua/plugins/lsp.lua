@@ -170,6 +170,11 @@ return {
                 MiniExtra.pickers.lsp({ scope = 'references' })
               end,
               { buffer = 0, desc = "Go to definition(s)" })
+            -- Open diagnostics picker
+            vim.keymap.set("n", "<leader>d", function()
+                MiniExtra.pickers.diagnostic()
+              end,
+              { buffer = 0, desc = "Open diagnostics picker", })
           end
 
           local has_telescope, telescope_builtin = pcall(require, "telescope.builtin")

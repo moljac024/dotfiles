@@ -17,10 +17,4 @@ return {
       })
     end,
   },
-  -- Choose nerd font icon
-  {
-    "2kabhishek/nerdy.nvim",
-    cmd = "Nerdy",
-  },
-
 }

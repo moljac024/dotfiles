@@ -2,8 +2,6 @@
 -- Keybindings
 -- ############################################################################
 
-local c = require("lib.command")
-
 -- Basic movement keybinds, these make navigating splits easy for me
 vim.keymap.set({ "n", "i" }, "<A-j>", "<c-c><c-w><c-j>", { desc = "Focus window down" })
 vim.keymap.set({ "n", "i" }, "<A-k>", "<c-c><c-w><c-k>", { desc = "Focus window up" })
@@ -38,39 +36,6 @@ vim.keymap.set({ "n" }, { "<leader>1", "<A-1>" }, "<c-w>o", { desc = "Close othe
 -- Map "U" to additional redo, like in helix
 vim.keymap.set({ "n" }, "U", "<C-r>")
 
--- Buffers
-c.add_command({
-  {
-    desc = "Kill current buffer",
-    -- cmd = "<CMD>bw<CR>",
-    cmd = function()
-      Snacks.bufdelete()
-    end,
-  },
-  {
-    desc = "Kill current buffer (force)",
-    -- cmd = "<CMD>bw!<CR>",
-    cmd = function()
-      Snacks.bufdelete({ force = true })
-    end,
-  },
-  {
-    desc = "Save current buffer",
-    cmd = "<CMD>w<CR>"
-  },
-  {
-    desc = "Save all buffers",
-    cmd = "<CMD>wa<CR>"
-  },
-  {
-    desc = "Refresh current buffer",
-    cmd = "<CMD>e<CR>"
-  },
-  {
-    desc = "Refresh current buffer (force)",
-    cmd = "<CMD>e!<CR>"
-  },
-})
 
 -- Tabs
 vim.keymap.set("n", "<leader>tk", "<CMD>tabclose<CR>", { desc = "Close tab", commander = {} })

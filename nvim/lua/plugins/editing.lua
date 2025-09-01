@@ -129,7 +129,7 @@ return {
     init = function()
       local tidy = require("tidy")
 
-      c.add_command({
+      c.add_commands({
         {
           desc = "Toggle tidy",
           cmd = tidy.toggle
@@ -138,8 +138,6 @@ return {
           desc = "Format file",
           cmd = tidy.toggle
         },
-      }, {
-        cat = "tidy"
       })
     end,
   },

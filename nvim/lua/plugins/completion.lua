@@ -2,6 +2,7 @@ return {
   {
     "hrsh7th/nvim-cmp",
     lazy = false,
+    -- enabled = false,
     priority = 100,
     dependencies = {
       "hrsh7th/cmp-path",
@@ -29,12 +30,12 @@ return {
       end, { "i", "c" })
 
       local up_mapping = cmp.mapping(function(fallback)
-        local function selectPrev()
+        local function select_prev()
           cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
         end
 
         if cmp.visible() then
-          selectPrev()
+          select_prev()
         else
           fallback()
         end

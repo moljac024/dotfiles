@@ -1,6 +1,8 @@
 {
   "diagnostics.globals": [
-    "import",
-    "Snacks"
+    "Snacks",
+    "MiniPick",
+    "MiniExtra",
+    "import"
   ]
 }

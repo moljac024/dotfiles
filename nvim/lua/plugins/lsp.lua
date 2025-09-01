@@ -58,7 +58,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "nvim-telescope/telescope.nvim",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -138,21 +137,51 @@ return {
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
-          local has_telescope, telescope_builtin = pcall(require, "telescope.builtin")
           local bufnr = args.buf
           local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
-
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 
+          if MiniExtra ~= nil then
+            -- Go to implementation
+            vim.keymap.set(
+              "n",
+              "gi", function()
+                MiniExtra.pickers.lsp({ scope = 'implementation' })
+              end,
+              { buffer = 0, desc = "Go to implementation" })
+            -- Go to definition(s)
+            vim.keymap.set(
+              "n",
+              "gd", function()
+                MiniExtra.pickers.lsp({ scope = 'definition' })
+              end,
+              { buffer = 0, desc = "Go to definition(s)" })
+            -- Go to type definition
+            vim.keymap.set(
+              "n",
+              "gd", function()
+                MiniExtra.pickers.lsp({ scope = 'type_definition' })
+              end,
+              { buffer = 0, desc = "Go to type definition" })
+            -- Go to references
+            vim.keymap.set(
+              "n",
+              "gr", function()
+                MiniExtra.pickers.lsp({ scope = 'references' })
+              end,
+              { buffer = 0, desc = "Go to definition(s)" })
+          end
+
+          local has_telescope, telescope_builtin = pcall(require, "telescope.builtin")
           if has_telescope then
             vim.keymap.set(
               "n",
-              "gd",
+              "gi",
               telescope_builtin.lsp_implementations,
               { buffer = 0, desc = "Go to implementation(s)" }
             )
             vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0, desc = "Go to reference(s)" })
-            vim.keymap.set("n", "gD", telescope_builtin.lsp_definitions, { buffer = 0, desc = "Go to definition(s)" })
+            vim.keymap.set("n", "gd", telescope_builtin.lsp_definitions, { buffer = 0, desc = "Go to definition(s)" })
             vim.keymap.set(
               "n",
               "gt",

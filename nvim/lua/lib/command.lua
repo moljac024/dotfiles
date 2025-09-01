@@ -1,28 +1,63 @@
 local M = {}
 
-M.add_command = function(...)
-  local args = { ... }
-  local cmds = args[1] or {}
-  local props = args[2] or {}
-  local has_commander, commander = pcall(require, "commander")
+local commands = {}
 
-  if not has_commander then
-    return
+local function run_command(x)
+  if type(x) == "function" then
+    x()
+  else
+    if type(x) == "string" then
+      local cmd = vim.api.nvim_replace_termcodes(x, true, false, true)
+      vim.api.nvim_feedkeys(cmd, "t", true)
+    else
+      error("Invalid command type: " .. type(x))
+    end
   end
+end
 
-  -- Commander is installed
-  commander.add(
-    cmds,
-    {
-      set = false,
-      show = true,
-      cat = props.cat
-    })
+M.add_commands = function(cmds)
+  commands = vim.list_extend(commands, cmds)
+end
+
+M.open_command_picker = function()
+  vim.ui.select(commands, {
+    prompt = 'Run command',
+    format_item = function(item)
+      -- If item keys is a non-empty table of keybinds, show those in parens next to desc
+      if type(item.keys) == "table" and #item.keys > 0 then
+        local keys_strs = {}
+        for _, keybind in ipairs(item.keys) do
+          if type(keybind) == "table" and #keybind == 2 then
+            local mode = keybind[1]
+
+            -- if mode is table, join all elems with comma
+            if type(mode) == "table" then
+              mode = table.concat(mode, ", ")
+            end
+
+            local lhs = keybind[2]
+            table.insert(keys_strs, string.format("%s: %s", mode, lhs))
+          end
+        end
+        if #keys_strs > 0 then
+          return string.format("%s (%s)", item.desc, table.concat(keys_strs, ", "))
+        end
+      end
+
+      return item.desc
+    end,
+  }, function(item)
+    if (item == nil) then
+      return
+    end
+
+    run_command(item.cmd)
+  end)
 end
 
 -- Monkey patch keymap set so that it supports additional functionality and
 -- integration with plugins
-M.patch_keymap_set_for_commander = function()
+M.patch_keymap_set = function()
   local original_vim_keymap_set = vim.keymap.set
 
   local function patched_keymap_set(...)
@@ -60,15 +95,11 @@ M.patch_keymap_set_for_commander = function()
       opts.which_key = nil
     end
 
-    -- Commander integration
-    local has_commander, commander = pcall(require, "commander")
-    local should_add_to_commander = has_commander
-        and type(opts.desc) == "string"
-        and opts.desc ~= ""
-        and type(opts.commander) == "table"
+    -- Add command
+    local should_add_command = type(opts.desc) == 'string' and opts.desc ~= "" and type(opts.commander) == "table"
 
-    if should_add_to_commander then
-      commander.add({
+    if should_add_command then
+      M.add_commands({
         {
           keys = {
             { modes, lhs },
@@ -76,10 +107,6 @@ M.patch_keymap_set_for_commander = function()
           desc = opts.desc or "",
           cmd = rhs,
         },
-      }, {
-        set = false,
-        show = true,
-        cat = opts.commander.cat,
       })
     end
     -- Remove extra keys from opts

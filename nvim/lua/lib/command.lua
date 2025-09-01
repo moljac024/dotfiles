@@ -113,7 +113,7 @@ M.patch_keymap_set = function()
           keys = {
             { modes, lhs },
           },
-          desc = opts.desc or "",
+          desc = opts.desc,
           cmd = rhs,
         },
       })

@@ -64,8 +64,3 @@ vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
   pattern = "*",
   command = 'silent! normal! g`"zv',
 })
-
--- Neovide specific settings
-if vim.g.neovide then
-  require("config.neovide")
-end

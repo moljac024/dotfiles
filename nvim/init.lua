@@ -5,7 +5,7 @@
 -- Allow relative imports
 require("lib.import")
 
--- Monkey patch vim's keybind.set so that it supports integration with commander
+-- Monkey patch vim's keybind.set
 require("lib.command").patch_keymap_set()
 
 -- ############################################################################

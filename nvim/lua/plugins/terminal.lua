@@ -9,11 +9,9 @@ return {
       local Terminal = require("toggleterm.terminal").Terminal
       toggleterm.setup({})
 
-      vim.keymap.set("t", "<C-g>n", [[<C-\><C-n>]], { noremap = true, desc = "Go to normal mode" })
-      vim.keymap.set("t", "<C-g>g", [[<C-\><C-g>]],
-        { noremap = true, desc = "Send CTRL-G to terminal" })
-      vim.keymap.set("t", "<C-g><C-g>", [[<C-\><C-g>]],
-        { noremap = true, desc = "Send CTRL-G to terminal" })
+      vim.keymap.set("t", "<C-q>", [[<C-\><C-n>]], { noremap = true, desc = "Go to normal mode" })
+      -- vim.keymap.set("t", "<C-q><C-q>", [[<C-\><C-q>]],
+      --   { noremap = true, desc = "Send CTRL-Q to terminal" })
 
       local float_opts = {
         row = 1,

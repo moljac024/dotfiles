@@ -1,8 +1,13 @@
 theme = catppuccin-frappe.conf
+
+maximize = true
 font-family = Zed Mono NF
 font-size = 16
-background-blur = 0
-# background-opacity = 0.95
+#background-blur = 25
+#background-opacity = 0.95
 
 # window-decoration = client
 # custom-shader = shaders/bettercrt.glsl
+
+# Keybinds
+config-file = "keybinds"

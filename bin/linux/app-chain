@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Generic chain runner: pick first available app from $APP_CHAIN
+# Example:
+#   APP_CHAIN="nvim:code -w:$EDITOR" ./app-chain.sh file.txt
+
+if [[ -z "${APP_CHAIN:-}" ]]; then
+  echo "APP_CHAIN not set" >&2
+  exit 1
+fi
+
+# Save args early
+args=("$@")
+
+is_command() { command -v "$1" >/dev/null 2>&1; }
+
+IFS=':' read -r -a candidates <<<"$APP_CHAIN"
+
+for entry in "${candidates[@]}"; do
+  [[ -z "${entry// }" ]] && continue
+
+  # shellcheck disable=SC2206
+  cmd=( $entry )
+
+  if is_command "${cmd[0]}"; then
+    exec "${cmd[@]}" "${args[@]}"
+  fi
+done
+
+echo "No suitable command found from APP_CHAIN: $APP_CHAIN" >&2
+exit 127

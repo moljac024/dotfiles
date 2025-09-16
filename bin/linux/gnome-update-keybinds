@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eo pipefail
+
+gsettings set org.gnome.shell.keybindings switch-to-application-5 "['<Super>5', '<Super>q']"
+gsettings set org.gnome.shell.keybindings switch-to-application-6 "['<Super>6', '<Super>w']"
+gsettings set org.gnome.shell.keybindings switch-to-application-7 "['<Super>7', '<Super>e']"
+gsettings set org.gnome.shell.keybindings switch-to-application-8 "['<Super>8', '<Super>d']"
+gsettings set org.gnome.shell.keybindings switch-to-application-9 "['<Super>9', '<Super>f']"
+
+gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4', '<Shift><Super>q']"

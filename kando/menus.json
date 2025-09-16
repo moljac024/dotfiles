@@ -452,20 +452,22 @@
                   {
                     "type": "uri",
                     "data": {
-                      "uri": "https://reddit.com"
+                      "uri": "https://youtube.com"
                     },
-                    "name": "Reddit",
-                    "icon": "reddit",
-                    "iconTheme": "simple-icons"
+                    "name": "Youtube",
+                    "icon": "youtube",
+                    "iconTheme": "simple-icons",
+                    "angle": 30
                   },
                   {
                     "type": "uri",
                     "data": {
-                      "uri": "https://instagram.com"
+                      "uri": "https://reddit.com"
                     },
-                    "name": "Instagram",
-                    "icon": "instagram",
-                    "iconTheme": "simple-icons"
+                    "name": "Reddit",
+                    "icon": "reddit",
+                    "iconTheme": "simple-icons",
+                    "angle": 90
                   },
                   {
                     "type": "uri",
@@ -474,16 +476,8 @@
                     },
                     "name": "Gmail",
                     "icon": "gmail",
-                    "iconTheme": "simple-icons"
-                  },
-                  {
-                    "type": "uri",
-                    "data": {
-                      "uri": "https://youtube.com"
-                    },
-                    "name": "Youtube",
-                    "icon": "youtube",
-                    "iconTheme": "simple-icons"
+                    "iconTheme": "simple-icons",
+                    "angle": 270
                   }
                 ],
                 "angle": 0
@@ -564,5 +558,14 @@
       }
     }
   ],
-  "templates": []
+  "collections": [
+    {
+      "name": "Favorites",
+      "icon": "favorite",
+      "iconTheme": "material-symbols-rounded",
+      "tags": [
+        "favs"
+      ]
+    }
+  ]
 }

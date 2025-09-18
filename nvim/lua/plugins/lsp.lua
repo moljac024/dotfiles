@@ -16,19 +16,20 @@ return {
     config = function()
       local hover = require("hover")
 
-      hover.setup({
-        init = function()
-          -- Require providers
-          require("hover.providers.lsp")
-          -- require('hover.providers.gh')
-          -- require('hover.providers.gh_user')
-          -- require('hover.providers.jira')
-          require("hover.providers.dap")
-          require("hover.providers.fold_preview")
-          require("hover.providers.diagnostic")
-          require("hover.providers.man")
-          require("hover.providers.dictionary")
-        end,
+      hover.config({
+        providers = {
+          'hover.providers.lsp',
+          'hover.providers.diagnostic',
+          'hover.providers.dap',
+          'hover.providers.man',
+          'hover.providers.dictionary',
+          -- Optional, disabled by default:
+          -- 'hover.providers.gh',
+          -- 'hover.providers.gh_user',
+          -- 'hover.providers.jira',
+          'hover.providers.fold_preview',
+          -- 'hover.providers.highlight',
+        },
         preview_opts = {
           border = "single",
         },
@@ -43,11 +44,8 @@ return {
       })
 
       -- Setup keymaps
-      vim.keymap.set("n", "K", function()
-        -- No op
-      end)
-      vim.keymap.set("n", "<leader>k", hover.hover, { desc = "Show docs for item under cursor (hover)" })
-      vim.keymap.set("n", "K", hover.hover, { desc = "Show docs for item under cursor (hover)" })
+      vim.keymap.set("n", "<leader>k", hover.open, { desc = "Show docs for item under cursor (hover)" })
+      vim.keymap.set("n", "K", hover.open, { desc = "Show docs for item under cursor (hover)" })
     end,
   },
   { 'kosayoda/nvim-lightbulb' },
@@ -55,20 +53,19 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "WhoIsSethDaniel/mason-tool-installer.nvim",
       -- JSON schemas
       "b0o/SchemaStore.nvim",
     },
     config = function()
+      require("mason").setup()
+      local registry = require("mason-registry")
+
       local capabilities = nil
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
       end
 
-      local lspconfig = require("lspconfig")
-
-      local servers = {
+      local configs = {
         jsonls = {
           settings = {
             json = {
@@ -103,28 +100,40 @@ return {
         pyright = {},
         rust_analyzer = {},
         gopls = {},
-        fennel_ls = {
-          manual_install = true
-        }
       }
 
-      local servers_to_install = vim.tbl_filter(function(key)
-        local t = servers[key]
-        local should_install = not t.manual_install
-        t.should_install = nil
-        return should_install
-      end, vim.tbl_keys(servers))
+      local tools_to_install = {
+        "bash-language-server",
+        "lua-language-server",
 
-      require("mason").setup()
-      require("mason-tool-installer").setup({ ensure_installed = servers_to_install })
-      require("mason-lspconfig").setup()
+        "rust-analyzer",
+        "pyright", -- Python
 
-      for name, config in pairs(servers) do
+        "elixir-ls",
+        "gopls",
+
+        -- Web
+        "json-lsp",
+        "yaml-language-server",
+        "css-lsp",
+        "eslint-lsp",
+        "tailwindcss-language-server",
+        "vtsls", -- Typescript
+      }
+
+      for _, tool in ipairs(tools_to_install) do
+        if not registry.is_installed(tool) then
+          registry.get_package(tool):install()
+        end
+      end
+
+      for name, config in pairs(configs) do
         config = vim.tbl_deep_extend("force", {}, {
           capabilities = capabilities,
         }, config)
 
-        lspconfig[name].setup(config)
+        vim.lsp.config(name, config)
+        vim.lsp.enable(name)
       end
 
       local disable_semantic_tokens = {
@@ -155,7 +164,7 @@ return {
             -- Go to type definition
             vim.keymap.set(
               "n",
-              "gd", function()
+              "gt", function()
                 MiniExtra.pickers.lsp({ scope = 'type_definition' })
               end,
               { buffer = 0, desc = "Go to type definition" })
@@ -171,27 +180,6 @@ return {
                 MiniExtra.pickers.diagnostic()
               end,
               { buffer = 0, desc = "Open diagnostics picker", })
-          end
-
-          local has_telescope, telescope_builtin = pcall(require, "telescope.builtin")
-          if has_telescope then
-            vim.keymap.set(
-              "n",
-              "gi",
-              telescope_builtin.lsp_implementations,
-              { buffer = 0, desc = "Go to implementation(s)" }
-            )
-            vim.keymap.set("n", "gr", telescope_builtin.lsp_references, { buffer = 0, desc = "Go to reference(s)" })
-            vim.keymap.set("n", "gd", telescope_builtin.lsp_definitions, { buffer = 0, desc = "Go to definition(s)" })
-            vim.keymap.set(
-              "n",
-              "gt",
-              telescope_builtin.lsp_type_definitions,
-              { buffer = 0, desc = "Go to type definition(s)" }
-            )
-
-            vim.keymap.set("n", "<leader>d", telescope_builtin.diagnostics,
-              { buffer = 0, desc = "Open diagnostics", })
           end
 
           vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })

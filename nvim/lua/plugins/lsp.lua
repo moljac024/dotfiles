@@ -36,16 +36,23 @@ return {
         -- Whether the contents of a currently open hover window should be moved
         -- to a :h preview-window when pressing the hover keymap.
         preview_window = false,
-        title = false,
+        title = true,
         mouse_providers = {
-          "LSP",
+          "hover.providers.lsp",
         },
         mouse_delay = 1000,
       })
 
       -- Setup keymaps
-      vim.keymap.set("n", "<leader>k", hover.open, { desc = "Show docs for item under cursor (hover)" })
-      vim.keymap.set("n", "K", hover.open, { desc = "Show docs for item under cursor (hover)" })
+      vim.keymap.set("n", "K", function()
+        if vim.bo.filetype ~= 'help' then
+          hover.open()
+        else
+          vim.api.nvim_feedkeys("K", 'ni', true)
+        end
+      end, { desc = "Hover (open)" })
+      vim.keymap.set("n", "<leader>k", hover.open, { desc = "Hover (open)" })
+      vim.keymap.set("n", "gK", hover.enter, { desc = "Hover (enter)" })
     end,
   },
   { 'kosayoda/nvim-lightbulb' },

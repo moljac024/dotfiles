@@ -19,6 +19,8 @@ return {
       "b0o/SchemaStore.nvim",    -- JSON and YAML schemas
     },
     config = function()
+      local schemastore = require("schemastore")
+
       local capabilities = nil
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -28,7 +30,7 @@ return {
         jsonls = {
           settings = {
             json = {
-              schemas = require("schemastore").json.schemas(),
+              schemas = schemastore.json.schemas(),
               validate = { enable = true },
             },
           },
@@ -43,7 +45,7 @@ return {
                 -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
                 url = "",
               },
-              schemas = require("schemastore").yaml.schemas(),
+              schemas = schemastore.yaml.schemas(),
             },
           },
         },
@@ -138,7 +140,7 @@ return {
               "gr", function()
                 MiniExtra.pickers.lsp({ scope = 'references' })
               end,
-              { buffer = 0, desc = "Go to definition(s)" })
+              { buffer = 0, desc = "Go to references" })
             -- Open diagnostics picker
             vim.keymap.set("n", "<leader>d", function()
                 MiniExtra.pickers.diagnostic()
@@ -169,6 +171,8 @@ return {
           end,
         })
       end
+
+      --
     end,
   },
 }

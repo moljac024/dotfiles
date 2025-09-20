@@ -59,14 +59,10 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "williamboman/mason.nvim",
-      -- JSON schemas
-      "b0o/SchemaStore.nvim",
+      "williamboman/mason.nvim", -- LSP tool installer
+      "b0o/SchemaStore.nvim", -- JSON and YAML schemas
     },
     config = function()
-      require("mason").setup()
-      local registry = require("mason-registry")
-
       local capabilities = nil
       if pcall(require, "cmp_nvim_lsp") then
         capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -98,16 +94,20 @@ return {
         bashls = {},
         lua_ls = {},
 
+        -- tsserver = {} -- Default typescript LSP,
+        vtsls = {}, -- Alternative typescript LSP
         cssls = {},
         tailwindcss = {},
         eslint = {},
-        -- tsserver = {} -- Default typescript LSP,
-        vtsls = {}, -- Alternative typescript LSP
 
         pyright = {},
         rust_analyzer = {},
         gopls = {},
       }
+
+      -- Setup mason
+      require("mason").setup()
+      local registry = require("mason-registry")
 
       local tools_to_install = {
         "bash-language-server",
@@ -133,6 +133,7 @@ return {
           registry.get_package(tool):install()
         end
       end
+      -- End mason setup
 
       for name, config in pairs(configs) do
         config = vim.tbl_deep_extend("force", {}, {
@@ -150,7 +151,7 @@ return {
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
           local bufnr = args.buf
-          local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid client")
+          local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid lsp client")
           vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
 
           if MiniExtra ~= nil then
@@ -199,6 +200,7 @@ return {
         end,
       })
 
+      -- Conform integration
       local has_conform, conform = pcall(require, "conform")
       if has_conform then
         vim.api.nvim_create_autocmd("BufWritePre", {

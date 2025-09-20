@@ -11,56 +11,12 @@ return {
       },
     },
   },
-  {
-    "lewis6991/hover.nvim",
-    config = function()
-      local hover = require("hover")
-
-      hover.config({
-        providers = {
-          'hover.providers.lsp',
-          'hover.providers.diagnostic',
-          'hover.providers.dap',
-          'hover.providers.man',
-          'hover.providers.dictionary',
-          -- Optional, disabled by default:
-          -- 'hover.providers.gh',
-          -- 'hover.providers.gh_user',
-          -- 'hover.providers.jira',
-          'hover.providers.fold_preview',
-          -- 'hover.providers.highlight',
-        },
-        preview_opts = {
-          border = "single",
-        },
-        -- Whether the contents of a currently open hover window should be moved
-        -- to a :h preview-window when pressing the hover keymap.
-        preview_window = false,
-        title = true,
-        mouse_providers = {
-          "hover.providers.lsp",
-        },
-        mouse_delay = 1000,
-      })
-
-      -- Setup keymaps
-      vim.keymap.set("n", "K", function()
-        if vim.bo.filetype ~= 'help' then
-          hover.open()
-        else
-          vim.api.nvim_feedkeys("K", 'ni', true)
-        end
-      end, { desc = "Hover (open)" })
-      vim.keymap.set("n", "<leader>k", hover.open, { desc = "Hover (open)" })
-      vim.keymap.set("n", "gK", hover.enter, { desc = "Hover (enter)" })
-    end,
-  },
   { 'kosayoda/nvim-lightbulb' },
   {
     "neovim/nvim-lspconfig",
     dependencies = {
       "williamboman/mason.nvim", -- LSP tool installer
-      "b0o/SchemaStore.nvim", -- JSON and YAML schemas
+      "b0o/SchemaStore.nvim",    -- JSON and YAML schemas
     },
     config = function()
       local capabilities = nil

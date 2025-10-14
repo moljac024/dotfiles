@@ -3,11 +3,19 @@ theme = catppuccin-frappe.conf
 maximize = true
 font-family = Zed Mono NF
 font-size = 16
-#background-blur = 25
-#background-opacity = 0.95
-
+gtk-titlebar-style=tabs
 # window-decoration = client
 # custom-shader = shaders/bettercrt.glsl
+
+# Background
+#background-blur = 25
+#background-opacity = 0.95
+background-image = "~/dotfiles/backgrounds/terminal/main/firewatch1.png"
+background-image-opacity = 0.05
+background-image-position = bottom-right
+background-image-fit = cover
+
+quick-terminal-size = 50%
 
 # Keybinds
 config-file = "keybinds"

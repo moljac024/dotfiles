@@ -13,8 +13,9 @@ window-show-tab-bar = never
 # custom-shader = shaders/bettercrt.glsl
 
 # Background
-background-opacity = 0.96
+background-opacity = 0.95
 config-file = "background-image"
+config-file = "?background-image-override"
 
 quick-terminal-size = 65%
 

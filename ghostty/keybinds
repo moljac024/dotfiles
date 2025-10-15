@@ -8,6 +8,7 @@ keybind = ctrl+shift+l=clear_screen
 # Navigating tabs
 keybind = ctrl+shift+h=previous_tab
 keybind = ctrl+shift+l=next_tab
+keybind = ctrl+shift+o=toggle_tab_overview
 
 # Scrolling
 keybind = ctrl+shift+j=scroll_page_down

@@ -47,6 +47,10 @@ return {
     end,
   },
   {
+    "MeanderingProgrammer/render-markdown.nvim",
+    ft = { "markdown", "codecompanion" }
+  },
+  {
     "hedyhli/outline.nvim",
     config = function()
       -- Example mapping to toggle outline

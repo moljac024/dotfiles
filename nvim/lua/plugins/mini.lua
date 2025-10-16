@@ -15,6 +15,12 @@ return {
         }
       })
 
+      local diff = require("mini.diff")
+      diff.setup({
+        -- Disabled by default
+        source = diff.gen_source.none(),
+      })
+
       local function override_select()
         ---@diagnostic disable-next-line: duplicate-set-field
         vim.ui.select = function(items, opts, on_choice)

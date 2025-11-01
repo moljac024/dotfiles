@@ -37,6 +37,7 @@ USAGE
 INCLUDES=( "**/*.{jpg,jpeg,png}" )
 EXCLUDES=()
 HIDDEN=0
+SHUFFLE=0
 MAX_DEPTH=0
 FOLLOW=1
 PROMPT="files> "
@@ -53,6 +54,7 @@ while (($#)); do
   case "$1" in
     -i|--include) INCLUDES+=("${2:?missing glob for --include}"); shift 2;;
     -x|--exclude|-I|--ignore) EXCLUDES+=("${2:?missing glob for --exclude}"); shift 2;;
+    -s|--shuffle) SHUFFLE=1; shift;;
     -H|--hidden) HIDDEN=1; shift;;
     -d|--max-depth) MAX_DEPTH="${2:?missing number for --max-depth}"; shift 2;;
     -L|--follow) FOLLOW=1; shift;;
@@ -116,10 +118,20 @@ make_label() {
 
 build_fzf_input() {
   local f label
-  for f in "${FILES[@]}"; do
-    label="$(make_label "$f")"
-    printf '%s\t%s\n' "$label" "$f"
-  done
+
+  if (( SHUFFLE )); then
+    # produce lines then shuffle
+    for f in "${FILES[@]}"; do
+      label="$(make_label "$f")"
+      printf '%s\t%s\n' "$label" "$f"
+    done | shuf
+  else
+    # normal ordering
+    for f in "${FILES[@]}"; do
+      label="$(make_label "$f")"
+      printf '%s\t%s\n' "$label" "$f"
+    done
+  fi
 }
 
 # ----- Picker (plain fzf: fuzzy type + arrows/hjkl + Enter/Esc) -----

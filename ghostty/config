@@ -1,8 +1,10 @@
-theme = catppuccin-frappe.conf
-
 maximize = true
+
+theme = catppuccin-frappe.conf
 font-family = Zed Mono NF
 font-size = 16
+
+quick-terminal-size = 65%
 
 # No window decorations
 window-decoration = none
@@ -13,11 +15,8 @@ window-show-tab-bar = never
 # custom-shader = shaders/bettercrt.glsl
 
 # Background
-background-opacity = 0.95
-config-file = "background-image"
-config-file = "?background-image-override"
-
-quick-terminal-size = 65%
+config-file = "background"
+config-file = "?background.extend"
 
 # Keybinds
 config-file = "keybinds"

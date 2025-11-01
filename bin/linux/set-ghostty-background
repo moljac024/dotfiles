@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 FILE_INPUT="${1:?usage: set-ghostty-background /path/to/image}"
-TARGET_FILE=$DOTFILES/ghostty/background-image-override
+TARGET_FILE=$DOTFILES/ghostty/background.extend
 
 # resolve to absolute path
 FILE_PATH="$(realpath -- "$FILE_INPUT")"

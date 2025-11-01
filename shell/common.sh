@@ -163,6 +163,8 @@ alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([c
 alias serve-spa="npx --yes http-server-spa"
 alias emacs="flatpak run org.gnu.emacs"
 
+alias pbg="pick-ghostty-background"
+
 if is_available nvim; then
   export_var EDITOR "nvim"
   export_var VISUAL "nvim"

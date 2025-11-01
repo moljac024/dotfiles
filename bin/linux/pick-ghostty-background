@@ -1,0 +1,6 @@
+#!/bin/bash
+set -Eeuo pipefail
+
+WALLPAPER_DIR=$DOTFILES/backgrounds/terminal
+
+exec filepick -q "$WALLPAPER_DIR" -e set-ghostty-background -e {} > /dev/null

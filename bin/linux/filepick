@@ -1,0 +1,184 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# filepick.sh — scan directories, fuzzy-pick a file, run a command with the path
+# Requires: fzf, ripgrep (rg), realpath
+
+VERSION="0.2.0"
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  filepick.sh [FLAGS] [DIR ...]
+  If no DIR is given, current directory is used.
+
+Flags:
+  -i, --include GLOB   Include glob (repeatable). Default: **/*.{jpg,jpeg,png}
+  -x, --exclude GLOB   Exclude glob (repeatable)
+  -H, --hidden         Include hidden files/dirs
+  -d, --max-depth N    Max recursion depth (0 = unlimited). Default: 0
+  -L, --follow         Follow symlinks (default)
+      --no-follow      Do not follow symlinks
+  -p, --prompt TEXT    Prompt for fzf. Default: "files> "
+  -e, --exec ARG       Exec argv mode (repeatable; '{}' replaced with file)
+      --shell CMD      Shell mode. '{}' replaced with file, then eval via bash -c
+  -q, --quiet          Suppress info logs
+  -V, --version        Print version
+
+Exit codes:
+  0  success
+  1  fatal error
+  2  no files found
+130  canceled (Esc/Ctrl-C in picker)
+USAGE
+}
+
+# Defaults
+INCLUDES=( "**/*.{jpg,jpeg,png}" )
+EXCLUDES=()
+HIDDEN=0
+MAX_DEPTH=0
+FOLLOW=1
+PROMPT="files> "
+QUIET=0
+EXEC_ARGS=()
+SHELL_CMD=""
+ROOTS=()
+
+log() { ((QUIET)) || printf '%s\n' "$*" >&2; }
+need() { command -v "$1" >/dev/null 2>&1 || { echo "error: missing dependency: $1" >&2; exit 1; }; }
+
+# ----- Arg parsing -----
+while (($#)); do
+  case "$1" in
+    -i|--include) INCLUDES+=("${2:?missing glob for --include}"); shift 2;;
+    -x|--exclude|-I|--ignore) EXCLUDES+=("${2:?missing glob for --exclude}"); shift 2;;
+    -H|--hidden) HIDDEN=1; shift;;
+    -d|--max-depth) MAX_DEPTH="${2:?missing number for --max-depth}"; shift 2;;
+    -L|--follow) FOLLOW=1; shift;;
+    --no-follow) FOLLOW=0; shift;;
+    -p|--prompt) PROMPT="${2:?missing text for --prompt}"; shift 2;;
+    -e|--exec) EXEC_ARGS+=("${2:?missing arg for --exec}"); shift 2;;
+    --shell) SHELL_CMD="${2:?missing command for --shell}"; shift 2;;
+    -q|--quiet) QUIET=1; shift;;
+    -V|--version) echo "filepick.sh v$VERSION"; exit 0;;
+    -h|--help) usage; exit 0;;
+    --) shift; break;;
+    -*) echo "error: unknown flag $1" >&2; usage; exit 1;;
+    *) ROOTS+=("$1"); shift;;
+  esac
+done
+if (($#)); then for x in "$@"; do ROOTS+=("$x"); done; fi
+((${#ROOTS[@]})) || ROOTS+=( "." )
+
+for dep in fzf rg realpath; do need "$dep"; done
+
+# ----- Build ripgrep command -----
+build_rg_cmd() {
+  local -a cmd=( rg --files )
+  ((HIDDEN)) && cmd+=( --hidden )
+  ((FOLLOW)) && cmd+=( --follow )
+  ((MAX_DEPTH>0)) && cmd+=( --max-depth "$MAX_DEPTH" )
+  for g in "${INCLUDES[@]}"; do cmd+=( -g "$g" ); done
+  for g in "${EXCLUDES[@]}"; do cmd+=( -g "!$g" ); done
+  cmd+=( "${ROOTS[@]}" )
+  printf '%q ' "${cmd[@]}"
+}
+
+# ----- Collect files (absolute paths) -----
+FILES=()
+collect_files() {
+  local rg_cmd; rg_cmd="$(build_rg_cmd)"
+  # shellcheck disable=SC2086
+  mapfile -t FILES < <( eval "$rg_cmd" | while IFS= read -r p; do realpath -- "$p"; done | sort -u )
+}
+
+# ----- Display label helpers -----
+make_label() {
+  local abs="$1"
+  if ((${#ROOTS[@]}==1)); then
+    local root; root="$(realpath -- "${ROOTS[0]}")"
+    local rel
+    if rel=$(realpath --relative-to="$root" -- "$abs" 2>/dev/null); then
+      printf '%s' "$rel"; return 0
+    fi
+  fi
+  local relcwd
+  if relcwd=$(realpath --relative-to="$PWD" -- "$abs" 2>/dev/null); then
+    case "$relcwd" in
+      ../*) basename -- "$abs" ;;
+      *)    printf '%s' "$relcwd" ;;
+    esac
+  else
+    basename -- "$abs"
+  fi
+}
+
+build_fzf_input() {
+  local f label
+  for f in "${FILES[@]}"; do
+    label="$(make_label "$f")"
+    printf '%s\t%s\n' "$label" "$f"
+  done
+}
+
+# ----- Picker (plain fzf: fuzzy type + arrows/hjkl + Enter/Esc) -----
+run_picker() {
+  local count="${#FILES[@]}"
+  local prompt; prompt="$(printf '%s (%d)> ' "$PROMPT" "$count")"
+  local sel
+  sel="$(
+    build_fzf_input | \
+    fzf \
+      --prompt="$prompt" \
+      --with-nth=1 --delimiter=$'\t' \
+      --height=80% --reverse \
+      --bind 'j:down,k:up,h:page-up,l:page-down' \
+      --expect=esc,ctrl-c \
+      --no-multi \
+      || true
+  )"
+  [[ -z "$sel" ]] && return 130
+  local last; last="$(printf '%s\n' "$sel" | tail -n 1)"
+  awk -F'\t' '{print $2}' <<<"$last"
+}
+
+# ----- Exec -----
+run_exec() {
+  local chosen="$1"
+  if ((${#EXEC_ARGS[@]}==0)) && [[ -z "$SHELL_CMD" ]]; then
+    printf '%s\n' "$chosen"; return 0
+  fi
+
+  if ((${#EXEC_ARGS[@]})); then
+    local replaced=0
+    local -a argv=()
+    for a in "${EXEC_ARGS[@]}"; do
+      if [[ "$a" == "{}" ]]; then argv+=( "$chosen" ); replaced=1; else argv+=( "$a" ); fi
+    done
+    ((replaced)) || argv+=( "$chosen" )
+    log "exec(argv): ${argv[*]}"
+    "${argv[@]}"
+    return $?
+  fi
+
+  local esc expanded
+  printf -v esc '%q' "$chosen"
+  expanded="${SHELL_CMD//'{}'/$esc}"
+  log "exec(shell): $expanded"
+  bash -c "$expanded"
+}
+
+# ----- Main -----
+main() {
+  log "scanning ${#ROOTS[@]} root(s) …"
+  collect_files
+  if ((${#FILES[@]}==0)); then echo "no files found" >&2; exit 2; fi
+  log "found ${#FILES[@]} file(s)"
+  local chosen
+  if ! chosen="$(run_picker)"; then exit 130; fi
+  [[ -z "$chosen" ]] && exit 130
+  run_exec "$chosen"
+}
+
+main "$@"

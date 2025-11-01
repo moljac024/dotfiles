@@ -1,0 +1,23 @@
+#!/bin/bash
+set -Eeuo pipefail
+
+FILE_INPUT="${1:?usage: set-ghostty-background /path/to/image}"
+TARGET_FILE=$DOTFILES/ghostty/background-image-override
+
+# resolve to absolute path
+FILE_PATH="$(realpath -- "$FILE_INPUT")"
+
+echo "background-image = $FILE_PATH" > "$TARGET_FILE"
+
+# kill -SIGUSR2 $(pgrep ghostty) >/dev/null 2>&1
+
+# Quietly notify Ghostty if it's running
+if command -v pkill >/dev/null 2>&1; then
+  pkill -x -SIGUSR2 ghostty >/dev/null 2>&1 || true
+else
+  if pids="$(pgrep -x ghostty)"; then
+    # Deliberate word-splitting to pass multiple PIDs; '--' avoids option confusion
+    # shellcheck disable=SC2086
+    kill -s SIGUSR2 -- $pids >/dev/null 2>&1 || true
+  fi
+fi

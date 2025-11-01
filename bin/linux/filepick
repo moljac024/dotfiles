@@ -126,6 +126,9 @@ build_fzf_input() {
 run_picker() {
   local count="${#FILES[@]}"
   local prompt; prompt="$(printf '%s (%d)> ' "$PROMPT" "$count")"
+
+  # We purposely do NOT bind plain h/j/k/l — they should be typed into the query.
+  # Navigation is only on Ctrl+hjkl (arrows still work).
   local sel
   sel="$(
     build_fzf_input | \
@@ -133,13 +136,23 @@ run_picker() {
       --prompt="$prompt" \
       --with-nth=1 --delimiter=$'\t' \
       --height=80% --reverse \
-      --bind 'j:down,k:up,h:page-up,l:page-down' \
+      --bind 'ctrl-j:down,ctrl-k:up,ctrl-h:page-up,ctrl-l:page-down' \
       --expect=esc,ctrl-c \
       --no-multi \
       || true
   )"
-  [[ -z "$sel" ]] && return 130
-  local last; last="$(printf '%s\n' "$sel" | tail -n 1)"
+
+  # Cancel handling: if ESC/Ctrl-C was pressed, do not run anything.
+  # With --expect, the first line is the key pressed.
+  local first
+  first="$(printf '%s\n' "$sel" | head -n1)"
+  if [[ -z "$sel" || "$first" == "esc" || "$first" == "ctrl-c" ]]; then
+    return 130
+  fi
+
+  # Otherwise, the last line has the selected row: "label<TAB>absolute"
+  local last
+  last="$(printf '%s\n' "$sel" | tail -n 1)"
   awk -F'\t' '{print $2}' <<<"$last"
 }
 
@@ -175,8 +188,11 @@ main() {
   collect_files
   if ((${#FILES[@]}==0)); then echo "no files found" >&2; exit 2; fi
   log "found ${#FILES[@]} file(s)"
+
   local chosen
-  if ! chosen="$(run_picker)"; then exit 130; fi
+  if ! chosen="$(run_picker)"; then
+    exit 130   # fzf aborted; do nothing
+  fi
   [[ -z "$chosen" ]] && exit 130
   run_exec "$chosen"
 }

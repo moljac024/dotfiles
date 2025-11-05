@@ -2,6 +2,9 @@
 keybind = ctrl+shift+f=toggle_fullscreen
 keybind = f11=toggle_fullscreen
 
+# Copy
+keybind = performable:ctrl+c=copy_to_clipboard
+
 # Clear screen
 keybind = ctrl+shift+l=clear_screen
 

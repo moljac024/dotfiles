@@ -19,11 +19,7 @@ fi
 ### Scripts
 ################################################################################
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    ensure_symlink $ROOT_DIR/bin/osx $HOME/bin
-else
-    ensure_symlink $ROOT_DIR/bin/linux $HOME/bin
-fi
+ensure_symlink $ROOT_DIR/bin $HOME/bin
 
 ################################################################################
 ### Terminals

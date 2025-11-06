@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ "$OSTYPE" != "darwin"* ]]; then
+  echo "This script is meant to run on MacOS only."
+  exit 1
+fi
+
 # Default location
 LOCATION=$HOME/Pictures/Screenshots
 if [ $# -gt 0 ]; then

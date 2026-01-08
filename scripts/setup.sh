@@ -99,11 +99,6 @@ ensure_symlink $ROOT_DIR/kakoune $HOME/.config/kak
 # Bat
 ensure_symlink $ROOT_DIR/bat $HOME/.config/bat
 
-# Volta nodejs version manager
-if [ ! -d "$HOME/.volta" ]; then
-    curl https://get.volta.sh | bash -s -- --skip-setup
-fi
-
 # Mise dev tool manager
 if ! is_command mise; then
   curl https://mise.run | sh

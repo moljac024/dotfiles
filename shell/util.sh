@@ -31,7 +31,8 @@ is_interactive() {
 }
 
 is_wsl() {
-  grep -qi microsoft /proc/version
+  [[ -r /proc/sys/kernel/osrelease ]] &&
+    grep -qi microsoft /proc/sys/kernel/osrelease
 }
 
 is_exported() {

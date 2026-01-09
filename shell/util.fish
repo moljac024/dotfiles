@@ -11,9 +11,12 @@ function is_interactive
 end
 
 function is_wsl
-    grep -qi microsoft /proc/version
+    if test -r /proc/sys/kernel/osrelease
+        grep -qi microsoft /proc/sys/kernel/osrelease
+        return $status
+    end
+    return 1
 end
-
 function is_exported
     set -q "$argv[1]"
 end

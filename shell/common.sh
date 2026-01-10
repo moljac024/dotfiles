@@ -40,6 +40,11 @@ if is_wsl; then
     export_var WSL_GUEST "$(wsl_ip)"
 fi
 
+# Homebrew
+if [ -d "/opt/homebrew/bin" ]; then
+    modify_path "/opt/homebrew/bin" prepend
+fi
+
 # Android dev
 if [ -d "$HOME/Android/Sdk" ]; then
     export_var ANDROID_HOME "$HOME/Android/Sdk"
@@ -80,18 +85,9 @@ modify_path "$HOME/.dotnet/tools" append
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
 
-# Volta nodejs version manager
-if [ -d "$HOME"/.volta ]; then
-    export_var VOLTA_HOME "$HOME/.volta"
-    modify_path "$VOLTA_HOME/bin" prepend
-fi
-
 # Fly.io
 export_var FLYCTL_INSTALL "$HOME/.fly"
 modify_path "$FLYCTL_INSTALL/bin" prepend
-
-# opencode
-modify_path $HOME/.opencode/bin prepend
 
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
@@ -161,7 +157,6 @@ alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)
 alias gs='git add . && git commit -m "sync" && git push origin'
 alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
 alias serve-spa="npx --yes http-server-spa"
-alias emacs="flatpak run org.gnu.emacs"
 
 alias pbg="pick-ghostty-background"
 
@@ -241,18 +236,31 @@ if [ "$(get_running_shell)" = "bash" ]; then
 fi
 
 ################################################################################
-### Secrets
-################################################################################
-
-export_secrets_from_dir "$DOTFILES/data/secrets"
-
-################################################################################
 ### Other
 ################################################################################
 
 # Cursor size
 if is_command gsettings; then
     export_var XCURSOR_SIZE "$(gsettings get org.gnome.desktop.interface cursor-size)"
+fi
+
+################################################################################
+### Secrets
+################################################################################
+
+export_secrets_from_dir "$DOTFILES/data/secrets"
+
+################################################################################
+### Local shell overrides
+################################################################################
+
+if [ -d "$DOTFILES/shell/local.d" ]; then
+    for f in "$DOTFILES/shell/local.d"/*; do
+        [ -f "$f" ] || continue
+        [ "$(basename "$f")" = ".gitignore" ] && continue
+        [ "$(basename "$f")" = "README.md" ] && continue
+        source "$f"
+    done
 fi
 
 ################################################################################

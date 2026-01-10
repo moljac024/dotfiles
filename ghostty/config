@@ -16,7 +16,10 @@ window-show-tab-bar = never
 
 # Background
 config-file = "background"
-config-file = "?background.extend"
+config-file = "?background.local"
 
 # Keybinds
 config-file = "keybinds"
+
+# Local extended config
+config-file = "?config.local"

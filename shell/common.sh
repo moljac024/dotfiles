@@ -254,8 +254,8 @@ export_secrets_from_dir "$DOTFILES/data/secrets"
 ### Local shell overrides
 ################################################################################
 
-if [ -d "$DOTFILES/shell/local.d" ]; then
-    for f in "$DOTFILES/shell/local.d"/*; do
+if [ -d "$DOTFILES/shell/local.sh.d" ]; then
+    for f in "$DOTFILES/shell/local.sh.d"/*; do
         [ -f "$f" ] || continue
         [ "$(basename "$f")" = ".gitignore" ] && continue
         [ "$(basename "$f")" = "README.md" ] && continue

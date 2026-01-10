@@ -52,22 +52,13 @@ if test -d "$HOME/Applications/android-studio"
     ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" "$HOME/bin/android-studio"
     modify_path "$HOME/Applications/android-studio/bin" append
 end
+
 if test -d "$HOME/Applications/flutter"
     modify_path "$HOME/Applications/flutter/bin" append
 end
 
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
-
-# Volta nodejs version manager
-if test -d $HOME/.volta
-    export_var VOLTA_HOME "$HOME/.volta"
-    modify_path "$VOLTA_HOME/bin" prepend
-end
-
-# Fly.io
-export_var FLYCTL_INSTALL "$HOME/.fly"
-modify_path "$FLYCTL_INSTALL/bin" prepend
 
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
@@ -176,12 +167,6 @@ export_var FZF_DEFAULT_OPTS " \
 --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 ################################################################################
-### Secrets
-################################################################################
-
-export_secrets_from_dir "$DOTFILES/data/secrets"
-
-################################################################################
 ### Other
 ################################################################################
 
@@ -194,13 +179,38 @@ if is_command gsettings
 end
 
 ################################################################################
+### Secrets
+################################################################################
+
+export_secrets_from_dir "$DOTFILES/data/secrets"
+
+################################################################################
+### Local shell overrides
+################################################################################
+
+if test -d "$DOTFILES/shell/local.fish.d"
+    for f in "$DOTFILES/shell/local.fish.d"/*
+        test -f "$f"; or continue
+
+        switch (basename "$f")
+            case ".gitignore" "README.md"
+                continue
+        end
+
+        source "$f"
+    end
+end
+
+################################################################################
 ### Prompt
 ################################################################################
 
-#if is_interactive
-#    if is_command starship
-#        starship init fish | source
-#    else if is_mise_command starship
-#        mise exec starship -- starship init fish | source
-#    end
-#end
+if is_interactive
+   if is_command starship
+       starship init fish | source
+   else
+       if is_mise_command starship
+           mise exec starship -- starship init fish | source
+       end
+   end
+end

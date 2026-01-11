@@ -15,8 +15,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "williamboman/mason.nvim", -- LSP tool installer
-      "b0o/SchemaStore.nvim",    -- JSON and YAML schemas
+      "b0o/SchemaStore.nvim", -- JSON and YAML schemas
     },
     config = function()
       local schemastore = require("schemastore")
@@ -62,36 +61,6 @@ return {
         rust_analyzer = {},
         gopls = {},
       }
-
-      -- Setup mason
-      require("mason").setup()
-      local registry = require("mason-registry")
-
-      local tools_to_install = {
-        "bash-language-server",
-        "lua-language-server",
-
-        "rust-analyzer",
-        "pyright", -- Python
-
-        "elixir-ls",
-        "gopls",
-
-        -- Web
-        "json-lsp",
-        "yaml-language-server",
-        "css-lsp",
-        "eslint-lsp",
-        "tailwindcss-language-server",
-        "vtsls", -- Typescript
-      }
-
-      for _, tool in ipairs(tools_to_install) do
-        if not registry.is_installed(tool) then
-          registry.get_package(tool):install()
-        end
-      end
-      -- End mason setup
 
       for name, config in pairs(configs) do
         config = vim.tbl_deep_extend("force", {}, {

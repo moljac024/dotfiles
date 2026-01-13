@@ -6,7 +6,10 @@ local commands = {}
 
 local function run_command(x)
   if type(x) == "function" then
-    x()
+    vim.schedule(function()
+      local bufnr = vim.api.nvim_get_current_buf()
+      x(bufnr)
+    end)
   elseif type(x) == "string" then
     local cmd = vim.api.nvim_replace_termcodes(x, true, false, true)
     vim.api.nvim_feedkeys(cmd, "t", true)

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 
 # Check if restic is installed and executable
 if ! command -v restic &> /dev/null; then

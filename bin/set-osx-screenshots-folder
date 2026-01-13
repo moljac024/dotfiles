@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 
 if [[ "$OSTYPE" != "darwin"* ]]; then
   echo "This script is meant to run on MacOS only."

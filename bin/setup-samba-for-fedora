@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 
 # CONFIG
 SHARE_PATH="/home/bojan/MyDocuments/VMs/shared"

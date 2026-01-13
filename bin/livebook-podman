@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 
 # In order to access and save notebooks directly to your machine
 # you can mount a local directory into the container.

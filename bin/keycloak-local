@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashim
 
 # Run the Keycloak container
 podman run --rm --replace --network local-dev -p 8080:8080 \

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 
 PORT="${1:-8080}"
 

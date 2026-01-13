@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 
 # Path to the temporary file for storing the selected file
 YAZI_SELECTED_FILE="/tmp/yazi-selected-file"

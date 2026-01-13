@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 
 is_command() {
   command -v "$1" >/dev/null 2>&1

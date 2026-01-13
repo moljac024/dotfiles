@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
 set -Eeuo pipefail
 
 WALLPAPER_DIR=$DOTFILES/backgrounds/terminal

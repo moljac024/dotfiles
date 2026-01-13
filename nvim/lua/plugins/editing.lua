@@ -194,6 +194,15 @@ return {
           -- These options will be passed to conform.format()
           timeout_ms = 2000,
           lsp_fallback = true,
+        }
+      })
+
+      c.add_commands({
+        {
+          desc = "Save current buffer (without autocmd)",
+          cmd = function()
+            vim.cmd("noautocmd write")
+          end
         },
       })
     end,

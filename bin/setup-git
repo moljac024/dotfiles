@@ -8,16 +8,18 @@ prompt_nonempty() {
   local prompt="$1"
   local value=""
   while :; do
-    # -r: raw input, no backslash escapes
     read -r -p "$prompt" value
-    # Trim leading/trailing whitespace (bash parameter expansion trick)
+
+    # Trim leading/trailing whitespace
     value="${value#"${value%%[![:space:]]*}"}"
     value="${value%"${value##*[![:space:]]}"}"
+
     if [[ -n "$value" ]]; then
       printf '%s' "$value"
       return 0
     fi
-    echo "Please enter something (empty input not accepted)."
+
+    echo "Please enter something (empty input not accepted)." >&2
   done
 }
 
@@ -71,14 +73,5 @@ git config --global filter.lfs.clean    "git-lfs clean -- %f"
 git config --global filter.lfs.smudge   "git-lfs smudge -- %f"
 git config --global filter.lfs.process  "git-lfs filter-process"
 git config --global filter.lfs.required "true"
-
-# --- macOS keychain helper ---
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  git config --global credential.helper "osxkeychain"
-else
-  # Optional: remove it if it exists from prior setups
-  # git config --global --unset credential.helper || true
-  :
-fi
 
 echo "Done. Wrote global Git config to: $(git config --global --list >/dev/null 2>&1 && echo ~/.gitconfig)"

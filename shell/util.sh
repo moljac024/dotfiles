@@ -76,6 +76,10 @@ export_secrets_from_dir() {
         return 1
     fi
 
+    # zsh: ignore unmatched globs; scoped to this function
+    # harmless in bash (ignored), helpful in zsh
+    setopt local_options null_glob 2>/dev/null
+
     for file in "$dir"/*; do
         if [[ -f "$file" ]]; then
             local var_name

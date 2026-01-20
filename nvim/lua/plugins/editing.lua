@@ -2,51 +2,6 @@ local c = require("lib.command")
 
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    dependencies = {
-      { "nvim-treesitter/nvim-treesitter-textobjects" },
-    },
-    build = ":TSUpdate",
-    config = function()
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
-        auto_install = true,
-        ignore_install = {},
-        modules = {},
-        ensure_installed = {
-          "c",
-          "lua",
-          "vim",
-          "vimdoc",
-          "query",
-          "go",
-          "elixir",
-          "heex",
-          "javascript",
-          "typescript",
-          "tsx",
-          "json",
-          "sql",
-          "css",
-          "html",
-          "xml",
-          "yaml",
-        },
-        sync_install = false,
-        highlight = { enable = true },
-        indent = { enable = true },
-        disable = function(lang, buf)
-          local max_filesize = 200 * 1024 -- Max file size in KB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then
-            return true
-          end
-        end,
-      })
-    end,
-  },
-  {
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown", "codecompanion" }
   },

@@ -74,7 +74,6 @@ ensure_symlink $ROOT_DIR/shell/.inputrc $HOME/.inputrc
 ################################################################################
 
 # Git
-ensure_symlink $ROOT_DIR/git/.gitconfig $HOME/.gitconfig
 ensure_symlink $ROOT_DIR/git/.gitignore_global $HOME/.gitignore_global
 
 # SSH

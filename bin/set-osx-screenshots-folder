@@ -1,4 +1,5 @@
 #!/usr/bin/env bashim
+# vim: filetype=sh
 
 if [[ "$OSTYPE" != "darwin"* ]]; then
   echo "This script is meant to run on MacOS only."

@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
 #code install and setup VSCode
 sudo wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-microsoft https://packages.microsoft.com/keys/microsoft.asc

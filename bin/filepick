@@ -1,4 +1,5 @@
 #!/usr/bin/env bashim
+# vim: filetype=sh
 set -Eeuo pipefail
 
 # filepick.sh — scan directories, fuzzy-pick a file, run a command with the path

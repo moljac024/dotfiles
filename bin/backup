@@ -1,4 +1,5 @@
 #!/usr/bin/env bashim
+# vim: filetype=sh
 
 # Check if restic is installed and executable
 if ! command -v restic &> /dev/null; then

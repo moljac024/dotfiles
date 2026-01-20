@@ -26,6 +26,7 @@ return {
       end
 
       local configs = {
+        -- JSON
         jsonls = {
           settings = {
             json = {
@@ -34,6 +35,7 @@ return {
             },
           },
         },
+        -- Yaml
         yamlls = {
           settings = {
             yaml = {
@@ -48,18 +50,31 @@ return {
             },
           },
         },
+
+        -- Bash
         bashls = {},
+
+        -- Lua
         lua_ls = {},
 
+        -- Markdown
+        marksman = {},
+
+        -- Typescript, Javascript
         -- tsserver = {} -- Default typescript LSP,
         vtsls = {}, -- Alternative typescript LSP
-        cssls = {},
-        tailwindcss = {},
         eslint = {},
 
+        -- CSS
+        cssls = {},
+        tailwindcss = {},
+
+        -- Python
         pyright = {},
         ruff = {},
+        -- Rust
         rust_analyzer = {},
+        -- Go
         gopls = {},
       }
 

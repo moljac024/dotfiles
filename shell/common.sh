@@ -164,9 +164,6 @@ if is_available nvim; then
   export_var EDITOR "nvim"
   export_var VISUAL "nvim"
   export_var MANPAGER "nvim +Man!"
-  alias vi="nvim"
-  alias vim="nvim"
-  alias vimdiff="nvim -d"
 fi
 
 if is_available eza; then

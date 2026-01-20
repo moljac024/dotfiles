@@ -122,9 +122,6 @@ alias emacs="flatpak run org.gnu.emacs"
 if is_available nvim
     export_var EDITOR "nvim"
     export_var VISUAL "nvim"
-    alias vi="nvim"
-    alias vim="nvim"
-    alias vimdiff="nvim -d"
 end
 
 alias lg='lazygit'

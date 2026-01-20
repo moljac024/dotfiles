@@ -72,10 +72,15 @@ return {
         -- Python
         pyright = {},
         ruff = {},
+
         -- Rust
         rust_analyzer = {},
+
         -- Go
         gopls = {},
+
+        -- Zig
+        zls = {},
       }
 
       for name, config in pairs(configs) do

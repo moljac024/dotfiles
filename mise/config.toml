@@ -1,3 +1,7 @@
+[env]
+# Load env from the dotenv file after tools have defined environment variables
+_.file = { path = ".env", tools = true }
+
 [tools]
 dotnet = "latest"
 go = "latest"

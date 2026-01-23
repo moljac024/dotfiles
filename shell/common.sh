@@ -101,11 +101,17 @@ export_var XDG_DATA_DIRS "$HOME"/.local/share/flatpak/exports/share:/var/lib/fla
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 
+# Windsurf
+if [ -d $HOME/.codeium/windsurf/bin ]; then
+  modify_path $HOME/.codeium/windsurf/bin prepend
+fi
+
 ###############################################################################
 # Mise dev tool manager
 ###############################################################################
 
 if is_command mise; then
+  export MISE_ENV_FILE=.env
   modify_path "$HOME"/.local/share/mise/shims prepend
   case $(get_running_shell) in
     "zsh")

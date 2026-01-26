@@ -1,0 +1,16 @@
+#/usr/bin/env bashim
+# vim: filetype=sh
+
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if is_command uv && test -f pyproject.toml; then
+  exec uv run python $@
+  exit $?
+fi
+
+if is_command python3; then
+  exec python3 $@
+  exit $?
+fi

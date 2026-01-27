@@ -8,3 +8,6 @@ sway/workspaces
 
 hypr/monitors.conf
 hypr/workspaces.conf
+
+k9s/clusters/
+k9s/k9s.log

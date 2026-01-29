@@ -6,7 +6,7 @@ is_command() {
 }
 
 if is_command mise; then
-    mise self-update --yes && mise up
+    mise self-update --yes; mise up
 fi
 
 if is_command flatpak; then

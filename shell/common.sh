@@ -258,6 +258,10 @@ export_secrets_from_dir "$DOTFILES/data/secrets"
 ################################################################################
 
 if [ -d "$DOTFILES/shell/local.sh.d" ]; then
+    # zsh: ignore unmatched globs; scoped to this function
+    # harmless in bash (ignored), helpful in zsh
+    setopt local_options null_glob 2>/dev/null
+
     for f in "$DOTFILES/shell/local.sh.d"/*; do
         [ -f "$f" ] || continue
         [ "$(basename "$f")" = ".gitignore" ] && continue

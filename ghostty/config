@@ -1,5 +1,8 @@
 maximize = true
 
+# Override shell
+# command = zsh
+
 theme = catppuccin-frappe.conf
 font-family = Zed Mono NF
 font-size = 16

@@ -70,25 +70,39 @@ export_secret () {
 }
 
 export_secrets_from_dir() {
-    local dir=$1
-    if [[ ! -d "$dir" ]]; then
-        echo "Error: '$dir' is not a directory" >&2
-        return 1
-    fi
+  local dir=$1
+  [[ -d "$dir" ]] || return 0
 
-    # zsh: ignore unmatched globs; scoped to this function
-    # harmless in bash (ignored), helpful in zsh
-    setopt local_options null_glob 2>/dev/null
+  # --- disable xtrace locally (bash + zsh)
+  local _xtrace_was_on=0
+  case "$-" in
+    *x*) _xtrace_was_on=1; set +x ;;
+  esac
 
-    for file in "$dir"/*; do
-        if [[ -f "$file" ]]; then
-            local var_name
-            var_name=$(basename "$file")
-            local content
-            content=$(<"$file") # Read file content efficiently
-            export_var "$var_name" "$content"
-        fi
-    done
+  local file var_name content
+
+  case "$(get_running_shell)" in
+    zsh)
+      setopt local_options null_glob
+      for file in "$dir"/*; do
+        [[ -f "$file" ]] || continue
+        var_name=${file##*/}
+        content=$(<"$file")
+        export_var "$var_name" "$content"
+      done
+      ;;
+    bash|*)
+      for file in "$dir"/*; do
+        [[ -f "$file" ]] || continue
+        var_name=${file##*/}
+        content=$(<"$file")
+        export_var "$var_name" "$content"
+      done
+      ;;
+  esac
+
+  # --- restore xtrace
+  [[ $_xtrace_was_on -eq 1 ]] && set -x
 }
 
 ensure_symlink () {

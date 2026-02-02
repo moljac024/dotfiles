@@ -1,3 +1,5 @@
+# vim: filetype=zsh
+
 # Antidote
 export ANTIDOTE_DIR=$HOME/.antidote
 if [ ! -e $ANTIDOTE_DIR ]; then

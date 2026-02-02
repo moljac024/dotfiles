@@ -1,8 +1,18 @@
-#!/usr/bin/env bash
+# vim: filetype=bash
 
-if [[ -f $HOME/.shell/util.sh ]]; then
-  source $HOME/.shell/util.sh
+export DOTFILES=$HOME/dotfiles
+
+################################################################################
+### Source common shell setup
+################################################################################
+
+if [ -f $DOTFILES/shell/common.sh ]; then
+  source $DOTFILES/shell/common.sh
 fi
+
+################################################################################
+### Source interactive bash setup
+################################################################################
 
 if [[ -f $HOME/.bash.mine ]]; then
     source $HOME/.bash.mine

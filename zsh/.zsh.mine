@@ -1,9 +1,8 @@
-if [[ -f $HOME/.shell/util.sh ]]; then
-  source $HOME/.shell/util.sh
-fi
+# vim: filetype=zsh
 
-if [[ -f $HOME/.shell/common.sh ]]; then
-  source $HOME/.shell/common.sh
+# Prompt
+if [[ -f $DOTFILES/shell/prompt.sh ]]; then
+  source $DOTFILES/shell/prompt.sh
 fi
 
 # Lines configured by zsh-newuser-install

@@ -1,13 +1,10 @@
-#!/usr/bin/bash
 # vim: filetype=sh
 # set -euo pipefail # Shell strict mode
 
-THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo "$0") # Full path of the current script
-DIR=$(dirname "${THIS}") # The directory where current script resides
-
-. "$DIR/util.sh"
+source "$DOTFILES/shell/util.sh"
 
 if [ "$(get_running_shell)" = "unknown" ]; then
+  echo "Unknown shell, common.sh exiting"
   return
 fi
 
@@ -268,18 +265,4 @@ if [ -d "$DOTFILES/shell/local.sh.d" ]; then
         [ "$(basename "$f")" = "README.md" ] && continue
         source "$f"
     done
-fi
-
-################################################################################
-### Prompt
-################################################################################
-
-if is_interactive; then
-  if is_command starship; then
-    eval "$(starship init "$(get_running_shell)")"
-    eval "$(starship completions "$(get_running_shell)")"
-  elif is_mise_command starship; then
-    eval "$(mise exec starship -- starship init "$(get_running_shell)")"
-    eval "$(mise exec starship -- starship completions "$(get_running_shell)")"
-  fi
 fi

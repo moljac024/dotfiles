@@ -2,7 +2,6 @@ return {
   -- Copilot
   {
     "zbirenbaum/copilot.lua",
-    enabled = true,
     lazy = true,
     cmd = "Copilot",
     event = 'InsertEnter',

@@ -50,9 +50,6 @@ ensure_symlink $ROOT_DIR/konsole/local/share $HOME/.local/share/konsole
 # Starship shell prompt
 ensure_symlink $ROOT_DIR/starship/starship.toml $HOME/.config/starship.toml
 
-# Common shell scripts, utilities and config
-ensure_symlink $ROOT_DIR/shell $HOME/.shell
-
 # Bash shell
 ensure_symlink $ROOT_DIR/bash/.bash_profile $HOME/.bash_profile
 ensure_symlink $ROOT_DIR/bash/.bashrc $HOME/.bashrc

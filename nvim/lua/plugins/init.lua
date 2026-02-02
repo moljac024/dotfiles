@@ -23,5 +23,5 @@ return {
   terminal,
   dev,
 
-  ai,
+  -- ai,
 }

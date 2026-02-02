@@ -1,6 +1,21 @@
 # vim: filetype=zsh
 
-# Prompt
+################################################################################
+### Plugins
+################################################################################
+
+export ANTIDOTE_DIR=$HOME/.antidote
+if [ ! -e $ANTIDOTE_DIR ]; then
+  git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+fi
+
+source $ANTIDOTE_DIR/antidote.zsh
+antidote load
+
+################################################################################
+### Prompt
+################################################################################
+
 if [[ -f $DOTFILES/shell/prompt.sh ]]; then
   source $DOTFILES/shell/prompt.sh
 fi
@@ -35,6 +50,3 @@ bindkey "$terminfo[kcbt]" menu-select
 
 # To suppress autocompletion until a minimum number of characters have been typed:
 zstyle ':autocomplete:*' min-input 3
-##################################################################
-#### end zsh-autocomplete
-##################################################################

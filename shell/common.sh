@@ -182,8 +182,6 @@ alias gg='git gui'
 
 # If podman is installed, use it instead of docker
 if is_command podman; then
-  # alias docker=podman
-  # alias docker-compose='podman-compose'
   # export_var DOCKER_HOST "unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
   # export_var DOCKER_HOST "unix:///run/podman/podman.sock"
   export_var DOCKER_HOST "ssh://vm-ubuntu-docker"

@@ -28,6 +28,9 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+# Completion
+# zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 ##################################################################
 #### zsh-autocomplete

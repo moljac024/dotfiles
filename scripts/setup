@@ -54,10 +54,10 @@ ensure_symlink $ROOT_DIR/starship/starship.toml $HOME/.config/starship.toml
 ensure_symlink $ROOT_DIR/shell $HOME/.shell
 
 # Bash shell
-ensure_symlink $ROOT_DIR/bash/.bash.mine $HOME/.bash.mine
 ensure_symlink $ROOT_DIR/bash/.bash_profile $HOME/.bash_profile
 ensure_symlink $ROOT_DIR/bash/.bashrc $HOME/.bashrc
 ensure_symlink $ROOT_DIR/bash/.bash_complete_alias $HOME/.bash_complete_alias
+ensure_symlink $ROOT_DIR/bash/.bash.mine $HOME/.bash.mine
 
 # Zsh shell
 ensure_symlink $ROOT_DIR/zsh/.zprofile $HOME/.zprofile

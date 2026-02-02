@@ -1,7 +1,6 @@
-#!/usr/bin/env fish
+# vim: filetype=fish
 
-set script_dir (dirname (status --current-filename))
-source $script_dir/util.fish
+source $DOTFILES/shell/util.fish
 
 ################################################################################
 ### Environment
@@ -87,9 +86,6 @@ end
 set -l OS (uname)
 if test "$OS" = "Linux"
     alias ls='ls --color=auto --group-directories-first --sort=extension'
-    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
-    alias update-fedora='sudo sh -c "dnf update -y"'
-    alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
 else if test "$OS" = Darwin
     alias ls='ls -FG'
     function whoishoggingport
@@ -102,11 +98,6 @@ if is_command sudo
     alias sudo="sudo TERMINFO=\"$TERMINFO\""
 end
 
-# If running in kitty, alias ssh to kitten ssh
-if test "$TERM" = "xterm-kitty"
-    alias ssh='kitten ssh'
-end
-
 alias update-npm-packages="npx -y npm-check-updates -i"
 alias c='clear'
 alias ..='cd ..'
@@ -117,7 +108,6 @@ alias duf="du -sk * | sort -n | perl -ne '\$s,\$f=split(m{\t});for (qw(K M G)) {
 alias gs='git add . && git commit -m "sync" && git push origin'
 alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
 alias serve-spa="npx --yes http-server-spa"
-alias emacs="flatpak run org.gnu.emacs"
 
 if is_available nvim
     export_var EDITOR "nvim"
@@ -164,9 +154,6 @@ export_var FZF_DEFAULT_OPTS " \
 ### Other
 ################################################################################
 
-# Disable flow control
-stty -ixon
-
 # Cursor size
 if is_command gsettings
     export_var XCURSOR_SIZE (gsettings get org.gnome.desktop.interface cursor-size)
@@ -187,7 +174,7 @@ if test -d "$DOTFILES/shell/local.fish.d"
         test -f "$f"; or continue
 
         switch (basename "$f")
-            case ".gitignore" "README.md"
+            case ".gitignore" ".gitkeep" "README.md"
                 continue
         end
 

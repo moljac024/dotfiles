@@ -17,6 +17,7 @@ function is_wsl
     end
     return 1
 end
+
 function is_exported
     set -q "$argv[1]"
 end

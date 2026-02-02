@@ -1,7 +1,9 @@
 # vim: filetype=sh
-# set -euo pipefail # Shell strict mode
 
 source "$DOTFILES/shell/util.sh"
+
+# Disable flow control
+stty -ixon
 
 ################################################################################
 ### Prompt

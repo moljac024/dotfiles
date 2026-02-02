@@ -24,9 +24,6 @@ if [ "$(get_running_shell)" = "zsh" ]; then
   autoload -U +X bashcompinit && bashcompinit
 fi
 
-# Disable flow control
-stty -ixon
-
 # WSL
 if is_wsl; then
     export_var WSL_HOST "$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
@@ -144,11 +141,6 @@ if is_command sudo; then
   alias sudo="sudo TERMINFO=\"$TERMINFO\""
 fi
 
-# If running in kitty, alias ssh to kitten ssh
-if [ "$TERM" = "xterm-kitty" ]; then
-  alias ssh='kitten ssh'
-fi
-
 alias update-npm-packages="npx -y npm-check-updates -i"
 alias c='clear'
 alias ..='cd ..'
@@ -206,11 +198,6 @@ fi
 ### Other
 ################################################################################
 
-# Dircolors
-# if [ -f $HOME/.dir_colors ]; then
-#     eval "$(dircolors $HOME/.dir_colors)"
-# fi
-
 # Enable Erlang/Elixir shell history
 export_var ERL_AFLAGS "-kernel shell_history enabled"
 
@@ -228,16 +215,16 @@ export_var FZF_DEFAULT_OPTS " \
 
 # FZF
 if [ "$(get_running_shell)" = "bash" ]; then
-  [ -f ~/.fzf.bash ] && . ~/.fzf.bash
+  [ -f ~/.fzf.bash ] && source ~/.fzf.bash
   [ -e "$HOME/.fzf-extras/fzf-extras.sh" ] \
-    && . "$HOME/.fzf-extras/fzf-extras.sh"
+    && source "$HOME/.fzf-extras/fzf-extras.sh"
 fi
 
 ################################################################################
 ### Other
 ################################################################################
 
-# Cursor size
+# Cursor size (GNOME)
 if is_command gsettings; then
     export_var XCURSOR_SIZE "$(gsettings get org.gnome.desktop.interface cursor-size)"
 fi
@@ -260,7 +247,9 @@ if [ -d "$DOTFILES/shell/local.sh.d" ]; then
     for f in "$DOTFILES/shell/local.sh.d"/*; do
         [ -f "$f" ] || continue
         [ "$(basename "$f")" = ".gitignore" ] && continue
+        [ "$(basename "$f")" = ".gitkeep" ] && continue
         [ "$(basename "$f")" = "README.md" ] && continue
         source "$f"
     done
+    unset f
 fi

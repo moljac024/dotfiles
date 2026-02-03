@@ -8,6 +8,7 @@ theme = catppuccin-frappe.conf
 # Font
 font-family = Zed Mono
 font-family = Zed Mono NF
+font-family = ZedMono Nerd Font
 font-family = ZedMono Nerd Font Mono
 font-size = 16
 

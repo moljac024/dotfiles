@@ -102,17 +102,7 @@ fi
 if is_command mise; then
   export MISE_ENV_FILE=.env
   modify_path "$HOME"/.local/share/mise/shims prepend
-  case $(get_running_shell) in
-    "zsh")
-      eval "$(mise activate zsh)"
-      ;;
-    "bash")
-      eval "$(mise activate bash)"
-      ;;
-    *)
-      :
-      ;;
-  esac
+  shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(mise activate "$shell")";; esac
 fi
 
 ################################################################################

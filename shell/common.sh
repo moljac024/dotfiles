@@ -1,5 +1,4 @@
 # vim: filetype=sh
-# set -euo pipefail # Shell strict mode
 
 source "$DOTFILES/shell/lib.sh"
 

@@ -1,7 +1,8 @@
 maximize = true
 
 # Override shell
-# command = zsh
+# command = zsh     # Use zsh shell
+# command = fish    # Use fish shell
 
 theme = catppuccin-frappe.conf
 

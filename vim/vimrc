@@ -2,11 +2,7 @@
 " Plugins
 " ==============================================================================
 
-if has('nvim')
-    call plug#begin($HOME . '/.local/share/nvim/plugged')
-else
-    call plug#begin($HOME . '/.vim/plugged')
-endif
+call plug#begin($HOME . '/.vim/plugged')
 
 " ===========================================
 " Basics
@@ -21,7 +17,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " ===========================================
 " Ricing
 " ===========================================
-Plug 'altercation/vim-colors-solarized'
 
 " ===========================================
 " Editing & Movement
@@ -55,14 +50,10 @@ let g:jsx_ext_required = 0
 " Typescript ================================
 Plug 'leafgarland/typescript-vim'
 
-" Elm =======================================
-Plug 'elmcast/elm-vim'
-
 " Elixir ====================================
 Plug 'elixir-lang/vim-elixir'
 " Format elixir on save
 let g:mix_format_on_save = 1
-" let g:mix_format_silent_errors = 1
 Plug 'mhinz/vim-mix-format'
 
 " Haskell ===================================
@@ -73,9 +64,6 @@ Plug 'fatih/vim-go'
 
 " Rust ======================================
 Plug 'rust-lang/rust.vim'
-
-" PHP =======================================
-Plug 'stanangeloff/php.vim'
 
 " ===========================================
 " Misc
@@ -94,14 +82,6 @@ Plug 'tomtom/tcomment_vim'
 Plug 'mhinz/vim-signify'
 
 " ===========================================
-" Language servers and linters
-" ===========================================
-" Plug 'w0rp/ale'
-" Plug 'prabirshrestha/vim-lsp'
-
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-" ===========================================
 " Files
 " ===========================================
 Plug 'airblade/vim-rooter'
@@ -119,7 +99,6 @@ let g:rooter_patterns = ['.git/', 'mix.exs', 'package.json', 'README.md']
 
 " Plug 'wincent/ferret'
 
-
 call plug#end() " Initialize plugin system
 
 " ==============================================================================
@@ -133,33 +112,33 @@ set nocompatible " No old school compatability
 " ==============================================================================
 
 " Make directory if it doesn't exist
-" function! EnsureDirExists (dir)
-"     if !isdirectory(a:dir)
-"         if exists("*mkdir")
-"             call mkdir(a:dir, 'p')
-"         else
-"             echo "Please create directory: " . a:dir
-"         endif
-"     endif
-" endfunction
+function! EnsureDirExists (dir)
+    if !isdirectory(a:dir)
+        if exists("*mkdir")
+            call mkdir(a:dir, 'p')
+        else
+            echo "Please create directory: " . a:dir
+        endif
+    endif
+endfunction
 
 " Ensure needed directories are there
-" call EnsureDirExists($HOME . '/.vim/backup')
-" call EnsureDirExists($HOME . '/.vim/sessions')
-" call EnsureDirExists($HOME . '/.vim/undo')
+call EnsureDirExists($HOME . '/.vim/backup')
+call EnsureDirExists($HOME . '/.vim/sessions')
+call EnsureDirExists($HOME . '/.vim/undo')
 
 " Keep all backups in a single directory
-" if isdirectory($HOME . '/.vim/backup')
-"     set backupdir=~/.vim/backup//
-" endif
+if isdirectory($HOME . '/.vim/backup')
+    set backupdir=~/.vim/backup//
+endif
 
 " Keep all undo in a single directory
-" if isdirectory($HOME . '/.vim/undo')
-"     if has("persistent_undo")
-"         set undodir=~/.vim/undo//
-"         set undofile
-"     endif
-" endif
+if isdirectory($HOME . '/.vim/undo')
+    if has("persistent_undo")
+        set undodir=~/.vim/undo//
+        set undofile
+    endif
+endif
 
 " ==============================================================================
 " General options
@@ -168,10 +147,7 @@ set nocompatible " No old school compatability
 set shortmess=at " Be less verbose
 set hidden " Enable multiple buffers open
 set scrolloff=3 " Maintain more context around cursor when scrolling
-
-set foldmethod=indent " Fold method
-set foldlevel=99 " Fold level
-"set nofoldenable " Don't fold code
+set nofoldenable " Don't fold code
 
 set nobackup " No backup files
 set noswapfile " No swap file, that is so 70s
@@ -201,22 +177,11 @@ set noerrorbells " Don't beep, don't you even blink
 set showcmd " Show incomplete commands
 set showmode " Always show current mode
 
-if !has('nvim') && &term =~ '256color'
+if &term =~ '256color'
     " Disable Background Color Erase (BCE) so that color schemes
     " work properly when Vim is used inside tmux and GNU screen.
     " See also http://snk.tuxfamily.org/log/vim-256color-bce.html
     set t_ut=
-endif
-
-set background=light
-" set background=dark
-colorscheme solarized
-
-if exists('&signcolumn')  " Vim 7.4.2201
-    set signcolumn=no
-    " Solarized sets a weird color here
-    highlight clear SignColumn
-    highlight SignColumn guibg=NONE ctermbg=NONE
 endif
 
 " Dont color background - so we can have nice transparent terminal

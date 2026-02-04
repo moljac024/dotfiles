@@ -5,13 +5,13 @@
 ################################################################################
 
 get_running_shell() {
-    if [ -n "$ZSH_VERSION" ]; then
-        echo "zsh"
-    elif [ -n "$BASH_VERSION" ]; then
-        echo "bash"
-    else
-        echo "unknown"
-    fi
+  if [ -n "$ZSH_VERSION" ]; then
+    echo "zsh"
+  elif [ -n "$BASH_VERSION" ]; then
+    echo "bash"
+  else
+    echo "unknown"
+  fi
 }
 
 is_interactive() {
@@ -152,24 +152,40 @@ modify_path() {
   fi
 }
 
-git_clone () {
-    local repo=$1
-    local location=$2
-    local location_fullpath="$(cd "$(dirname "$location")"; pwd)/$(basename "$location")"
+source_dir() {
+  if [ -d "$1" ]; then
+    # zsh no error on empty glob
+    [ "$(get_running_shell)" = zsh ] && setopt local_options null_glob
 
-    if [ ! -d "$location_fullpath" ]; then
-        git clone "$repo" "$location_fullpath"
-    fi
+    for f in "$DOTFILES/shell/local.sh.d"/*; do
+      [ -f "$f" ] || continue
+      [ "$(basename "$f")" = ".gitignore" ] && continue
+      [ "$(basename "$f")" = ".gitkeep" ] && continue
+      [ "$(basename "$f")" = "README.md" ] && continue
+      source "$f"
+    done
+    unset f
+  fi
+}
+
+git_clone () {
+  local repo=$1
+  local location=$2
+  local location_fullpath="$(cd "$(dirname "$location")"; pwd)/$(basename "$location")"
+
+  if [ ! -d "$location_fullpath" ]; then
+    git clone "$repo" "$location_fullpath"
+  fi
 }
 
 cdr() {
-    dir="$PWD"
-    while [[ "$dir" != "/" ]]; do
-        if [[ -d "$dir/.git" ]]; then
-            cd "$dir" || return
-            return
-        fi
-        dir=$(dirname "$dir")
-    done
-    echo "No .git directory found" >&2
+  dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -d "$dir/.git" ]]; then
+      cd "$dir" || return
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "No .git directory found" >&2
 }

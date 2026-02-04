@@ -2,16 +2,6 @@
 
 source $DOTFILES/shell/lib.fish
 
-###############################################################################
-# Mise dev tool manager
-###############################################################################
-
-if is_command mise
-    export_var MISE_ENV_FILE .env
-    modify_path "$HOME"/.local/share/mise/shims prepend
-    mise activate fish | source
-end
-
 ################################################################################
 ### Environment
 ################################################################################
@@ -19,45 +9,9 @@ end
 export_var LC_ALL "en_US.UTF-8"
 export_var LANG "en_US.UTF-8"
 
-if is_linux; then
-    export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
-    export_var LIBVIRT_DEFAULT_URI "qemu:///system"
-end
-
 # Homebrew
 if test -d "/opt/homebrew/bin"
     modify_path "/opt/homebrew/bin" prepend
-end
-
-# Android dev
-if test -d $HOME/Android/Sdk
-    export_var ANDROID_HOME "$HOME/Android/Sdk"
-    export_var ANDROID_SDK_ROOT "$ANDROID_HOME"
-
-    modify_path "$ANDROID_HOME/emulator" append
-    modify_path "$ANDROID_HOME/platform-tools" append
-
-    # If cmdline tools version 8.0 are installed they should have precedence,
-    # because react native does not work with newer ones
-    modify_path "$ANDROID_HOME/cmdline-tools/8.0/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/latest/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/11.0/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/10.0/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/9.0/bin" append
-
-    modify_path "$ANDROID_HOME/tools" append
-    modify_path "$ANDROID_HOME/tools/bin" append
-
-    if is_exported WSL_HOST
-        export_var ADB_SERVER_SOCKET "tcp:$WSL_HOST:5037"
-    end
-end
-
-# Android studio
-if test -d "$HOME/Applications/android-studio"
-    export_var ANDROID_STUDIO "$HOME/Applications/android-studio"
-    ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" "$HOME/bin/android-studio"
-    modify_path "$HOME/Applications/android-studio/bin" append
 end
 
 # Dotnet
@@ -71,11 +25,6 @@ modify_path "$HOME/.local/bin" prepend
 # Home binaries (systems should do this already)
 modify_path "$HOME/bin" prepend
 
-# Flatpak paths
-if is_linux
-    export_var XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
-end
-
 # Krew kubectl plugin package manager
 set -q KREW_ROOT; or set KREW_ROOT "$HOME/.krew"
 modify_path "$KREW_ROOT/bin" prepend
@@ -85,21 +34,12 @@ if test -d $HOME/.codeium/windsurf/bin
   modify_path $HOME/.codeium/windsurf/bin prepend
 end
 
-# Nvim
-if is_available nvim
-    export_var EDITOR "nvim"
-    export_var VISUAL "nvim"
-  export_var MANPAGER "nvim +Man!"
-end
-
-# WSL
-if is_wsl
-    export_var WSL_HOST (awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
-
-    function wsl_ip
-        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-    end
-    export_var WSL_GUEST (wsl_ip)
+# Mise dev env
+# NOTE: This has to come after PATH setup
+if is_command mise
+    export_var MISE_ENV_FILE .env
+    modify_path "$HOME"/.local/share/mise/shims prepend
+    mise activate fish | source
 end
 
 ################################################################################
@@ -152,6 +92,64 @@ alias kn='kubens'
 ### Other
 ################################################################################
 
+# Nvim
+if is_available nvim
+    export_var EDITOR "nvim"
+    export_var VISUAL "nvim"
+  export_var MANPAGER "nvim +Man!"
+end
+
+# WSL
+if is_wsl
+    export_var WSL_HOST (awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
+
+    function wsl_ip
+        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+    end
+    export_var WSL_GUEST (wsl_ip)
+end
+
+# Flatpak
+if is_linux
+    export_var XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
+end
+
+# Android dev
+if test -d $HOME/Android/Sdk
+    export_var ANDROID_HOME "$HOME/Android/Sdk"
+    export_var ANDROID_SDK_ROOT "$ANDROID_HOME"
+
+    modify_path "$ANDROID_HOME/emulator" append
+    modify_path "$ANDROID_HOME/platform-tools" append
+
+    # If cmdline tools version 8.0 are installed they should have precedence,
+    # because react native does not work with newer ones
+    modify_path "$ANDROID_HOME/cmdline-tools/8.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/latest/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/11.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/10.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/9.0/bin" append
+
+    modify_path "$ANDROID_HOME/tools" append
+    modify_path "$ANDROID_HOME/tools/bin" append
+
+    if is_exported WSL_HOST
+        export_var ADB_SERVER_SOCKET "tcp:$WSL_HOST:5037"
+    end
+end
+
+# Android studio
+if test -d "$HOME/Applications/android-studio"
+    export_var ANDROID_STUDIO "$HOME/Applications/android-studio"
+    ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" "$HOME/bin/android-studio"
+    modify_path "$HOME/Applications/android-studio/bin" append
+end
+
+if is_linux; then
+    export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+    export_var LIBVIRT_DEFAULT_URI "qemu:///system"
+end
+
 # Enable Erlang/Elixir shell history
 export_var ERL_AFLAGS "-kernel shell_history enabled"
 
@@ -171,18 +169,7 @@ export_var FZF_DEFAULT_OPTS " \
 ### Local shell overrides
 ################################################################################
 
-if test -d "$DOTFILES/shell/local.fish.d"
-    for f in "$DOTFILES/shell/local.fish.d"/*
-        test -f "$f"; or continue
-
-        switch (basename "$f")
-            case ".gitignore" ".gitkeep" "README.md"
-                continue
-        end
-
-        source "$f"
-    end
-end
+source_dir "$DOTFILES/shell/local.fish.d"
 
 ################################################################################
 ### Secrets

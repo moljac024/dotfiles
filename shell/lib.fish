@@ -107,6 +107,22 @@ function modify_path
     end
 end
 
+function source_dir
+    set -l dir $argv[1]
+    test -d "$dir"; or return
+
+    for f in "$dir"/*
+        test -f "$f"; or continue
+
+        switch (path basename -- "$f")
+            case ".gitignore" ".gitkeep" "README.md"
+                continue
+        end
+
+        source "$f"
+    end
+end
+
 function git_clone
     set -l repo $argv[1]
     set -l location $argv[2]

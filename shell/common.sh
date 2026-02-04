@@ -7,16 +7,6 @@ if [ "$(get_running_shell)" = "unknown" ]; then
   return
 fi
 
-###############################################################################
-# Mise dev tool manager
-###############################################################################
-
-if is_command mise; then
-  export_var MISE_ENV_FILE .env
-  modify_path "$HOME"/.local/share/mise/shims prepend
-  shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(mise activate "$shell")";; esac
-fi
-
 ################################################################################
 ### Environment
 ################################################################################
@@ -24,48 +14,9 @@ fi
 export_var LC_ALL "en_US.UTF-8"
 export_var LANG "en_US.UTF-8"
 
-if is_linux; then
-  export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
-  export_var LIBVIRT_DEFAULT_URI "qemu:///system"
-fi
-
 # Homebrew
 if [ -d "/opt/homebrew/bin" ]; then
     modify_path "/opt/homebrew/bin" prepend
-fi
-
-# Android dev
-if [ -d "$HOME/Android/Sdk" ]; then
-    export_var ANDROID_HOME "$HOME/Android/Sdk"
-    export_var ANDROID_SDK_ROOT "$ANDROID_HOME"
-
-    modify_path "$ANDROID_HOME/emulator" append
-    modify_path "$ANDROID_HOME/platform-tools" append
-
-    # If cmdline tools version 8.0 are installed they should have precendence,
-    # because react native does not work with newer ones
-    modify_path "$ANDROID_HOME/cmdline-tools/8.0/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/latest/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/11.0/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/10.0/bin" append
-    modify_path "$ANDROID_HOME/cmdline-tools/9.0/bin" append
-
-    modify_path "$ANDROID_HOME/tools" append
-    modify_path "$ANDROID_HOME/tools/bin" append
-
-    if is_exported WSL_HOST; then
-        export_var ADB_SERVER_SOCKET "tcp:$WSL_HOST:5037"
-    fi
-fi
-
-# Android studio
-if [ -d "$HOME/Applications/android-studio" ]; then
-    export_var ANDROID_STUDIO "$HOME/Applications/android-studio"
-    ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" "$HOME/bin/android-studio"
-    modify_path "$HOME/Applications/android-studio/bin" append
-fi
-if [ -d "$HOME/Applications/flutter" ]; then
-    modify_path "$HOME/Applications/flutter/bin" append
 fi
 
 # Dotnet
@@ -74,18 +25,12 @@ modify_path "$HOME/.dotnet/tools" append
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
 
-# Fly.io
-export_var FLYCTL_INSTALL "$HOME/.fly"
-modify_path "$FLYCTL_INSTALL/bin" prepend
-
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
 # Home binaries (systems should do this already)
 modify_path "$HOME/bin" prepend
-modify_path "$HOME/.config/sway/bin" prepend
 
-# Flatpak paths
-export_var XDG_DATA_DIRS "$HOME"/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:"$XDG_DATA_DIRS"
+modify_path "$HOME/.config/sway/bin" prepend
 
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
@@ -95,26 +40,12 @@ if [ -d $HOME/.codeium/windsurf/bin ]; then
   modify_path $HOME/.codeium/windsurf/bin prepend
 fi
 
-# Nvim
-if is_available nvim; then
-  export_var EDITOR "nvim"
-  export_var VISUAL "nvim"
-  export_var MANPAGER "nvim +Man!"
-fi
-
-# If podman is installed, use it instead of docker
-if is_command podman && is_linux; then
-  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
-fi
-
-# WSL
-if is_wsl; then
-    export_var WSL_HOST "$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
-
-    wsl_ip () {
-        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-    }
-    export_var WSL_GUEST "$(wsl_ip)"
+# Mise dev env
+# NOTE: This has to come after PATH setup
+if is_command mise; then
+  export_var MISE_ENV_FILE .env
+  modify_path "$HOME"/.local/share/mise/shims prepend
+  shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(mise activate "$shell")";; esac
 fi
 
 ################################################################################
@@ -172,6 +103,64 @@ alias kn='kubectl ns'
 ### Other
 ################################################################################
 
+# Nvim
+if is_available nvim; then
+  export_var EDITOR "nvim"
+  export_var VISUAL "nvim"
+  export_var MANPAGER "nvim +Man!"
+fi
+
+# WSL
+if is_wsl; then
+    export_var WSL_HOST "$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
+
+    wsl_ip () {
+        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+    }
+    export_var WSL_GUEST "$(wsl_ip)"
+fi
+
+# Flatpak
+if is_linux; then
+  export_var XDG_DATA_DIRS "$HOME"/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:"$XDG_DATA_DIRS"
+fi
+
+# Android dev
+if [ -d "$HOME/Android/Sdk" ]; then
+    export_var ANDROID_HOME "$HOME/Android/Sdk"
+    export_var ANDROID_SDK_ROOT "$ANDROID_HOME"
+
+    modify_path "$ANDROID_HOME/emulator" append
+    modify_path "$ANDROID_HOME/platform-tools" append
+
+    # If cmdline tools version 8.0 are installed they should have precendence,
+    # because react native does not work with newer ones
+    modify_path "$ANDROID_HOME/cmdline-tools/8.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/latest/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/11.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/10.0/bin" append
+    modify_path "$ANDROID_HOME/cmdline-tools/9.0/bin" append
+
+    modify_path "$ANDROID_HOME/tools" append
+    modify_path "$ANDROID_HOME/tools/bin" append
+
+    if is_exported WSL_HOST; then
+        export_var ADB_SERVER_SOCKET "tcp:$WSL_HOST:5037"
+    fi
+fi
+
+# Android studio
+if [ -d "$HOME/Applications/android-studio" ]; then
+    export_var ANDROID_STUDIO "$HOME/Applications/android-studio"
+    ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" "$HOME/bin/android-studio"
+    modify_path "$HOME/Applications/android-studio/bin" append
+fi
+
+if is_linux; then
+  export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+  export_var LIBVIRT_DEFAULT_URI "qemu:///system"
+fi
+
 # Enable Erlang/Elixir shell history
 export_var ERL_AFLAGS "-kernel shell_history enabled"
 
@@ -187,23 +176,16 @@ export_var FZF_DEFAULT_OPTS " \
   --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
   --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
+# If podman is installed, use it instead of docker
+if is_command podman && is_linux; then
+  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
+fi
+
 ################################################################################
 ### Local shell overrides
 ################################################################################
 
-if [ -d "$DOTFILES/shell/local.sh.d" ]; then
-    # zsh no error on empty glob
-    [ "$(get_running_shell)" = zsh ] && setopt local_options null_glob
-
-    for f in "$DOTFILES/shell/local.sh.d"/*; do
-        [ -f "$f" ] || continue
-        [ "$(basename "$f")" = ".gitignore" ] && continue
-        [ "$(basename "$f")" = ".gitkeep" ] && continue
-        [ "$(basename "$f")" = "README.md" ] && continue
-        source "$f"
-    done
-    unset f
-fi
+source_dir "$DOTFILES/shell/local.sh.d"
 
 ################################################################################
 ### Secrets

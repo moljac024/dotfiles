@@ -147,7 +147,7 @@ if is_available nvim; then
 fi
 
 if is_available eza; then
-  alias ls="eza"
+  alias ls="eza --group-directories-first"
 fi
 
 alias lg='lazygit'

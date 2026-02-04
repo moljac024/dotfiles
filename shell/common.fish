@@ -7,6 +7,8 @@ source $DOTFILES/shell/lib.fish
 ###############################################################################
 
 if is_command mise
+    export_var MISE_ENV_FILE .env
+    modify_path "$HOME"/.local/share/mise/shims prepend
     mise activate fish | source
 end
 
@@ -106,6 +108,9 @@ end
 
 if is_linux
     alias ls='ls --color=auto --group-directories-first --sort=extension'
+    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
+    alias update-fedora='sudo sh -c "dnf update -y"'
+    alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
 end
 
 if is_mac

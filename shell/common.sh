@@ -7,25 +7,26 @@ if [ "$(get_running_shell)" = "unknown" ]; then
   return
 fi
 
+###############################################################################
+# Mise dev tool manager
+###############################################################################
+
+if is_command mise; then
+  export MISE_ENV_FILE=.env
+  modify_path "$HOME"/.local/share/mise/shims prepend
+  shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(mise activate "$shell")";; esac
+fi
+
 ################################################################################
 ### Environment
 ################################################################################
 
 export_var LC_ALL "en_US.UTF-8"
 export_var LANG "en_US.UTF-8"
-export_var EDITOR "vi"
-export_var DOTFILES "$HOME/dotfiles"
-export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
-export_var LIBVIRT_DEFAULT_URI "qemu:///system"
 
-# WSL
-if is_wsl; then
-    export_var WSL_HOST "$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
-
-    wsl_ip () {
-        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-    }
-    export_var WSL_GUEST "$(wsl_ip)"
+if is_linux; then
+  export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+  export_var LIBVIRT_DEFAULT_URI "qemu:///system"
 fi
 
 # Homebrew
@@ -94,26 +95,40 @@ if [ -d $HOME/.codeium/windsurf/bin ]; then
   modify_path $HOME/.codeium/windsurf/bin prepend
 fi
 
-###############################################################################
-# Mise dev tool manager
-###############################################################################
+# Nvim
+if is_available nvim; then
+  export_var EDITOR "nvim"
+  export_var VISUAL "nvim"
+  export_var MANPAGER "nvim +Man!"
+fi
 
-if is_command mise; then
-  export MISE_ENV_FILE=.env
-  modify_path "$HOME"/.local/share/mise/shims prepend
-  shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(mise activate "$shell")";; esac
+# If podman is installed, use it instead of docker
+if is_command podman && is_linux; then
+  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
+fi
+
+# WSL
+if is_wsl; then
+    export_var WSL_HOST "$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
+
+    wsl_ip () {
+        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+    }
+    export_var WSL_GUEST "$(wsl_ip)"
 fi
 
 ################################################################################
 ### Aliases
 ################################################################################
 
-if [[ "$OSTYPE" = "linux-gnu" ]]; then
+if is_linux; then
   alias ls='ls --color=auto --group-directories-first --sort=extension'
   alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
   alias update-fedora='sudo sh -c "dnf update -y"'
   alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
-elif [[ "$OSTYPE" = "darwin"* ]]; then
+fi
+
+if is_mac; then
   alias ls='ls -FG'
   whoishoggingport () {
     lsof -n -iTCP:$1 | grep LISTEN
@@ -125,54 +140,33 @@ if is_command sudo; then
   alias sudo="sudo TERMINFO=\"$TERMINFO\""
 fi
 
-alias update-npm-packages="npx -y npm-check-updates -i"
 alias c='clear'
 alias ..='cd ..'
 alias cdn='cd $HOME/MyDocuments/Notebook/'
 alias back='cd "$OLDPWD"'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'
-alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
 alias gs='git add . && git commit -m "sync" && git push origin'
-alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
+
 alias serve-spa="npx --yes http-server-spa"
-
+alias update-npm-packages="npx -y npm-check-updates -i"
 alias pbg="pick-ghostty-background"
-
-if is_available nvim; then
-  export_var EDITOR "nvim"
-  export_var VISUAL "nvim"
-  export_var MANPAGER "nvim +Man!"
-fi
 
 if is_available eza; then
   alias ls="eza --group-directories-first"
 fi
 
-alias lg='lazygit'
-
 # Git aliases
 alias gta='gitk --all'
 alias gita='gitk --all'
 alias gg='git gui'
-
-# If podman is installed, use it instead of docker
-if is_command podman; then
-  # export_var DOCKER_HOST "unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
-  # export_var DOCKER_HOST "unix:///run/podman/podman.sock"
-  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
-fi
+alias lg='lazygit'
 
 # k8s aliases
 alias k='kubectl'
 alias kcfg='kubectl config view --minify | grep name'
 alias kc='kubectl ctx'
 alias kn='kubectl ns'
-
-# Print out k8s secret
-ksecret () {
-  kubectl get secret "$@" -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
-}
 
 ################################################################################
 ### Other
@@ -192,15 +186,6 @@ export_var FZF_DEFAULT_OPTS " \
   --color=spinner:#f2d5cf,hl:#e78284 \
   --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
   --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
-
-################################################################################
-### Other
-################################################################################
-
-# Cursor size (GNOME)
-if is_command gsettings; then
-    export_var XCURSOR_SIZE "$(gsettings get org.gnome.desktop.interface cursor-size)"
-fi
 
 ################################################################################
 ### Local shell overrides

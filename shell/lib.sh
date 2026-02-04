@@ -29,13 +29,38 @@ is_interactive() {
   esac
 }
 
+is_linux() {
+  [[ $OSTYPE == linux* ]]
+}
+
+is_mac() {
+  [[ $OSTYPE == darwin* ]]
+}
+
 is_wsl() {
-  [[ -r /proc/sys/kernel/osrelease ]] &&
+  is_linux &&
+    [[ -r /proc/sys/kernel/osrelease ]] &&
     grep -qi microsoft /proc/sys/kernel/osrelease
 }
 
 is_exported() {
-    [ -n "$(export -p | grep "^export $1=")" ]
+  local name=${1-} decl
+  # must be a valid shell identifier
+  [[ $name == [A-Za-z_][A-Za-z0-9_]* ]] || return 1
+
+  case "$(get_running_shell)" in
+    bash)
+      decl=$(declare -p "$name" 2>/dev/null) || return 1
+      [[ $decl == declare\ -x* ]]
+      ;;
+    zsh)
+      decl=$(typeset -p "$name" 2>/dev/null) || return 1
+      [[ $decl == typeset\ -x* ]]
+      ;;
+    *)
+      export -p | grep -q "^export $name="
+      ;;
+  esac
 }
 
 is_command() {

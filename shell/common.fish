@@ -2,23 +2,29 @@
 
 source $DOTFILES/shell/lib.fish
 
+###############################################################################
+# Mise dev tool manager
+###############################################################################
+
+if is_command mise
+    mise activate fish | source
+end
+
 ################################################################################
 ### Environment
 ################################################################################
 
 export_var LC_ALL "en_US.UTF-8"
 export_var LANG "en_US.UTF-8"
-export_var EDITOR "vi"
-export_var DOTFILES "$HOME/dotfiles"
 
-# WSL
-if is_wsl
-    export_var WSL_HOST (awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
+if is_linux; then
+    export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+    export_var LIBVIRT_DEFAULT_URI "qemu:///system"
+end
 
-    function wsl_ip
-        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
-    end
-    export_var WSL_GUEST (wsl_ip)
+# Homebrew
+if test -d "/opt/homebrew/bin"
+    modify_path "/opt/homebrew/bin" prepend
 end
 
 # Android dev
@@ -52,9 +58,8 @@ if test -d "$HOME/Applications/android-studio"
     modify_path "$HOME/Applications/android-studio/bin" append
 end
 
-if test -d "$HOME/Applications/flutter"
-    modify_path "$HOME/Applications/flutter/bin" append
-end
+# Dotnet
+modify_path "$HOME/.dotnet/tools" append
 
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
@@ -65,28 +70,45 @@ modify_path "$HOME/.local/bin" prepend
 modify_path "$HOME/bin" prepend
 
 # Flatpak paths
-export_var XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
+if is_linux
+    export_var XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
+end
 
 # Krew kubectl plugin package manager
 set -q KREW_ROOT; or set KREW_ROOT "$HOME/.krew"
 modify_path "$KREW_ROOT/bin" prepend
 
-###############################################################################
-# Mise dev tool manager
-###############################################################################
+# Windsurf
+if test -d $HOME/.codeium/windsurf/bin
+  modify_path $HOME/.codeium/windsurf/bin prepend
+end
 
-if is_command mise
-    mise activate fish | source
+# Nvim
+if is_available nvim
+    export_var EDITOR "nvim"
+    export_var VISUAL "nvim"
+  export_var MANPAGER "nvim +Man!"
+end
+
+# WSL
+if is_wsl
+    export_var WSL_HOST (awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)
+
+    function wsl_ip
+        ip addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+    end
+    export_var WSL_GUEST (wsl_ip)
 end
 
 ################################################################################
 ### Aliases
 ################################################################################
 
-set -l OS (uname)
-if test "$OS" = "Linux"
+if is_linux
     alias ls='ls --color=auto --group-directories-first --sort=extension'
-else if test "$OS" = Darwin
+end
+
+if is_mac
     alias ls='ls -FG'
     function whoishoggingport
         lsof -n -iTCP:$argv[1] | grep LISTEN
@@ -98,32 +120,22 @@ if is_command sudo
     alias sudo="sudo TERMINFO=\"$TERMINFO\""
 end
 
-alias update-npm-packages="npx -y npm-check-updates -i"
 alias c='clear'
 alias ..='cd ..'
 alias back='cd -'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'
-alias duf="du -sk * | sort -n | perl -ne '\$s,\$f=split(m{\t});for (qw(K M G)) {if(\$s<1024) {printf(\"%.1f\",\$s);print \"\$_\t\$f\"; last};\$s=\$s/1024}'"
 alias gs='git add . && git commit -m "sync" && git push origin'
-alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
+
 alias serve-spa="npx --yes http-server-spa"
-
-if is_available nvim
-    export_var EDITOR "nvim"
-    export_var VISUAL "nvim"
-end
-
-alias lg='lazygit'
+alias update-npm-packages="npx -y npm-check-updates -i"
+alias pbg="pick-ghostty-background"
 
 # Git aliases
 alias gta='gitk --all'
 alias gita='gitk --all'
 alias gg='git gui'
-
-# if is_command podman
-#     export_var DOCKER_HOST "unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
-# end
+alias lg='lazygit'
 
 # k8s aliases
 alias k='kubectl'
@@ -149,15 +161,6 @@ export_var FZF_DEFAULT_OPTS " \
 --color=spinner:#f2d5cf,hl:#e78284 \
 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
 --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
-
-################################################################################
-### Other
-################################################################################
-
-# Cursor size
-if is_command gsettings
-    export_var XCURSOR_SIZE (gsettings get org.gnome.desktop.interface cursor-size)
-end
 
 ################################################################################
 ### Local shell overrides

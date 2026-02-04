@@ -10,12 +10,19 @@ function is_interactive
     status --is-interactive
 end
 
+function is_linux
+    test -n "$OSTYPE"
+    and string match -q 'linux*' -- "$OSTYPE"
+end
+
+function is_mac
+    test -n "$OSTYPE"
+    and string match -q 'darwin*' -- "$OSTYPE"
+end
+
 function is_wsl
-    if test -r /proc/sys/kernel/osrelease
-        grep -qi microsoft /proc/sys/kernel/osrelease
-        return $status
-    end
-    return 1
+    is_linux
+    and string match -qi '*microsoft*' -- (string collect </proc/sys/kernel/osrelease)
 end
 
 function is_exported

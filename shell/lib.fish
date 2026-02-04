@@ -42,16 +42,17 @@ function export_var
     set -gx $var_name $var_value
 end
 
-function export_secret
-    set -l var_name $argv[1]
-    set -l file $argv[2]
-    if test -f $file
-        set -l content (cat $file)
-        export_var $var_name $content
+function export_var_from_file
+    set -l file $argv[1]
+    if test -f "$file"
+        set -l var_name (path basename -- "$file")
+        set var_name (string replace -r '[^A-Za-z0-9_]' '_' -- "$var_name")
+        set -l content (cat -- "$file")
+        export_var "$var_name" "$content"
     end
 end
 
-function export_secrets_from_dir
+function export_vars_from_dir
     set dir $argv[1]
 
     if not test -d "$dir"

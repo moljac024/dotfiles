@@ -175,10 +175,6 @@ ksecret () {
   kubectl get secret "$@" -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
 }
 
-if is_command zide; then
-  export_var ZIDE_DIR "$HOME/.config/zide"
-fi
-
 ################################################################################
 ### Other
 ################################################################################
@@ -208,19 +204,12 @@ if is_command gsettings; then
 fi
 
 ################################################################################
-### Secrets
-################################################################################
-
-export_secrets_from_dir "$DOTFILES/data/secrets"
-
-################################################################################
 ### Local shell overrides
 ################################################################################
 
 if [ -d "$DOTFILES/shell/local.sh.d" ]; then
-    # zsh: ignore unmatched globs; scoped to this function
-    # harmless in bash (ignored), helpful in zsh
-    setopt local_options null_glob 2>/dev/null
+    # zsh no error on empty glob
+    [ "$(get_running_shell)" = zsh ] && setopt local_options null_glob
 
     for f in "$DOTFILES/shell/local.sh.d"/*; do
         [ -f "$f" ] || continue
@@ -231,3 +220,9 @@ if [ -d "$DOTFILES/shell/local.sh.d" ]; then
     done
     unset f
 fi
+
+################################################################################
+### Secrets
+################################################################################
+
+export_vars_from_dir "$DOTFILES/data/secrets"

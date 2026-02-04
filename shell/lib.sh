@@ -59,16 +59,21 @@ export_var() {
   export "$var_name=$var_value"
 }
 
-export_secret () {
-  local var_name=$1
-  local file=$2
-  if [ -f $file ]; then
-    local content=$(cat $file)
-    export_var "${var_name}" "$content"
-  fi
+export_var_from_file() {
+  [ $# -eq 1 ] || return 0
+  local file=$1
+  [ -f "$file" ] || return 0
+
+  local var_name=${file##*/}
+  var_name=${var_name//[^A-Za-z0-9_]/_}
+
+  local content
+  content=$(<"$file")
+
+  export_var "$var_name" "$content"
 }
 
-export_secrets_from_dir() {
+export_vars_from_dir() {
   local dir=$1
   [[ -d "$dir" ]] || return 0
 
@@ -80,25 +85,15 @@ export_secrets_from_dir() {
 
   local file var_name content
 
-  case "$(get_running_shell)" in
-    zsh)
-      setopt local_options null_glob
-      for file in "$dir"/*; do
-        [[ -f "$file" ]] || continue
-        var_name=${file##*/}
-        content=$(<"$file")
-        export_var "$var_name" "$content"
-      done
-      ;;
-    bash|*)
-      for file in "$dir"/*; do
-        [[ -f "$file" ]] || continue
-        var_name=${file##*/}
-        content=$(<"$file")
-        export_var "$var_name" "$content"
-      done
-      ;;
-  esac
+  # zsh no error on empty glob
+  [ "$(get_running_shell)" = zsh ] && setopt local_options null_glob
+
+  for file in "$dir"/*; do
+    [[ -f "$file" ]] || continue
+    var_name=${file##*/}
+    content=$(<"$file")
+    export_var "$var_name" "$content"
+  done
 
   # --- restore xtrace
   [[ $_xtrace_was_on -eq 1 ]] && set -x

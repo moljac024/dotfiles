@@ -19,11 +19,6 @@ export_var DOTFILES "$HOME/dotfiles"
 export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
 export_var LIBVIRT_DEFAULT_URI "qemu:///system"
 
-if [ "$(get_running_shell)" = "zsh" ]; then
-  autoload -Uz compinit && compinit
-  autoload -U +X bashcompinit && bashcompinit
-fi
-
 # WSL
 if is_wsl; then
     export_var WSL_HOST "$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)"
@@ -212,13 +207,6 @@ export_var FZF_DEFAULT_OPTS " \
   --color=spinner:#f2d5cf,hl:#e78284 \
   --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
   --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
-
-# FZF
-if [ "$(get_running_shell)" = "bash" ]; then
-  [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-  [ -e "$HOME/.fzf-extras/fzf-extras.sh" ] \
-    && source "$HOME/.fzf-extras/fzf-extras.sh"
-fi
 
 ################################################################################
 ### Other

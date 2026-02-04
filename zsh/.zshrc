@@ -30,21 +30,22 @@ if [[ -f $DOTFILES/shell/prompt.sh ]]; then
   source $DOTFILES/shell/prompt.sh
 fi
 
-# Lines configured by zsh-newuser-install
+##################################################################
+#### Other
+##################################################################
+
+autoload -Uz compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 unsetopt beep
 bindkey -e
-# End of lines configured by zsh-newuser-install
 
 # Completion
 # zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-##################################################################
-#### zsh-autocomplete
-##################################################################
 
 # This makes Tab and ShiftTab move the selection in the menu right and left, respectively, instead of exiting the menu:
 bindkey              '^I'         menu-complete

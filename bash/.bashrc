@@ -25,7 +25,7 @@ if [[ -f $DOTFILES/shell/prompt.sh ]]; then
 fi
 
 ################################################################################
-### Completions
+### Other
 ################################################################################
 
 # Bash completions
@@ -59,6 +59,11 @@ if ! shopt -oq posix; then
         complete -F _complete_alias "${!BASH_ALIASES[@]}"
     fi
 fi
+
+# FZF
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -e "$HOME/.fzf-extras/fzf-extras.sh" ] \
+  && source "$HOME/.fzf-extras/fzf-extras.sh"
 
 if is_command kubectl; then
     source <(kubectl completion bash)

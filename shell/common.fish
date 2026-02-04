@@ -1,6 +1,6 @@
 # vim: filetype=fish
 
-source $DOTFILES/shell/util.fish
+source $DOTFILES/shell/lib.fish
 
 ################################################################################
 ### Environment

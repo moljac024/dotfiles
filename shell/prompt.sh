@@ -1,6 +1,6 @@
 # vim: filetype=sh
 
-source "$DOTFILES/shell/util.sh"
+source "$DOTFILES/shell/lib.sh"
 
 # Disable flow control
 stty -ixon

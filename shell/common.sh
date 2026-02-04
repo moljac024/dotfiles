@@ -1,10 +1,10 @@
 # vim: filetype=sh
 # set -euo pipefail # Shell strict mode
 
-source "$DOTFILES/shell/util.sh"
+source "$DOTFILES/shell/lib.sh"
 
 if [ "$(get_running_shell)" = "unknown" ]; then
-  echo "Unknown shell, common.sh exiting"
+  echo "Unknown shell, stopping."
   return
 fi
 

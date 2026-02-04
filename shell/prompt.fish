@@ -1,4 +1,4 @@
-source $DOTFILES/shell/util.fish
+source $DOTFILES/shell/lib.fish
 
 # Disable flow control
 stty -ixon

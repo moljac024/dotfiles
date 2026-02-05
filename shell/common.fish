@@ -75,6 +75,10 @@ alias serve-spa="npx --yes http-server-spa"
 alias update-npm-packages="npx -y npm-check-updates -i"
 alias pbg="pick-ghostty-background"
 
+if is_command eza
+  alias ls="eza --group-directories-first"
+end
+
 # Git aliases
 alias gta='gitk --all'
 alias gita='gitk --all'

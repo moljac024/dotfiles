@@ -56,9 +56,6 @@ fi
 
 if is_mac; then
   alias ls='ls -FG'
-  whoishoggingport () {
-    lsof -n -iTCP:$1 | grep LISTEN
-  }
 fi
 
 if is_command sudo; then
@@ -78,7 +75,7 @@ alias serve-spa="npx --yes http-server-spa"
 alias update-npm-packages="npx -y npm-check-updates -i"
 alias pbg="pick-ghostty-background"
 
-if is_available eza; then
+if is_command eza; then
   alias ls="eza --group-directories-first"
 fi
 
@@ -101,7 +98,7 @@ fi
 
 # Direnv
 if is_command direnv; then
- kshell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(direnv hook "$shell")";; esac
+  shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(direnv hook "$shell")";; esac
 fi
 
 # Ripgrep and fzf config
@@ -117,7 +114,7 @@ export_var FZF_DEFAULT_OPTS " \
   --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 # Nvim
-if is_available nvim; then
+if is_command nvim; then
   export_var EDITOR "nvim"
   export_var VISUAL "nvim"
   export_var MANPAGER "nvim +Man!"

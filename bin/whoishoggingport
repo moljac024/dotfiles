@@ -1,0 +1,11 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+
+source $DOTFILES/shell/lib.sh
+
+if ! is_mac; then
+  echo "This script is meant to run on Mac OS only."
+  exit 1
+fi
+
+lsof -n -iTCP:$1 | grep LISTEN

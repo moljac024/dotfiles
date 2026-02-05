@@ -10,8 +10,8 @@ export_var LC_ALL "en_US.UTF-8"
 export_var LANG "en_US.UTF-8"
 
 # Homebrew
-if test -d "/opt/homebrew/bin"
-    modify_path "/opt/homebrew/bin" prepend
+if test -d /opt/homebrew/bin
+    modify_path /opt/homebrew/bin prepend
 end
 
 # Dotnet
@@ -33,7 +33,7 @@ modify_path "$KREW_ROOT/bin" prepend
 
 # Windsurf
 if test -d $HOME/.codeium/windsurf/bin
-  modify_path $HOME/.codeium/windsurf/bin prepend
+    modify_path $HOME/.codeium/windsurf/bin prepend
 end
 
 # Mise dev env
@@ -54,9 +54,6 @@ end
 
 if is_mac
     alias ls='ls -FG'
-    function whoishoggingport
-        lsof -n -iTCP:$argv[1] | grep LISTEN
-    end
 end
 
 if is_command sudo
@@ -76,7 +73,7 @@ alias update-npm-packages="npx -y npm-check-updates -i"
 alias pbg="pick-ghostty-background"
 
 if is_command eza
-  alias ls="eza --group-directories-first"
+    alias ls="eza --group-directories-first"
 end
 
 # Git aliases
@@ -90,6 +87,16 @@ alias k='kubectl'
 alias kcfg='kubectl config view --minify | grep name'
 alias kc='kubectl ctx'
 alias kn='kubens'
+
+# Kubectl completions
+if is_command kubectl
+  kubectl completion fish | source
+end
+
+# Direnv
+if is_command direnv
+  direnv hook fish | source
+end
 
 ################################################################################
 ### Other
@@ -108,10 +115,10 @@ export_var FZF_DEFAULT_OPTS " \
 --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 # Nvim
-if is_available nvim
-    export_var EDITOR "nvim"
-    export_var VISUAL "nvim"
-  export_var MANPAGER "nvim +Man!"
+if is_command nvim
+    export_var EDITOR nvim
+    export_var VISUAL nvim
+    export_var MANPAGER "nvim +Man!"
 end
 
 # WSL

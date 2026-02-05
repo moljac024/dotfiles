@@ -54,9 +54,6 @@ fi
 
 if is_linux; then
   alias ls='ls --color=auto --group-directories-first --sort=extension'
-  alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
-  alias update-fedora='sudo sh -c "dnf update -y"'
-  alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
 fi
 
 if is_mac; then
@@ -102,6 +99,18 @@ alias kn='kubectl ns'
 ################################################################################
 ### Other
 ################################################################################
+
+# Ripgrep and fzf config
+export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
+export_var FZF_DEFAULT_COMMAND "rg --files"
+export_var FZF_FIND_FILE_COMMAND "rg --files"
+
+# Catppuccin frappe theme for FZF
+export_var FZF_DEFAULT_OPTS " \
+  --color=bg+:-1,bg:-1 \
+  --color=spinner:#f2d5cf,hl:#e78284 \
+  --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
+  --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 # Nvim
 if is_available nvim; then
@@ -163,18 +172,6 @@ fi
 
 # Enable Erlang/Elixir shell history
 export_var ERL_AFLAGS "-kernel shell_history enabled"
-
-# Ripgrep and fzf config
-export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
-export_var FZF_DEFAULT_COMMAND "rg --files"
-export_var FZF_FIND_FILE_COMMAND "rg --files"
-
-# Catppuccin frappe theme for FZF
-export_var FZF_DEFAULT_OPTS " \
-  --color=bg+:-1,bg:-1 \
-  --color=spinner:#f2d5cf,hl:#e78284 \
-  --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
-  --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 # If podman is installed, use it instead of docker
 if is_command podman && is_linux; then

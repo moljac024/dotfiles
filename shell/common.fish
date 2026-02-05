@@ -25,6 +25,8 @@ modify_path "$HOME/.local/bin" prepend
 # Home binaries (systems should do this already)
 modify_path "$HOME/bin" prepend
 
+modify_path "$HOME/.config/sway/bin" prepend
+
 # Krew kubectl plugin package manager
 set -q KREW_ROOT; or set KREW_ROOT "$HOME/.krew"
 modify_path "$KREW_ROOT/bin" prepend
@@ -48,9 +50,6 @@ end
 
 if is_linux
     alias ls='ls --color=auto --group-directories-first --sort=extension'
-    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
-    alias update-fedora='sudo sh -c "dnf update -y"'
-    alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
 end
 
 if is_mac
@@ -91,6 +90,18 @@ alias kn='kubens'
 ################################################################################
 ### Other
 ################################################################################
+
+# Ripgrep and fzf config
+export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
+export_var FZF_DEFAULT_COMMAND "rg --files"
+export_var FZF_FIND_FILE_COMMAND "rg --files"
+
+# Catppuccin frappe theme for FZF
+export_var FZF_DEFAULT_OPTS " \
+--color=bg+:-1,bg:-1 \
+--color=spinner:#f2d5cf,hl:#e78284 \
+--color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
+--color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
 # Nvim
 if is_available nvim
@@ -145,7 +156,7 @@ if test -d "$HOME/Applications/android-studio"
     modify_path "$HOME/Applications/android-studio/bin" append
 end
 
-if is_linux; then
+if is_linux
     export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
     export_var LIBVIRT_DEFAULT_URI "qemu:///system"
 end
@@ -153,17 +164,10 @@ end
 # Enable Erlang/Elixir shell history
 export_var ERL_AFLAGS "-kernel shell_history enabled"
 
-# Ripgrep and fzf config
-export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
-export_var FZF_DEFAULT_COMMAND "rg --files"
-export_var FZF_FIND_FILE_COMMAND "rg --files"
-
-# Catppuccin frappe theme for FZF
-export_var FZF_DEFAULT_OPTS " \
---color=bg+:-1,bg:-1 \
---color=spinner:#f2d5cf,hl:#e78284 \
---color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
---color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
+# If podman is installed, use it instead of docker
+if is_command podman
+  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
+end
 
 ################################################################################
 ### Local shell overrides

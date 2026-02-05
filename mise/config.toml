@@ -23,6 +23,7 @@ zoxide = "latest" # cd on steroids
 yazi = "latest" # file manager
 usage = "latest"
 neovim = "latest" # text editor / ide
+helix = "latest" # text editor / ide
 restic = "latest" # backup tool
 borg = "latest" # backup tool
 lazyssh = "latest"

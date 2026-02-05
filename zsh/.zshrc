@@ -1,6 +1,7 @@
 # vim: filetype=zsh
 
 export DOTFILES=$HOME/dotfiles
+source $DOTFILES/shell/lib.sh
 
 ################################################################################
 ### Plugins
@@ -14,28 +15,12 @@ fi
 source $ANTIDOTE_DIR/antidote.zsh
 antidote load
 
-################################################################################
-### Source common shell setup
-################################################################################
-
-if [[ -f $DOTFILES/shell/common.sh ]]; then
-  source $DOTFILES/shell/common.sh
-fi
-
-################################################################################
-### Prompt
-################################################################################
-
-if [[ -f $DOTFILES/shell/prompt.sh ]]; then
-  source $DOTFILES/shell/prompt.sh
-fi
-
-##################################################################
-#### Other
-##################################################################
-
 autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
+
+################################################################################
+#### Other
+################################################################################
 
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -64,3 +49,19 @@ bindkey "$terminfo[kcbt]" menu-select
 
 # To suppress autocompletion until a minimum number of characters have been typed:
 zstyle ':autocomplete:*' min-input 3
+
+################################################################################
+### Source common shell setup
+################################################################################
+
+if [[ -f $DOTFILES/shell/common.sh ]]; then
+  source $DOTFILES/shell/common.sh
+fi
+
+################################################################################
+### Prompt
+################################################################################
+
+if [[ -f $DOTFILES/shell/prompt.sh ]]; then
+  source $DOTFILES/shell/prompt.sh
+fi

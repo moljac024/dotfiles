@@ -109,7 +109,6 @@ ensure_symlink $ROOT_DIR/ripgrep/.ripgreprc $HOME/.ripgreprc
 
 # Tmux
 mkdir -p $HOME/.tmux/plugins
-git_clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 ensure_symlink $ROOT_DIR/tmux/.tmux.conf $HOME/.tmux.conf
 
 # Zellij
@@ -194,4 +193,4 @@ ensure_symlink $ROOT_DIR/nautilus/actions $HOME/.local/share/nautilus/actions
 
 # KDE google accounts fix
 mkdir -p $HOME/.local/share/accounts/providers
-ensure_symlink $ROOT_DIR/local/share/accounts/providers/google.provider $HOME/.local/share/accounts/providers/google.provider
+ensure_symlink $ROOT_DIR/data/kde/google_account_provider $HOME/.local/share/accounts/providers/google.provider

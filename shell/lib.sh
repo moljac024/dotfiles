@@ -157,7 +157,7 @@ source_dir() {
     # zsh no error on empty glob
     [ "$(get_running_shell)" = zsh ] && setopt local_options null_glob
 
-    for f in "$DOTFILES/shell/local.sh.d"/*; do
+    for f in "$1"/*; do
       [ -f "$f" ] || continue
       [ "$(basename "$f")" = ".gitignore" ] && continue
       [ "$(basename "$f")" = ".gitkeep" ] && continue

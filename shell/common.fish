@@ -125,6 +125,14 @@ if is_linux
     export_var XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
 end
 
+if is_linux
+    export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+    export_var LIBVIRT_DEFAULT_URI "qemu:///system"
+end
+
+# Enable Erlang/Elixir shell history
+export_var ERL_AFLAGS "-kernel shell_history enabled"
+
 # Android dev
 if test -d $HOME/Android/Sdk
     export_var ANDROID_HOME "$HOME/Android/Sdk"
@@ -156,27 +164,14 @@ if test -d "$HOME/Applications/android-studio"
     modify_path "$HOME/Applications/android-studio/bin" append
 end
 
-if is_linux
-    export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
-    export_var LIBVIRT_DEFAULT_URI "qemu:///system"
-end
-
-# Enable Erlang/Elixir shell history
-export_var ERL_AFLAGS "-kernel shell_history enabled"
-
-# If podman is installed, use it instead of docker
-if is_command podman
-  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
-end
-
 ################################################################################
 ### Local shell overrides
 ################################################################################
 
-source_dir "$DOTFILES/shell/local.fish.d"
+source_dir "$DOTFILES/shell/fish.local.d"
 
 ################################################################################
 ### Secrets
 ################################################################################
 
-export_vars_from_dir "$DOTFILES/data/secrets"
+export_vars_from_dir "$DOTFILES/shell/env.local.d"

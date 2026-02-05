@@ -8,29 +8,16 @@ if [ "$(get_running_shell)" = "unknown" ]; then
 fi
 
 ################################################################################
-### Environment
+### Paths
 ################################################################################
-
-export_var LC_ALL "en_US.UTF-8"
-export_var LANG "en_US.UTF-8"
 
 # Homebrew
 if [ -d "/opt/homebrew/bin" ]; then
-    modify_path "/opt/homebrew/bin" prepend
+  modify_path "/opt/homebrew/bin" prepend
 fi
-
-# Dotnet
-modify_path "$HOME/.dotnet/tools" append
 
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
-
-# Locally compiled/installed files
-modify_path "$HOME/.local/bin" prepend
-# Home binaries (systems should do this already)
-modify_path "$HOME/bin" prepend
-
-modify_path "$HOME/.config/sway/bin" prepend
 
 # Krew kubectl plugin package manager
 modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
@@ -39,6 +26,14 @@ modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
 if [ -d $HOME/.codeium/windsurf/bin ]; then
   modify_path $HOME/.codeium/windsurf/bin prepend
 fi
+
+# Sway scripts
+modify_path "$HOME/.config/sway/bin" prepend
+
+# Locally compiled/installed files
+modify_path "$HOME/.local/bin" prepend
+# Home binaries (systems should do this already)
+modify_path "$HOME/bin" prepend
 
 # Mise dev env
 # NOTE: This has to come after PATH setup
@@ -49,8 +44,11 @@ if is_command mise; then
 fi
 
 ################################################################################
-### Aliases
+### Main
 ################################################################################
+
+export_var LC_ALL "en_US.UTF-8"
+export_var LANG "en_US.UTF-8"
 
 if is_linux; then
   alias ls='ls --color=auto --group-directories-first --sort=extension'
@@ -96,9 +94,15 @@ alias kcfg='kubectl config view --minify | grep name'
 alias kc='kubectl ctx'
 alias kn='kubectl ns'
 
-################################################################################
-### Other
-################################################################################
+# Kubectl completions
+if is_command kubectl; then
+  shell=$(get_running_shell); case "$shell" in zsh|bash) source <(kubectl completion "$shell") ;; esac
+fi
+
+# Direnv
+if is_command direnv; then
+ kshell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(direnv hook "$shell")";; esac
+fi
 
 # Ripgrep and fzf config
 export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
@@ -134,6 +138,14 @@ if is_linux; then
   export_var XDG_DATA_DIRS "$HOME"/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:"$XDG_DATA_DIRS"
 fi
 
+if is_linux; then
+  export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+  export_var LIBVIRT_DEFAULT_URI "qemu:///system"
+fi
+
+# Enable Erlang/Elixir shell history
+export_var ERL_AFLAGS "-kernel shell_history enabled"
+
 # Android dev
 if [ -d "$HOME/Android/Sdk" ]; then
     export_var ANDROID_HOME "$HOME/Android/Sdk"
@@ -165,27 +177,14 @@ if [ -d "$HOME/Applications/android-studio" ]; then
     modify_path "$HOME/Applications/android-studio/bin" append
 fi
 
-if is_linux; then
-  export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
-  export_var LIBVIRT_DEFAULT_URI "qemu:///system"
-fi
-
-# Enable Erlang/Elixir shell history
-export_var ERL_AFLAGS "-kernel shell_history enabled"
-
-# If podman is installed, use it instead of docker
-if is_command podman && is_linux; then
-  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
-fi
-
 ################################################################################
 ### Local shell overrides
 ################################################################################
 
-source_dir "$DOTFILES/shell/local.sh.d"
+source_dir "$DOTFILES/shell/sh.local.d"
 
 ################################################################################
 ### Secrets
 ################################################################################
 
-export_vars_from_dir "$DOTFILES/data/secrets"
+export_vars_from_dir "$DOTFILES/shell/env.local.d"

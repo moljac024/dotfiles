@@ -1,7 +1,7 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-command_timeout = 2000
+command_timeout = 500
 format = """
 $username\
 $hostname\
@@ -167,6 +167,7 @@ python_binary = ['python', 'python3', 'python2']
 
 [custom.uv_python]
 command = 'uv python find --show-version'
+disabled = true
 detect_files = ['.python-version', 'pyproject.toml', 'uv.lock']
 symbol = "🐍"
 format = '\[[ $symbol \(UV\)( $output)]($style)\]'

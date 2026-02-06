@@ -101,6 +101,11 @@ if is_command direnv; then
   shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(direnv hook "$shell")";; esac
 fi
 
+# Zoxide
+if is_command zoxide; then
+  shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(zoxide init "$shell")";; esac
+fi
+
 # Ripgrep and fzf config
 export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
 export_var FZF_DEFAULT_COMMAND "rg --files"

@@ -98,6 +98,11 @@ if is_command direnv
   direnv hook fish | source
 end
 
+# Zoxide
+if is_command zoxide
+  zoxide init fish | source
+end
+
 ################################################################################
 ### Other
 ################################################################################

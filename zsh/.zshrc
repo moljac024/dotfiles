@@ -1,7 +1,17 @@
 # vim: filetype=zsh
 
-export DOTFILES=$HOME/dotfiles
-source $DOTFILES/shell/lib.sh
+################################################################################
+### Base
+################################################################################
+
+# Important that this comes first
+autoload -Uz compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+export DOTFILES="$HOME/dotfiles"
+source "$DOTFILES/shell/sh/lib"
+source "$DOTFILES/shell/sh/common"
+source "$DOTFILES/shell/sh/prompt"
 
 ################################################################################
 ### Plugins
@@ -14,9 +24,6 @@ fi
 
 source $ANTIDOTE_DIR/antidote.zsh
 antidote load
-
-autoload -Uz compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
 
 ################################################################################
 #### Zsh config
@@ -51,25 +58,16 @@ bindkey "$terminfo[kcbt]" menu-select
 zstyle ':autocomplete:*' min-input 3
 
 ################################################################################
-### Source common shell setup
-################################################################################
-
-if [[ -f $DOTFILES/shell/common.sh ]]; then
-  source $DOTFILES/shell/common.sh
-fi
-
-################################################################################
-### Prompt
-################################################################################
-
-if [[ -f $DOTFILES/shell/prompt.sh ]]; then
-  source $DOTFILES/shell/prompt.sh
-fi
-
-################################################################################
 ### Other
 ################################################################################
 
-if is_command kubectl && [ -f "$DOTFILES/zsh/lazy-complete-kubectl" ]; then
-  source "$DOTFILES/zsh/lazy-complete-kubectl"
+if [[ ! -f "$DOTFILES/zsh/local/kubectl-completions" ]]; then
+  kubectl completion zsh > "$DOTFILES/zsh/local/kubectl-completions"
 fi
+
+################################################################################
+### Local
+################################################################################
+
+source_dir "$DOTFILES/zsh/local"
+source_dir "$DOTFILES/shell/sh/local"

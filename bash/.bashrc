@@ -9,8 +9,10 @@ if [ -f /etc/bashrc ]; then
     source /etc/bashrc
 fi
 
-export DOTFILES=$HOME/dotfiles
-source $DOTFILES/shell/lib.sh
+export DOTFILES="$HOME/dotfiles"
+source "$DOTFILES/shell/sh/lib"
+source "$DOTFILES/shell/sh/common"
+source "$DOTFILES/shell/sh/prompt"
 
 ################################################################################
 ### Completions
@@ -37,33 +39,16 @@ fi
   && source "$HOME/.fzf-extras/fzf-extras.sh"
 
 ################################################################################
-### Source common shell setup
-################################################################################
-
-if [[ -f $DOTFILES/shell/common.sh ]]; then
-  source $DOTFILES/shell/common.sh
-fi
-
-################################################################################
-### Prompt
-################################################################################
-
-if [[ -f $DOTFILES/shell/prompt.sh ]]; then
-  source $DOTFILES/shell/prompt.sh
-fi
-
-################################################################################
 ### Other
 ################################################################################
 
-# Complete aliases, need to run this after all setup
-if [[ -f "$DOTFILES/bash/bash-complete-alias" ]]; then
-  source "$DOTFILES/bash/bash-complete-alias"
-  # Complete all aliases
-  complete -F _complete_alias "${!BASH_ALIASES[@]}"
+if [[ ! -f "$DOTFILES/bash/local/kubectl-completions" ]]; then
+  kubectl completion bash > "$DOTFILES/bash/local/kubectl-completions"
 fi
 
-# Lazy kubectl completions
-if is_command kubectl && [ -f "$DOTFILES/bash/lazy-complete-kubectl" ]; then
-  source "$DOTFILES/bash/lazy-complete-kubectl"
-fi
+################################################################################
+### Local
+################################################################################
+
+source_dir "$DOTFILES/bash/local"
+source_dir "$DOTFILES/shell/sh/local"

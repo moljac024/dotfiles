@@ -3,10 +3,13 @@ set -gx DOTFILES $HOME/dotfiles
 # Surpress fish greeting
 set -U fish_greeting
 
-if test -f $DOTFILES/shell/common.fish
-  source $DOTFILES/shell/common.fish
+source $DOTFILES/shell/fish/lib
+source $DOTFILES/shell/fish/common
+source $DOTFILES/shell/fish/prompt
+
+if not test -f "$DOTFILES/shell/fish/local/kubectl-completions"
+  kubectl completion fish > "$DOTFILES/shell/fish/local/kubectl-completions"
 end
 
-if test -f $DOTFILES/shell/prompt.fish
-  source $DOTFILES/shell/prompt.fish
-end
+# Local shell overrides, this should be last
+source_dir "$DOTFILES/shell/fish/local"

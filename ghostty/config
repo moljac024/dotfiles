@@ -56,9 +56,9 @@ quick-terminal-size = 65%
 ### Background
 ################################################################################
 
-background-opacity = 0.98
+background-opacity = 0.97
 background-image = "~/dotfiles/backgrounds/terminal/simple/tie.png"
-background-image-opacity = 0.1
+background-image-opacity = 0.07
 background-image-position = bottom-right
 background-image-fit = cover
 
@@ -148,6 +148,28 @@ keybind = super+digit_7=unbind
 keybind = super+digit_8=unbind
 keybind = super+digit_9=unbind
 keybind = super+digit_0=unbind
+
+# Unbind alt+n
+keybind = alt+1=unbind
+keybind = alt+2=unbind
+keybind = alt+3=unbind
+keybind = alt+4=unbind
+keybind = alt+5=unbind
+keybind = alt+6=unbind
+keybind = alt+7=unbind
+keybind = alt+8=unbind
+keybind = alt+9=unbind
+keybind = alt+0=unbind
+keybind = alt+digit_1=unbind
+keybind = alt+digit_2=unbind
+keybind = alt+digit_3=unbind
+keybind = alt+digit_4=unbind
+keybind = alt+digit_5=unbind
+keybind = alt+digit_6=unbind
+keybind = alt+digit_7=unbind
+keybind = alt+digit_8=unbind
+keybind = alt+digit_9=unbind
+keybind = alt+digit_0=unbind
 
 ################################################################################
 ### Local config override

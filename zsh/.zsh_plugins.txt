@@ -1,6 +1,4 @@
 marlonrichert/zsh-autocomplete
-
-# popular fish-like plugins
 mattmc3/zfunctions
 zdharma-continuum/fast-syntax-highlighting kind:defer
 zsh-users/zsh-history-substring-search

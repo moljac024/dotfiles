@@ -1,4 +1,4 @@
-source $DOTFILES/shell/lib.fish
+# vim: filetype=fish
 
 ################################################################################
 ### Prompt

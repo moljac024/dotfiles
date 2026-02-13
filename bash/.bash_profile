@@ -1,9 +1,5 @@
-#!/usr/bin/env bash
+# vim: filetype=bash
 
-if [[ -f $HOME/.shell/util.sh ]]; then
-  source $HOME/.shell/util.sh
-fi
-
-if [[ -f $HOME/.bash.mine ]]; then
-    source $HOME/.bash.mine
+if [[ -f ~/.bashrc ]]; then
+  source ~/.bashrc
 fi

@@ -15,8 +15,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      "williamboman/mason.nvim", -- LSP tool installer
-      "b0o/SchemaStore.nvim",    -- JSON and YAML schemas
+      "b0o/SchemaStore.nvim", -- JSON and YAML schemas
     },
     config = function()
       local schemastore = require("schemastore")
@@ -27,6 +26,7 @@ return {
       end
 
       local configs = {
+        -- JSON
         jsonls = {
           settings = {
             json = {
@@ -35,6 +35,7 @@ return {
             },
           },
         },
+        -- Yaml
         yamlls = {
           settings = {
             yaml = {
@@ -49,49 +50,38 @@ return {
             },
           },
         },
+
+        -- Bash
         bashls = {},
+
+        -- Lua
         lua_ls = {},
 
+        -- Markdown
+        marksman = {},
+
+        -- Typescript, Javascript
         -- tsserver = {} -- Default typescript LSP,
         vtsls = {}, -- Alternative typescript LSP
-        cssls = {},
-        tailwindcss = {},
         eslint = {},
 
+        -- CSS
+        cssls = {},
+        tailwindcss = {},
+
+        -- Python
         pyright = {},
+        ruff = {},
+
+        -- Rust
         rust_analyzer = {},
+
+        -- Go
         gopls = {},
+
+        -- Zig
+        zls = {},
       }
-
-      -- Setup mason
-      require("mason").setup()
-      local registry = require("mason-registry")
-
-      local tools_to_install = {
-        "bash-language-server",
-        "lua-language-server",
-
-        "rust-analyzer",
-        "pyright", -- Python
-
-        "elixir-ls",
-        "gopls",
-
-        -- Web
-        "json-lsp",
-        "yaml-language-server",
-        "css-lsp",
-        "eslint-lsp",
-        "tailwindcss-language-server",
-        "vtsls", -- Typescript
-      }
-
-      for _, tool in ipairs(tools_to_install) do
-        if not registry.is_installed(tool) then
-          registry.get_package(tool):install()
-        end
-      end
-      -- End mason setup
 
       for name, config in pairs(configs) do
         config = vim.tbl_deep_extend("force", {}, {
@@ -105,6 +95,21 @@ return {
       local disable_semantic_tokens = {
         lua = true,
       }
+
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client == nil then
+            return
+          end
+          if client.name == 'ruff' then
+            -- Disable hover in favor of Pyright
+            client.server_capabilities.hoverProvider = false
+          end
+        end,
+        desc = 'LSP: Disable hover capability from Ruff',
+      })
 
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)

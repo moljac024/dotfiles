@@ -1,0 +1,30 @@
+# vim: filetype=sh
+
+source "$DOTFILES/shell/lib.sh"
+
+################################################################################
+### Prompt
+################################################################################
+
+if is_interactive; then
+  # Disable flow control
+  stty -ixon
+
+  if is_command starship; then
+    eval "$(starship init "$(get_running_shell)")"
+    eval "$(starship completions "$(get_running_shell)")"
+  elif is_mise_command starship; then
+    eval "$(mise exec starship -- starship init "$(get_running_shell)")"
+    eval "$(mise exec starship -- starship completions "$(get_running_shell)")"
+  fi
+
+  # Direnv
+  if is_command direnv; then
+    shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(direnv hook "$shell")";; esac
+  fi
+
+  # Zoxide
+  if is_command zoxide; then
+    shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(zoxide init "$shell")";; esac
+  fi
+fi

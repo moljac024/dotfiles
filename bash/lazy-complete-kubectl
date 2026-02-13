@@ -1,0 +1,28 @@
+# vim: filetype=bash
+
+# ---- kubectl completion: lazy-load on first TAB ----
+__kubectl_lazy_complete() {
+  # Load kubectl completion definitions
+  source <(kubectl completion bash)
+  # Optional alias
+  alias k=kubectl
+  complete -F __start_kubectl k 2>/dev/null || true
+
+  # Remove the stub so normal completion takes over
+  complete -r kubectl 2>/dev/null || true
+  complete -r k 2>/dev/null || true
+  unset -f __kubectl_lazy_complete __kubectl_lazy_stub
+}
+
+# Stub completion function: first TAB triggers loader, second TAB completes
+__kubectl_lazy_stub() {
+  __kubectl_lazy_complete
+  # Now re-run completion for the current word
+  COMPREPLY=()
+  _init_completion -n : || return
+  __start_kubectl
+}
+
+# Attach stub to kubectl (and k if you already have it)
+complete -F __kubectl_lazy_stub kubectl
+complete -F __kubectl_lazy_stub k 2>/dev/null || true

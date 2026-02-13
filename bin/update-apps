@@ -1,9 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
-if command -v mise >/dev/null 2>&1; then
-    mise self-update --yes && mise up
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if is_command mise; then
+    mise self-update --yes; mise up
 fi
 
-if command -v flatpak >/dev/null 2>&1; then
+if is_command flatpak; then
     flatpak update -y
+fi
+
+if is_command brew; then
+    brew update && brew upgrade
 fi

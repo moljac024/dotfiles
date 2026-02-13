@@ -1,0 +1,10 @@
+#!/bin/sh
+# bashshim - prefer Homebrew bash, fall back to system bash
+
+if [ -x /opt/homebrew/bin/bash ]; then
+    exec /opt/homebrew/bin/bash "$@"
+elif [ -x /usr/local/bin/bash ]; then
+    exec /usr/local/bin/bash "$@"
+else
+    exec /bin/bash "$@"
+fi

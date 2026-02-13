@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
 # Path to the temporary file for storing the selected file
 YAZI_SELECTED_FILE="/tmp/yazi-selected-file"

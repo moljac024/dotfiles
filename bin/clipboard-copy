@@ -1,0 +1,5 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+#
+
+APP_CHAIN="wl-copy:pbcopy:xclip -selection clipboard" exec app-chain "$@"

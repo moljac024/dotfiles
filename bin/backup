@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
 # Check if restic is installed and executable
 if ! command -v restic &> /dev/null; then
@@ -25,8 +26,8 @@ if [ ! -d "$REPO" ]; then
 fi
 
 # Set the backup repository include/exclude files
-INCLUDES="$HOME/dotfiles/backup/restic/include.txt"
-EXCLUDES="$HOME/dotfiles/backup/restic/exclude.txt"
+INCLUDES="$DOTFILES/data/backup_restic/include.txt"
+EXCLUDES="$DOTFILES/data/backup_restic/exclude.txt"
 
 if [ "$CURRENT_DIR" != "$EXPECTED_DIR" ]; then
     echo "Error: Script must be run from $EXPECTED_DIR. Exiting."

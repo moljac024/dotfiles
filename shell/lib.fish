@@ -1,0 +1,155 @@
+################################################################################
+### Helper functions
+################################################################################
+
+function get_running_shell
+    echo "fish"
+end
+
+function is_interactive
+    status --is-interactive
+end
+
+function is_linux
+    test -n "$OSTYPE"
+    and string match -q 'linux*' -- "$OSTYPE"
+end
+
+function is_mac
+    test -n "$OSTYPE"
+    and string match -q 'darwin*' -- "$OSTYPE"
+end
+
+function is_wsl
+    is_linux
+    and string match -qi '*microsoft*' -- (string collect </proc/sys/kernel/osrelease)
+end
+
+function is_exported
+    set -q "$argv[1]"
+end
+
+function is_command
+    command -v "$argv[1]" >/dev/null 2>&1
+end
+
+function is_mise_command
+    is_command mise && mise which "$argv[1]" >/dev/null 2>&1
+end
+
+function is_available
+    is_command "$argv[1]" || is_mise_command "$argv[1]"
+end
+
+function get_var
+  set -l var_name $argv[1]
+  set -l var_default_value $argv[2]
+
+  if set -q $var_name
+   echo (eval echo \$$var_name)
+  else
+    echo $var_default_value
+  end
+end
+
+function export_var
+    set -l var_name $argv[1]
+    set -l var_value $argv[2]
+    # Replace spaces with underscores in variable name
+    set var_name (string replace -a ' ' '_' $var_name)
+    set -gx $var_name $var_value
+end
+
+function export_var_from_file
+    set -l file $argv[1]
+    if test -f "$file"
+        set -l var_name (path basename -- "$file")
+        set var_name (string replace -r '[^A-Za-z0-9_]' '_' -- "$var_name")
+        set -l content (cat -- "$file")
+        export_var "$var_name" "$content"
+    end
+end
+
+function export_vars_from_dir
+    set dir $argv[1]
+
+    if not test -d "$dir"
+        echo "Error: '$dir' is not a directory" >&2
+        return 1
+    end
+
+    for file in $dir/*
+        if test -f "$file"
+            set var_name (basename "$file")
+
+            # Read the file contents properly without Fish breaking on special characters
+            set -l content (cat "$file" | string collect --no-trim)
+
+            # Export while wrapping the content in quotes to preserve special characters
+            set -gx $var_name "$content"
+        end
+    end
+end
+
+function ensure_symlink
+    set -l original $argv[1]
+    set -l path $argv[2]
+    set -l original_fullpath (realpath $original)
+    if test -L $path
+        rm $path
+    end
+
+    if test -e $path
+        mv $path $path.old
+    end
+    ln -s $original_fullpath $path
+end
+
+function modify_path
+    set -l dir $argv[1]
+    set -l action $argv[2]
+    if not contains $dir $PATH
+        if test "$action" = "prepend"
+            set -gx PATH $dir $PATH
+        else
+            set -gx PATH $PATH $dir
+        end
+    end
+end
+
+function source_dir
+    set -l dir $argv[1]
+    test -d "$dir"; or return
+
+    for f in "$dir"/*
+        test -f "$f"; or continue
+
+        switch (path basename -- "$f")
+            case ".gitignore" ".gitkeep" "README.md"
+                continue
+        end
+
+        source "$f"
+    end
+end
+
+function git_clone
+    set -l repo $argv[1]
+    set -l location $argv[2]
+    set -l location_fullpath (realpath (dirname $location))/(basename $location)
+    if not test -d "$location_fullpath"
+        git clone "$repo" "$location_fullpath"
+    end
+end
+
+function cdr
+    set dir (pwd)
+    while test "$dir" != "/"  # Stop at the root
+        if test -d "$dir/.git"
+            cd "$dir"
+            return
+        end
+        set dir (dirname "$dir")
+    end
+    echo "No .git directory found" >&2
+end

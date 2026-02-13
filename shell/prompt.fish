@@ -1,0 +1,28 @@
+source $DOTFILES/shell/lib.fish
+
+################################################################################
+### Prompt
+################################################################################
+
+if is_interactive
+   # Disable flow control
+   stty -ixon
+
+   if is_command starship
+       starship init fish | source
+   else
+       if is_mise_command starship
+           mise exec starship -- starship init fish | source
+       end
+   end
+
+  # Direnv
+  if is_command direnv
+    direnv hook fish | source
+  end
+
+  # Zoxide
+  if is_command zoxide
+    zoxide init fish | source
+  end
+end

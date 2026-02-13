@@ -1,13 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
-if command -v apt-get >/dev/null 2>&1; then
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if is_command apt-get; then
     sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"
 fi
 
-if command -v dnf >/dev/null 2>&1; then
+if is_command dnf; then
     sudo sh -c "dnf update -y"
 fi
 
-if command -v rpm-ostree >/dev/null 2>&1; then
+if is_command rpm-ostree; then
     rpm-ostree upgrade
 fi

@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
 APP_CHAIN="nvim:code -w:$EDITOR" exec app-chain "$@"

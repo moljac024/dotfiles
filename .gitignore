@@ -1,6 +1,8 @@
 # Helix runtime
 helix/runtime
 
+bash/cache
+zsh/cache
 fish/fish_variables
 
 sway/outputs
@@ -8,3 +10,6 @@ sway/workspaces
 
 hypr/monitors.conf
 hypr/workspaces.conf
+
+k9s/clusters/
+k9s/k9s.log

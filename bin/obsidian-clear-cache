@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
 rm -rf $HOME/var/app/md.obsidian.Obsidian/cache
 rm -rf $HOME/.var/app/md.obsidian.Obsidian/config/obsidian/GPUCache

@@ -1,0 +1,77 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+set -euo pipefail
+
+# Generate ~/.gitconfig using `git config --global ...` commands.
+
+prompt_nonempty() {
+  local prompt="$1"
+  local value=""
+  while :; do
+    read -r -p "$prompt" value
+
+    # Trim leading/trailing whitespace
+    value="${value#"${value%%[![:space:]]*}"}"
+    value="${value%"${value##*[![:space:]]}"}"
+
+    if [[ -n "$value" ]]; then
+      printf '%s' "$value"
+      return 0
+    fi
+
+    echo "Please enter something (empty input not accepted)." >&2
+  done
+}
+
+name="$(prompt_nonempty 'Git user.name: ')"
+echo
+email="$(prompt_nonempty 'Git user.email: ')"
+echo
+
+# --- [user] ---
+git config --global user.name "$name"
+git config --global user.email "$email"
+
+# --- [core] ---
+git config --global core.excludesfile "~/.gitignore_global"
+
+# --- [alias] ---
+git config --global alias.d "difftool"
+git config --global alias.u "fetch --all --prune"
+git config --global alias.f "fetch --all --prune"
+git config --global alias.p "push origin --all"
+git config --global alias.br "branch"
+git config --global alias.ci "commit"
+git config --global alias.co "checkout"
+git config --global alias.st "status"
+git config --global alias.ff "merge --ff-only"
+git config --global alias.gg "log --all --graph --oneline --decorate --color"
+git config --global alias.quick-stats "! /usr/local/bin/git-quick-stats"
+
+# --- [branch] ---
+git config --global branch.autosetuprebase "always"
+
+# --- [color] ---
+git config --global color.ui "true"
+git config --global color.status "auto"
+git config --global color.branch "auto"
+
+# --- [push] ---
+git config --global push.default "simple"
+git config --global push.autoSetupRemote "true"
+
+# --- [gui] ---
+# Note: git-config will store these as plain strings; no need for escaping quotes.
+git config --global gui.fontui  '-family ".SF NS Text" -size 16 -weight normal -slant roman -underline 0 -overstrike 0'
+git config --global gui.fontdiff "-family Monaco -size 14 -weight normal -slant roman -underline 0 -overstrike 0"
+
+# --- [init] ---
+git config --global init.defaultBranch "main"
+
+# --- [filter "lfs"] ---
+git config --global filter.lfs.clean    "git-lfs clean -- %f"
+git config --global filter.lfs.smudge   "git-lfs smudge -- %f"
+git config --global filter.lfs.process  "git-lfs filter-process"
+git config --global filter.lfs.required "true"
+
+echo "Done. Wrote global Git config to: $(git config --global --list >/dev/null 2>&1 && echo ~/.gitconfig)"

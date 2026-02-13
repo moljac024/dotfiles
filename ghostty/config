@@ -1,22 +1,156 @@
-maximize = true
+################################################################################
+### Base
+################################################################################
 
+# Use zsh shell
+# command = zsh
+
+# Use fish shell
+command = fish
+
+################################################################################
+### Theme and font
+################################################################################
+
+# Theme
 theme = catppuccin-frappe.conf
+
+# Font
 font-family = Zed Mono NF
+font-family = ZedMono Nerd Font
+font-family = ZedMono Nerd Font Mono
 font-size = 16
 
+################################################################################
+### Other
+################################################################################
+
+# Don't inherit working directory
+window-inherit-working-directory = false
+
+################################################################################
+### Window
+################################################################################
+
+# Start maximized
+maximize = true
+
+# Always show tab bar
+window-show-tab-bar = always
+window-new-tab-position = end
+
+# Integrate tabs into titlebar
+gtk-titlebar-style = tabs
+macos-titlebar-style = tabs
+
+# Quick terminal
 quick-terminal-size = 65%
 
-# No window decorations
-window-decoration = none
-window-show-tab-bar = never
-# gtk-titlebar-style=tabs
+################################################################################
+### Shaders
+################################################################################
 
-# Shader
 # custom-shader = shaders/bettercrt.glsl
 
-# Background
-config-file = "background"
-config-file = "?background.extend"
+################################################################################
+### Background
+################################################################################
 
-# Keybinds
-config-file = "keybinds"
+background-opacity = 0.98
+background-image = "~/dotfiles/backgrounds/terminal/simple/tie.png"
+background-image-opacity = 0.1
+background-image-position = bottom-right
+background-image-fit = cover
+
+# Background override
+config-file = "?background.local"
+
+################################################################################
+### Keybinds
+################################################################################
+
+# On mac OS, always treat option as alt key
+macos-option-as-alt = true
+
+# Toggle fullscreen
+keybind = ctrl+shift+f=toggle_fullscreen
+keybind = f11=toggle_fullscreen
+
+# Copy
+keybind = performable:ctrl+c=copy_to_clipboard
+
+# Clear screen
+keybind = ctrl+shift+l=clear_screen
+
+# Tab overview
+keybind = ctrl+shift+o=toggle_tab_overview
+
+# Navigating tabs
+keybind = shift+ctrl+1=goto_tab:1
+keybind = shift+ctrl+2=goto_tab:2
+keybind = shift+ctrl+3=goto_tab:3
+keybind = shift+ctrl+4=goto_tab:4
+keybind = shift+ctrl+5=goto_tab:5
+keybind = shift+ctrl+6=goto_tab:6
+keybind = shift+ctrl+7=goto_tab:7
+keybind = shift+ctrl+8=goto_tab:8
+keybind = shift+ctrl+9=goto_tab:9
+keybind = shift+ctrl+0=goto_tab:0
+
+keybind = shift+ctrl+h=previous_tab
+keybind = shift+ctrl+l=next_tab
+keybind = shift+ctrl+arrow_left=previous_tab
+keybind = shift+ctrl+arrow_right=next_tab
+
+# Scrolling
+keybind = shift+ctrl+j=scroll_page_down
+keybind = shift+ctrl+k=scroll_page_up
+keybind = shift+ctrl+arrow_down=scroll_page_down
+keybind = shift+ctrl+arrow_up=scroll_page_up
+
+# Navigating splits
+keybind = ctrl+s>h=goto_split:left
+keybind = ctrl+s>j=goto_split:down
+keybind = ctrl+s>k=goto_split:up
+keybind = ctrl+s>l=goto_split:right
+
+# Zoom/unzoom split
+keybind = ctrl+s>z=toggle_split_zoom
+
+################################################################################
+### Unbinds
+################################################################################
+
+# Unbind alt+arrows so they can be used in zellij
+keybind = alt+arrow_up=unbind
+keybind = alt+arrow_down=unbind
+keybind = alt+arrow_left=unbind
+keybind = alt+arrow_right=unbind
+
+# Unbind super+n
+keybind = super+1=unbind
+keybind = super+2=unbind
+keybind = super+3=unbind
+keybind = super+4=unbind
+keybind = super+5=unbind
+keybind = super+6=unbind
+keybind = super+7=unbind
+keybind = super+8=unbind
+keybind = super+9=unbind
+keybind = super+0=unbind
+keybind = super+digit_1=unbind
+keybind = super+digit_2=unbind
+keybind = super+digit_3=unbind
+keybind = super+digit_4=unbind
+keybind = super+digit_5=unbind
+keybind = super+digit_6=unbind
+keybind = super+digit_7=unbind
+keybind = super+digit_8=unbind
+keybind = super+digit_9=unbind
+keybind = super+digit_0=unbind
+
+################################################################################
+### Local config override
+################################################################################
+
+config-file = "?config.local"

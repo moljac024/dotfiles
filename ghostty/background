@@ -1,6 +1,0 @@
-# Background
-background-opacity = 0.98
-background-image = "~/dotfiles/backgrounds/terminal/simple/tyrande.png"
-background-image-opacity = 0.1
-background-image-position = bottom-right
-background-image-fit = cover

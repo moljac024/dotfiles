@@ -1,0 +1,23 @@
+# vim: filetype=zsh
+
+# ---- kubectl completion: lazy-load on first TAB ----
+_kubectl_lazy_load() {
+  # load the real completion definitions
+  source <(kubectl completion zsh)
+
+  # optional alias
+  alias k=kubectl
+
+  # remove this stub so the real one takes over
+  unfunction _kubectl_lazy_load _kubectl 2>/dev/null
+
+  # now call the real completion function
+  _kubectl
+}
+
+# stub completion function named _kubectl (zsh calls this for kubectl)
+_kubectl() {
+  _kubectl_lazy_load
+}
+compdef _kubectl kubectl
+compdef _kubectl k 2>/dev/null

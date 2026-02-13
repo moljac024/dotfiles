@@ -1,7 +1,6 @@
-#!/usr/bin/env fish
+# vim: filetype=fish
 
-set script_dir (dirname (status --current-filename))
-source $script_dir/util.fish
+source $DOTFILES/shell/lib.fish
 
 ################################################################################
 ### Environment
@@ -9,8 +8,123 @@ source $script_dir/util.fish
 
 export_var LC_ALL "en_US.UTF-8"
 export_var LANG "en_US.UTF-8"
-export_var EDITOR "vi"
-export_var DOTFILES "$HOME/dotfiles"
+
+# Homebrew
+if test -d /opt/homebrew/bin
+    modify_path /opt/homebrew/bin prepend
+end
+
+# Dotnet
+modify_path "$HOME/.dotnet/tools" append
+
+# Rust binaries
+modify_path "$HOME/.cargo/bin" prepend
+
+# Krew kubectl plugin package manager
+modify_path (get_var KREW_ROOT "$HOME/.krew")/bin prepend
+
+# Windsurf
+if test -d $HOME/.codeium/windsurf/bin
+    modify_path $HOME/.codeium/windsurf/bin prepend
+end
+
+# Sway scripts
+modify_path "$HOME/.config/sway/bin" prepend
+
+# Locally compiled/installed files
+modify_path "$HOME/.local/bin" prepend
+# Home binaries (systems should do this already)
+modify_path "$HOME/bin" prepend
+
+# Mise dev env
+# NOTE: This has to come after PATH setup
+if is_command mise
+    export_var MISE_ENV_FILE .env
+    modify_path "$HOME/.local/share/mise/shims" prepend
+
+    if is_interactive
+      mise activate fish | source
+    end
+end
+
+################################################################################
+### Main
+################################################################################
+
+if is_linux
+    set -l base_ls 'ls --color=auto --group-directories-first --sort=extension'
+    alias ls="$base_ls"
+    alias lsa="$base_ls -a"
+    alias lsl="$base_ls -l"
+    alias lsla="$base_ls -la"
+end
+
+if is_mac
+    set -l base_ls 'ls -FG'
+    alias ls="$base_ls"
+    alias lsa="$base_ls -a"
+    alias lsl="$base_ls -l"
+    alias lsla="$base_ls -la"
+end
+
+if is_command sudo
+    # Keep terminal info when using sudo
+    alias sudo="sudo TERMINFO=\"$TERMINFO\""
+end
+
+alias c='clear'
+alias ..='cd ..'
+alias back='cd -'
+alias mkdir='mkdir -p -v'
+alias su='sudo -i'
+
+alias serve-spa="npx --yes http-server-spa"
+alias update-npm-packages="npx -y npm-check-updates -i"
+
+if is_command eza
+    set -l base_ls 'eza --group-directories-first --icons=auto'
+    alias ls="$base_ls"
+    alias lsa="$base_ls -a"
+    alias lsl="$base_ls --git -lb"
+    alias lsla="$base_ls --git -lba"
+end
+
+# Git aliases
+alias g='git'
+alias gs='git add . && git commit -m "sync" && git push origin'
+alias gta='gitk --all'
+alias gita='gitk --all'
+alias gg='git gui'
+alias lg='lazygit'
+
+# k8s aliases
+abbr --add --global k kubectl
+abbr --add --global kc 'kubectl ctx'
+alias kn='kubectl ns'
+alias kcfg='kubectl config view --minify | grep name'
+
+# Other aliases
+alias zl='zellij'
+alias pbg="pick-ghostty-background"
+
+# Ripgrep and fzf config
+export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
+export_var FZF_DEFAULT_COMMAND "rg --files"
+export_var FZF_FIND_FILE_COMMAND "rg --files"
+
+# Catppuccin frappe theme for FZF
+export_var FZF_DEFAULT_OPTS " \
+--color=bg+:-1,bg:-1 \
+--color=spinner:#f2d5cf,hl:#e78284 \
+--color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
+--color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
+
+# Nvim
+if is_command nvim
+    export_var EDITOR nvim
+    export_var VISUAL nvim
+    export_var MANPAGER "nvim +Man!"
+end
 
 # WSL
 if is_wsl
@@ -21,6 +135,19 @@ if is_wsl
     end
     export_var WSL_GUEST (wsl_ip)
 end
+
+# Flatpak
+if is_linux
+    export_var XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
+end
+
+if is_linux
+    export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+    export_var LIBVIRT_DEFAULT_URI "qemu:///system"
+end
+
+# Enable Erlang/Elixir shell history
+export_var ERL_AFLAGS "-kernel shell_history enabled"
 
 # Android dev
 if test -d $HOME/Android/Sdk
@@ -52,155 +179,15 @@ if test -d "$HOME/Applications/android-studio"
     ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" "$HOME/bin/android-studio"
     modify_path "$HOME/Applications/android-studio/bin" append
 end
-if test -d "$HOME/Applications/flutter"
-    modify_path "$HOME/Applications/flutter/bin" append
-end
-
-# Rust binaries
-modify_path "$HOME/.cargo/bin" prepend
-
-# Volta nodejs version manager
-if test -d $HOME/.volta
-    export_var VOLTA_HOME "$HOME/.volta"
-    modify_path "$VOLTA_HOME/bin" prepend
-end
-
-# Fly.io
-export_var FLYCTL_INSTALL "$HOME/.fly"
-modify_path "$FLYCTL_INSTALL/bin" prepend
-
-# Locally compiled/installed files
-modify_path "$HOME/.local/bin" prepend
-# Home binaries (systems should do this already)
-modify_path "$HOME/bin" prepend
-
-# Flatpak paths
-export_var XDG_DATA_DIRS "$HOME/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
-
-# Krew kubectl plugin package manager
-set -q KREW_ROOT; or set KREW_ROOT "$HOME/.krew"
-modify_path "$KREW_ROOT/bin" prepend
-
-###############################################################################
-# Mise dev tool manager
-###############################################################################
-
-if is_command mise
-    mise activate fish | source
-end
 
 ################################################################################
-### Aliases
+### Local shell overrides
 ################################################################################
 
-set -l OS (uname)
-if test "$OS" = "Linux"
-    alias ls='ls --color=auto --group-directories-first --sort=extension'
-    alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
-    alias update-fedora='sudo sh -c "dnf update -y"'
-    alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
-else if test "$OS" = Darwin
-    alias ls='ls -FG'
-    function whoishoggingport
-        lsof -n -iTCP:$argv[1] | grep LISTEN
-    end
-end
-
-if is_command sudo
-    # Keep terminal info when using sudo
-    alias sudo="sudo TERMINFO=\"$TERMINFO\""
-end
-
-# If running in kitty, alias ssh to kitten ssh
-if test "$TERM" = "xterm-kitty"
-    alias ssh='kitten ssh'
-end
-
-alias update-npm-packages="npx -y npm-check-updates -i"
-alias c='clear'
-alias ..='cd ..'
-alias back='cd -'
-alias mkdir='mkdir -p -v'
-alias su='sudo -i'
-alias duf="du -sk * | sort -n | perl -ne '\$s,\$f=split(m{\t});for (qw(K M G)) {if(\$s<1024) {printf(\"%.1f\",\$s);print \"\$_\t\$f\"; last};\$s=\$s/1024}'"
-alias gs='git add . && git commit -m "sync" && git push origin'
-alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
-alias serve-spa="npx --yes http-server-spa"
-alias emacs="flatpak run org.gnu.emacs"
-
-if is_available nvim
-    export_var EDITOR "nvim"
-    export_var VISUAL "nvim"
-    alias vi="nvim"
-    alias vim="nvim"
-    alias vimdiff="nvim -d"
-end
-
-alias lg='lazygit'
-
-# Git aliases
-alias gta='gitk --all'
-alias gita='gitk --all'
-alias gg='git gui'
-
-# If podman is installed, use it instead of docker
-# if is_command podman
-#     alias docker=podman
-#     alias docker-compose='podman-compose'
-#     export_var DOCKER_HOST "unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
-# end
-
-# k8s aliases
-alias k='kubectl'
-alias kcfg='kubectl config view --minify | grep name'
-alias kc='kubectl ctx'
-alias kn='kubens'
-
-################################################################################
-### Other
-################################################################################
-
-# Enable Erlang/Elixir shell history
-export_var ERL_AFLAGS "-kernel shell_history enabled"
-
-# Ripgrep and fzf config
-export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
-export_var FZF_DEFAULT_COMMAND "rg --files"
-export_var FZF_FIND_FILE_COMMAND "rg --files"
-
-# Catppuccin frappe theme for FZF
-export_var FZF_DEFAULT_OPTS " \
---color=bg+:-1,bg:-1 \
---color=spinner:#f2d5cf,hl:#e78284 \
---color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
---color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
+source_dir "$DOTFILES/shell/fish.local.d"
 
 ################################################################################
 ### Secrets
 ################################################################################
 
-export_secrets_from_dir "$DOTFILES/data/secrets"
-
-################################################################################
-### Other
-################################################################################
-
-# Disable flow control
-stty -ixon
-
-# Cursor size
-if is_command gsettings
-    export_var XCURSOR_SIZE (gsettings get org.gnome.desktop.interface cursor-size)
-end
-
-################################################################################
-### Prompt
-################################################################################
-
-#if is_interactive
-#    if is_command starship
-#        starship init fish | source
-#    else if is_mise_command starship
-#        mise exec starship -- starship init fish | source
-#    end
-#end
+export_vars_from_dir "$DOTFILES/shell/env.local.d"

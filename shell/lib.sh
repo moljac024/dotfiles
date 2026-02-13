@@ -1,0 +1,222 @@
+# vim: filetype=sh
+
+################################################################################
+### Helper functions
+################################################################################
+
+get_running_shell() {
+  if [ -n "$ZSH_VERSION" ]; then
+    echo "zsh"
+  elif [ -n "$BASH_VERSION" ]; then
+    echo "bash"
+  else
+    echo "unknown"
+  fi
+}
+
+is_interactive() {
+  case "$(get_running_shell)" in
+    bash|zsh)
+      [[ $- == *i* ]]
+      ;;
+    *)
+      # Fallback for unknown shells
+      case $- in
+        *i*) return 0 ;;
+        *) return 1 ;;
+      esac
+      ;;
+  esac
+}
+
+is_linux() {
+  [[ $OSTYPE == linux* ]]
+}
+
+is_mac() {
+  [[ $OSTYPE == darwin* ]]
+}
+
+is_wsl() {
+  is_linux &&
+    [[ -r /proc/sys/kernel/osrelease ]] &&
+    grep -qi microsoft /proc/sys/kernel/osrelease
+}
+
+is_exported() {
+  local name=${1-} decl
+  # must be a valid shell identifier
+  [[ $name == [A-Za-z_][A-Za-z0-9_]* ]] || return 1
+
+  case "$(get_running_shell)" in
+    bash)
+      decl=$(declare -p "$name" 2>/dev/null) || return 1
+      [[ $decl == declare\ -x* ]]
+      ;;
+    zsh)
+      decl=$(typeset -p "$name" 2>/dev/null) || return 1
+      [[ $decl == typeset\ -x* ]]
+      ;;
+    *)
+      export -p | grep -q "^export $name="
+      ;;
+  esac
+}
+
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+is_mise_command() {
+  is_command mise && mise which "$1" >/dev/null 2>&1
+}
+
+is_available() {
+  is_command "$1" || is_mise_command "$1"
+}
+
+get_var() {
+  local var_name="$1"
+  local default_value="$2"
+  local sh="$(get_running_shell)"
+
+  if [ "$sh" = "bash" ]; then
+    # bash indirection: ${!name}
+    local val="${!var_name}"
+    if [ -n "$val" ]; then
+      printf '%s\n' "$val"
+    else
+      printf '%s\n' "$default_value"
+    fi
+    return
+  fi
+
+  if [ "$sh" = "zsh" ]; then
+    # zsh indirection: ${(P)name}
+    local val="${(P)var_name}"
+    if [ -n "$val" ]; then
+      print -r -- "$val"
+    else
+      print -r -- "$default_value"
+    fi
+    return
+  fi
+
+  # unknown shell: don't attempt indirection; safest behavior is "use default"
+  printf '%s\n' "$default_value"
+}
+
+export_var() {
+  local var_name="$1"
+  local var_value="$2"
+
+  # Replace spaces with underscores in variable name
+  var_name="${var_name// /_}"
+  export "$var_name=$var_value"
+}
+
+export_var_from_file() {
+  [ $# -eq 1 ] || return 0
+  local file=$1
+  [ -f "$file" ] || return 0
+
+  local var_name=${file##*/}
+  var_name=${var_name//[^A-Za-z0-9_]/_}
+
+  local content
+  content=$(<"$file")
+
+  export_var "$var_name" "$content"
+}
+
+export_vars_from_dir() {
+  local dir=$1
+  [[ -d "$dir" ]] || return 0
+
+  # --- disable xtrace locally (bash + zsh)
+  local _xtrace_was_on=0
+  case "$-" in
+    *x*) _xtrace_was_on=1; set +x ;;
+  esac
+
+  local file var_name content
+
+  # zsh no error on empty glob
+  [ "$(get_running_shell)" = zsh ] && setopt local_options null_glob
+
+  for file in "$dir"/*; do
+    [[ -f "$file" ]] || continue
+    var_name=${file##*/}
+    content=$(<"$file")
+    export_var "$var_name" "$content"
+  done
+
+  # --- restore xtrace
+  [[ $_xtrace_was_on -eq 1 ]] && set -x
+}
+
+ensure_symlink () {
+  local original=$1
+  local path=$2
+  local original_fullpath="$(cd "$(dirname "$original")"; pwd)/$(basename "$original")"
+
+  if [ -L "$path" ]; then
+    rm "$path"
+  fi
+
+  if [ -e "$path" ]; then
+    mv "$path" "$path.old"
+  fi
+
+  ln -s "$original_fullpath" "$path"
+}
+
+modify_path() {
+  local dir="$1"
+  local action="$2"
+  if [[ ":$PATH:" != *":$dir:"* ]]; then
+    if [ "$action" = "prepend" ]; then
+      export PATH="$dir:$PATH"
+    else
+      export PATH="$PATH:$dir"
+    fi
+  fi
+}
+
+source_dir() {
+  if [ -d "$1" ]; then
+    # zsh no error on empty glob
+    [ "$(get_running_shell)" = zsh ] && setopt local_options null_glob
+
+    for f in "$1"/*; do
+      [ -f "$f" ] || continue
+      [ "$(basename "$f")" = ".gitignore" ] && continue
+      [ "$(basename "$f")" = ".gitkeep" ] && continue
+      [ "$(basename "$f")" = "README.md" ] && continue
+      source "$f"
+    done
+    unset f
+  fi
+}
+
+git_clone () {
+  local repo=$1
+  local location=$2
+  local location_fullpath="$(cd "$(dirname "$location")"; pwd)/$(basename "$location")"
+
+  if [ ! -d "$location_fullpath" ]; then
+    git clone "$repo" "$location_fullpath"
+  fi
+}
+
+cdr() {
+  dir="$PWD"
+  while [[ "$dir" != "/" ]]; do
+    if [[ -d "$dir/.git" ]]; then
+      cd "$dir" || return
+      return
+    fi
+    dir=$(dirname "$dir")
+  done
+  echo "No .git directory found" >&2
+}

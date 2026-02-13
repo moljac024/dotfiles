@@ -1,34 +1,136 @@
-#!/usr/bin/bash
 # vim: filetype=sh
-# set -euo pipefail # Shell strict mode
 
-THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo "$0") # Full path of the current script
-DIR=$(dirname "${THIS}") # The directory where current script resides
-
-. "$DIR/util.sh"
+source "$DOTFILES/shell/lib.sh"
 
 if [ "$(get_running_shell)" = "unknown" ]; then
+  echo "Unknown shell, stopping."
   return
 fi
 
 ################################################################################
-### Environment
+### Paths
+################################################################################
+
+# Homebrew
+if [ -d "/opt/homebrew/bin" ]; then
+  modify_path "/opt/homebrew/bin" prepend
+fi
+
+# Rust binaries
+modify_path "$HOME/.cargo/bin" prepend
+
+# Krew kubectl plugin package manager
+modify_path "$(get_var KREW_ROOT "$HOME/.krew")/bin" prepend
+
+# Windsurf
+if [ -d $HOME/.codeium/windsurf/bin ]; then
+  modify_path $HOME/.codeium/windsurf/bin prepend
+fi
+
+# Sway scripts
+modify_path "$HOME/.config/sway/bin" prepend
+
+# Locally compiled/installed files
+modify_path "$HOME/.local/bin" prepend
+# Home binaries (systems should do this already)
+modify_path "$HOME/bin" prepend
+
+# Mise dev env
+# NOTE: This has to come after PATH setup
+if is_command mise; then
+  export_var MISE_ENV_FILE .env
+  modify_path "$HOME"/.local/share/mise/shims prepend
+
+  if is_interactive; then
+    shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(mise activate "$shell")";; esac
+  fi
+fi
+
+################################################################################
+### Main
 ################################################################################
 
 export_var LC_ALL "en_US.UTF-8"
 export_var LANG "en_US.UTF-8"
-export_var EDITOR "vi"
-export_var DOTFILES "$HOME/dotfiles"
-export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
-export_var LIBVIRT_DEFAULT_URI "qemu:///system"
 
-if [ "$(get_running_shell)" = "zsh" ]; then
-  autoload -Uz compinit && compinit
-  autoload -U +X bashcompinit && bashcompinit
+if is_linux; then
+  BASE_LS="ls --color=auto --group-directories-first --sort=extension"
+  alias ls="$BASE_LS"
+  alias lsa="$BASE_LS -a"
+  alias lsl="$BASE_LS -l"
+  alias lsla="$BASE_LS -la"
+  unset BASE_LS
 fi
 
-# Disable flow control
-stty -ixon
+if is_mac; then
+  BASE_LS="ls -FG"
+  alias ls="$BASE_LS"
+  alias lsa="$BASE_LS -a"
+  alias lsl="$BASE_LS -l"
+  alias lsla="$BASE_LS -la"
+  unset BASE_LS
+fi
+
+if is_command sudo; then
+  # Keep terminal info when using sudo
+  alias sudo="sudo TERMINFO=\"$TERMINFO\""
+fi
+
+alias c='clear'
+alias ..='cd ..'
+alias cdn='cd $HOME/MyDocuments/Notebook/'
+alias back='cd "$OLDPWD"'
+alias mkdir='mkdir -p -v'
+alias su='sudo -i'
+
+alias serve-spa="npx --yes http-server-spa"
+alias update-npm-packages="npx -y npm-check-updates -i"
+
+if is_command eza; then
+  BASE_LS="eza --group-directories-first --icons=auto"
+  alias ls="$BASE_LS"
+  alias lsa="$BASE_LS -a"
+  alias lsl="$BASE_LS --git -lb"
+  alias lsla="$BASE_LS --git -lba"
+  unset BASE_LS
+fi
+
+# Git aliases
+alias g='git'
+alias gs='git add . && git commit -m "sync" && git push origin'
+alias gta='gitk --all'
+alias gita='gitk --all'
+alias gg='git gui'
+alias lg='lazygit'
+
+# k8s aliases
+alias k='kubectl'
+alias kc='kubectl ctx'
+alias kn='kubectl ns'
+alias kcfg='kubectl config view --minify | grep name'
+
+# Other aliases
+alias zl='zellij'
+alias pbg="pick-ghostty-background"
+
+# Ripgrep and fzf config
+export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
+export_var FZF_DEFAULT_COMMAND "rg --files"
+export_var FZF_FIND_FILE_COMMAND "rg --files"
+
+# Catppuccin frappe theme for FZF
+export_var FZF_DEFAULT_OPTS " \
+  --color=bg+:-1,bg:-1 \
+  --color=spinner:#f2d5cf,hl:#e78284 \
+  --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
+  --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
+
+# Nvim
+if is_command nvim; then
+  export_var EDITOR "nvim"
+  export_var VISUAL "nvim"
+  export_var MANPAGER "nvim +Man!"
+fi
 
 # WSL
 if is_wsl; then
@@ -39,6 +141,19 @@ if is_wsl; then
     }
     export_var WSL_GUEST "$(wsl_ip)"
 fi
+
+# Flatpak
+if is_linux; then
+  export_var XDG_DATA_DIRS "$HOME"/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:"$XDG_DATA_DIRS"
+fi
+
+if is_linux; then
+  export_var RESTIC_REPOSITORY "/run/media/$(whoami)/Gunnar/Backup/Restic/Repository"
+  export_var LIBVIRT_DEFAULT_URI "qemu:///system"
+fi
+
+# Enable Erlang/Elixir shell history
+export_var ERL_AFLAGS "-kernel shell_history enabled"
 
 # Android dev
 if [ -d "$HOME/Android/Sdk" ]; then
@@ -70,201 +185,15 @@ if [ -d "$HOME/Applications/android-studio" ]; then
     ensure_symlink "$ANDROID_STUDIO/bin/studio.sh" "$HOME/bin/android-studio"
     modify_path "$HOME/Applications/android-studio/bin" append
 fi
-if [ -d "$HOME/Applications/flutter" ]; then
-    modify_path "$HOME/Applications/flutter/bin" append
-fi
-
-# Dotnet
-modify_path "$HOME/.dotnet/tools" append
-
-# Rust binaries
-modify_path "$HOME/.cargo/bin" prepend
-
-# Volta nodejs version manager
-if [ -d "$HOME"/.volta ]; then
-    export_var VOLTA_HOME "$HOME/.volta"
-    modify_path "$VOLTA_HOME/bin" prepend
-fi
-
-# Fly.io
-export_var FLYCTL_INSTALL "$HOME/.fly"
-modify_path "$FLYCTL_INSTALL/bin" prepend
-
-# opencode
-modify_path $HOME/.opencode/bin prepend
-
-# Locally compiled/installed files
-modify_path "$HOME/.local/bin" prepend
-# Home binaries (systems should do this already)
-modify_path "$HOME/bin" prepend
-modify_path "$HOME/.config/sway/bin" prepend
-
-# Flatpak paths
-export_var XDG_DATA_DIRS "$HOME"/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:"$XDG_DATA_DIRS"
-
-# Krew kubectl plugin package manager
-modify_path "${KREW_ROOT:-$HOME/.krew}/bin" prepend
-
-###############################################################################
-# Mise dev tool manager
-###############################################################################
-
-if is_command mise; then
-  modify_path "$HOME"/.local/share/mise/shims prepend
-  case $(get_running_shell) in
-    "zsh")
-      eval "$(mise activate zsh)"
-      ;;
-    "bash")
-      eval "$(mise activate bash)"
-      ;;
-    *)
-      :
-      ;;
-  esac
-fi
 
 ################################################################################
-### Aliases
+### Local shell overrides
 ################################################################################
 
-if [[ "$OSTYPE" = "linux-gnu" ]]; then
-  alias ls='ls --color=auto --group-directories-first --sort=extension'
-  alias update-ubuntu='sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"'
-  alias update-fedora='sudo sh -c "dnf update -y"'
-  alias update-arch='sudo sh -c "pacman -Syu --noconfirm"'
-elif [[ "$OSTYPE" = "darwin"* ]]; then
-  alias ls='ls -FG'
-  whoishoggingport () {
-    lsof -n -iTCP:$1 | grep LISTEN
-  }
-fi
-
-if is_command sudo; then
-  # Keep terminal info when using sudo
-  alias sudo="sudo TERMINFO=\"$TERMINFO\""
-fi
-
-# If running in kitty, alias ssh to kitten ssh
-if [ "$TERM" = "xterm-kitty" ]; then
-  alias ssh='kitten ssh'
-fi
-
-alias update-npm-packages="npx -y npm-check-updates -i"
-alias c='clear'
-alias ..='cd ..'
-alias cdn='cd $HOME/MyDocuments/Notebook/'
-alias back='cd "$OLDPWD"'
-alias mkdir='mkdir -p -v'
-alias su='sudo -i'
-alias duf='du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
-alias gs='git add . && git commit -m "sync" && git push origin'
-alias erlang-version="erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), \"releases\", erlang:system_info(otp_release), \"OTP_VERSION\"])), io:fwrite(Version), halt().' -noshell"
-alias serve-spa="npx --yes http-server-spa"
-alias emacs="flatpak run org.gnu.emacs"
-
-alias pbg="pick-ghostty-background"
-
-if is_available nvim; then
-  export_var EDITOR "nvim"
-  export_var VISUAL "nvim"
-  export_var MANPAGER "nvim +Man!"
-  alias vi="nvim"
-  alias vim="nvim"
-  alias vimdiff="nvim -d"
-fi
-
-if is_available eza; then
-  alias ls="eza"
-fi
-
-alias lg='lazygit'
-
-# Git aliases
-alias gta='gitk --all'
-alias gita='gitk --all'
-alias gg='git gui'
-
-# If podman is installed, use it instead of docker
-if is_command podman; then
-  # alias docker=podman
-  # alias docker-compose='podman-compose'
-  # export_var DOCKER_HOST "unix://$(podman info --format '{{.Host.RemoteSocket.Path}}')"
-  # export_var DOCKER_HOST "unix:///run/podman/podman.sock"
-  export_var DOCKER_HOST "ssh://vm-ubuntu-docker"
-fi
-
-# k8s aliases
-alias k='kubectl'
-alias kcfg='kubectl config view --minify | grep name'
-alias kc='kubectl ctx'
-alias kn='kubectl ns'
-
-# Print out k8s secret
-ksecret () {
-  kubectl get secret "$@" -o json | jq -r '.data | to_entries[] | "\(.key): \(.value | @base64d)"'
-}
-
-if is_command zide; then
-  export_var ZIDE_DIR "$HOME/.config/zide"
-fi
-
-################################################################################
-### Other
-################################################################################
-
-# Dircolors
-# if [ -f $HOME/.dir_colors ]; then
-#     eval "$(dircolors $HOME/.dir_colors)"
-# fi
-
-# Enable Erlang/Elixir shell history
-export_var ERL_AFLAGS "-kernel shell_history enabled"
-
-# Ripgrep and fzf config
-export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"
-export_var FZF_DEFAULT_COMMAND "rg --files"
-export_var FZF_FIND_FILE_COMMAND "rg --files"
-
-# Catppuccin frappe theme for FZF
-export_var FZF_DEFAULT_OPTS " \
-  --color=bg+:-1,bg:-1 \
-  --color=spinner:#f2d5cf,hl:#e78284 \
-  --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
-  --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
-
-# FZF
-if [ "$(get_running_shell)" = "bash" ]; then
-  [ -f ~/.fzf.bash ] && . ~/.fzf.bash
-  [ -e "$HOME/.fzf-extras/fzf-extras.sh" ] \
-    && . "$HOME/.fzf-extras/fzf-extras.sh"
-fi
+source_dir "$DOTFILES/shell/sh.local.d"
 
 ################################################################################
 ### Secrets
 ################################################################################
 
-export_secrets_from_dir "$DOTFILES/data/secrets"
-
-################################################################################
-### Other
-################################################################################
-
-# Cursor size
-if is_command gsettings; then
-    export_var XCURSOR_SIZE "$(gsettings get org.gnome.desktop.interface cursor-size)"
-fi
-
-################################################################################
-### Prompt
-################################################################################
-
-if is_interactive; then
-  if is_command starship; then
-    eval "$(starship init "$(get_running_shell)")"
-    eval "$(starship completions "$(get_running_shell)")"
-  elif is_mise_command starship; then
-    eval "$(mise exec starship -- starship init "$(get_running_shell)")"
-    eval "$(mise exec starship -- starship completions "$(get_running_shell)")"
-  fi
-fi
+export_vars_from_dir "$DOTFILES/shell/env.local.d"

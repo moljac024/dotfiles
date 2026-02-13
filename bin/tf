@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
 exec tofu "$@"

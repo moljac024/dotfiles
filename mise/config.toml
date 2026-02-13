@@ -1,63 +1,89 @@
+[env]
+# Load env from the dotenv file after tools have defined environment variables
+_.file = { path = ".env", tools = true }
+
 [tools]
-dotnet = "latest"
-go = "latest"
-kubectl = "latest"
-kustomize = "latest"
-kubecm = "latest"
-krew = "latest"
-kubie = "latest"
-kubeshark = "latest"
-kubespy = "latest"
-k9s = "latest"
-minikube = "latest"
-lazygit = "latest"
-neovim = "latest"
+############################################################
+# cli
+############################################################
+starship = "latest" # shell prompt
 ripgrep = "latest"
 zellij = "latest"
-lazydocker = "latest"
-jq = "latest"
-opentofu = "latest"
-helm = "latest"
-doctl = "latest"
-yq = "latest"
-dagger = "latest"
-bitwarden = "cli-v2025.5.0"
 fzf = "latest"
-restic = "latest"
-mkcert = "latest"
-rustic = "latest"
-zig = "latest"
-arduino = "latest"
-btop = "latest"
 bat = "latest"
+bat-extras = "latest"
 eza = "latest"
-dust = "latest"
 fd = "latest"
-starship = "latest"
-aws-cli = "latest"
-borg = "latest"
+dust = "latest" # like du but more intuitive
 ctop = "latest"
 dt = "latest"
 duf = "latest"
-github-cli = "latest"
-jj = "latest"
 rclone = "latest"
-mitmproxy = "latest"
-zoxide = "latest"
-yazi = "latest"
-node = "lts"
-rust = "latest"
-bun = "latest"
-bat-extras = "latest"
-glow = "latest"
-java = "23.0.2"
-xh = "latest"
-dive = "latest"
-nerdctl = "latest"
-uv = "latest"
-flyctl = "latest"
-marp-cli = "latest"
+zoxide = "latest" # cd on steroids
+yazi = "latest" # file manager
+usage = "latest"
+neovim = "latest" # text editor / ide
+helix = "latest" # text editor / ide
+restic = "latest" # backup tool
+borg = "latest" # backup tool
+lazyssh = "latest"
+"npm:tldr" = "latest" # community-driven, simplified man pages
+glow = "latest" # render markdown on CLI
+marp-cli = "latest" # markdown slides
+trivy = "latest" # vuln scanner
+############################################################
+# docker and k8s
+############################################################
+dive = "latest" # explore docker images
+lazydocker = "latest"
+colima = "latest"
+lima = "latest"
+kubectl = "latest"
+kustomize = "latest"
+krew = "latest"
+kubecm = "latest"
+kubie = "latest"
+kubeshark = "latest"
+kubespy = "latest"
+kubeswitch = "latest"
+k9s = "latest"
+minikube = "latest"
+############################################################
+# git
+############################################################
+lazygit = "latest"
+git-lfs = "latest"
 gitu = "latest"
+############################################################
+# dev tools
+############################################################
+grpcurl = "latest" # graphql client
+xh = "latest" # http client
+websocat = "latest" # websocket client
+bombardier = "latest" # http benchmarking tool
+mkcert = "latest" # local https dev
+just = "latest" # modern make
+meson = "latest"
+ninja = "latest"
+jq = "latest"
+yq = "latest"
+jj = "latest" # SCM
+############################################################
+# language runtimes, compilers and LSP servers
+############################################################
+node = "lts"
+bun = "latest"
+uv = "latest" # Python
+dotnet = "latest"
+go = "latest"
+rust = "latest"
+rustic = "latest"
+rust-analyzer = "latest"
+zig = "latest"
+java = "23.0.2"
+janet = "latest"
+lua-language-server = "latest"
+zls = "latest" # zig language server
 "npm:prettier" = "latest"
 "npm:@tailwindcss/language-server" = "latest"
 "npm:typescript-language-server" = "latest"
@@ -68,25 +94,28 @@ gitu = "latest"
 "npm:fish-lsp" = "latest"
 "npm:@prisma/language-server" = "latest"
 "npm:intelephense" = "latest"
-"npm:@github/copilot-language-server" = "latest"
-"npm:@anthropic-ai/claude-code" = "latest"
-"npm:tldr" = "latest"
-trivy = "latest"
-"npm:@google/gemini-cli" = "latest"
-"npm:@openai/codex" = "latest"
-"npm:opencode-ai" = "latest"
-grpcurl = "latest"
-websocat = "latest"
-meson = "latest"
-ninja = "latest"
-janet = "latest"
-lua = "5.2.4"
-usage = "latest"
-protobuf = "latest"
-erlang = "28"
-elixir = "1.18.4-otp-28"
-bombardier = "latest"
-just = "latest"
-git-lfs = "latest"
 "npm:eslint" = "latest"
-"npm:cline" = "latest"
+"npm:pyright" = "latest"
+ruff = "latest"
+protobuf = "latest"
+tree-sitter = "latest"
+marksman = "latest" # markdown language server
+"pipx:harlequin" = "latest" # cli database client
+############################################################
+# ops
+############################################################
+opentofu = "latest"
+helm = "latest"
+dagger = "latest"
+############################################################
+# cloud
+############################################################
+aws-cli = "latest"
+doctl = "latest"
+flyctl = "latest"
+github-cli = "latest"
+"pipx:snowflake-cli" = "latest"
+############################################################
+# other
+############################################################
+arduino = "latest"

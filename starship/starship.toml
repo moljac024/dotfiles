@@ -1,7 +1,60 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-command_timeout = 2000
+command_timeout = 500
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$nodejs\
+$python\
+${custom.uv_python}\
+$ruby\
+$golang\
+$rust\
+$zig\
+$dotnet\
+$java\
+$kubernetes\
+$time\
+$all\
+$cmd_duration\
+$line_break\
+$character
+"""
+
+[palettes.catppuccin_frappe]
+rosewater = "#f2d5cf"
+flamingo = "#eebebe"
+pink = "#f4b8e4"
+mauve = "#ca9ee6"
+red = "#e78284"
+maroon = "#ea999c"
+peach = "#ef9f76"
+yellow = "#e5c890"
+green = "#a6d189"
+teal = "#81c8be"
+sky = "#99d1db"
+sapphire = "#85c1dc"
+blue = "#8caaee"
+lavender = "#babbf1"
+text = "#c6d0f5"
+subtext1 = "#b5bfe2"
+subtext0 = "#a5adce"
+overlay2 = "#949cbb"
+overlay1 = "#838ba7"
+overlay0 = "#737994"
+surface2 = "#626880"
+surface1 = "#51576d"
+surface0 = "#414559"
+base = "#303446"
+mantle = "#292c3c"
+crust = "#232634"
 
 [directory]
 truncation_length = 3
@@ -34,9 +87,6 @@ format = '\[[$symbol($version)]($style)\]'
 format = '\[[$symbol$environment]($style)\]'
 
 [crystal]
-format = '\[[$symbol($version)]($style)\]'
-
-[daml]
 format = '\[[$symbol($version)]($style)\]'
 
 [dart]
@@ -87,9 +137,6 @@ format = '\[[$symbol($version)]($style)\]'
 [julia]
 format = '\[[$symbol($version)]($style)\]'
 
-[kotlin]
-format = '\[[$symbol($version)]($style)\]'
-
 [kubernetes]
 format = '\[[$symbol$context( \($namespace\))]($style)\]'
 
@@ -99,20 +146,11 @@ format = '\[[$symbol($version)]($style)\]'
 [memory_usage]
 format = '\[$symbol[$ram( | $swap)]($style)\]'
 
-[nim]
-format = '\[[$symbol($version)]($style)\]'
-
 [nix_shell]
 format = '\[[$symbol$state( \($name\))]($style)\]'
 
 [nodejs]
 format = '\[[$symbol($version)]($style)\]'
-
-[ocaml]
-format = '\[[$symbol($version)(\($switch_indicator$switch_name\))]($style)\]'
-
-[openstack]
-format = '\[[$symbol$cloud(\($project\))]($style)\]'
 
 [package]
 format = '\[[$symbol$version]($style)\]'
@@ -123,32 +161,22 @@ format = '\[[$symbol($version)]($style)\]'
 [php]
 format = '\[[$symbol($version)]($style)\]'
 
-[pulumi]
-format = '\[[$symbol$stack]($style)\]'
-
-[purescript]
-format = '\[[$symbol($version)]($style)\]'
-
 [python]
 format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
+python_binary = ['python', 'python3', 'python2']
 
-[raku]
-format = '\[[$symbol($version-$vm_version)]($style)\]'
-
-[red]
-format = '\[[$symbol($version)]($style)\]'
+[custom.uv_python]
+command = 'uv python find --show-version'
+disabled = true
+detect_files = ['.python-version', 'pyproject.toml', 'uv.lock']
+symbol = "🐍"
+format = '\[[ $symbol \(UV\)( $output)]($style)\]'
 
 [ruby]
 format = '\[[$symbol($version)]($style)\]'
 
 [rust]
 format = '\[[$symbol($version)]($style)\]'
-
-[scala]
-format = '\[[$symbol($version)]($style)\]'
-
-[spack]
-format = '\[[$symbol$environment]($style)\]'
 
 [sudo]
 format = '\[[as $symbol]\]'
@@ -165,39 +193,5 @@ format = '\[[$time]($style)\]'
 [username]
 format = '\[[$user]($style)\]'
 
-[vagrant]
-format = '\[[$symbol($version)]($style)\]'
-
-[vlang]
-format = '\[[$symbol($version)]($style)\]'
-
 [zig]
 format = '\[[$symbol($version)]($style)\]'
-
-[palettes.catppuccin_frappe]
-rosewater = "#f2d5cf"
-flamingo = "#eebebe"
-pink = "#f4b8e4"
-mauve = "#ca9ee6"
-red = "#e78284"
-maroon = "#ea999c"
-peach = "#ef9f76"
-yellow = "#e5c890"
-green = "#a6d189"
-teal = "#81c8be"
-sky = "#99d1db"
-sapphire = "#85c1dc"
-blue = "#8caaee"
-lavender = "#babbf1"
-text = "#c6d0f5"
-subtext1 = "#b5bfe2"
-subtext0 = "#a5adce"
-overlay2 = "#949cbb"
-overlay1 = "#838ba7"
-overlay0 = "#737994"
-surface2 = "#626880"
-surface1 = "#51576d"
-surface0 = "#414559"
-base = "#303446"
-mantle = "#292c3c"
-crust = "#232634"

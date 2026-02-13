@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 set -Eeuo pipefail
 
 # filepick.sh — scan directories, fuzzy-pick a file, run a command with the path
@@ -98,22 +99,29 @@ collect_files() {
 # ----- Display label helpers -----
 make_label() {
   local abs="$1"
+
+  # Normalize to remove symlinks and dot segments; fall back safely.
+  local abs_norm pwd_norm root_norm
+  abs_norm="$(realpath "$abs" 2>/dev/null || echo "$abs")"
+  pwd_norm="$(pwd -P)"
+
+  # If exactly one root was provided, prefer label relative to that root.
   if ((${#ROOTS[@]}==1)); then
-    local root; root="$(realpath -- "${ROOTS[0]}")"
-    local rel
-    if rel=$(realpath --relative-to="$root" -- "$abs" 2>/dev/null); then
-      printf '%s' "$rel"; return 0
-    fi
-  fi
-  local relcwd
-  if relcwd=$(realpath --relative-to="$PWD" -- "$abs" 2>/dev/null); then
-    case "$relcwd" in
-      ../*) basename -- "$abs" ;;
-      *)    printf '%s' "$relcwd" ;;
+    # Resolve root to a canonical absolute path
+    root_norm="$(cd -- "${ROOTS[0]}" 2>/dev/null && pwd -P || echo "${ROOTS[0]}")"
+    case "$abs_norm" in
+      "$root_norm"/*)
+        printf '%s' "${abs_norm#"$root_norm/"}"
+        return 0
+        ;;
     esac
-  else
-    basename -- "$abs"
   fi
+
+  # Otherwise, prefer label relative to the current working directory.
+  case "$abs_norm" in
+    "$pwd_norm"/*) printf '%s' "${abs_norm#"$pwd_norm/"}" ;;
+    *)             printf '%s' "${abs_norm##*/}" ;;  # basename without spawning a process
+  esac
 }
 
 build_fzf_input() {

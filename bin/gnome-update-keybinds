@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 set -eo pipefail
 
 gsettings set org.gnome.shell.keybindings switch-to-application-5 "['<Super>5', '<Super>q']"

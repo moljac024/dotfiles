@@ -1,0 +1,16 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+
+is_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+if is_command nvim; then
+  exec nvim $@
+else
+  if is_command vim; then
+    exec vim $@
+  else
+    exec vi $@
+  fi
+fi

@@ -1,3 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bashim
+# vim: filetype=sh
 
 podman run -d --replace --name jellyfin-test -p 8096:8096 -v ~/Media:/media:Z -v jellyfin-config:/config:Z jellyfin/jellyfin:latest

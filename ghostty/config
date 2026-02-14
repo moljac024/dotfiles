@@ -56,9 +56,9 @@ quick-terminal-size = 65%
 ### Background
 ################################################################################
 
-background-opacity = 0.97
+background-opacity = 0.98
 background-image = "~/dotfiles/backgrounds/terminal/simple/tie.png"
-background-image-opacity = 0.07
+background-image-opacity = 0.05
 background-image-position = bottom-right
 background-image-fit = cover
 

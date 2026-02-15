@@ -109,12 +109,14 @@ keybind = shift+ctrl+arrow_down=scroll_page_down
 keybind = shift+ctrl+arrow_up=scroll_page_up
 
 # Navigating splits
-keybind = ctrl+s>h=goto_split:left
-keybind = ctrl+s>j=goto_split:down
-keybind = ctrl+s>k=goto_split:up
-keybind = ctrl+s>l=goto_split:right
-keybind = ctrl+s>d=new_split:down
-keybind = ctrl+s>shift+d=new_split:right
+keybind = ctrl+s>ctrl+h=goto_split:left
+keybind = ctrl+s>ctrl+j=goto_split:down
+keybind = ctrl+s>ctrl+k=goto_split:up
+keybind = ctrl+s>ctrl+l=goto_split:right
+keybind = ctrl+s>h=new_split:left
+keybind = ctrl+s>j=new_split:down
+keybind = ctrl+s>k=new_split:up
+keybind = ctrl+s>l=new_split:right
 
 # Zoom/unzoom split
 keybind = ctrl+s>z=toggle_split_zoom

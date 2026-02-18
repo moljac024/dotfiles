@@ -10,7 +10,7 @@ if is_command mise; then
 fi
 
 if is_command flatpak; then
-    flatpak update -y
+    flatpak update -y --noninteractive
 fi
 
 if is_command brew; then

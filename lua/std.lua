@@ -6,37 +6,33 @@ local M = {}
 
 M.string = {}
 
-M.string.contains = function(self, sub)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return self:find(sub, 1, true) ~= nil
+M.string.contains = function(str, sub)
+  return str:find(sub, 1, true) ~= nil
 end
 
-M.string.starts_with = function(self, start)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return self:sub(1, #start) == start
+M.string.startswith = function(str, start)
+  return str:sub(1, #start) == start
 end
-M.string.startsWith = M.string.starts_with
+M.string.starts_with = M.string.startswith
+M.string.startsWith = M.string.startswith
 
-M.string.ends_with = function(self, ending)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return ending == "" or self:sub(- #ending) == ending
+M.string.endswith = function(str, ending)
+  return ending == "" or str:sub(- #ending) == ending
 end
-M.string.endsWith = M.string.ends_with
+M.string.ends_with = M.string.endswith
+M.string.endsWith = M.string.endswith
 
-M.string.replace = function(self, old, new)
-  local out = self
+M.string.replace = function(str, old, new)
+  local out = str
   local search_start_idx = 1
 
   while true do
-    ---@diagnostic disable-next-line: param-type-mismatch
     local start_idx, end_idx = out:find(old, search_start_idx, true)
     if (not start_idx) then
       break
     end
 
-    ---@diagnostic disable-next-line: param-type-mismatch
     local postfix = out:sub(end_idx + 1)
-    ---@diagnostic disable-next-line: param-type-mismatch
     out = out:sub(1, (start_idx - 1)) .. new .. postfix
 
     search_start_idx = -1 * postfix:len()
@@ -45,20 +41,19 @@ M.string.replace = function(self, old, new)
   return out
 end
 
-M.string.insert = function(self, pos, text)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return self:sub(1, pos - 1) .. text .. self:sub(pos)
+M.string.insert = function(str, pos, text)
+  return str:sub(1, pos - 1) .. text .. str:sub(pos)
 end
 
-M.string.split = function(istr, sep)
+M.string.split = function(str, sep)
   local out = {}
 
   if sep == nil then
     sep = "%s"
   end
 
-  for str in string.gmatch(istr, "([^" .. sep .. "]+)") do
-    table.insert(out, str)
+  for part in string.gmatch(str, "([^" .. sep .. "]+)") do
+    table.insert(out, part)
   end
 
   return out
@@ -74,6 +69,7 @@ M.includes = function(t, value)
       return true
     end
   end
+
   return false
 end
 

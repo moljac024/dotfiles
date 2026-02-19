@@ -85,8 +85,9 @@ gnomify({
   "Excalidraw.app"
 })
 
--- Kill app hiding keybind
+-- Kill app hiding keybinds
 safe_bind_key({ "cmd" }, "h", nil)
+safe_bind_key({ "cmd", "alt" }, "h", nil)
 
 -- Lock screen keybind
 safe_bind_key({ "cmd", "alt" }, "l", lock_screen)

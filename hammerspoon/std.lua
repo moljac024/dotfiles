@@ -1,1 +1,1 @@
-../lualib/std.lua
+../lua/std.lua

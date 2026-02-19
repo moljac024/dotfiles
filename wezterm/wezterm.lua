@@ -1,6 +1,7 @@
 local wezterm = require("wezterm") -- Pull in the wezterm API
-local io = require('io')
-local os = require('os')
+local io = require("io")
+local os = require("os")
+local std = require("std")
 
 local mux = wezterm.mux
 local config = wezterm.config_builder() -- This will hold the configuration.
@@ -13,152 +14,6 @@ local log = {
   warn = wezterm.log_warn,
   error = wezterm.log_error
 }
-
--- =============================================================================
--- ==== Functions
--- =============================================================================
---
-function string:contains(sub)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return self:find(sub, 1, true) ~= nil
-end
-
-function string:startswith(start)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return self:sub(1, #start) == start
-end
-
-function string:endswith(ending)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return ending == "" or self:sub(- #ending) == ending
-end
-
-function string:replace(old, new)
-  local s = self
-  local search_start_idx = 1
-
-  while true do
-    ---@diagnostic disable-next-line: param-type-mismatch
-    local start_idx, end_idx = s:find(old, search_start_idx, true)
-    if (not start_idx) then
-      break
-    end
-
-    ---@diagnostic disable-next-line: param-type-mismatch
-    local postfix = s:sub(end_idx + 1)
-    ---@diagnostic disable-next-line: param-type-mismatch
-    s = s:sub(1, (start_idx - 1)) .. new .. postfix
-
-    search_start_idx = -1 * postfix:len()
-  end
-
-  return s
-end
-
-function string:insert(pos, text)
-  ---@diagnostic disable-next-line: param-type-mismatch
-  return self:sub(1, pos - 1) .. text .. self:sub(pos)
-end
-
--- Function to check if program is available
----@diagnostic disable-next-line: unused-function, unused-local
-local function is_program_available(program)
-  local success, stdout, stderr = wezterm.run_child_process({ "which", program })
-
-  log.info(string.format("%s check: success=%s, stdout='%s', stderr='%s'", program, tostring(success), stdout, stderr))
-  return success
-end
-
-local function split_str(input_str, sep)
-  if sep == nil then
-    sep = "%s"
-  end
-  local t = {}
-  for str in string.gmatch(input_str, "([^" .. sep .. "]+)") do
-    table.insert(t, str)
-  end
-  return t
-end
-
----@diagnostic disable-next-line: unused-function, unused-local
-local function includes(table, value)
-  for i = 1, #table do
-    if (table[i] == value) then
-      return true
-    end
-  end
-  return false
-end
-
-
----@diagnostic disable-next-line: unused-function, unused-local
-local function filter(t, func)
-  local out = {}
-  for i = 1, #t do
-    if func(t[i]) then
-      table.insert(out, t[i])
-    end
-  end
-  return out
-end
-
----@diagnostic disable-next-line: unused-function, unused-local
-local function map(tbl, f)
-  local t = {}
-  for k, v in pairs(tbl) do
-    t[k] = f(v, k)
-  end
-  return t
-end
-
-
----@diagnostic disable-next-line: unused-function, unused-local
-local function values(tbl)
-  local t = {}
-  for _, v in pairs(tbl) do
-    table.insert(t, v)
-  end
-  return t
-end
-
----@diagnostic disable-next-line: unused-function, unused-local
-local function array_concat(a1, a2)
-  local t = {}
-
-  for i = 1, #a1 do
-    t[#t + 1] = a1[i]
-  end
-
-  for i = 1, #a2 do
-    t[#t + 1] = a2[i]
-  end
-
-  return t
-end
-
----@diagnostic disable-next-line: unused-function, unused-local
-local function shuffle(t)
-  local s = {}
-  for i = 1, #t do s[i] = t[i] end
-  for i = #t, 2, -1 do
-    local j = math.random(i)
-    s[i], s[j] = s[j], s[i]
-  end
-  return s
-end
-
-
--- Take the first n entries from table or the whole table if n is larger than
--- the length
----@diagnostic disable-next-line: unused-function, unused-local
-local function take(t, n)
-  local s = {}
-  for i = 1, math.min(n, #t) do
-    s[i] = t[i]
-  end
-
-  return s
-end
 
 -- wezterm.gui is not available to the mux server, so take care to
 -- do something reasonable when this config is evaluated by the mux
@@ -206,7 +61,7 @@ local function generate_unique_name(tab_info, existing_names, opts)
 
     local name = table.concat(parts, "-")
 
-    if not includes(existing_names, name) then
+    if not std.includes(existing_names, name) then
       return name
     end
 
@@ -215,14 +70,12 @@ local function generate_unique_name(tab_info, existing_names, opts)
 
   -- Fallback: return the next number in sequence
   return tostring(tab_info.tab_id)
-
-  -- Fallback: return the next number in sequence
-  -- return tostring(#existing_names + 1)
 end
 
 local function get_images_from_dir(dir)
-  return filter(wezterm.read_dir(dir), function(file)
-    return file:endswith(".jpg") or file:endswith(".jpeg") or file:endswith(".png")
+  return std.filter(wezterm.read_dir(dir), function(file)
+    return std.string.ends_with(file, ".jpg") or std.string.ends_with(file, ".jpeg") or
+        std.string.ends_with(file, ".png")
   end)
 end
 
@@ -231,19 +84,19 @@ local function get_background_images(opts)
   local images = {}
 
   if (opts and opts.include_simple) then
-    images = array_concat(images, get_images_from_dir(base_images_dir .. "/simple"))
+    images = std.concat(images, get_images_from_dir(base_images_dir .. "/simple"))
   end
 
   if (opts and opts.include_main) then
-    images = array_concat(images, get_images_from_dir(base_images_dir .. "/main"))
+    images = std.concat(images, get_images_from_dir(base_images_dir .. "/main"))
   end
 
   if (opts and opts.include_sketchy) then
-    images = array_concat(images, get_images_from_dir(base_images_dir .. "/sketchy"))
+    images = std.concat(images, get_images_from_dir(base_images_dir .. "/sketchy"))
   end
 
   if (opts and opts.include_secret) then
-    images = array_concat(images, get_images_from_dir(base_images_dir .. "/secret"))
+    images = std.concat(images, get_images_from_dir(base_images_dir .. "/secret"))
   end
 
   return images
@@ -295,12 +148,12 @@ local function make_background_image_chooser(image_opts, opts)
       return
     end
 
-    local shuffled = shuffle(images)
-    local limited = take(shuffled, opts.max or 5)
+    local shuffled = std.shuffle(images)
+    local limited = std.take(shuffled, opts.max or 5)
 
     ---@diagnostic disable-next-line: unused-local
     for i, image in ipairs(limited) do
-      local split = split_str(image, "/")
+      local split = std.string.split(image, "/")
       table.insert(choices, { label = split[#split], id = image })
     end
 
@@ -335,11 +188,11 @@ local function get_tab_title(tab_info, opts)
     global.tab_names = {}
   end
 
-  local all_tab_ids = map(tabs, function(tab)
+  local all_tab_ids = std.map(tabs, function(tab)
     return tostring(tab.tab_id)
   end)
   local tab_id = tostring(tab_info.tab_id)
-  local existing_names = values(global.tab_names)
+  local existing_names = std.values(global.tab_names)
   local existing_title = tab_info.tab_title
   local title = tab_id
 
@@ -363,7 +216,7 @@ local function get_tab_title(tab_info, opts)
 
   -- Clean up the global tab names
   for _, t in pairs(global.tab_names) do
-    if not includes(all_tab_ids, t) then
+    if not std.includes(all_tab_ids, t) then
       global.tab_names[t] = nil
     end
   end

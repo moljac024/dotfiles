@@ -1,3 +1,4 @@
+local std = require "std"
 local M = {}
 
 M.setupAutoReload = function()
@@ -101,7 +102,51 @@ M.moveWindow = function(win, direction)
   end)
 end
 
-local function makeApplicationSwitchChooser()
+local function getRunningApplications()
+  local apps = hs.fnutils.filter(hs.application.runningApplications(), function(app)
+    if app:kind() ~= 1 then
+      return false
+    end
+
+    if app:isHidden() then
+      return false
+    end
+
+    if app:mainWindow() == nil then
+      return false
+    end
+
+    if #app:visibleWindows() == 0 then
+      return false
+    end
+
+    return true
+  end)
+
+  return apps
+end
+
+local function invokeChooser(chooser, opts)
+  if type(opts) ~= "table" then
+    opts = {}
+  end
+
+  if opts.theme == "dark" then
+    chooser:bgDark(true)
+  end
+
+  if opts.theme == "light" then
+    chooser:bgDark(false)
+  end
+
+  if type(opts.choices) == "table" then
+    chooser:choices(opts.choices)
+  end
+
+  chooser:show()
+end
+
+M.makeApplicationChooser = function()
   local chooser = hs.chooser.new(function(x)
     if x ~= nil then
       hs.application.launchOrFocus(x.path)
@@ -113,28 +158,12 @@ local function makeApplicationSwitchChooser()
     chooser:query(nil)
   end)
 
-  local function invoke()
-    local apps = hs.fnutils.filter(hs.application.runningApplications(), function(app)
-      if app:kind() ~= 1 then
-        return false
-      end
+  local function invoke(opts)
+    if type(opts) ~= table then
+      opts = {}
+    end
 
-      if app:isHidden() then
-        return false
-      end
-
-      if app:mainWindow() == nil then
-        return false
-      end
-
-      if #app:visibleWindows() == 0 then
-        return false
-      end
-
-      return true
-    end)
-
-    local appChoices = hs.fnutils.map(apps, function(x)
+    local choices = hs.fnutils.map(getRunningApplications(), function(x)
       return {
         text = x:name(),
         image = hs.image.iconForFile(x:path()),
@@ -142,8 +171,12 @@ local function makeApplicationSwitchChooser()
       }
     end)
 
-    chooser:choices(appChoices)
-    chooser:show()
+    if #choices < 2 then
+      return nil
+    end
+
+    local finalOpts = std.merge(opts, { choices = choices })
+    return invokeChooser(chooser, finalOpts)
   end
 
   return {
@@ -151,6 +184,48 @@ local function makeApplicationSwitchChooser()
   }
 end
 
-M.applicationChooser = makeApplicationSwitchChooser()
+M.makeApplicationWindowChooser = function()
+  local chooser = hs.chooser.new(function(x)
+    if x == nil then
+      return nil
+    end
+
+    local window = hs.window.get(x.id)
+    if window ~= nil then
+      window:focus()
+    end
+  end)
+
+  -- Clear query when closed
+  chooser:hideCallback(function()
+    chooser:query(nil)
+  end)
+
+  local function invoke(opts)
+    if type(opts) ~= table then
+      opts = {}
+    end
+
+    local app = hs.window.focusedWindow():application()
+    local choices = std.map(app:allWindows(), function(window)
+      return {
+        text = window:title(),
+        image = window:snapshot(),
+        id = window:id(),
+      }
+    end)
+
+    if #choices < 2 then
+      return nil
+    end
+
+    local finalOpts = std.merge(opts, { choices = choices })
+    invokeChooser(chooser, finalOpts)
+  end
+
+  return {
+    invoke = invoke
+  }
+end
 
 return M

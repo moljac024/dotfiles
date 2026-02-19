@@ -4,7 +4,10 @@
 
 local lib = require "lib"
 
-lib.setupAutoReload()
+lib.setupAutoReload() -- Auto reload on lua file changes
+local applicationChooser = lib.makeApplicationChooser()
+local windowChooser = lib.makeApplicationWindowChooser()
+
 -- hs.window.animationDuration = 0
 
 -- =============================================================================
@@ -50,4 +53,6 @@ lib.bindKey({ "cmd", "alt" }, "h", nil)
 -- Lock screen keybind
 lib.bindKey({ "cmd", "ctrl", "alt" }, "l", lib.lockScreen)
 
-lib.bindKey({ "cmd" }, "'", lib.applicationChooser.invoke)
+-- Application and window choosers
+lib.bindKey({ "cmd" }, ";", function() applicationChooser.invoke({}) end)
+lib.bindKey({ "cmd" }, "'", function() windowChooser.invoke({}) end)

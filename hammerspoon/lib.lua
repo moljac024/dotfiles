@@ -104,20 +104,34 @@ end
 local function makeApplicationSwitchChooser()
   local chooser = hs.chooser.new(function(x)
     if x ~= nil then
-      -- Focus app
       hs.application.launchOrFocus(x.path)
     end
   end)
 
   -- Clear query when closed
-
   chooser:hideCallback(function()
     chooser:query(nil)
   end)
 
   local function invoke()
     local apps = hs.fnutils.filter(hs.application.runningApplications(), function(app)
-      return not app:isHidden() and app:mainWindow() ~= nil and #app:visibleWindows() > 0
+      if app:kind() ~= 1 then
+        return false
+      end
+
+      if app:isHidden() then
+        return false
+      end
+
+      if app:mainWindow() == nil then
+        return false
+      end
+
+      if #app:visibleWindows() == 0 then
+        return false
+      end
+
+      return true
     end)
 
     local appChoices = hs.fnutils.map(apps, function(x)

@@ -90,7 +90,7 @@ function export_vars_from_dir
             set var_name (basename "$file")
 
             # Read the file contents properly without Fish breaking on special characters
-            set -l content (cat "$file" | string collect --no-trim)
+            set -l content (cat -- "$file")
 
             # Export while wrapping the content in quotes to preserve special characters
             set -gx $var_name "$content"

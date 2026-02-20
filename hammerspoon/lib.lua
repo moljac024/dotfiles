@@ -103,7 +103,7 @@ M.moveWindow = function(win, direction)
 end
 
 local getRunningApplications = function()
-  local apps = hs.fnutils.filter(hs.application.runningApplications(), function(app)
+  local apps = std.filter(hs.application.runningApplications(), function(app)
     if app:kind() ~= 1 then
       return false
     end

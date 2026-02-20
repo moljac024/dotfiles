@@ -150,11 +150,10 @@ local makeChooser = function(getChoices, onSelect)
   local chooser = hs.chooser.new(onSelect)
   local invoke = function(opts)
     local choices = getChoices()
-    if type(choices) ~= "table" or #choices < 1 then
-      return nil
-    end
 
+    if type(choices) ~= "table" or #choices < 1 then return nil end
     if type(opts) ~= table then opts = {} end
+
     local finalOpts = std.merge(opts, { choices = choices })
 
     return invokeChooser(chooser, finalOpts)
@@ -196,10 +195,7 @@ end
 
 M.makeApplicationWindowChooser = function()
   local onSelect = function(x)
-    if x == nil then
-      return nil
-    end
-
+    if x == nil then return nil end
 
     local window = hs.window.get(x.id)
     if window ~= nil then
@@ -208,7 +204,10 @@ M.makeApplicationWindowChooser = function()
   end
 
   local getChoices = function()
-    local app = hs.window.focusedWindow():application()
+    local win = hs.window.focusedWindow()
+    if win == nil then return nil end
+
+    local app = win:application()
     local choices = std.map(app:allWindows(), function(window)
       return {
         text = window:title(),

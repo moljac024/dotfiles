@@ -153,6 +153,8 @@ M.makeApplicationChooser = function()
     end
   end)
 
+  chooser:placeholderText("Switch to application")
+
   -- Clear query when closed
   chooser:hideCallback(function()
     chooser:query(nil)
@@ -171,7 +173,7 @@ M.makeApplicationChooser = function()
       }
     end)
 
-    if #choices < 2 then
+    if #choices < 1 then
       return nil
     end
 
@@ -190,11 +192,14 @@ M.makeApplicationWindowChooser = function()
       return nil
     end
 
+
     local window = hs.window.get(x.id)
     if window ~= nil then
       window:focus()
     end
   end)
+
+  chooser:placeholderText("Switch to application window")
 
   -- Clear query when closed
   chooser:hideCallback(function()
@@ -215,7 +220,7 @@ M.makeApplicationWindowChooser = function()
       }
     end)
 
-    if #choices < 2 then
+    if #choices < 1 then
       return nil
     end
 

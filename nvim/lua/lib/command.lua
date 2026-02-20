@@ -1,4 +1,4 @@
-local util = import("./util")
+local std = import("./std")
 
 local M = {}
 
@@ -44,7 +44,7 @@ end
 
 M.add_commands = function(cmds)
   for _, item in ipairs(cmds) do
-    local existing_index = util.find_index(commands, function(c)
+    local existing_index = std.find_index(commands, function(c)
       return c.desc == item.desc
     end)
 
@@ -56,7 +56,7 @@ M.add_commands = function(cmds)
           existing_item.keys = {}
         end
         for _, keybind in ipairs(item.keys) do
-          if not util.includes(existing_item.keys, keybind) then
+          if not std.includes(existing_item.keys, keybind) then
             table.insert(existing_item.keys, keybind)
           end
         end

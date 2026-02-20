@@ -63,6 +63,18 @@ end
 -- ==== Table
 -- =============================================================================
 
+M.findindex = function(t, matcher)
+  for i = 1, #t do
+    if (matcher(t[i])) then
+      return i
+    end
+  end
+
+  return -1
+end
+M.find_index = M.findindex
+M.findIndex = M.findindex
+
 M.includes = function(t, value)
   for i = 1, #t do
     if (t[i] == value) then

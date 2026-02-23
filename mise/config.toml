@@ -13,6 +13,7 @@ fzf = "latest"
 bat = "latest"
 bat-extras = "latest"
 eza = "latest"
+lsd = "latest"
 fd = "latest"
 dust = "latest" # like du but more intuitive
 ctop = "latest"

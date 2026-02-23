@@ -1,3 +1,41 @@
+-- =============================================================================
+-- ==== Path setup
+-- =============================================================================
+
+local function setup_lua_path()
+  local home = os.getenv('HOME')
+  local dotfiles = os.getenv('DOTFILES')
+  local target_path
+
+  -- 1. Determine the base directory
+  if dotfiles and dotfiles ~= "" then
+    target_path = dotfiles .. '/lua'
+  elseif home then
+    target_path = home .. '/dotfiles/lua'
+  end
+
+  -- 2. Append to package.path if we found a valid directory
+  if target_path then
+    -- We add both the file and the init.lua directory pattern
+    local patterns = {
+      target_path .. '/?.lua',
+      target_path .. '/?/init.lua',
+    }
+
+    for _, pattern in ipairs(patterns) do
+      -- Only add if it's not already in the path (prevents bloat on reloads)
+      if not package.path:find(pattern, 1, true) then
+        package.path = package.path .. ';' .. pattern
+      end
+    end
+  end
+end
+setup_lua_path()
+
+-- =============================================================================
+-- ==== Base
+-- =============================================================================
+
 local wezterm = require("wezterm") -- Pull in the wezterm API
 local io = require("io")
 local os = require("os")

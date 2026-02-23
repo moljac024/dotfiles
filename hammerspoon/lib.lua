@@ -167,7 +167,7 @@ local makeChooser = function(getChoices, onSelect)
   return chooser, invoke
 end
 
-M.makeApplicationChooser = function()
+M.makeRunninApplicationChooser = function()
   local onSelect = function(x)
     if x ~= nil then
       hs.application.launchOrFocus(x.path)
@@ -193,7 +193,7 @@ M.makeApplicationChooser = function()
   }
 end
 
-M.makeApplicationWindowChooser = function()
+M.makeFocusedApplicationWindowChooser = function()
   local onSelect = function(x)
     if x == nil then return nil end
 

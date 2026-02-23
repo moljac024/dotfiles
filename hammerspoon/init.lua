@@ -12,25 +12,27 @@ lib.setupAutoReload() -- Auto reload on lua file changes
 -- == Main config
 -- =============================================================================
 
-lib.gnomify({
+local docs = {
   "Finder", -- Has to be in first slot
-  "Ghostty.app",
-  "Microsoft Edge.app",
-  "Firefox.app",
+  "Ghostty",
+  "Microsoft Edge",
+  "Firefox",
 
-  -- "Visual Studio Code.app",
-  "Windsurf.app",
-  "DBeaver.app",
+  -- "Visual Studio Code",
+  "Windsurf",
+  "DBeaver",
 
-  "Obsidian.app",
+  "Obsidian",
 
-  "Microsoft Teams.app",
-  "Microsoft Outlook.app",
-  -- "Microsoft OneNote.app",
-  "Microsoft 365 Copilot.app",
+  "Microsoft Teams",
+  "Microsoft Outlook",
+  -- "Microsoft OneNote",
+  "Microsoft 365 Copilot",
 
-  "Excalidraw.app"
-})
+  "Excalidraw"
+}
+
+lib.gnomify(docs)
 
 -- Window management
 lib.bindKey({ "cmd", "alt" }, "h", function() lib.moveWindow(hs.window.focusedWindow(), "screen-left") end)
@@ -44,15 +46,15 @@ lib.bindKey({ "cmd", "alt" }, "up", function()
   end)
 end)
 
--- Kill app hiding keybinds
+-- Kill hiding keybinds
 lib.bindKey({ "cmd" }, "h", nil)
 lib.bindKey({ "cmd", "alt" }, "h", nil)
 
 -- Lock screen keybind
 lib.bindKey({ "cmd", "ctrl", "alt" }, "l", lib.lockScreen)
 
--- Application and window choosers
--- local applicationChooser = lib.makeApplicationChooser()
--- local windowChooser = lib.makeApplicationWindowChooser()
--- lib.bindKey({ "cmd" }, ";", function() applicationChooser.invoke({}) end)
+--lication and window choosers
+-- locallicationChooser = lib.makeRunningApplicationChooser()
+-- local windowChooser = lib.makeFocuselicationWindowChooser()
+-- lib.bindKey({ "cmd" }, ";", function()licationChooser.invoke({}) end)
 -- lib.bindKey({ "cmd" }, "'", function() windowChooser.invoke({}) end)

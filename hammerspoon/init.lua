@@ -12,27 +12,25 @@ lib.setupAutoReload() -- Auto reload on lua file changes
 -- == Main config
 -- =============================================================================
 
-local docs = {
+local apps = {
   "Finder", -- Has to be in first slot
   "Ghostty",
   "Microsoft Edge",
-  "Firefox",
 
   -- "Visual Studio Code",
   "Windsurf",
-  "DBeaver",
 
+  "DBeaver",
   "Obsidian",
 
   "Microsoft Teams",
   "Microsoft Outlook",
-  -- "Microsoft OneNote",
   "Microsoft 365 Copilot",
 
   "Excalidraw"
 }
 
-lib.gnomify(docs)
+lib.gnomify(apps)
 
 -- Window management
 lib.bindKey({ "cmd", "alt" }, "h", function() lib.moveWindow(hs.window.focusedWindow(), "screen-left") end)

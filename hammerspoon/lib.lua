@@ -40,7 +40,7 @@ M.gnomify = function(apps)
     return
   end
 
-  for i = 1, 10 do
+  for i = 1, 9 do
     local key = (i == 10) and "0" or tostring(i)
     M.bindKey({ "cmd" }, key, function()
       if type(apps[i]) == "string" then

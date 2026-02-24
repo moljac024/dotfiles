@@ -1,0 +1,4 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+
+exec curl https://mise.run | sh

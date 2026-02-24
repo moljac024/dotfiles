@@ -69,6 +69,8 @@ ninja = "latest"
 jq = "latest"
 yq = "latest"
 jj = "latest" # SCM
+"pipx:harlequin" = "latest" # cli database client
+"pipx:pgcli" = "latest" # pg cli client, nicer than psql
 ############################################################
 # language runtimes, compilers and LSP servers
 ############################################################
@@ -101,7 +103,6 @@ ruff = "latest"
 protobuf = "latest"
 tree-sitter = "latest"
 marksman = "latest" # markdown language server
-"pipx:harlequin" = "latest" # cli database client
 ############################################################
 # ops
 ############################################################

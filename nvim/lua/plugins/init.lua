@@ -8,7 +8,7 @@ local lsp = import("./lsp")
 local ui = import("./ui")
 local terminal = import("./terminal")
 local dev = import("./dev")
-
+local obsidian = import("./obsidian")
 local ai = import("./ai")
 
 return {
@@ -22,6 +22,6 @@ return {
   ui,
   terminal,
   dev,
-
+  obsidian,
   -- ai,
 }

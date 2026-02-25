@@ -1,19 +1,13 @@
 # vim: filetype=fish
 
 ################################################################################
-### Environment
+### Paths
 ################################################################################
-
-export_var LC_ALL "en_US.UTF-8"
-export_var LANG "en_US.UTF-8"
 
 # Homebrew
 if test -d /opt/homebrew/bin
     modify_path /opt/homebrew/bin prepend
 end
-
-# Dotnet
-modify_path "$HOME/.dotnet/tools" append
 
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend
@@ -49,6 +43,13 @@ end
 ### Main
 ################################################################################
 
+export_var LC_ALL "en_US.UTF-8"
+export_var LANG "en_US.UTF-8"
+
+if test -d $HOME/MyDocuments/Notebook
+  export_var NOTEBOOK_PATH $HOME/MyDocuments/Notebook
+end
+
 if is_linux
     set -l base_ls 'ls --color=auto --group-directories-first --sort=extension'
     alias ls="$base_ls"
@@ -72,6 +73,7 @@ end
 
 alias c='clear'
 alias ..='cd ..'
+alias cdn='cd $NOTEBOOK_PATH'
 alias back='cd -'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'

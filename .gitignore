@@ -4,6 +4,7 @@ helix/runtime
 bash/cache
 zsh/cache
 fish/fish_variables
+fish/completions
 
 sway/outputs
 sway/workspaces

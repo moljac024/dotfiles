@@ -7,6 +7,7 @@ _.file = { path = ".env", tools = true }
 # cli
 ############################################################
 starship = "latest" # shell prompt
+oh-my-posh = "latest" # shell prompt
 ripgrep = "latest"
 zellij = "latest"
 fzf = "latest"
@@ -23,6 +24,8 @@ rclone = "latest"
 zoxide = "latest" # cd on steroids
 yazi = "latest" # file manager
 usage = "latest"
+choose = "latest" # simple awk/cut replacement
+coreutils = "latest" # coreutils rewrite in rust
 neovim = "latest" # text editor / ide
 helix = "latest" # text editor / ide
 restic = "latest" # backup tool
@@ -49,6 +52,7 @@ kubespy = "latest"
 kubeswitch = "latest"
 k9s = "latest"
 minikube = "latest"
+popeye = "latest" # k8s cluster linter
 ############################################################
 # git
 ############################################################
@@ -58,8 +62,10 @@ gitu = "latest"
 ############################################################
 # dev tools
 ############################################################
+doggo = "latest" # dns client
 grpcurl = "latest" # graphql client
 xh = "latest" # http client
+restish = "latest" # http client
 websocat = "latest" # websocket client
 bombardier = "latest" # http benchmarking tool
 mkcert = "latest" # local https dev

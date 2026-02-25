@@ -80,7 +80,6 @@ fi
 
 alias c='clear'
 alias ..='cd ..'
-alias cdn='cd $NOTEBOOK_PATH'
 alias back='cd "$OLDPWD"'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'

@@ -73,7 +73,6 @@ end
 
 alias c='clear'
 alias ..='cd ..'
-alias cdn='cd $NOTEBOOK_PATH'
 alias back='cd -'
 alias mkdir='mkdir -p -v'
 alias su='sudo -i'

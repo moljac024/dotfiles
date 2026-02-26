@@ -5,6 +5,8 @@ bash/cache
 zsh/cache
 fish/fish_variables
 fish/completions
+fish/functions
+fish/conf.d
 
 sway/outputs
 sway/workspaces

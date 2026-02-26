@@ -125,6 +125,12 @@ if is_command nvim
     export_var MANPAGER "nvim +Man!"
 end
 
+# Use zig as C and C++ compiler, if present
+if is_command zig
+  export_var CC "zig cc"
+  export_var CXX "zig c++"
+end
+
 # WSL
 if is_wsl
     export_var WSL_HOST (awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null)

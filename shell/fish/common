@@ -86,6 +86,7 @@ if is_command eza
     alias lsa="$base_ls -a"
     alias lsl="$base_ls --git -lb"
     alias lsla="$base_ls --git -lba"
+    alias tree="$base_ls --tree"
 end
 
 # Git aliases

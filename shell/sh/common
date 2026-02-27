@@ -93,6 +93,7 @@ if is_command eza; then
   alias lsa="$BASE_LS -a"
   alias lsl="$BASE_LS --git -lb"
   alias lsla="$BASE_LS --git -lba"
+  alias tree="$BASE_LS --tree"
   unset BASE_LS
 fi
 

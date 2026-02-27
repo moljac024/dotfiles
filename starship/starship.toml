@@ -3,6 +3,7 @@
 
 command_timeout = 500
 format = """
+$shell\
 $username\
 $hostname\
 $directory\
@@ -11,22 +12,12 @@ $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
-$nodejs\
-$python\
-${custom.uv_python}\
-$ruby\
-$golang\
-$rust\
-$zig\
-$dotnet\
-$java\
-$kubernetes\
+$docker_context\
+$aws\
 $time\
-$all\
 $cmd_duration\
 $line_break\
-$character
-"""
+$character"""
 
 [palettes.catppuccin_frappe]
 rosewater = "#f2d5cf"
@@ -56,6 +47,9 @@ base = "#303446"
 mantle = "#292c3c"
 crust = "#232634"
 
+[shell]
+# disabled = false
+
 [directory]
 truncation_length = 3
 truncation_symbol = "../"
@@ -64,105 +58,10 @@ read_only = "🔒"
 read_only_style = "red"
 
 [cmd_duration]
-format = '\[[⏱ $duration]($style)\]'
 min_time = 200
 show_milliseconds = true
 
-[aws]
-format = '\[[$symbol($profile)(\($region\))(\[$duration\])]($style)\]'
-
-[bun]
-format = '\[[$symbol($version)]($style)\]'
-
-[c]
-format = '\[[$symbol($version(-$name))]($style)\]'
-
-[cmake]
-format = '\[[$symbol($version)]($style)\]'
-
-[cobol]
-format = '\[[$symbol($version)]($style)\]'
-
-[conda]
-format = '\[[$symbol$environment]($style)\]'
-
-[crystal]
-format = '\[[$symbol($version)]($style)\]'
-
-[dart]
-format = '\[[$symbol($version)]($style)\]'
-
-[deno]
-format = '\[[$symbol($version)]($style)\]'
-
-[docker_context]
-format = '\[[$symbol$context]($style)\]'
-
-[dotnet]
-format = '\[[$symbol($version)(🎯 $tfm)]($style)\]'
-
-[elixir]
-format = '\[[$symbol($version \(OTP $otp_version\))]($style)\]'
-
-[elm]
-format = '\[[$symbol($version)]($style)\]'
-
-[erlang]
-format = '\[[$symbol($version)]($style)\]'
-
-[gcloud]
-format = '\[[$symbol$account(@$domain)(\($region\))]($style)\]'
-
-[git_branch]
-format = '\[[$symbol$branch]($style)\]'
-
-[git_status]
-format = '([\[$all_status$ahead_behind\]]($style))'
-
-[golang]
-format = '\[[$symbol($version)]($style)\]'
-
-[haskell]
-format = '\[[$symbol($version)]($style)\]'
-
-[helm]
-format = '\[[$symbol($version)]($style)\]'
-
-[hg_branch]
-format = '\[[$symbol$branch]($style)\]'
-
-[java]
-format = '\[[$symbol($version)]($style)\]'
-
-[julia]
-format = '\[[$symbol($version)]($style)\]'
-
-[kubernetes]
-format = '\[[$symbol$context( \($namespace\))]($style)\]'
-
-[lua]
-format = '\[[$symbol($version)]($style)\]'
-
-[memory_usage]
-format = '\[$symbol[$ram( | $swap)]($style)\]'
-
-[nix_shell]
-format = '\[[$symbol$state( \($name\))]($style)\]'
-
-[nodejs]
-format = '\[[$symbol($version)]($style)\]'
-
-[package]
-format = '\[[$symbol$version]($style)\]'
-
-[perl]
-format = '\[[$symbol($version)]($style)\]'
-
-[php]
-format = '\[[$symbol($version)]($style)\]'
-
 [python]
-format = '\[[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style)\]'
 python_binary = ['python', 'python3', 'python2']
 
 [custom.uv_python]
@@ -170,28 +69,3 @@ command = 'uv python find --show-version'
 disabled = true
 detect_files = ['.python-version', 'pyproject.toml', 'uv.lock']
 symbol = "🐍"
-format = '\[[ $symbol \(UV\)( $output)]($style)\]'
-
-[ruby]
-format = '\[[$symbol($version)]($style)\]'
-
-[rust]
-format = '\[[$symbol($version)]($style)\]'
-
-[sudo]
-format = '\[[as $symbol]\]'
-
-[swift]
-format = '\[[$symbol($version)]($style)\]'
-
-[terraform]
-format = '\[[$symbol$workspace]($style)\]'
-
-[time]
-format = '\[[$time]($style)\]'
-
-[username]
-format = '\[[$user]($style)\]'
-
-[zig]
-format = '\[[$symbol($version)]($style)\]'

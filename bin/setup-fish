@@ -4,6 +4,8 @@ set -euo pipefail
 
 is_command() { command -v "$1" >/dev/null 2>&1; }
 
-if [[ is_command fish && -f $HOME/.config/fish/setup.fish ]]; then
-  fish $HOME/.config/fish/setup.fish
+setup_script="$HOME/.config/fish/setup.fish"
+
+if is_command fish && [[ -f "$setup_script" ]]; then
+  fish "$setup_script"
 fi

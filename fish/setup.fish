@@ -4,7 +4,7 @@ curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fi
 # Install plugins listed in fish_plugins
 fisher update
 
-# Symlink setup to conf.d so it runs before plugins
+# Symlink init to conf.d so it runs before plugins
 set -l here (path resolve (dirname (status --current-filename)))
 set -l target $here/init.fish
 set -l dest $here/conf.d/000.init.fish

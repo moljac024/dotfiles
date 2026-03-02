@@ -2,7 +2,9 @@
 -- == Setup
 -- =============================================================================
 
-local lib = require "lib"
+-- global so it can be used in hammerspoon console
+---@diagnostic disable-next-line: lowercase-global
+lib = require "lib"
 
 lib.setupAutoReload() -- Auto reload on lua file changes
 

@@ -81,6 +81,7 @@ jj = "latest" # SCM
 # language runtimes, compilers and LSP servers
 ############################################################
 node = "lts"
+deno = "latest"
 bun = "latest"
 uv = "latest" # Python
 dotnet = "latest"

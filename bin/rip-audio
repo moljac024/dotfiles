@@ -1,0 +1,8 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+set -Eeuo pipefail
+
+INPUT="$1"
+OUTPUT="$2"
+
+exec ffmpeg -i "$INPUT" -q:a 0 -map a "$OUTPUT"

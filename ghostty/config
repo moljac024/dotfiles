@@ -102,6 +102,9 @@ keybind = shift+ctrl+l=next_tab
 keybind = shift+ctrl+arrow_left=previous_tab
 keybind = shift+ctrl+arrow_right=next_tab
 
+keybind = ctrl+alt+h=move_tab:-1
+keybind = ctrl+alt+l=move_tab:1
+
 # Scrolling
 keybind = shift+ctrl+j=scroll_page_down
 keybind = shift+ctrl+k=scroll_page_up

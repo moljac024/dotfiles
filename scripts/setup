@@ -119,9 +119,18 @@ ensure_symlink $ROOT_DIR/zellij $HOME/.config/zellij
 
 # K9s
 ensure_symlink $ROOT_DIR/k9s $HOME/.config/k9s
+if is_mac; then
+  ensure_symlink $ROOT_DIR/kew "$HOME/Library/Application Support/k9s"
+fi
 
 # Opencode
 ensure_symlink $ROOT_DIR/opencode $HOME/.config/opencode
+
+# Kew (music player)
+ensure_symlink $ROOT_DIR/kew $HOME/.config/kew
+if is_mac; then
+  ensure_symlink $ROOT_DIR/kew $HOME/Library/Preferences/kew
+fi
 
 # Midnight commander
 mkdir -p $HOME/.local/share/mc

@@ -35,6 +35,7 @@ bitwarden = "latest" # password manager
 glow = "latest" # render markdown on CLI
 marp-cli = "latest" # markdown slides
 "npm:tldr" = "latest" # community-driven, simplified man pages
+yt-dlp = { version = "latest", rename_exe = "yt-dlp" } # audio/video downloader
 ############################################################
 # docker and k8s
 ############################################################

@@ -10,7 +10,7 @@ THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0) # Full 
 DIR=$(dirname "${THIS}") # The directory where current script resides
 ROOT_DIR=$(dirname "${DIR}../")
 
-source $ROOT_DIR/shell/lib.sh
+source $ROOT_DIR/shell/sh/lib
 
 if [[ ! -e $HOME/.config ]] ; then
     mkdir -p $HOME/.config
@@ -125,6 +125,9 @@ fi
 
 # Opencode
 ensure_symlink $ROOT_DIR/opencode $HOME/.config/opencode
+
+# Yazi
+ensure_symlink $ROOT_DIR/yazi $HOME/.config/yazi
 
 # Kew (music player)
 ensure_symlink $ROOT_DIR/kew $HOME/.config/kew

@@ -104,8 +104,9 @@ alias kn='kubectl ns'
 alias kcfg='kubectl config view --minify | grep name'
 
 # Other aliases
-alias zl='zellij'
 alias pbg="pick-ghostty-background"
+alias zl='zellij'
+alias y='yazi'
 
 # Ripgrep and fzf config
 export_var RIPGREP_CONFIG_PATH "$HOME/.ripgreprc"

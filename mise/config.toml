@@ -23,6 +23,7 @@ dust = "latest" # like du but more intuitive
 ctop = "latest" # top, but for containers
 dt = "latest" # duct tape for unix pipes
 duf = "latest" # disk usage
+gdu = "latest" # directory size
 zoxide = "latest" # cd on steroids
 yazi = "latest" # file manager
 choose = "latest" # simple awk/cut replacement
@@ -35,6 +36,7 @@ bitwarden = "latest" # password manager
 glow = "latest" # render markdown on CLI
 marp-cli = "latest" # markdown slides
 "npm:tldr" = "latest" # community-driven, simplified man pages
+duckdb = "latest" # database
 yt-dlp = { version = "latest", rename_exe = "yt-dlp" } # audio/video downloader
 ############################################################
 # docker and k8s

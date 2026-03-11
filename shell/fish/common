@@ -127,6 +127,11 @@ if is_command nvim
     export_var MANPAGER "nvim +Man!"
 end
 
+# Bat
+if is_command bat
+  alias cat="bat --decorations=never --pager=never"
+end
+
 # Use zig as C and C++ compiler, if present
 if is_command zig
   export_var CC "zig cc"

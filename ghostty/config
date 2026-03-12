@@ -27,6 +27,8 @@ font-size = 16
 
 # Don't inherit working directory
 window-inherit-working-directory = false
+tab-inherit-working-directory = false
+split-inherit-working-directory = true
 
 # Notify when long commands finish
 notify-on-command-finish = unfocused

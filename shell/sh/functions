@@ -1,0 +1,50 @@
+# vim: filetype=sh
+
+bw-unlock() {
+    local session_key=$(bw unlock --raw)
+
+    if [[ $? -eq 0 && -n "$session_key" ]]; then
+        export BW_SESSION="$session_key"
+        echo "Bitwarden unlocked. BW_SESSION set."
+    else
+        # Force a newline to clear the "Master password:" prompt line
+        echo ""
+        # If interrupted or failed, ensure we don't keep an old/broken key
+        unset BW_SESSION
+        echo "Unlock cancelled or failed."
+        return 1
+    fi
+}
+
+bw-search() {
+    if [[ -z "$1" ]]; then
+        echo "Usage: bw_search <query>"
+        return 1
+    fi
+
+    # Query 'bw status' and check the 'status' field in the JSON output
+    local bw_status=$(bw status | jq -r '.status')
+
+    if [[ "$bw_status" != "unlocked" ]]; then
+        echo "Vault is $bw_status. Unlock first."
+        return 1
+    fi
+
+    local jq_filter='.[] | {
+        name: .name,
+        type: (if .type == 1 then "Login" elif .type == 2 then "Note" elif .type == 3 then "Card" elif .type == 4 then "Identity" else "Unknown" end),
+        urls: [.login.uris[]?.uri?],
+        username: .login.username?,
+        password: .login.password?,
+        cardholder: .card.cardholderName?,
+        brand: .card.brand?,
+        number: .card.number?,
+        exp: (if .card.expMonth then (.card.expMonth + "/" + .card.expYear) else null end),
+        code: .card.code?,
+        notes: .notes?
+    } | with_entries(select(.value != null and .value != [] and .value != ""))'
+
+    bw list items --session "$BW_SESSION" --search "$1" \
+    | jq "$jq_filter" \
+    | bat -l json --decorations=never --pager=never
+}

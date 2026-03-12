@@ -28,6 +28,11 @@ font-size = 16
 # Don't inherit working directory
 window-inherit-working-directory = false
 
+# Notify when long commands finish
+notify-on-command-finish = unfocused
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 30s
+
 ################################################################################
 ### Window
 ################################################################################
@@ -73,17 +78,13 @@ config-file = "?background.local"
 macos-option-as-alt = true
 
 # Toggle fullscreen
-keybind = ctrl+shift+f=toggle_fullscreen
 keybind = f11=toggle_fullscreen
 
 # Copy
 keybind = performable:ctrl+c=copy_to_clipboard
 
 # Clear screen
-keybind = ctrl+shift+l=clear_screen
-
-# Tab overview
-keybind = ctrl+shift+o=toggle_tab_overview
+keybind = ctrl+shift+o=clear_screen
 
 # Navigating tabs
 keybind = shift+ctrl+1=goto_tab:1
@@ -111,7 +112,7 @@ keybind = shift+ctrl+k=scroll_page_up
 keybind = shift+ctrl+arrow_down=scroll_page_down
 keybind = shift+ctrl+arrow_up=scroll_page_up
 
-# Navigating splits
+# Splits
 keybind = ctrl+s>ctrl+h=goto_split:left
 keybind = ctrl+s>ctrl+j=goto_split:down
 keybind = ctrl+s>ctrl+k=goto_split:up

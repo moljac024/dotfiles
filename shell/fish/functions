@@ -1,0 +1,59 @@
+# vim: filetype=fish
+
+function bw-unlock
+    # Prompt for password and capture output
+    set -l session_key (bw unlock --raw)
+
+    # Check if the command succeeded AND the key isn't empty
+    if test $status -eq 0; and test -n "$session_key"
+        set -gx BW_SESSION $session_key
+        echo "Bitwarden unlocked. BW_SESSION set."
+    else
+        # Force a newline to clear the "Master password:" prompt line
+        echo ""
+        # If interrupted or failed, ensure we don't keep an old/broken key
+        set -e BW_SESSION
+        echo "Unlock cancelled or failed."
+        return 1
+    end
+end
+
+function bw-search
+    if test -z "$argv[1]"
+        echo "Usage: bw-search <query>"
+        return 1
+    end
+
+    # Check actual vault status
+    set -l bw_status (bw status | jq -r '.status')
+
+    if test "$bw_status" != "unlocked"
+        echo "Vault is $bw_status. Unlock first."
+        return 1
+    end
+
+    set -l jq_filter '.[] | {
+        name: .name,
+        type: (
+            if .type == 1 then "Login"
+            elif .type == 2 then "Note"
+            elif .type == 3 then "Card"
+            elif .type == 4 then "Identity"
+            else "Unknown" end
+        ),
+        urls: [.login.uris[]?.uri?],
+        username: .login.username?,
+        password: .login.password?,
+        cardholder: .card.cardholderName?,
+        brand: .card.brand?,
+        number: .card.number?,
+        exp: (if .card.expMonth then (.card.expMonth + "/" + .card.expYear) else null end),
+        code: .card.code?,
+        notes: .notes?
+    } | with_entries(select(.value != null and .value != [] and .value != ""))'
+
+    # The execution pipeline
+    bw list items --session "$BW_SESSION" --search "$argv[1]" \
+    | jq $jq_filter \
+    | bat -l json --decorations=never --pager=never
+end

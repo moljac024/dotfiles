@@ -11,6 +11,7 @@ autoload -U +X bashcompinit && bashcompinit
 export DOTFILES="$HOME/dotfiles"
 source "$DOTFILES/shell/sh/lib"
 source "$DOTFILES/shell/sh/common"
+source "$DOTFILES/shell/sh/functions"
 source "$DOTFILES/shell/sh/prompt"
 
 ################################################################################

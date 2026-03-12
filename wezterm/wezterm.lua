@@ -164,15 +164,23 @@ local function set_background_image()
 
   config.background = {
     { source = { Color = bg_color }, width = '100%', height = '100%' },
-    {
-      source = {
-        File = image
-      },
-      horizontal_align = "Right",
-      vertical_align = "Bottom",
-      opacity = 0.15,
-      hsb = { brightness = 0.5 }
-    },
+    -- Image scaling is completely broken and aspect ratio cannot be preserved. Commenting out until fixed.
+
+    -- {
+    --   source = {
+    --     File = image
+    --   },
+    --   repeat_x = "NoRepeat",
+    --   repeat_y = "NoRepeat",
+    --   width = "Contain",
+    --   height = "90%",
+    --   horizontal_align = "Right",
+    --   horizontal_offset = "-1cell",
+    --   vertical_align = "Bottom",
+    --   vertical_offset = "-1cell",
+    --   opacity = 0.15,
+    --   hsb = { brightness = 0.5 }
+    -- },
   }
 end
 

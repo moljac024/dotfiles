@@ -74,62 +74,7 @@ background-image-fit = contain
 config-file = "?background.local"
 
 ################################################################################
-### Keybinds
-################################################################################
-
-# On mac OS, always treat option as alt key
-macos-option-as-alt = true
-
-# Toggle fullscreen
-keybind = f11=toggle_fullscreen
-
-# Copy
-keybind = performable:ctrl+c=copy_to_clipboard
-
-# Clear screen
-keybind = ctrl+shift+o=clear_screen
-
-# Navigating tabs
-keybind = shift+ctrl+1=goto_tab:1
-keybind = shift+ctrl+2=goto_tab:2
-keybind = shift+ctrl+3=goto_tab:3
-keybind = shift+ctrl+4=goto_tab:4
-keybind = shift+ctrl+5=goto_tab:5
-keybind = shift+ctrl+6=goto_tab:6
-keybind = shift+ctrl+7=goto_tab:7
-keybind = shift+ctrl+8=goto_tab:8
-keybind = shift+ctrl+9=goto_tab:9
-keybind = shift+ctrl+0=goto_tab:0
-
-keybind = shift+ctrl+h=previous_tab
-keybind = shift+ctrl+l=next_tab
-keybind = shift+ctrl+arrow_left=previous_tab
-keybind = shift+ctrl+arrow_right=next_tab
-
-keybind = ctrl+alt+h=move_tab:-1
-keybind = ctrl+alt+l=move_tab:1
-
-# Scrolling
-keybind = shift+ctrl+j=scroll_page_down
-keybind = shift+ctrl+k=scroll_page_up
-keybind = shift+ctrl+arrow_down=scroll_page_down
-keybind = shift+ctrl+arrow_up=scroll_page_up
-
-# Splits
-keybind = ctrl+s>h=goto_split:left
-keybind = ctrl+s>j=goto_split:down
-keybind = ctrl+s>k=goto_split:up
-keybind = ctrl+s>l=goto_split:right
-keybind = ctrl+s>ctrl+h=new_split:left
-keybind = ctrl+s>ctrl+j=new_split:down
-keybind = ctrl+s>ctrl+k=new_split:up
-keybind = ctrl+s>ctrl+l=new_split:right
-
-# Zoom/unzoom split
-keybind = ctrl+s>z=toggle_split_zoom
-
-################################################################################
-### Unbinds
+### Clear default keybinds
 ################################################################################
 
 # Unbind alt+arrows so they can be used in zellij
@@ -185,6 +130,64 @@ keybind = alt+digit_7=unbind
 keybind = alt+digit_8=unbind
 keybind = alt+digit_9=unbind
 keybind = alt+digit_0=unbind
+
+################################################################################
+### Keybinds
+################################################################################
+
+# On mac OS, always treat option as alt key
+macos-option-as-alt = true
+
+# Toggle fullscreen
+keybind = f11=toggle_fullscreen
+
+# Copy
+keybind = performable:ctrl+c=copy_to_clipboard
+
+# Clear screen
+keybind = ctrl+shift+o=clear_screen
+
+# Navigating tabs
+keybind = shift+ctrl+1=goto_tab:1
+keybind = shift+ctrl+2=goto_tab:2
+keybind = shift+ctrl+3=goto_tab:3
+keybind = shift+ctrl+4=goto_tab:4
+keybind = shift+ctrl+5=goto_tab:5
+keybind = shift+ctrl+6=goto_tab:6
+keybind = shift+ctrl+7=goto_tab:7
+keybind = shift+ctrl+8=goto_tab:8
+keybind = shift+ctrl+9=goto_tab:9
+keybind = shift+ctrl+0=goto_tab:0
+
+keybind = shift+ctrl+h=previous_tab
+keybind = shift+ctrl+l=next_tab
+keybind = shift+ctrl+arrow_left=previous_tab
+keybind = shift+ctrl+arrow_right=next_tab
+
+keybind = ctrl+alt+h=move_tab:-1
+keybind = ctrl+alt+l=move_tab:1
+
+# Scrolling
+keybind = shift+ctrl+j=scroll_page_down
+keybind = shift+ctrl+k=scroll_page_up
+keybind = shift+ctrl+arrow_down=scroll_page_down
+keybind = shift+ctrl+arrow_up=scroll_page_up
+
+# Splits
+keybind = ctrl+s>h=goto_split:left
+keybind = ctrl+s>j=goto_split:down
+keybind = ctrl+s>k=goto_split:up
+keybind = ctrl+s>l=goto_split:right
+keybind = ctrl+s>ctrl+h=new_split:left
+keybind = ctrl+s>ctrl+j=new_split:down
+keybind = ctrl+s>ctrl+k=new_split:up
+keybind = ctrl+s>ctrl+l=new_split:right
+
+# Zoom/unzoom split
+keybind = ctrl+s>z=toggle_split_zoom
+
+# Rename tab
+keybind = ctrl+s>r=prompt_tab_title
 
 ################################################################################
 ### Local config override

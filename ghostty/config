@@ -183,11 +183,25 @@ keybind = ctrl+s>ctrl+j=new_split:down
 keybind = ctrl+s>ctrl+k=new_split:up
 keybind = ctrl+s>ctrl+l=new_split:right
 
+keybind = resize/h=resize_split:left,10
+keybind = resize/j=resize_split:down,10
+keybind = resize/k=resize_split:up,10
+keybind = resize/l=resize_split:right,10
+keybind = resize/arrow_up=resize_split:up,10
+keybind = resize/arrow_down=resize_split:down,10
+keybind = resize/arrow_left=resize_split:left,10
+keybind = resize/arrow_right=resize_split:right,10
+keybind = resize/escape=deactivate_key_table
+keybind = resize/enter=deactivate_key_table
+keybind = resize/catch_all=ignore
+
+keybind = ctrl+s>r=activate_key_table:resize
+
 # Zoom/unzoom split
 keybind = ctrl+s>z=toggle_split_zoom
 
 # Rename tab
-keybind = ctrl+s>r=prompt_tab_title
+keybind = ctrl+s>t=prompt_tab_title
 
 ################################################################################
 ### Local config override

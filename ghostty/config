@@ -146,6 +146,7 @@ keybind = performable:ctrl+c=copy_to_clipboard
 
 # Clear screen
 keybind = ctrl+shift+o=clear_screen
+keybind = ctrl+s>c=clear_screen
 
 # Navigating tabs
 keybind = shift+ctrl+1=goto_tab:1
@@ -202,6 +203,9 @@ keybind = ctrl+s>z=toggle_split_zoom
 
 # Rename tab
 keybind = ctrl+s>t=prompt_tab_title
+
+# Copy screen and scrollback content to tmp file
+keybind = ctrl+s>s=write_screen_file:copy
 
 ################################################################################
 ### Local config override

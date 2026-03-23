@@ -1,0 +1,4 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+
+APP_CHAIN="wl-paste:pbpaste:xsel -ob" exec app-chain "$@"

@@ -13,7 +13,7 @@ M.init = function()
   require("hotpot")
 
   -- Load list of plugins
-  local plugins = require("plugins")
+  local plugins = require("plugins.lazy")
 
   require("lazy").setup({
     spec = vim.list_extend({ "rktjmp/hotpot.nvim" }, plugins),

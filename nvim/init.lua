@@ -2,19 +2,23 @@
 -- Setup
 -- ############################################################################
 
+-- Enable faster module loading
+vim.loader.enable()
+
+-- Expose lib as a global variable
 Lib = require("lib")
 
 -- Monkey patch vim's keybind.set
 Lib.command.patch_keymap_set()
 
 -- ############################################################################
--- Config
+-- Options
 -- ############################################################################
 
-require("config.main")
+require("config.options")
 
 -- ############################################################################
--- Lazy (plugin manager)
+-- Plugins
 -- ############################################################################
 
 require("lib.lazy").init()

@@ -1,0 +1,175 @@
+vim.pack.add({
+  "https://github.com/folke/lazydev.nvim",
+  "https://github.com/Bilal2453/luvit-meta",
+})
+
+require("lazydev").setup({
+  library = {
+    "luvit-meta/library",
+  },
+})
+
+vim.pack.add({
+  "https://github.com/kosayoda/nvim-lightbulb",
+  "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/b0o/SchemaStore.nvim",
+})
+
+local schemastore = require("schemastore")
+
+local capabilities = nil
+if pcall(require, "cmp_nvim_lsp") then
+  capabilities = require("cmp_nvim_lsp").default_capabilities()
+end
+
+local configs = {
+  -- JSON
+  jsonls = {
+    settings = {
+      json = {
+        schemas = schemastore.json.schemas(),
+        validate = { enable = true },
+      },
+    },
+  },
+  -- Yaml
+  yamlls = {
+    settings = {
+      yaml = {
+        schemaStore = {
+          -- You must disable built-in schemaStore support if you want to use
+          -- this plugin and its advanced options like `ignore`.
+          enable = false,
+          -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+          url = "",
+        },
+        schemas = schemastore.yaml.schemas(),
+      },
+    },
+  },
+
+  -- Bash
+  bashls = {},
+
+  -- Lua
+  lua_ls = {},
+
+  -- Markdown
+  marksman = {},
+
+  -- Typescript, Javascript
+  -- tsserver = {} -- Default typescript LSP,
+  vtsls = {}, -- Alternative typescript LSP
+  eslint = {},
+
+  -- CSS
+  cssls = {},
+  tailwindcss = {},
+
+  -- Python
+  pyright = {},
+  ruff = {},
+
+  -- Rust
+  rust_analyzer = {},
+
+  -- Go
+  gopls = {},
+
+  -- Zig
+  zls = {},
+}
+
+for name, config in pairs(configs) do
+  config = vim.tbl_deep_extend("force", {}, {
+    capabilities = capabilities,
+  }, config)
+
+  vim.lsp.config(name, config)
+  vim.lsp.enable(name)
+end
+
+local disable_semantic_tokens = {
+  lua = true,
+}
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.name == 'ruff' then
+      -- Disable hover in favor of Pyright
+      client.server_capabilities.hoverProvider = false
+    end
+  end,
+  desc = 'LSP: Disable hover capability from Ruff',
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local bufnr = args.buf
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id), "must have valid lsp client")
+    vim.opt_local.omnifunc = "v:lua.vim.lsp.omnifunc"
+
+    if MiniExtra ~= nil then
+      -- Go to implementation
+      vim.keymap.set(
+        "n",
+        "gi", function()
+          MiniExtra.pickers.lsp({ scope = 'implementation' })
+        end,
+        { buffer = 0, desc = "Go to implementation" })
+      -- Go to definition(s)
+      vim.keymap.set(
+        "n",
+        "gd", function()
+          MiniExtra.pickers.lsp({ scope = 'definition' })
+        end,
+        { buffer = 0, desc = "Go to definition(s)" })
+      -- Go to type definition
+      vim.keymap.set(
+        "n",
+        "gt", function()
+          MiniExtra.pickers.lsp({ scope = 'type_definition' })
+        end,
+        { buffer = 0, desc = "Go to type definition" })
+      -- Go to references
+      vim.keymap.set(
+        "n",
+        "gr", function()
+          MiniExtra.pickers.lsp({ scope = 'references' })
+        end,
+        { buffer = 0, desc = "Go to references" })
+      -- Open diagnostics picker
+      vim.keymap.set("n", "<leader>d", function()
+          MiniExtra.pickers.diagnostic()
+        end,
+        { buffer = 0, desc = "Open diagnostics picker", })
+    end
+
+    vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { buffer = 0, desc = "Rename symbol" })
+    vim.keymap.set({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, { buffer = 0, desc = "Code actions" })
+
+    local filetype = vim.bo[bufnr].filetype
+    if disable_semantic_tokens[filetype] then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+  end,
+})
+
+-- Conform integration
+local has_conform, conform = pcall(require, "conform")
+if has_conform then
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    callback = function(args)
+      conform.format({
+        bufnr = args.buf,
+        lsp_fallback = true,
+        quiet = true,
+      })
+    end,
+  })
+end

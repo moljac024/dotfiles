@@ -21,7 +21,11 @@ require("config.options")
 -- Plugins
 -- ############################################################################
 
-require("lib.lazy").init()
+if vim.pack then
+  require("plugins.vim_pack")
+else
+  require("lib.lazy").init()
+end
 
 -- ############################################################################
 -- Keybindings

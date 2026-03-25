@@ -1,7 +1,6 @@
-local std = import("./std")
+local std = require("lib.std")
 
 local M = {}
-
 local commands = {}
 
 local function run_command(x)

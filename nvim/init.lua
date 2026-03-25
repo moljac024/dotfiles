@@ -2,11 +2,10 @@
 -- Setup
 -- ############################################################################
 
--- Allow relative imports
-require("lib.import")
+Lib = require("lib")
 
 -- Monkey patch vim's keybind.set
-require("lib.command").patch_keymap_set()
+Lib.command.patch_keymap_set()
 
 -- ############################################################################
 -- Config

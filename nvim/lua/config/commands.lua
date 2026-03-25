@@ -1,17 +1,5 @@
 local c = require("lib.command")
 
--- Function to copy relative path of current buffer
-local function copy_relative_file_path_of_active_buffer()
-  local filepath = vim.api.nvim_buf_get_name(0)
-  if filepath == "" then
-    print("No file in current buffer")
-    return
-  end
-  local relpath = vim.fn.fnamemodify(filepath, ":.") -- relative to cwd
-  vim.fn.setreg("+", relpath)                        -- copy to system clipboard
-  print("Copied relative path: " .. relpath)
-end
-
 -- Run command keybind
 vim.keymap.set("n", "<leader><leader>", c.open_command_picker, { desc = "Run command" })
 
@@ -52,12 +40,28 @@ c.add_commands({
   {
     desc = "Copy current file path to clipboard (relative)",
     cmd = function()
-      copy_relative_file_path_of_active_buffer()
+      Lib.util.copy_relative_file_path_of_active_buffer()
     end,
   },
   -- Quit, closing all windows
   {
     desc = "Quit/Exit",
     cmd = "<CMD>qall!<CR>",
+  },
+})
+
+-- Scratch buffer
+c.add_commands({
+  {
+    desc = "Toggle scratch buffer",
+    cmd = function()
+      Snacks.scratch()
+    end,
+  },
+  {
+    desc = "Select scratch buffer",
+    cmd = function()
+      Snacks.scratch.select()
+    end,
   },
 })

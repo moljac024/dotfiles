@@ -1,5 +1,5 @@
 local M = {}
-local git = import("./git")
+local git = require("lib.git")
 
 M.init = function()
   local lazy_path = git.ensure_installed("folke/lazy.nvim", { ref = "stable", refresh = false })       -- Package manager

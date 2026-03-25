@@ -1,27 +1,10 @@
-local base = require("plugins.lazy.base")
-local mini = require("plugins.lazy.mini")
-local completion = require("plugins.lazy.completion")
-local editing = require("plugins.lazy.editing")
-local files = require("plugins.lazy.files")
-local util = require("plugins.lazy.util")
-local lsp = require("plugins.lazy.lsp")
-local ui = require("plugins.lazy.ui")
-local terminal = require("plugins.lazy.terminal")
-local dev = require("plugins.lazy.dev")
-local obsidian = require("plugins.lazy.obsidian")
-local ai = require("plugins.lazy.ai")
-
 return {
-  base,
-  mini,
-  completion,
-  editing,
-  files,
-  util,
-  lsp,
-  ui,
-  terminal,
-  dev,
-  obsidian,
-  -- ai,
+  require("plugins.lazy.base"),
+  require("plugins.lazy.completion"),
+  require("plugins.lazy.obsidian"),
+  require("plugins.lazy.lsp"),
+  require("plugins.lazy.editing"),
+  require("plugins.lazy.dev"),
+  require("plugins.lazy.files"),
+  require("plugins.lazy.terminal"),
 }

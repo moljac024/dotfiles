@@ -1,10 +1,8 @@
-local c = require("lib.command")
-
 -- Run command keybind
-vim.keymap.set("n", "<leader><leader>", c.open_command_picker, { desc = "Run command" })
+vim.keymap.set("n", "<leader><leader>", Lib.command.open_command_picker, { desc = "Run command" })
 
 -- Commands
-c.add_commands({
+Lib.command.add_commands({
   -- Buffers
   {
     desc = "Kill current buffer",
@@ -51,7 +49,7 @@ c.add_commands({
 })
 
 -- Scratch buffer
-c.add_commands({
+Lib.command.add_commands({
   {
     desc = "Toggle scratch buffer",
     cmd = function()
@@ -62,6 +60,28 @@ c.add_commands({
     desc = "Select scratch buffer",
     cmd = function()
       Snacks.scratch.select()
+    end,
+  },
+})
+
+-- Vim pack
+Lib.command.add_commands({
+  {
+    desc = "Update plugins",
+    cmd = function()
+      vim.pack.update()
+    end,
+  },
+  {
+    desc = "Show plugins",
+    cmd = function()
+      vim.pack.update(nil, { offline = true })
+    end,
+  },
+  {
+    desc = "Sync plugins with lock file",
+    cmd = function()
+      vim.pack.update(nil, { target = 'lockfile' })
     end,
   },
 })

@@ -25,6 +25,10 @@ font-size = 16
 ### Other
 ################################################################################
 
+# Scrollback limit (in bytes)
+# scrollback-limit = 8096
+scrollback-limit = 24576
+
 # Don't inherit working directory
 window-inherit-working-directory = false
 tab-inherit-working-directory = false

@@ -30,8 +30,6 @@ modify_path "$HOME/.config/sway/bin" prepend
 
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
-# Home binaries (systems should do this already)
-modify_path "$HOME/bin" prepend
 
 # Mise dev env
 # NOTE: This has to come after PATH setup
@@ -43,6 +41,10 @@ if is_command mise; then
     shell=$(get_running_shell); case "$shell" in zsh|bash) eval "$(mise activate "$shell")";; esac
   fi
 fi
+
+# Home binaries (systems should do this already)
+modify_path "$HOME/bin" prepend
+modify_path "$DOTFILES/shell/bin" prepend
 
 ################################################################################
 ### Main

@@ -125,6 +125,7 @@ doctl = "latest"
 flyctl = "latest"
 github-cli = "latest"
 "pipx:snowflake-cli" = "latest"
+acli = "latest" # atlassian cli
 ############################################################
 # other
 ############################################################

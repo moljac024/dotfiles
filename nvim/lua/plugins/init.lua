@@ -1,4 +1,4 @@
-local base = "plugins.vim_pack" .. "."
+local base = "plugins" .. "."
 
 require(base .. "base")
 require(base .. "lsp")

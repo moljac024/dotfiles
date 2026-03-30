@@ -21,7 +21,9 @@ require("config.options")
 -- Plugins
 -- ############################################################################
 
-require("plugins")
+if vim.pack ~= nil then
+  require("plugins")
+end
 
 -- ############################################################################
 -- Keybindings

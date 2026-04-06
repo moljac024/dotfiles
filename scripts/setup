@@ -190,6 +190,9 @@ ensure_symlink $ROOT_DIR/sway $HOME/.config/sway
 # Hyprland
 ensure_symlink $ROOT_DIR/hypr $HOME/.config/hypr
 
+# Niri
+ensure_symlink $ROOT_DIR/niri $HOME/.config/niri
+
 ################################################################################
 ### Other
 ################################################################################

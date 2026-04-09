@@ -1,16 +1,17 @@
 layout {
     gaps 4
     center-focused-column "never"
-    background-color "rgb(48, 52, 70)"
+    // background-color "transparent"
+    // background-color "rgb(48, 52, 70)"
     always-center-single-column
 
     preset-column-widths {
         proportion 0.5
         proportion 0.66667
-        proportion 0.8
+        proportion 0.75
     }
 
-    default-column-width { proportion 0.8; }
+    default-column-width { proportion 0.75; }
 
     focus-ring {
         off
@@ -53,6 +54,15 @@ layout {
         inactive-color "#51576d"
         urgent-color "#e78284"
     }
+}
+
+layer-rule {
+    // This is for swaybg; change for other wallpaper tools.
+    // Find the right namespace by running niri msg layers.
+    match namespace="^wallpaper$"
+
+    // Make the wallpaper stationary, rather than moving with workspaces.
+    // place-within-backdrop true
 }
 
 layer-rule {

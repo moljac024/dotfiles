@@ -120,6 +120,10 @@
       "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
       "src": "https://github.com/folke/snacks.nvim"
     },
+    "tidy.nvim": {
+      "rev": "8b6921150b16f38f48a2459a844a0c2b4c916914",
+      "src": "https://github.com/mcauley-penney/tidy.nvim"
+    },
     "toggleterm.nvim": {
       "rev": "9a88eae817ef395952e08650b3283726786fb5fb",
       "src": "https://github.com/akinsho/toggleterm.nvim"

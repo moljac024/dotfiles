@@ -32,3 +32,12 @@ vim.pack.add({
   'https://github.com/MeanderingProgrammer/render-markdown.nvim',
 })
 require('render-markdown').setup({})
+
+-- ############################################################################
+-- ## Trim whitespace on save
+-- ############################################################################
+
+vim.pack.add({
+  'https://github.com/mcauley-penney/tidy.nvim',
+})
+require("tidy").setup({})

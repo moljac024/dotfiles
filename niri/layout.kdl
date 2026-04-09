@@ -1,8 +1,8 @@
 layout {
     gaps 4
     center-focused-column "never"
-    background-color "transparent"
-    // background-color "rgb(48, 52, 70)"
+    background-color "rgb(48, 52, 70)"
+    always-center-single-column
 
     preset-column-widths {
         proportion 0.5
@@ -55,14 +55,6 @@ layout {
     }
 }
 
-// Make the wallpaper stationary, rather than moving with workspaces.
-layer-rule {
-    // This is for swaybg; change for other wallpaper tools.
-    // Find the right namespace by running niri msg layers.
-    match namespace="^wallpaper$"
-    place-within-backdrop true
-}
-
 layer-rule {
     match namespace="waybar"
     match at-startup=true
@@ -71,16 +63,6 @@ layer-rule {
     opacity 0.9
     block-out-from "screencast"
     // block-out-from "screen-capture"
-
-    shadow {
-        on
-        // off
-        softness 40
-        spread 5
-        offset x=0 y=5
-        draw-behind-window true
-        color "#00000064"
-    }
 
     geometry-corner-radius 12
     place-within-backdrop true

@@ -1,0 +1,22 @@
+// Make Edge always open maximized
+window-rule {
+  match app-id="microsoft-edge"
+  open-maximized-to-edges true
+}
+
+// VeraCrypt wants to float by default.
+window-rule {
+    match app-id=r#"^veracrypt$"#
+    open-floating false
+}
+
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+    // This app-id regular expression will work for both:
+    // - host Firefox (app-id is "firefox")
+    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+

@@ -1,52 +1,32 @@
 // vim: syntax=jsonc
 {
-  "layer": "bottom",
+  "layer": "top",
   "position": "top",
   "output": [
     "eDP-1"
   ],
-  "height": 30,
+  "height": 45,
   "modules-left": [
-    "custom/prev_workspace",
-    "sway/workspaces",
-    "custom/next_workspace",
-    "sway/mode",
     "custom/app_launcher",
-    "custom/file_manager",
-    "sway/window",
-    "custom/kill_active_window"
+    "custom/file_manager"
   ],
   "modules-center": [],
   "modules-right": [
-    "custom/change_wallpaper",
     "tray",
     "pulseaudio",
     "backlight",
     "network",
-    "custom/displays",
     "cpu",
     "memory",
     "temperature",
     "battery",
     "power-profiles-daemon",
     "idle_inhibitor",
-    "sway/language",
     "clock",
     "custom/power"
   ],
-  "sway/language": {
-    "format": "{}",
-    "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
-  },
-  "sway/workspaces": {
-    "disable-scroll": false,
-    "all-outputs": true
-  },
-  "sway/window": {
-    "on-click-right": "swaymsg floating toggle"
-  },
   "tray": {
-    "icon-size": 16,
+    "icon-size": 24,
     "spacing": 5,
     "reverse-direction": true
   },
@@ -152,18 +132,6 @@
       "power-saver": " "
     }
   },
-  "custom/kill_active_window": {
-    "format": "󱎘 ",
-    "on-click": "swaymsg kill",
-    "tooltip": true,
-    "tooltip-format": "Kill focused application"
-  },
-  "custom/floating_toggle": {
-    "format": " ",
-    "on-click": "swaymsg floating toggle",
-    "tooltip": true,
-    "tooltip-format": "Toggle floating of focused application"
-  },
   "custom/file_manager": {
     "format": " ",
     "on-click": "nautilus --new-window",
@@ -172,23 +140,13 @@
   },
   "custom/app_launcher": {
     "format": "󰣛 ",
-    "on-click": "~/.config/sway/bin/sway-run",
+    "on-click": "fuzzel",
     "tooltip": true,
     "tooltip-format": "Launch application"
   },
-  "custom/change_wallpaper": {
-    "format": "󱧾 ",
-    "tooltip": true,
-    "tooltip-format": "Change wallpaper",
-    "on-click": "killall -SIGUSR1 swayscape"
-  },
-  "custom/displays": {
-    "format": "󰍹 ",
-    "on-click": "~/.config/sway/bin/sway-displays"
-  },
   "custom/power": {
     "format": "⏻ ",
-    "on-click": "~/.config/sway/bin/sway-power-menu",
+    "on-click": "wlogout",
     "tooltip": true,
     "tooltip-format": "Power menu"
   }

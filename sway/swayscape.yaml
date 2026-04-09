@@ -1,5 +1,5 @@
 directory: "~/Pictures/Wallpapers"
 recursive: true
 interval: 5m
-order: "random"  # Can be "alphabetical" or "random"
-command: "~/.config/sway/bin/set-wallpaper {{img}}"
+order: "random" # Can be "alphabetical" or "random"
+command: "set-wallpaper {{img}}"

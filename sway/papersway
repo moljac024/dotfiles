@@ -1,7 +1,7 @@
 # vim ft=swayconfig
 
-set $papersway ~/.config/sway/bin/papersway
-set $papersway-msg ~/.config/sway/bin/papersway-msg
+set $papersway papersway
+set $papersway-msg papersway-msg
 
 # Clear the bindings that conflict with papersway
 unbindsym $mod+b

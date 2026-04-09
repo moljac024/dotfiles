@@ -1,0 +1,11 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+
+# A simple fuzzy-find window switcher
+WINDOW=$(niri msg --json windows | \
+    jq -r '.[] | " \(.title) [\(.app_id)] | id:\(.id)"' | \
+    fuzzel -d | awk -F'id:' '{print $2}')
+
+if [ -n "$WINDOW" ]; then
+    niri msg action focus-window --id "$WINDOW"
+fi

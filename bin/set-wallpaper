@@ -1,0 +1,32 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+set -Eeuo pipefail
+
+set_wallpaper() {
+  if [[ ! -f "$1" ]]; then
+    echo "$1 is not a valid wallpaper."
+    exit 1
+  fi
+
+  ln -sf "$(realpath "$1")" $DOTFILES/data/local/wallpaper && systemctl --user restart swaybg
+}
+
+set_random_wallpaper_from_dir() {
+  if [[ ! -d "$1" ]]; then
+    echo "$1 is not a directory"
+    exit 1
+  fi
+
+  IMG=$(find "$1" -type f | shuf -n 1);
+  set_wallpaper "$IMG"
+}
+
+if [[ -f "$1" ]]; then
+  set_wallpaper "$1"
+  exit 0
+fi
+
+if [[ -d "$1" ]]; then
+  set_random_wallpaper_from_dir "$1"
+  exit 0
+fi

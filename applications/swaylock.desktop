@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Lock screen
+GenericName=Lock screen
+StartupNotify=false
+Exec=swaylock
+Icon=swaylock
+Categories=System;
+NotShownIn=GNOME;KDE

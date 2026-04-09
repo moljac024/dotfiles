@@ -25,9 +25,6 @@ if [ -d $HOME/.codeium/windsurf/bin ]; then
   modify_path $HOME/.codeium/windsurf/bin prepend
 fi
 
-# Sway scripts
-modify_path "$HOME/.config/sway/bin" prepend
-
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
 

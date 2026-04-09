@@ -1,0 +1,14 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+
+if [[ ! -d "$1" ]]; then
+  echo "$1 is not a directory. Must provide a directory for wallpaper slideshow."
+  exit 1
+fi
+
+SLEEP_DURATION=${2:-"15m"}
+
+while true; do
+    set-wallpaper "$1"
+    sleep "$SLEEP_DURATION";
+done

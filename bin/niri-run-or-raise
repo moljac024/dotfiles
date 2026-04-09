@@ -1,0 +1,33 @@
+#!/usr/bin/env bashim
+
+EXEC_CMD="$1"
+TARGET_MATCH="$2"
+
+# 1. Validation: We at least need something to execute.
+if [[ -z "$EXEC_CMD" ]]; then
+    echo "Usage: niri-ror <exec_cmd> [app_id_or_title_match]"
+    exit 1
+fi
+
+# 2. Logic: If no target is provided, we skip the search and go straight to "launching"
+WIN_ID=""
+if [[ -n "$TARGET_MATCH" ]]; then
+    # Search for app_id OR title matching the target string
+    WIN_ID=$(niri msg --json windows | jq -r '
+        .[] |
+        select(
+            (.app_id | ascii_downcase == ($TARGET | ascii_downcase)) or
+            (.title | ascii_downcase | contains($TARGET | ascii_downcase))
+        ) | .id' --arg TARGET "$TARGET_MATCH" | head -n 1)
+fi
+
+# 3. Execution
+if [[ -n "$WIN_ID" ]]; then
+    # echo "Raising existing window: $WIN_ID"
+    niri msg action focus-window --id "$WIN_ID"
+else
+    # echo "Launching new instance: $EXEC_CMD"
+    # Using 'spawn' directly. If your command has pipes/complex shell logic,
+    # niri's spawn handles the heavy lifting.
+    niri msg action spawn -- bash -c "$EXEC_CMD"
+fi

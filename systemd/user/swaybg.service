@@ -1,0 +1,12 @@
+[Unit]
+Description=Swaybg Wallpaper Daemon
+After=graphical-session.target
+
+[Service]
+Type=simple
+# %h expands to your home directory
+ExecStart=/usr/bin/swaybg -m fill -i %h/dotfiles/data/local/wallpaper
+Restart=always
+
+[Install]
+WantedBy=default.target

@@ -1,20 +1,15 @@
 // vim: syntax=jsonc
 {
-  "layer": "bottom",
+  "layer": "top",
   "position": "top",
   "output": [
     "eDP-1"
   ],
-  "height": 30,
+  "height": 45,
   "modules-left": [
-    "custom/prev_workspace",
-    "custom/next_workspace",
-    "hyprland/workspaces",
-    "hyprland/submap",
     "custom/app_launcher",
     "custom/file_manager",
-    "hyprland/window",
-    "custom/kill_active_window"
+    "niri/window"
   ],
   "modules-center": [],
   "modules-right": [
@@ -28,24 +23,14 @@
     "battery",
     "power-profiles-daemon",
     "idle_inhibitor",
-    "hyprland/language",
+    "niri/language",
     "clock",
     "custom/power"
   ],
-  // Module configs
-  "hyprland/workspaces": {
-    "format": "{name}",
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1"
-  },
-  "hyprland/window": {
-    // "separate-outputs": true,
-    "on-click-right": "hyprctl dispatch togglefloating",
-    "format": "{}"
-  },
   "tray": {
-    "icon-size": 16,
-    "spacing": 5
+    "icon-size": 24,
+    "spacing": 5,
+    "reverse-direction": true
   },
   "backlight": {
     // "format": "󰳲  {percent}%",
@@ -134,12 +119,14 @@
     "format-icons": {
       "activated": "󰅶 ",
       "deactivated": "󰛊 "
-    }
+    },
+    "tooltip": true,
+    "tooltip-format": "Idle inhibitor: {}"
   },
   "power-profiles-daemon": {
     "format": "{icon}",
-    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
     "tooltip": true,
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
     "format-icons": {
       "default": " ",
       "performance": " ",
@@ -147,29 +134,8 @@
       "power-saver": " "
     }
   },
-  "custom/kill_active_window": {
-    "format": "󱎘 ",
-    "on-click": "hyprctl dispatch killactive",
-    "tooltip": true,
-    "tooltip-format": "Kill focused application"
-  },
-  "custom/prev_workspace": {
-    "format": "󰜱 ",
-    "on-click": "hyprctl dispatch workspace -1",
-    "tooltip": true,
-    "tooltip-format": "Go to previous workspace"
-  },
-  "custom/next_workspace": {
-    "format": "󰜴 ",
-    "on-click": "hyprctl dispatch workspace +1",
-    "tooltip": true,
-    "tooltip-format": "Go to next workspace"
-  },
-  "custom/floating_toggle": {
-    "format": " ",
-    "on-click": "hyprctl dispatch togglefloating",
-    "tooltip": true,
-    "tooltip-format": "Toggle floating of focused application"
+  "niri/window": {
+    "icon": true,
   },
   "custom/file_manager": {
     "format": " ",

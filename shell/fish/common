@@ -20,9 +20,6 @@ if test -d $HOME/.codeium/windsurf/bin
     modify_path $HOME/.codeium/windsurf/bin prepend
 end
 
-# Sway scripts
-modify_path "$HOME/.config/sway/bin" prepend
-
 # Locally compiled/installed files
 modify_path "$HOME/.local/bin" prepend
 

@@ -1,0 +1,15 @@
+// Add lines like this to spawn processes at startup.
+// Note that running niri as a session supports xdg-desktop-autostart,
+// which may be more convenient to use.
+// See the binds section below for more spawn examples.
+
+spawn-at-startup "swayidle" "-w" \
+    "timeout" "120" "brightnessctl -s set 20%" \
+    "resume" "brightnessctl -r" \
+    "timeout" "300" "niri msg action power-off-monitors" \
+    "timeout" "600" "systemctl suspend" \
+    "before-sleep" "swaylock -f" \
+    "lock" "swaylock -f"
+
+// This line starts waybar, a commonly used bar for Wayland compositors.
+spawn-sh-at-startup "waybar -c ~/.config/niri/waybar/config -s ~/.config/niri/waybar/style.css"

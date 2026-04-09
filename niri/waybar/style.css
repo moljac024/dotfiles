@@ -1,0 +1,20 @@
+@import "catppuccin/frappe.css";
+
+* {
+  color: @text;
+  border: none;
+  border-radius: 0;
+  font-family: "ZedMono NF", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  min-height: 0;
+}
+
+window#waybar {
+  background-color: @base;
+  border: 2px solid @crust;
+}
+
+.module {
+  padding: 0 5px;
+  margin: 0;
+}

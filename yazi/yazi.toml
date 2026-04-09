@@ -1,0 +1,4 @@
+[opener]
+wallpaper = [
+    { run = "set-wallpaper %s1", desc = "Set as wallpaper", for = "linux" }
+]

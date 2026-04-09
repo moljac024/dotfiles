@@ -1,0 +1,132 @@
+layout {
+    gaps 4
+    center-focused-column "never"
+    background-color "transparent"
+    // background-color "rgb(48, 52, 70)"
+
+    preset-column-widths {
+        proportion 0.5
+        proportion 0.66667
+        proportion 0.8
+    }
+
+    default-column-width { proportion 0.8; }
+
+    focus-ring {
+        off
+        width 4
+        active-color "#8caaee"
+        inactive-color "#51576d"
+    }
+
+    border {
+        off
+        width 4
+        active-color "#8caaee"
+        inactive-color "#51576d"
+        urgent-color "#e78284"
+    }
+
+    shadow {
+        // Uncomment the next line to enable shadows.
+        // on
+        softness 30
+        spread 5
+        offset x=0 y=5
+
+        // You can also change the shadow color and opacity.
+        color "#303446"
+    }
+
+    tab-indicator {
+        // off
+        on
+        hide-when-single-tab
+        place-within-column
+        gap 4
+        width 4
+        length total-proportion=0.5
+        position "left"
+        gaps-between-tabs 2
+        corner-radius 8
+        active-color "#8caaee"
+        inactive-color "#51576d"
+        urgent-color "#e78284"
+    }
+}
+
+// Make the wallpaper stationary, rather than moving with workspaces.
+layer-rule {
+    // This is for swaybg; change for other wallpaper tools.
+    // Find the right namespace by running niri msg layers.
+    match namespace="^wallpaper$"
+    place-within-backdrop true
+}
+
+layer-rule {
+    match namespace="waybar"
+    match at-startup=true
+
+    // Properties that apply continuously.
+    opacity 0.9
+    block-out-from "screencast"
+    // block-out-from "screen-capture"
+
+    shadow {
+        on
+        // off
+        softness 40
+        spread 5
+        offset x=0 y=5
+        draw-behind-window true
+        color "#00000064"
+    }
+
+    geometry-corner-radius 12
+    place-within-backdrop true
+    // baba-is-float true
+}
+
+// Block out mako notifications from screencasts.
+layer-rule {
+    match namespace="^notifications$"
+    block-out-from "screencast"
+}
+
+window-rule {
+    // Enable rounded corners for all windows.
+    geometry-corner-radius 12
+    clip-to-geometry true
+    draw-border-with-background true
+
+    // Open all windows in the tiling layout, overriding any auto-floating logic.
+    // open-floating false
+
+    default-column-display "tabbed"
+}
+
+// Active window
+window-rule {
+    match is-active=true
+    opacity 1.0
+    border {
+      on
+      active-color "#8caaee"
+    }
+}
+
+// Inactive window
+window-rule {
+    match is-active=false
+    opacity 0.9
+    border {
+      on
+      inactive-color "#949cbb"
+    }
+}
+
+// Floating window
+window-rule {
+    match is-floating=true
+    // opacity 0.95
+}

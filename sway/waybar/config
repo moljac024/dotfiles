@@ -8,44 +8,47 @@
   "height": 30,
   "modules-left": [
     "custom/prev_workspace",
+    "sway/workspaces",
     "custom/next_workspace",
-    "hyprland/workspaces",
-    "hyprland/submap",
+    "sway/mode",
     "custom/app_launcher",
     "custom/file_manager",
-    "hyprland/window",
+    "sway/window",
     "custom/kill_active_window"
   ],
   "modules-center": [],
   "modules-right": [
+    "custom/change_wallpaper",
     "tray",
     "pulseaudio",
     "backlight",
     "network",
+    "custom/displays",
     "cpu",
     "memory",
     "temperature",
     "battery",
     "power-profiles-daemon",
     "idle_inhibitor",
-    "hyprland/language",
+    "sway/language",
     "clock",
     "custom/power"
   ],
-  // Module configs
-  "hyprland/workspaces": {
-    "format": "{name}",
-    "on-scroll-up": "hyprctl dispatch workspace e+1",
-    "on-scroll-down": "hyprctl dispatch workspace e-1"
+  "sway/language": {
+    "format": "{}",
+    "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
   },
-  "hyprland/window": {
-    // "separate-outputs": true,
-    "on-click-right": "hyprctl dispatch togglefloating",
-    "format": "{}"
+  "sway/workspaces": {
+    "disable-scroll": false,
+    "all-outputs": true
+  },
+  "sway/window": {
+    "on-click-right": "swaymsg floating toggle"
   },
   "tray": {
     "icon-size": 16,
-    "spacing": 5
+    "spacing": 5,
+    "reverse-direction": true
   },
   "backlight": {
     // "format": "󰳲  {percent}%",
@@ -134,12 +137,14 @@
     "format-icons": {
       "activated": "󰅶 ",
       "deactivated": "󰛊 "
-    }
+    },
+    "tooltip": true,
+    "tooltip-format": "Idle inhibitor: {}"
   },
   "power-profiles-daemon": {
     "format": "{icon}",
-    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
     "tooltip": true,
+    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
     "format-icons": {
       "default": " ",
       "performance": " ",
@@ -149,25 +154,13 @@
   },
   "custom/kill_active_window": {
     "format": "󱎘 ",
-    "on-click": "hyprctl dispatch killactive",
+    "on-click": "swaymsg kill",
     "tooltip": true,
     "tooltip-format": "Kill focused application"
   },
-  "custom/prev_workspace": {
-    "format": "󰜱 ",
-    "on-click": "hyprctl dispatch workspace -1",
-    "tooltip": true,
-    "tooltip-format": "Go to previous workspace"
-  },
-  "custom/next_workspace": {
-    "format": "󰜴 ",
-    "on-click": "hyprctl dispatch workspace +1",
-    "tooltip": true,
-    "tooltip-format": "Go to next workspace"
-  },
   "custom/floating_toggle": {
     "format": " ",
-    "on-click": "hyprctl dispatch togglefloating",
+    "on-click": "swaymsg floating toggle",
     "tooltip": true,
     "tooltip-format": "Toggle floating of focused application"
   },
@@ -179,13 +172,23 @@
   },
   "custom/app_launcher": {
     "format": "󰣛 ",
-    "on-click": "fuzzel",
+    "on-click": "~/.config/sway/bin/sway-run",
     "tooltip": true,
     "tooltip-format": "Launch application"
   },
+  "custom/change_wallpaper": {
+    "format": "󱧾 ",
+    "tooltip": true,
+    "tooltip-format": "Change wallpaper",
+    "on-click": "killall -SIGUSR1 swayscape"
+  },
+  "custom/displays": {
+    "format": "󰍹 ",
+    "on-click": "~/.config/sway/bin/sway-displays"
+  },
   "custom/power": {
     "format": "⏻ ",
-    "on-click": "wlogout",
+    "on-click": "~/.config/sway/bin/sway-power-menu",
     "tooltip": true,
     "tooltip-format": "Power menu"
   }

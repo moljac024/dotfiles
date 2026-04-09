@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+set -euo pipefail # Shell strict mode
+
+THIS=$(readlink -f "${BASH_SOURCE[0]:-${(%):-%x}}" 2>/dev/null||echo $0) # Full path of the current script
+DIR=$(dirname "${THIS}") # The directory where current script resides
+ROOT_DIR=$(dirname "${DIR}../")
+
+###############################################################################
+# Link all the files
+# #############################################################################
+
+function link_application_entries() {
+  # Ensure parent dir exists
+  target_dir=$HOME/.local/share/applications
+  mkdir -p $target_dir
+
+  for file in "$ROOT_DIR"/applications/*; do
+    ln -sf "$file" "$target_dir"
+  done
+}
+
+function link_icons() {
+  # Ensure parent dir exists
+  target_dir=$HOME/.local/share/icons
+  mkdir -p $target_dir
+
+  for file in "$ROOT_DIR"/icons/*; do
+    ln -sf "$file" "$target_dir"
+  done
+}
+
+link_application_entries
+link_icons

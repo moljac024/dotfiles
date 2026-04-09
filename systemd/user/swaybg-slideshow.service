@@ -1,0 +1,12 @@
+[Unit]
+Description=Swaybg Wallpaper Slideshow Daemon
+After=graphical-session.target
+
+[Service]
+Type=simple
+# %h expands to your home directory
+ExecStart=%h/dotfiles/bin/wallpaper-slideshow %h/Pictures/Wallpapers 15m
+Restart=always
+
+[Install]
+WantedBy=default.target

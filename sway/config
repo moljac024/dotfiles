@@ -125,14 +125,13 @@ set $right l
 # Your preferred terminal emulator
 set $term flatpak run org.wezfurlong.wezterm
 
-set $screenshot_cmd ~/.config/sway/bin/grimshot --notify savecopy anything $HOME/Pictures/Screenshots/Screenshot\ from\ $(date +"%Y-%m-%d %H-%M-%S").png
+set $screenshot_cmd grimshot --notify savecopy anything $HOME/Pictures/Screenshots/Screenshot\ from\ $(date +"%Y-%m-%d %H-%M-%S").png
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 # set $menu "rofi -show drun"
-# set $menu "fuzzel"
-set $menu "~/.config/sway/bin/sway-run"
+set $menu "fuzzel"
 
 ###############################################################################
 #### Key bindings
@@ -314,7 +313,7 @@ for_window [app_id="blueman-manager"] floating enable
 ###############################################################################
 
 bar {
-     swaybar_command waybar
+     swaybar_command ~/.config/sway/bin/sway-waybar
 }
 
 ###############################################################################
@@ -327,15 +326,9 @@ bar {
 #### Startup applications
 ###############################################################################
 
-# Custom binary to manage window decorations
-# exec ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml -v > ~/logs/window_decoration_manager.log 2>&1
-exec ~/.config/sway/bin/wdm -config ~/.config/sway/wdm.toml
-
 # Wallpaper (swww)
-exec ~/.config/sway/bin/swww-daemon
-exec ~/.config/sway/bin/swww restore
-exec ~/.config/sway/bin/swayscape -config ~/.config/sway/swayscape.yaml
-bindsym $mod+Shift+w exec killall -SIGUSR1 swayscape
+exec swww-daemon
+exec swww restore
 
 # Gnome keyring
 exec eval $(gnome-keyring-daemon --start)

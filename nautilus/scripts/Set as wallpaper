@@ -21,13 +21,13 @@ case "$mime_type" in
         ;;
     *)
         echo "Invalid file type: $mime_type" >> /tmp/sway_wallpaper.log
-        notify-send "Sway Wallpaper" "Invalid file type. Please select a valid image file." -u critical
+        notify-send "Set Wallpaper" "Invalid file type. Please select a valid image file." -u critical
         exit 1
         ;;
 esac
 
 # Call your wallpaper setting script
-~/.config/sway/bin/set-wallpaper "$selected_file"
+set-wallpaper "$selected_file"
 
 # Log the result
 # echo "Wallpaper setting script called with: $selected_file" >> /tmp/sway_wallpaper.log

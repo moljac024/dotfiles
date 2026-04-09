@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# vim: filetype=sh
+
+exec waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css

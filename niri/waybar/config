@@ -135,7 +135,10 @@
     }
   },
   "niri/window": {
-    "icon": true,
+    "icon": true
+  },
+  "niri/language": {
+    "format": "{short}"
   },
   "custom/file_manager": {
     "format": " ",

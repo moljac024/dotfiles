@@ -61,6 +61,7 @@ gitu = "latest"
 ############################################################
 # dev tools
 ############################################################
+arduino = "latest"
 doggo = "latest" # dns client
 grpcurl = "latest" # graphql client
 xh = "latest" # http client
@@ -79,6 +80,7 @@ jj = "latest" # SCM
 # language runtimes, compilers and LSP servers
 ############################################################
 node = "lts"
+yarn = "1.22.22"
 deno = "latest"
 bun = "latest"
 uv = "latest" # Python
@@ -125,6 +127,4 @@ acli = "latest" # atlassian cli
 ############################################################
 # other
 ############################################################
-arduino = "latest"
-"go:github.com/textfuel/lazyjira/cmd/lazyjira" = "latest"
-yarn = "1.22.22"
+"go:go.senan.xyz/cliphist" = "latest"

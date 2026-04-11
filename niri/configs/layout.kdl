@@ -2,16 +2,16 @@ layout {
     gaps 4
     center-focused-column "never"
     // background-color "transparent"
-    // background-color "rgb(48, 52, 70)"
+    background-color "rgb(48, 52, 70)"
     always-center-single-column
 
     preset-column-widths {
+        proportion 0.33333
         proportion 0.5
         proportion 0.66667
-        proportion 0.75
     }
 
-    default-column-width { proportion 0.75; }
+    default-column-width { proportion 0.66667; }
 
     focus-ring {
         off
@@ -21,22 +21,11 @@ layout {
     }
 
     border {
-        off
+        on
         width 4
         active-color "#8caaee"
         inactive-color "#51576d"
         urgent-color "#e78284"
-    }
-
-    shadow {
-        // Uncomment the next line to enable shadows.
-        // on
-        softness 30
-        spread 5
-        offset x=0 y=5
-
-        // You can also change the shadow color and opacity.
-        color "#303446"
     }
 
     tab-indicator {
@@ -75,8 +64,8 @@ layer-rule {
     // block-out-from "screen-capture"
 
     geometry-corner-radius 12
+    // Place in backdrop, even if it's not on the "top" layer
     place-within-backdrop true
-    // baba-is-float true
 }
 
 // Block out mako notifications from screencasts.
@@ -85,11 +74,12 @@ layer-rule {
     block-out-from "screencast"
 }
 
+// All windows
 window-rule {
-    // Enable rounded corners for all windows.
+    // Enable rounded corners.
     geometry-corner-radius 12
     clip-to-geometry true
-    draw-border-with-background true
+    draw-border-with-background false
 
     // Open all windows in the tiling layout, overriding any auto-floating logic.
     // open-floating false
@@ -101,24 +91,22 @@ window-rule {
 window-rule {
     match is-active=true
     opacity 1.0
-    border {
-      on
-      active-color "#8caaee"
-    }
 }
 
 // Inactive window
 window-rule {
     match is-active=false
     opacity 0.9
-    border {
-      on
-      inactive-color "#949cbb"
-    }
 }
 
 // Floating window
 window-rule {
     match is-floating=true
-    // opacity 0.95
+    border {
+        on
+        width 4
+        active-color "#8caaee"
+        inactive-color "#51576d"
+        urgent-color "#e78284"
+    }
 }

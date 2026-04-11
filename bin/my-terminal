@@ -1,4 +1,4 @@
 #!/usr/bin/env bashim
 # vim: filetype=sh
 
-APP_CHAIN="my-wezterm start --always-new-process:ghostty:$TERMINAL" exec app-chain "$@"
+APP_CHAIN="ghostty:my-wezterm start --always-new-process:$TERMINAL" exec app-chain "$@"

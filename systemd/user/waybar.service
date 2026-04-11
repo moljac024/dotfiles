@@ -1,0 +1,14 @@
+[Unit]
+Description=Waybar (niri)
+; After=graphical-session.target
+Partof=niri.service
+After=niri.service
+
+[Service]
+Type=simple
+# %h expands to your home directory
+ExecStart=waybar -c %h/.config/niri/waybar/config -s %h/.config/niri/waybar/style.css
+Restart=always
+
+[Install]
+WantedBy=niri.service

@@ -1,0 +1,22 @@
+[Unit]
+Description=Idle manager for Wayland (niri)
+Documentation=man:swayidle(1)
+Partof=niri.service
+After=niri.service
+; Partof=graphical-session.target
+; After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=swayidle -w \
+  timeout 120 "brightnessctl -s set 20%" \
+  resume "brightnessctl -r" \
+  timeout 300 "niri msg action power-off-monitors" \
+  timeout 600 "systemctl suspend" \
+  before-sleep "swaylock -f" \
+  lock "swaylock -f"
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=niri.service

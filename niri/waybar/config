@@ -19,6 +19,7 @@
     "network",
     "cpu",
     "memory",
+    "disk",
     "temperature",
     "battery",
     "power-profiles-daemon",
@@ -73,6 +74,11 @@
   "memory": {
     "format": "  {}%",
     "on-click": "flatpak run io.missioncenter.MissionCenter"
+  },
+  "disk": {
+    "interval": 30,
+    "format": "  {free}",
+    "path": "/var/home/bojan"
   },
   "temperature": {
     "critical-threshold": 80,

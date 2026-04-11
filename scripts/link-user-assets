@@ -30,5 +30,17 @@ function link_icons() {
   done
 }
 
-link_application_entries
+function link_systemd_services() {
+  target_dir=$HOME/.config/systemd/user
+  mkdir -p $target_dir
+
+  for file in "$ROOT_DIR"/systemd/user/*; do
+    systemctl --user link "$file"
+  done
+
+  systemctl --user daemon-reload
+}
+
 link_icons
+link_application_entries
+link_systemd_services

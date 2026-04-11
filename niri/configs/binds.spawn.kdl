@@ -1,0 +1,69 @@
+binds {
+    Mod+Return repeat=false hotkey-overlay-title="Open a terminal" {
+      spawn "ghostty";
+    }
+
+    Alt+Space repeat=false hotkey-overlay-title="Run an application" {
+      spawn "fuzzel";
+    }
+
+    Mod+P repeat=false hotkey-overlay-title="Run an application" {
+      spawn "fuzzel";
+    }
+
+    Mod+D repeat=false hotkey-overlay-title="Open window switcher" {
+      spawn "niri-window-switcher";
+    }
+
+    Mod+Ctrl+Alt+L repeat=false hotkey-overlay-title="Lock the screen" {
+      spawn "swaylock";
+    }
+
+    Mod+1 repeat=false hotkey-overlay-title="Activate file manager" {
+      spawn "niri-run-or-raise" "nautilus -w" "org.gnome.Nautilus";
+    }
+
+    Mod+Shift+1 hotkey-overlay-title="Open a new file manager window" {
+      spawn "niri-run-or-raise" "nautilus -w";
+    }
+
+    Mod+2 hotkey-overlay-title="Activate terminal" {
+      spawn "niri-run-or-raise" "ghostty" "com.mitchellh.ghostty";
+    }
+
+    Mod+Shift+2 hotkey-overlay-title="Open a new terminal window" {
+      spawn "niri-run-or-raise" "ghostty" "com.mitchellh.ghostty";
+    }
+
+    Mod+3 hotkey-overlay-title="Activate web browser" {
+      spawn "niri-run-or-raise" "flatpak run com.microsoft.Edge" "microsoft-edge";
+    }
+
+    Mod+Shift+3 hotkey-overlay-title="Create a new web browser window" {
+      spawn "niri-run-or-raise" "flatpak run com.microsoft.Edge";
+    }
+
+    Mod+4 hotkey-overlay-title="Activate VS Code" {
+      spawn "niri-run-or-raise" "code" "code";
+    }
+
+    Mod+7 hotkey-overlay-title="Activate viber" {
+      spawn "niri-run-or-raise" "flatpak run com.viber.Viber" "viber";
+    }
+
+    Mod+8 hotkey-overlay-title="Activate zapzap (whatsapp)" {
+      spawn "niri-run-or-raise" "flatpak run com.rtosta.zapzap" "zapzap";
+    }
+
+    Mod+9 hotkey-overlay-title="Activate telegram" {
+      spawn "niri-run-or-raise" "flatpak run org.telegram.desktop" "telegram";
+    }
+
+    Mod+0 hotkey-overlay-title="Activate steam" {
+      spawn "niri-run-or-raise" "steam" "steam";
+    }
+
+    Mod+B repeat=false hotkey-overlay-title="Toggle top bar visibility" {
+      spawn-sh "pkill -USR1 waybar";
+    }
+  }

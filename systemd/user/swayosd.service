@@ -1,5 +1,5 @@
 [Unit]
-Description=Swaybg Wallpaper Daemon (niri)
+Description=OSD for wayland (niri)
 After=graphical-session.target
 Partof=niri.service
 After=niri.service
@@ -7,9 +7,8 @@ After=niri.service
 [Service]
 Type=simple
 # %h expands to your home directory
-ExecStart=swaybg -m fill -i %h/dotfiles/data/local/wallpaper
+ExecStart=swayosd-server
 Restart=always
 
 [Install]
-; WantedBy=default.target
 WantedBy=niri.service

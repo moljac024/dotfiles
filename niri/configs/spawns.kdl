@@ -1,0 +1,10 @@
+// Add lines like this to spawn processes at startup.
+// Note that running niri as a session supports xdg-desktop-autostart,
+// which may be more convenient to use.
+// See the binds section below for more spawn examples.
+
+// This line starts waybar, a commonly used bar for Wayland compositors.
+// spawn-sh-at-startup "waybar -c ~/.config/niri/waybar/config -s ~/.config/niri/waybar/style.css"
+
+spawn-at-startup "dbus-update-activation-environment" "--all"
+spawn-at-startup "systemctl" "--user" "import-environment" "PATH" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"

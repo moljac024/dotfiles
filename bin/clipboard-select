@@ -1,0 +1,53 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+
+# --- niri-clipboard-switcher ---
+# Requires: cliphist, fuzzel, wl-copy.
+
+while true; do
+  cliphist_list=$(cliphist list)
+
+  if [[ -z "$cliphist_list" ]]; then
+    notify-send -u low -t 2000 "Clipboard empty"
+    exit 0
+  fi
+
+  # Show fuzzel and capture selection
+  # --with-nth 2 hides the ID number from view
+  item=$(echo "$cliphist_list" | fuzzel -d \
+    --placeholder "Search clipboard..." \
+    --no-sort \
+    --with-nth 2 \
+    --lines 15)
+
+  exit_code=$?
+
+  case "$exit_code" in
+    0) # Enter: Copy and Exit
+      if [[ -n "$item" ]]; then
+        echo "$item" | cliphist decode | wl-copy
+        exit 0
+      fi
+      exit 0
+      ;;
+
+    10) # Alt+1 (custom-1): Delete and LOOP
+      if [[ -n "$item" ]]; then
+        echo "$item" | cliphist delete
+        # Do not exit; the loop will restart and refresh the list
+      fi
+      ;;
+
+    19) # Alt+0 (custom-0): Wipe and Exit
+      confirmation=$(echo -e "No\nYes" | fuzzel -d --placeholder "Delete all history?" --lines 2)
+      if [[ "$confirmation" == "Yes" ]]; then
+        cliphist wipe
+        exit 0
+      fi
+      ;;
+
+    *) # Escape or any other exit code
+      exit 0
+      ;;
+  esac
+done

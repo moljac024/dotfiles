@@ -33,14 +33,14 @@ layout {
         on
         hide-when-single-tab
         place-within-column
-        gap 4
-        width 4
+        gap -6
+        width 8
         length total-proportion=0.5
         position "left"
         gaps-between-tabs 2
         corner-radius 8
         active-color "#8caaee"
-        inactive-color "#51576d"
+        inactive-color "#414559"
         urgent-color "#e78284"
     }
 }
@@ -50,8 +50,8 @@ layer-rule {
     // Find the right namespace by running niri msg layers.
     match namespace="^wallpaper$"
 
-    // Make the wallpaper stationary, rather than moving with workspaces.
-    // place-within-backdrop true
+    // If true, make the wallpaper stationary, rather than moving with workspaces.
+    place-within-backdrop false
 }
 
 layer-rule {

@@ -11,6 +11,10 @@ binds {
       spawn "fuzzel";
     }
 
+    Mod+Shift+V repeat=false hotkey-overlay-title="Open cliboard selector" {
+      spawn "clipboard-select";
+    }
+
     Mod+D repeat=false hotkey-overlay-title="Open window switcher" {
       spawn "niri-window-switcher";
     }

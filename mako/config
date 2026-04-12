@@ -1,15 +1,20 @@
 # Colors
-background-color=#303446
+background-color=#303446E6
 text-color=#c6d0f5
 border-color=#8caaee
+border-size=4
 border-radius=10
 progress-color=over #414559
 
 # Font
 font=ZedMono NF 16, monospace 16
 
+# Size
+width=450
+height=300
+
 [urgency=high]
 border-color=#ef9f76
 
-[mode=dnd]
+[mode=do-not-disturb]
 invisible=1

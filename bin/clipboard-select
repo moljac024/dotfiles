@@ -8,7 +8,7 @@ while true; do
   cliphist_list=$(cliphist list)
 
   if [[ -z "$cliphist_list" ]]; then
-    notify-send -u low -t 2000 "Clipboard empty"
+    notify-send -u low -t 2000 "Clipboard select" "Clipboard is empty, nothing to search..."
     exit 0
   fi
 
@@ -16,6 +16,7 @@ while true; do
   # --with-nth 2 hides the ID number from view
   item=$(echo "$cliphist_list" | fuzzel -d \
     --placeholder "Search clipboard..." \
+    --only-match \
     --no-sort \
     --with-nth 2 \
     --lines 15)

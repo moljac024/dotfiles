@@ -24,6 +24,7 @@
     "battery",
     "power-profiles-daemon",
     "idle_inhibitor",
+    "custom/clipboard",
     "niri/language",
     "clock",
     "custom/power"
@@ -157,6 +158,12 @@
     "on-click": "fuzzel",
     "tooltip": true,
     "tooltip-format": "Launch application"
+  },
+  "custom/clipboard": {
+    "format": " ",
+    "on-click": "clipboard-select",
+    "tooltip": true,
+    "tooltip-format": "Select from clipboard history"
   },
   "custom/power": {
     "format": "⏻ ",

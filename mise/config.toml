@@ -34,6 +34,7 @@ marp-cli = "latest" # markdown slides
 "npm:tldr" = "latest" # community-driven, simplified man pages
 duckdb = "latest" # database
 yt-dlp = { version = "latest", rename_exe = "yt-dlp" } # audio/video downloader
+"go:go.senan.xyz/cliphist" = "latest"
 ############################################################
 # docker and k8s
 ############################################################
@@ -71,6 +72,8 @@ bombardier = "latest" # http benchmarking tool
 mkcert = "latest" # local https dev
 just = "latest" # modern make
 ninja = "latest"
+meson = "latest"
+cmake = "latest"
 jq = "latest"
 yq = "latest"
 jj = "latest" # SCM
@@ -127,4 +130,3 @@ acli = "latest" # atlassian cli
 ############################################################
 # other
 ############################################################
-"go:go.senan.xyz/cliphist" = "latest"

@@ -66,6 +66,7 @@ arduino = "latest"
 doggo = "latest" # dns client
 grpcurl = "latest" # graphql client
 xh = "latest" # http client
+hurl = "latest" # http client
 restish = "latest" # http client
 websocat = "latest" # websocket client
 bombardier = "latest" # http benchmarking tool

@@ -9,3 +9,7 @@
 spawn-at-startup "dbus-update-activation-environment" "--all"
 spawn-at-startup "systemctl" "--user" "import-environment" "PATH" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
 spawn-at-startup "gnome-keyring-daemon" "--start" "--components=pkcs11,secrets,ssh"
+
+// spawn-sh-at-startup "dms run -c ~/projects/oss/dms/quickshell"
+spawn-sh-at-startup "systemctl --user start waybar"
+spawn-sh-at-startup "systemctl --user start swaybg"

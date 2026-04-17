@@ -1,8 +1,6 @@
 layout {
     gaps 4
     center-focused-column "never"
-    // background-color "transparent"
-    background-color "rgb(48, 52, 70)"
     always-center-single-column
 
     preset-column-widths {
@@ -21,7 +19,8 @@ layout {
     }
 
     border {
-        on
+        // on
+        off
         width 4
         active-color "#8caaee"
         inactive-color "#51576d"
@@ -46,15 +45,6 @@ layout {
 }
 
 layer-rule {
-    // This is for swaybg; change for other wallpaper tools.
-    // Find the right namespace by running niri msg layers.
-    match namespace="^wallpaper$"
-
-    // If true, make the wallpaper stationary, rather than moving with workspaces.
-    place-within-backdrop false
-}
-
-layer-rule {
     match namespace="waybar"
     match at-startup=true
 
@@ -63,7 +53,7 @@ layer-rule {
     block-out-from "screencast"
     // block-out-from "screen-capture"
 
-    geometry-corner-radius 12
+    // geometry-corner-radius 12
     // Place in backdrop, even if it's not on the "top" layer
     place-within-backdrop true
 }
@@ -93,20 +83,20 @@ window-rule {
     opacity 1.0
 }
 
-// Inactive window
 window-rule {
+    // Inactive window
     match is-active=false
-    opacity 0.9
+    opacity 0.85
 }
 
-// Floating window
 window-rule {
+    // Floating window
     match is-floating=true
-    border {
-        on
-        width 4
-        active-color "#8caaee"
-        inactive-color "#51576d"
-        urgent-color "#e78284"
-    }
+}
+
+window-rule {
+    // Unfocused floating window literally floats
+    match is-active=false is-floating=true
+
+    baba-is-float true
 }

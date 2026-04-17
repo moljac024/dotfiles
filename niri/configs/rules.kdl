@@ -4,6 +4,11 @@ window-rule {
   open-maximized-to-edges true
 }
 
+window-rule {
+  match app-id="com.mitchellh.ghostty"
+  open-maximized-to-edges false
+}
+
 // VeraCrypt wants to float by default.
 window-rule {
     match app-id=r#"^veracrypt$"#
@@ -16,5 +21,13 @@ window-rule {
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="re.sonny.Junction"
+    border {
+      off
+    }
     open-floating true
 }

@@ -104,6 +104,7 @@ alias kcfg='kubectl config view --minify | grep name'
 
 # Other aliases
 alias pbg="pick-ghostty-background"
+alias cbg="set-ghostty-background"
 alias zl='zellij'
 alias y='yazi'
 

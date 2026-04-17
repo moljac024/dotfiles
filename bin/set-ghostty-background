@@ -2,11 +2,14 @@
 # vim: filetype=sh
 set -Eeuo pipefail
 
-FILE_INPUT="${1:?usage: set-ghostty-background /path/to/image}"
+FILE_INPUT="${1:-""}"
 TARGET_FILE=$DOTFILES/ghostty/background.local
+FILE_PATH="$FILE_INPUT"
 
 # resolve to absolute path
-FILE_PATH="$(realpath -- "$FILE_INPUT")"
+if [[ -f "$FILE_INPUT" ]]; then
+  FILE_PATH="$(realpath -- "$FILE_INPUT")"
+fi
 
 echo "background-image = $FILE_PATH" > "$TARGET_FILE"
 
@@ -20,9 +23,7 @@ end tell
 APPLESCRIPT
 }
 
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  reload_ghostty_macos || true
-else
+reload_ghostty_linux() {
   # kill -SIGUSR2 $(pgrep ghostty) >/dev/null 2>&1
 
   # Quietly notify Ghostty if it's running
@@ -35,4 +36,10 @@ else
       kill -s SIGUSR2 -- $pids >/dev/null 2>&1 || true
     fi
   fi
+}
+
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  reload_ghostty_macos || true
+else
+  reload_ghostty_linux || true
 fi

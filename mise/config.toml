@@ -31,28 +31,11 @@ lazyssh = "latest"
 bitwarden = "latest" # password manager
 glow = "latest" # render markdown on CLI
 marp-cli = "latest" # markdown slides
-"npm:tldr" = "latest" # community-driven, simplified man pages
-duckdb = "latest" # database
-yt-dlp = { version = "latest", rename_exe = "yt-dlp" } # audio/video downloader
+############################################################
+# desktop tools
+############################################################
 "go:go.senan.xyz/cliphist" = "latest"
-############################################################
-# docker and k8s
-############################################################
-dive = "latest" # explore docker images
-lazydocker = "latest"
-colima = "latest"
-lima = "latest"
-kubectl = "latest"
-kustomize = "latest"
-krew = "latest"
-kubecm = "latest"
-kubie = "latest"
-kubeshark = "latest"
-kubespy = "latest"
-kubeswitch = "latest"
-k9s = "latest"
-minikube = "latest"
-popeye = "latest" # k8s cluster linter
+"pipx:trash-cli" = "latest"
 ############################################################
 # git
 ############################################################
@@ -67,7 +50,6 @@ doggo = "latest" # dns client
 grpcurl = "latest" # graphql client
 xh = "latest" # http client
 hurl = "latest" # http client
-restish = "latest" # http client
 websocat = "latest" # websocket client
 bombardier = "latest" # http benchmarking tool
 mkcert = "latest" # local https dev
@@ -120,6 +102,24 @@ opentofu = "latest"
 helm = "latest"
 dagger = "latest"
 ############################################################
+# docker and k8s
+############################################################
+dive = "latest" # explore docker images
+lazydocker = "latest"
+colima = "latest"
+lima = "latest"
+kubectl = "latest"
+kustomize = "latest"
+krew = "latest"
+kubecm = "latest"
+kubie = "latest"
+kubeshark = "latest"
+kubespy = "latest"
+kubeswitch = "latest"
+k9s = "latest"
+minikube = "latest"
+popeye = "latest" # k8s cluster linter
+############################################################
 # cloud
 ############################################################
 aws-cli = "latest"
@@ -131,3 +131,5 @@ acli = "latest" # atlassian cli
 ############################################################
 # other
 ############################################################
+yt-dlp = { version = "latest", rename_exe = "yt-dlp" } # audio/video downloader
+duckdb = "latest" # database

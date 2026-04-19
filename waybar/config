@@ -1,6 +1,7 @@
 // vim: syntax=jsonc
 {
-  "layer": "top",
+  "layer": "top", // can be "top", "bottom", "overlay"
+  "exclusive": true,
   "position": "top",
   "output": [
     "eDP-1"

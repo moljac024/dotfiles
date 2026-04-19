@@ -1,6 +1,7 @@
 // vim: syntax=jsonc
 {
-  "layer": "top",
+  "layer": "top", // can be "top", "bottom", "overlay"
+  "exclusive": false,
   "position": "top",
   "output": [
     "eDP-1"
@@ -8,8 +9,8 @@
   "height": 45,
   "modules-left": [
     "custom/app_launcher",
-    "custom/file_manager",
-    "niri/window"
+    "custom/file_manager"
+    // "niri/window"
   ],
   "modules-center": [],
   "modules-right": [

@@ -1,18 +1,49 @@
-// Make Edge always open maximized
+// All windows
 window-rule {
-  match app-id="microsoft-edge"
-  open-maximized-to-edges true
+    // Enable rounded corners.
+    geometry-corner-radius 12
+    clip-to-geometry true
+    draw-border-with-background false
+
+    // Open all windows in the tiling layout, overriding any auto-floating logic.
+    // open-floating false
+
+    default-column-display "tabbed"
 }
 
 window-rule {
-  match app-id="com.mitchellh.ghostty"
-  open-maximized-to-edges false
+    // Active window
+    match is-active=true
+    opacity 1.0
+}
+
+window-rule {
+    // Inactive window
+    match is-active=false
+    opacity 0.80
+}
+
+window-rule {
+    // Floating window, inactive
+    match is-floating=true is-active=false
+    opacity 0.2
+}
+
+// Make Edge always open maximized
+window-rule {
+    match app-id="microsoft-edge"
+    open-maximized-to-edges true
+}
+
+window-rule {
+    match app-id="com.mitchellh.ghostty"
+    open-maximized-to-edges false
 }
 
 // VeraCrypt wants to float by default.
 window-rule {
     match app-id=r#"^veracrypt$"#
-    open-floating false
+    // open-floating false
 }
 
 // Open the Firefox picture-in-picture player as floating by default.

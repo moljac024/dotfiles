@@ -6,12 +6,15 @@ FILE_INPUT="${1:-""}"
 TARGET_FILE=$DOTFILES/ghostty/background.local
 FILE_PATH="$FILE_INPUT"
 
-# resolve to absolute path
-if [[ -f "$FILE_INPUT" ]]; then
-  FILE_PATH="$(realpath -- "$FILE_INPUT")"
-fi
-
-echo "background-image = $FILE_PATH" > "$TARGET_FILE"
+set_background() {
+  # resolve to absolute path
+  if [[ -f "$1" ]]; then
+    FILE_PATH="$(realpath -- "$1")"
+    echo "background-image = $FILE_PATH" > "$TARGET_FILE"
+  else
+    echo "" > "$TARGET_FILE"
+  fi
+}
 
 reload_ghostty_macos() {
   osascript >/dev/null <<'APPLESCRIPT'
@@ -38,8 +41,13 @@ reload_ghostty_linux() {
   fi
 }
 
-if [[ "$(uname -s)" == "Darwin" ]]; then
-  reload_ghostty_macos || true
-else
-  reload_ghostty_linux || true
-fi
+reload_ghostty() {
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    reload_ghostty_macos || true
+  else
+    reload_ghostty_linux || true
+  fi
+}
+
+set_background "$FILE_INPUT"
+reload_ghostty

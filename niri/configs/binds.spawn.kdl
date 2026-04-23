@@ -1,4 +1,12 @@
 binds {
+    Mod+B repeat=false hotkey-overlay-title="Toggle top bar visibility" {
+      spawn-sh "pkill -USR1 waybar";
+    }
+
+    Mod+Shift+W repeat=false cooldown-ms=2000 hotkey-overlay-title="Randomize wallpaper" {
+      spawn-sh "set-wallpaper";
+    }
+
     Mod+Return repeat=false hotkey-overlay-title="Open a terminal" {
       spawn "ghostty";
     }
@@ -17,10 +25,6 @@ binds {
 
     Mod+D repeat=false hotkey-overlay-title="Open window switcher" {
       spawn "niri-window-switcher";
-    }
-
-    Mod+Ctrl+Alt+L repeat=false hotkey-overlay-title="Lock the screen" {
-      spawn "swaylock";
     }
 
     Mod+1 repeat=false hotkey-overlay-title="Activate file manager" {
@@ -65,9 +69,5 @@ binds {
 
     Mod+0 hotkey-overlay-title="Activate steam" {
       spawn "niri-run-or-raise" "steam" "steam";
-    }
-
-    Mod+B repeat=false hotkey-overlay-title="Toggle top bar visibility" {
-      spawn-sh "pkill -USR1 waybar";
     }
   }

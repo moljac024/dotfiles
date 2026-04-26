@@ -47,11 +47,12 @@ window-show-tab-bar = always
 window-new-tab-position = end
 
 # Integrate tabs into titlebar
-# gtk-titlebar-style = tabs
+gtk-titlebar-style = tabs
 macos-titlebar-style = tabs
 
-window-padding-x = 12
-window-padding-y = 12
+# Window padding
+window-padding-x = 2
+window-padding-y = 2
 window-padding-balance = true
 
 ################################################################################
@@ -64,7 +65,7 @@ window-padding-balance = true
 ### Background
 ################################################################################
 
-background-opacity = 0.95
+# background-opacity = 0.95
 background-opacity-cells = true
 
 background-image-opacity = 0.05

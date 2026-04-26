@@ -2,10 +2,13 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 command_timeout = 500
+add_newline = true
+
 format = """
 $shell\
 $username\
 $hostname\
+$container\
 $directory\
 $git_branch\
 $git_commit\
@@ -50,6 +53,9 @@ crust = "#232634"
 [shell]
 # disabled = false
 
+[container]
+style = 'bold purple dimmed'
+
 [directory]
 truncation_length = 3
 truncation_symbol = "../"
@@ -63,9 +69,3 @@ show_milliseconds = true
 
 [python]
 python_binary = ['python', 'python3', 'python2']
-
-[custom.uv_python]
-command = 'uv python find --show-version'
-disabled = true
-detect_files = ['.python-version', 'pyproject.toml', 'uv.lock']
-symbol = "🐍"

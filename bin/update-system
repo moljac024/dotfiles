@@ -5,14 +5,18 @@ is_command() {
   command -v "$1" >/dev/null 2>&1
 }
 
+if is_command rpm-ostree; then
+    exec rpm-ostree upgrade
+fi
+
 if is_command apt-get; then
-    sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"
+    exec sudo sh -c "apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade && apt-get autoremove -y"
 fi
 
 if is_command dnf; then
-    sudo sh -c "dnf update -y"
+    exec sudo sh -c "dnf update -y"
 fi
 
-if is_command rpm-ostree; then
-    rpm-ostree upgrade
+if is_command pacman; then
+    exec sudo pacman -Syu --noconfirm
 fi

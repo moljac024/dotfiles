@@ -68,7 +68,7 @@ window-padding-balance = true
 # background-opacity = 0.95
 background-opacity-cells = true
 
-background-image-opacity = 0.05
+background-image-opacity = 0.10
 background-image-position = bottom-right
 background-image-fit = contain
 # background-image = "~/dotfiles/backgrounds/terminal/simple/tie.png"

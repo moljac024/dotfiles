@@ -42,6 +42,7 @@ marp-cli = "latest" # markdown slides
 lazygit = "latest"
 git-lfs = "latest"
 gitu = "latest"
+"npm:tiged" = "latest" # project scaffold
 ############################################################
 # dev tools
 ############################################################
@@ -62,6 +63,7 @@ yq = "latest"
 jj = "latest" # SCM
 "pipx:harlequin" = "latest" # cli database client
 "pipx:pgcli" = "latest" # pg cli client, nicer than psql
+"npm:yalc" = "latest"
 ############################################################
 # language runtimes, compilers and LSP servers
 ############################################################

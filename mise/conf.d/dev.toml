@@ -8,21 +8,6 @@ websocat = "latest" # websocket client
 grpcurl = "latest" # like curl but for grpc
 bombardier = "latest" # http benchmarking tool
 ############################################################
-# ops
-############################################################
-opentofu = "latest"
-helm = "latest"
-############################################################
-# docker and k8s
-############################################################
-dive = "latest" # explore docker images
-lazydocker = "latest"
-kubectl = "latest"
-kustomize = "latest"
-krew = "latest"
-kubecm = "latest"
-k9s = "latest"
-############################################################
 # compilers and runtimes
 ############################################################
 node = "lts"

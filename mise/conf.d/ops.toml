@@ -1,0 +1,17 @@
+[tools]
+############################################################
+# ops
+############################################################
+opentofu = "latest"
+helm = "latest"
+############################################################
+# docker and k8s
+############################################################
+dive = "latest" # explore docker images
+lazydocker = "latest"
+kubectl = "latest"
+kustomize = "latest"
+krew = "latest"
+kubecm = "latest"
+kubeswitch = "latest"
+k9s = "latest"

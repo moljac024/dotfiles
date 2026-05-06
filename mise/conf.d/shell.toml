@@ -1,0 +1,23 @@
+[tools]
+############################################################
+# shell
+############################################################
+starship = "latest" # shell prompt
+oh-my-posh = "latest" # shell prompt
+coreutils = "latest" # coreutils rewrite in rust
+rclone = "latest"
+bat = "latest" # cat improved
+bat-extras = "latest"
+eza = "latest" # ls improved
+lsd = "latest" # ls improved
+fd = "latest" # search
+fzf = "latest" # search
+ripgrep = "latest" # search
+zoxide = "latest" # cd on steroids
+yazi = "latest" # file manager
+neovim = "latest" # text editor / ide
+restic = "latest" # backup tool
+zellij = "latest" # terminal multiplexer
+just = "latest" # modern make
+jq = "latest" # sed for json
+yq = "latest" # sed for yaml

@@ -1,0 +1,37 @@
+[tools]
+############################################################
+# web dev tools
+############################################################
+xh = "latest" # http client
+hurl = "latest" # http client
+websocat = "latest" # websocket client
+grpcurl = "latest" # like curl but for grpc
+bombardier = "latest" # http benchmarking tool
+############################################################
+# ops
+############################################################
+opentofu = "latest"
+helm = "latest"
+############################################################
+# docker and k8s
+############################################################
+dive = "latest" # explore docker images
+lazydocker = "latest"
+kubectl = "latest"
+kustomize = "latest"
+krew = "latest"
+kubecm = "latest"
+k9s = "latest"
+############################################################
+# compilers and runtimes
+############################################################
+node = "lts"
+yarn = "1.22.22"
+uv = "latest" # Python
+dotnet = "latest"
+go = "latest"
+rust = "latest"
+rustic = "latest"
+rust-analyzer = "latest"
+zig = "latest"
+java = "23.0.2"

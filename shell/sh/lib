@@ -179,12 +179,19 @@ ensure_symlink () {
 modify_path() {
   local dir="$1"
   local action="$2"
-  if [[ ":$PATH:" != *":$dir:"* ]]; then
-    if [ "$action" = "prepend" ]; then
-      export PATH="$dir:$PATH"
-    else
-      export PATH="$PATH:$dir"
-    fi
+
+  # 1. Remove the directory if it's already in the PATH
+  # This handles middle, start, and end cases by cleaning up double colons
+  PATH=":$PATH:"
+  PATH="${PATH//:$dir:/:}"
+  PATH="${PATH#:}" # Remove leading colon
+  PATH="${PATH%:}" # Remove trailing colon
+
+  # 2. Add it back based on the action
+  if [ "$action" = "prepend" ]; then
+    export PATH="$dir:$PATH"
+  else
+    export PATH="$PATH:$dir"
   fi
 }
 

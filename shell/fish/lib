@@ -116,12 +116,18 @@ end
 function modify_path
     set -l dir $argv[1]
     set -l action $argv[2]
-    if not contains $dir $PATH
-        if test "$action" = "prepend"
-            set -gx PATH $dir $PATH
-        else
-            set -gx PATH $PATH $dir
-        end
+
+    # 1. Find the index of the directory if it exists
+    if set -l index (contains -i $dir $PATH)
+        # 2. Remove it from the current PATH array
+        set -e PATH[$index]
+    end
+
+    # 3. Add it back in the desired position
+    if test "$action" = "prepend"
+        set -gx PATH $dir $PATH
+    else
+        set -gx PATH $PATH $dir
     end
 end
 

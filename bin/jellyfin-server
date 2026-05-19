@@ -1,4 +1,13 @@
 #!/usr/bin/env bashim
 # vim: filetype=sh
 
-podman run -d --replace --name jellyfin-test -p 8096:8096 -v ~/Media:/media:Z -v jellyfin-config:/config:Z jellyfin/jellyfin:latest
+podman run \
+  --name jellyfin \
+  --replace \
+  --net=host \
+  --device /dev/dri:/dev/dri:rw \
+  -v jellyfin-config:/config:z \
+  -v jellyfin-cache:/cache:z \
+  -v $HOME/Media:/media:z \
+  --restart unless-stopped \
+  jellyfin/jellyfin:latest

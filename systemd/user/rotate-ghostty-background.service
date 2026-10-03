@@ -1,0 +1,12 @@
+[Unit]
+Description=Rotate Ghostty background image
+After=graphical-session.target
+
+[Service]
+Type=simple
+# %h expands to your home directory
+ExecStart=%h/dotfiles/bin/rotate-ghostty-background run
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

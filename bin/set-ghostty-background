@@ -3,12 +3,15 @@
 set -Eeuo pipefail
 
 FILE_INPUT="${1:-""}"
-TARGET_FILE=$DOTFILES/ghostty/background.local
+TARGET_FILE=${DOTFILES:-$HOME/dotfiles}/ghostty/background.local
 FILE_PATH="$FILE_INPUT"
 
 set_background() {
   # resolve to absolute path
-  if [[ -f "$1" ]]; then
+  if [[ -d "$1" ]]; then
+    FILE_PATH="$(filepick -q -r "$1")"
+    echo "background-image = $FILE_PATH" > "$TARGET_FILE"
+  elif [[ -f "$1" ]]; then
     FILE_PATH="$(realpath -- "$1")"
     echo "background-image = $FILE_PATH" > "$TARGET_FILE"
   else

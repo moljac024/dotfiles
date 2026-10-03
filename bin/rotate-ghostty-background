@@ -1,0 +1,155 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+set -Eeuo pipefail
+
+# rotate-ghostty-background — periodically set a random Ghostty background.
+# The daemon (`run`) is managed by the rotate-ghostty-background systemd user
+# service; the other subcommands control it.
+
+SERVICE=rotate-ghostty-background.service
+STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/rotate-ghostty-background"
+DEFAULT_DIR="${DOTFILES:-$HOME/dotfiles}/backgrounds/terminal/main"
+DEFAULT_INTERVAL="15m"
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  rotate-ghostty-background <command> [args]
+
+Commands:
+  start [DIR] [INTERVAL]  Start rotating (optionally set folder and interval)
+  stop                    Stop the service
+  pause                   Keep the service running but stop changing backgrounds
+  resume                  Undo pause
+  next                    Switch to a new random background now
+  interval DURATION       Change the interval (e.g. 30s, 10m, 1h); applies immediately
+  dir DIR                 Change the folder images are picked from
+  status                  Show current state
+  run                     Run the rotation loop in the foreground (used by systemd)
+
+Defaults: DIR=$DOTFILES/backgrounds/terminal/main, INTERVAL=15m
+USAGE
+}
+
+# ----- State -----
+read_state() {
+  local file="$STATE_DIR/$1" default="$2"
+  if [[ -s "$file" ]]; then cat -- "$file"; else printf '%s' "$default"; fi
+}
+
+write_state() {
+  mkdir -p -- "$STATE_DIR"
+  printf '%s\n' "$2" > "$STATE_DIR/$1"
+}
+
+is_paused() { [[ -e "$STATE_DIR/paused" ]]; }
+
+valid_interval() { [[ "$1" =~ ^[0-9]+(\.[0-9]+)?[smhd]?$ ]]; }
+
+# ----- Service control -----
+is_running() { systemctl --user is-active --quiet "$SERVICE"; }
+
+signal_daemon() {
+  is_running || return 0
+  systemctl --user kill --kill-whom=main --signal="$1" "$SERVICE"
+}
+
+# ----- Daemon -----
+run_daemon() {
+  local sleep_pid="" wake="" force=0
+  trap 'wake=next;   [[ -n "$sleep_pid" ]] && kill "$sleep_pid" 2>/dev/null' USR1
+  trap 'wake=reload; [[ -n "$sleep_pid" ]] && kill "$sleep_pid" 2>/dev/null' HUP
+  trap '[[ -n "$sleep_pid" ]] && kill "$sleep_pid" 2>/dev/null; exit 0' TERM INT
+
+  local rotate=1 dir interval
+  while true; do
+    dir="$(read_state dir "$DEFAULT_DIR")"
+    interval="$(read_state interval "$DEFAULT_INTERVAL")"
+    valid_interval "$interval" || { echo "invalid interval '$interval', using $DEFAULT_INTERVAL" >&2; interval="$DEFAULT_INTERVAL"; }
+
+    if ((rotate)) && { ((force)) || ! is_paused; }; then
+      set-ghostty-background "$dir" || echo "failed to set background from $dir" >&2
+    fi
+
+    # Sleep in the background so signals interrupt the wait immediately.
+    sleep "$interval" & sleep_pid=$!
+    wait "$sleep_pid" || true
+    sleep_pid=""
+
+    # next: rotate now, even if paused. reload: restart the timer without rotating.
+    case "$wake" in
+      next)   rotate=1; force=1 ;;
+      reload) rotate=0; force=0 ;;
+      *)      rotate=1; force=0 ;;
+    esac
+    wake=""
+  done
+}
+
+# ----- Status -----
+show_status() {
+  local state="stopped"
+  if is_running; then
+    if is_paused; then state="paused"; else state="running"; fi
+  fi
+  echo "state:    $state"
+  echo "folder:   $(read_state dir "$DEFAULT_DIR")"
+  echo "interval: $(read_state interval "$DEFAULT_INTERVAL")"
+}
+
+# ----- Main -----
+cmd="${1:-status}"
+(($#)) && shift
+
+case "$cmd" in
+  start)
+    if (($#)); then
+      [[ -d "$1" ]] || { echo "error: not a directory: $1" >&2; exit 1; }
+      write_state dir "$(realpath -- "$1")"
+    fi
+    if (($# > 1)); then
+      valid_interval "$2" || { echo "error: invalid interval: $2" >&2; exit 1; }
+      write_state interval "$2"
+    fi
+    rm -f -- "$STATE_DIR/paused"
+    if is_running; then signal_daemon USR1; else systemctl --user start "$SERVICE"; fi
+    show_status
+    ;;
+  stop)
+    systemctl --user stop "$SERVICE"
+    show_status
+    ;;
+  pause)
+    mkdir -p -- "$STATE_DIR"
+    touch -- "$STATE_DIR/paused"
+    show_status
+    ;;
+  resume)
+    rm -f -- "$STATE_DIR/paused"
+    signal_daemon HUP
+    show_status
+    ;;
+  next)
+    if is_running; then
+      signal_daemon USR1
+    else
+      set-ghostty-background "$(read_state dir "$DEFAULT_DIR")"
+    fi
+    ;;
+  interval)
+    [[ -n "${1:-}" ]] || { echo "error: missing duration" >&2; exit 1; }
+    valid_interval "$1" || { echo "error: invalid interval: $1" >&2; exit 1; }
+    write_state interval "$1"
+    signal_daemon HUP
+    show_status
+    ;;
+  dir)
+    [[ -d "${1:-}" ]] || { echo "error: not a directory: ${1:-}" >&2; exit 1; }
+    write_state dir "$(realpath -- "$1")"
+    show_status
+    ;;
+  status) show_status ;;
+  run) run_daemon ;;
+  -h|--help|help) usage ;;
+  *) echo "error: unknown command: $cmd" >&2; usage; exit 1 ;;
+esac

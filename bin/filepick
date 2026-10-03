@@ -3,7 +3,7 @@
 set -Eeuo pipefail
 
 # filepick.sh — scan directories, fuzzy-pick a file, run a command with the path
-# Requires: fzf, ripgrep (rg), realpath
+# Requires: fzf (unless --random), ripgrep (rg), realpath
 
 VERSION="0.2.0"
 
@@ -16,6 +16,7 @@ Usage:
 Flags:
   -i, --include GLOB   Include glob (repeatable). Default: **/*.{jpg,jpeg,png}
   -x, --exclude GLOB   Exclude glob (repeatable)
+  -r, --random         Pick a random file instead of showing the picker
   -H, --hidden         Include hidden files/dirs
   -d, --max-depth N    Max recursion depth (0 = unlimited). Default: 0
   -L, --follow         Follow symlinks (default)
@@ -39,6 +40,7 @@ INCLUDES=( "**/*.{jpg,jpeg,png}" )
 EXCLUDES=()
 HIDDEN=0
 SHUFFLE=0
+RANDOM_PICK=0
 MAX_DEPTH=0
 FOLLOW=1
 PROMPT="files> "
@@ -56,6 +58,7 @@ while (($#)); do
     -i|--include) INCLUDES+=("${2:?missing glob for --include}"); shift 2;;
     -x|--exclude|-I|--ignore) EXCLUDES+=("${2:?missing glob for --exclude}"); shift 2;;
     -s|--shuffle) SHUFFLE=1; shift;;
+    -r|--random) RANDOM_PICK=1; shift;;
     -H|--hidden) HIDDEN=1; shift;;
     -d|--max-depth) MAX_DEPTH="${2:?missing number for --max-depth}"; shift 2;;
     -L|--follow) FOLLOW=1; shift;;
@@ -74,7 +77,8 @@ done
 if (($#)); then for x in "$@"; do ROOTS+=("$x"); done; fi
 ((${#ROOTS[@]})) || ROOTS+=( "." )
 
-for dep in fzf rg realpath; do need "$dep"; done
+for dep in rg realpath; do need "$dep"; done
+((RANDOM_PICK)) || need fzf
 
 # ----- Build ripgrep command -----
 build_rg_cmd() {
@@ -210,7 +214,10 @@ main() {
   log "found ${#FILES[@]} file(s)"
 
   local chosen
-  if ! chosen="$(run_picker)"; then
+  if ((RANDOM_PICK)); then
+    chosen="$(printf '%s\n' "${FILES[@]}" | shuf -n 1)"
+    log "random pick: $chosen"
+  elif ! chosen="$(run_picker)"; then
     exit 130   # fzf aborted; do nothing
   fi
   [[ -z "$chosen" ]] && exit 130

@@ -103,8 +103,9 @@ alias kn='kubectl ns'
 alias kcfg='kubectl config view --minify | grep name'
 
 # Other aliases
-alias pbg="pick-ghostty-background"
-alias cbg="set-ghostty-background"
+alias pbg='pick-ghostty-background'
+alias cbg='set-ghostty-background'
+alias rbg='set-ghostty-background "$DOTFILES/backgrounds/terminal"'
 alias zl='zellij'
 alias y='yazi'
 

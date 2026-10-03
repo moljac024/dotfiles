@@ -33,6 +33,9 @@ notify-on-command-finish = unfocused
 notify-on-command-finish-action = no-bell,notify
 notify-on-command-finish-after = 30s
 
+# Skip the "reloaded the configuration" toast
+app-notifications = no-config-reload
+
 quit-after-last-window-closed = true
 
 ################################################################################
@@ -65,7 +68,7 @@ window-padding-balance = true
 ### Background
 ################################################################################
 
-# background-opacity = 0.95
+background-opacity = 0.95
 background-opacity-cells = true
 
 background-image-opacity = 0.10

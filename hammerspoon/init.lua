@@ -20,7 +20,7 @@ local apps = {
   "Microsoft Edge",
 
   -- "Visual Studio Code",
-  "Windsurf",
+  "Devin.app",
 
   "DBeaver",
   "Obsidian",
@@ -28,8 +28,6 @@ local apps = {
   "Microsoft Teams",
   "Microsoft Outlook",
   "Microsoft 365 Copilot",
-
-  "Excalidraw"
 }
 
 lib.gnomify(apps)
@@ -52,9 +50,3 @@ lib.bindKey({ "cmd", "alt" }, "h", nil)
 
 -- Lock screen keybind
 lib.bindKey({ "cmd", "ctrl", "alt" }, "l", lib.lockScreen)
-
---lication and window choosers
--- locallicationChooser = lib.makeRunningApplicationChooser()
--- local windowChooser = lib.makeFocuselicationWindowChooser()
--- lib.bindKey({ "cmd" }, ";", function()licationChooser.invoke({}) end)
--- lib.bindKey({ "cmd" }, "'", function() windowChooser.invoke({}) end)

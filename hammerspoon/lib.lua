@@ -10,6 +10,7 @@ M.setupAutoReload = function()
       end
     end
     if shouldReload then
+      hs.printf("Auto-reloading config")
       hs.reload()
     end
   end):start()

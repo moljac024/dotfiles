@@ -2,6 +2,28 @@
 # vim: filetype=sh
 set -Eeuo pipefail
 
-WALLPAPER_DIR=$DOTFILES/backgrounds/terminal
+DEFAULT_DIR=${DOTFILES:-$HOME/dotfiles}/backgrounds/terminal
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  pick-ghostty-background [DIR]
+
+Pick a Ghostty background image from DIR (recursive) with an interactive
+fuzzy finder (fzf), then set it with set-ghostty-background.
+DIR defaults to $DOTFILES/backgrounds/terminal.
+Press Esc or Ctrl-C to cancel without changing the background.
+
+Options:
+  -h, --help  Show this help
+USAGE
+}
+
+case "${1:-}" in
+  -h|--help) usage; exit 0;;
+esac
+
+WALLPAPER_DIR="${1:-$DEFAULT_DIR}"
+[[ -d "$WALLPAPER_DIR" ]] || { echo "error: not a directory: $WALLPAPER_DIR" >&2; exit 1; }
 
 exec filepick -q -s "$WALLPAPER_DIR" -e set-ghostty-background -e {} > /dev/null

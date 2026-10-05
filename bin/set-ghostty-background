@@ -5,6 +5,27 @@ set -Eeuo pipefail
 # Find sibling scripts (filepick, ghostty-reload) even when ~/bin is not on PATH
 PATH="$(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")"):$PATH"
 
+usage() {
+  cat <<'USAGE'
+Usage:
+  set-ghostty-background [FILE | DIR]
+
+Set the Ghostty background image and reload the config.
+
+  FILE    Use this image as the background
+  DIR     Use a random image from this folder (recursive), never the current one
+          unless it is the only image there
+  (none)  Clear the background image
+
+Options:
+  -h, --help  Show this help
+USAGE
+}
+
+case "${1:-}" in
+  -h|--help) usage; exit 0;;
+esac
+
 FILE_INPUT="${1:-""}"
 TARGET_FILE=${DOTFILES:-$HOME/dotfiles}/ghostty/background.local
 FILE_PATH="$FILE_INPUT"

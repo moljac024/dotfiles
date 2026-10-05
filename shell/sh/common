@@ -13,6 +13,9 @@ fi
 if [ -d "/opt/homebrew/bin" ]; then
   modify_path "/opt/homebrew/bin" prepend
 fi
+if [ -d "/opt/homebrew/sbin" ]; then
+  modify_path "/opt/homebrew/sbin" prepend
+fi
 
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend

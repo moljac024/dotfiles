@@ -8,6 +8,9 @@
 if test -d /opt/homebrew/bin
     modify_path /opt/homebrew/bin prepend
 end
+if test -d /opt/homebrew/sbin
+    modify_path /opt/homebrew/sbin prepend
+end
 
 # Rust binaries
 modify_path "$HOME/.cargo/bin" prepend

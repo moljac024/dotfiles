@@ -2,6 +2,9 @@
 # vim: filetype=sh
 set -Eeuo pipefail
 
+# Find sibling scripts (filepick, ghostty-reload) even when ~/bin is not on PATH
+PATH="$(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")"):$PATH"
+
 FILE_INPUT="${1:-""}"
 TARGET_FILE=${DOTFILES:-$HOME/dotfiles}/ghostty/background.local
 FILE_PATH="$FILE_INPUT"
@@ -9,7 +12,14 @@ FILE_PATH="$FILE_INPUT"
 set_background() {
   # resolve to absolute path
   if [[ -d "$1" ]]; then
-    FILE_PATH="$(filepick -q -r "$1")"
+    # Avoid re-picking the current image, unless it's the only one in the folder
+    local current
+    current="$(sed -n 's/^background-image = //p' "$TARGET_FILE" 2>/dev/null || true)"
+    if [[ -n "$current" ]]; then
+      FILE_PATH="$(filepick -q -r -X "$current" "$1" 2>/dev/null || filepick -q -r "$1")"
+    else
+      FILE_PATH="$(filepick -q -r "$1")"
+    fi
     echo "background-image = $FILE_PATH" > "$TARGET_FILE"
   elif [[ -f "$1" ]]; then
     FILE_PATH="$(realpath -- "$1")"
@@ -19,38 +29,5 @@ set_background() {
   fi
 }
 
-reload_ghostty_macos() {
-  osascript >/dev/null <<'APPLESCRIPT'
-tell application "System Events"
-  tell process "Ghostty"
-    keystroke "," using {command down, shift down}
-  end tell
-end tell
-APPLESCRIPT
-}
-
-reload_ghostty_linux() {
-  # kill -SIGUSR2 $(pgrep ghostty) >/dev/null 2>&1
-
-  # Quietly notify Ghostty if it's running
-  if command -v pkill >/dev/null 2>&1; then
-    pkill -x -SIGUSR2 ghostty >/dev/null 2>&1 || true
-  else
-    if pids="$(pgrep -x ghostty)"; then
-      # Deliberate word-splitting to pass multiple PIDs; '--' avoids option confusion
-      # shellcheck disable=SC2086
-      kill -s SIGUSR2 -- $pids >/dev/null 2>&1 || true
-    fi
-  fi
-}
-
-reload_ghostty() {
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    reload_ghostty_macos || true
-  else
-    reload_ghostty_linux || true
-  fi
-}
-
 set_background "$FILE_INPUT"
-reload_ghostty
+ghostty-reload

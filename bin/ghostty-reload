@@ -1,0 +1,34 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+set -Eeuo pipefail
+
+# ghostty-reload — make running Ghostty instances reload their configuration
+
+reload_ghostty_macos() {
+  osascript >/dev/null <<'APPLESCRIPT'
+tell application "System Events"
+  tell process "Ghostty"
+    keystroke "," using {command down, shift down}
+  end tell
+end tell
+APPLESCRIPT
+}
+
+reload_ghostty_linux() {
+  # Quietly notify Ghostty if it's running
+  if command -v pkill >/dev/null 2>&1; then
+    pkill -x -SIGUSR2 ghostty >/dev/null 2>&1 || true
+  else
+    if pids="$(pgrep -x ghostty)"; then
+      # Deliberate word-splitting to pass multiple PIDs; '--' avoids option confusion
+      # shellcheck disable=SC2086
+      kill -s SIGUSR2 -- $pids >/dev/null 2>&1 || true
+    fi
+  fi
+}
+
+if [[ "$(uname -s)" == "Darwin" ]]; then
+  reload_ghostty_macos || true
+else
+  reload_ghostty_linux || true
+fi

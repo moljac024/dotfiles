@@ -76,8 +76,9 @@ background-image-position = bottom-right
 background-image-fit = contain
 # background-image = "~/dotfiles/backgrounds/terminal/simple/tie.png"
 
-# Background override
+# Local overrides (set-ghostty-background, ghostty-opacity)
 config-file = "?background.local"
+config-file = "?opacity.local"
 
 ################################################################################
 ### Clear default keybinds

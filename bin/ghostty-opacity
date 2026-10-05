@@ -1,0 +1,63 @@
+#!/usr/bin/env bashim
+# vim: filetype=sh
+set -Eeuo pipefail
+
+# Find sibling scripts (filepick, ghostty-reload) even when ~/bin is not on PATH
+PATH="$(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")"):$PATH"
+
+# ghostty-opacity — adjust Ghostty's background-opacity and reload the config
+
+TARGET_FILE=${DOTFILES:-$HOME/dotfiles}/ghostty/opacity.local
+STEP=0.05
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  ghostty-opacity up [STEP]     Increase opacity (default step: 0.05)
+  ghostty-opacity down [STEP]   Decrease opacity (default step: 0.05)
+  ghostty-opacity set VALUE     Set opacity to VALUE (0-1)
+  ghostty-opacity reset         Remove the override and use the value from the config
+  ghostty-opacity get           Print the current opacity
+USAGE
+}
+
+is_number() { [[ "$1" =~ ^[0-9]*\.?[0-9]+$ ]]; }
+
+# Effective value, including the override file
+current_opacity() {
+  local value
+  value="$(ghostty +show-config 2>/dev/null | awk -F' = ' '$1 == "background-opacity" { print $2 }')"
+  is_number "$value" && printf '%s' "$value" || printf '1'
+}
+
+set_opacity() {
+  local value
+  value="$(awk -v v="$1" 'BEGIN { if (v < 0) v = 0; if (v > 1) v = 1; printf "%.2f", v }')"
+  echo "background-opacity = $value" > "$TARGET_FILE"
+  ghostty-reload
+  echo "$value"
+}
+
+cmd="${1:-get}"
+arg="${2:-}"
+
+case "$cmd" in
+  up|down)
+    step="${arg:-$STEP}"
+    is_number "$step" || { echo "error: invalid step: $step" >&2; exit 1; }
+    [[ "$cmd" == "down" ]] && step="-$step"
+    set_opacity "$(awk -v c="$(current_opacity)" -v s="$step" 'BEGIN { print c + s }')"
+    ;;
+  set)
+    is_number "$arg" || { echo "error: invalid value: $arg" >&2; exit 1; }
+    set_opacity "$arg"
+    ;;
+  reset)
+    rm -f -- "$TARGET_FILE"
+    ghostty-reload
+    current_opacity; echo
+    ;;
+  get) current_opacity; echo ;;
+  -h|--help|help) usage ;;
+  *) echo "error: unknown command: $cmd" >&2; usage; exit 1 ;;
+esac

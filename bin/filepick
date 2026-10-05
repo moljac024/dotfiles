@@ -16,6 +16,7 @@ Usage:
 Flags:
   -i, --include GLOB   Include glob (repeatable). Default: **/*.{jpg,jpeg,png}
   -x, --exclude GLOB   Exclude glob (repeatable)
+  -X, --exclude-path P Exclude this exact file (repeatable)
   -r, --random         Pick a random file instead of showing the picker
   -H, --hidden         Include hidden files/dirs
   -d, --max-depth N    Max recursion depth (0 = unlimited). Default: 0
@@ -38,6 +39,7 @@ USAGE
 # Defaults
 INCLUDES=( "**/*.{jpg,jpeg,png}" )
 EXCLUDES=()
+EXCLUDE_PATHS=()
 HIDDEN=0
 SHUFFLE=0
 RANDOM_PICK=0
@@ -57,6 +59,7 @@ while (($#)); do
   case "$1" in
     -i|--include) INCLUDES+=("${2:?missing glob for --include}"); shift 2;;
     -x|--exclude|-I|--ignore) EXCLUDES+=("${2:?missing glob for --exclude}"); shift 2;;
+    -X|--exclude-path) EXCLUDE_PATHS+=("$(realpath -m -- "${2:?missing path for --exclude-path}")"); shift 2;;
     -s|--shuffle) SHUFFLE=1; shift;;
     -r|--random) RANDOM_PICK=1; shift;;
     -H|--hidden) HIDDEN=1; shift;;
@@ -98,6 +101,15 @@ collect_files() {
   local rg_cmd; rg_cmd="$(build_rg_cmd)"
   # shellcheck disable=SC2086
   mapfile -t FILES < <( eval "$rg_cmd" | while IFS= read -r p; do realpath -- "$p"; done | sort -u )
+
+  ((${#EXCLUDE_PATHS[@]})) || return 0
+  local -a kept=()
+  local f x
+  for f in "${FILES[@]}"; do
+    for x in "${EXCLUDE_PATHS[@]}"; do [[ "$f" == "$x" ]] && continue 2; done
+    kept+=( "$f" )
+  done
+  FILES=( "${kept[@]}" )
 }
 
 # ----- Display label helpers -----

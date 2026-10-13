@@ -1,14 +1,20 @@
 {
+  "version": "3.0.0",
   "menus": [
     {
-      "shortcut": "Control+Space",
-      "shortcutID": "main-kde",
-      "centered": false,
       "root": {
-        "type": "submenu",
+        "type": "root",
         "name": "main-kde",
         "icon": "fedora",
         "iconTheme": "simple-icons",
+        "activateWorkflow": {
+          "quickSelectKey": "Backspace",
+          "actions": [
+            {
+              "type": "close-menu"
+            }
+          ]
+        },
         "children": [
           {
             "type": "submenu",
@@ -18,236 +24,392 @@
             "children": [
               {
                 "type": "submenu",
-                "data": {},
                 "name": "Manage",
                 "icon": "rectangle",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
                     "type": "submenu",
-                    "data": {},
                     "name": "Close or maximize",
                     "icon": "select_window_2",
                     "iconTheme": "material-symbols-rounded",
                     "children": [
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "AltLeft+F4",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Close window",
                         "icon": "cancel_presentation",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 90
+                        "angle": 90,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "AltLeft+F4"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+PageUp",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Toggle maximize",
                         "icon": "open_in_full",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 270
+                        "angle": 270,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+PageUp"
+                            }
+                          ]
+                        }
                       }
                     ],
+                    "activateWorkflow": {
+                      "quickSelectKey": "Backspace",
+                      "actions": [
+                        {
+                          "type": "close-submenu"
+                        }
+                      ]
+                    },
                     "angle": 0
                   },
                   {
                     "type": "submenu",
-                    "data": {},
                     "name": "Tile",
                     "icon": "splitscreen_landscape",
                     "iconTheme": "material-symbols-rounded",
                     "children": [
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+ArrowLeft",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Tile left",
                         "icon": "splitscreen_left",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 90
+                        "angle": 90,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+ArrowLeft"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+ArrowRight",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Tile right",
                         "icon": "splitscreen_right",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 270
+                        "angle": 270,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+ArrowRight"
+                            }
+                          ]
+                        }
                       }
                     ],
+                    "activateWorkflow": {
+                      "quickSelectKey": "Backspace",
+                      "actions": [
+                        {
+                          "type": "close-submenu"
+                        }
+                      ]
+                    },
                     "angle": 180
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 90
               },
               {
                 "type": "submenu",
-                "data": {},
                 "name": "Actions",
                 "icon": "browse",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
                     "type": "submenu",
-                    "data": {},
                     "name": "Move window",
                     "icon": "move_group",
                     "iconTheme": "material-symbols-rounded",
                     "children": [
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+ShiftLeft+ArrowRight",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Screen right",
                         "icon": "arrow_forward",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 90
+                        "angle": 90,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+ShiftLeft+ArrowRight"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+ShiftLeft+ArrowDown",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Screen down",
                         "icon": "arrow_downward",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 225
+                        "angle": 225,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+ShiftLeft+ArrowDown"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+ShiftLeft+ArrowLeft",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Screen left",
                         "icon": "arrow_back",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 270
+                        "angle": 270,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+ShiftLeft+ArrowLeft"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+ShiftLeft+ArrowUp",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Screen up",
                         "icon": "arrow_upward",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 315
+                        "angle": 315,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+ShiftLeft+ArrowUp"
+                            }
+                          ]
+                        }
                       }
                     ],
+                    "activateWorkflow": {
+                      "quickSelectKey": "Backspace",
+                      "actions": [
+                        {
+                          "type": "close-submenu"
+                        }
+                      ]
+                    },
                     "angle": 0
                   },
                   {
                     "type": "submenu",
-                    "data": {},
                     "name": "Other",
                     "icon": "menu",
                     "iconTheme": "material-symbols-rounded",
                     "children": [
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+ControlLeft+Escape",
-                          "delayed": true
-                        },
+                        "type": "button",
                         "name": "Kill window",
                         "icon": "skull",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 90
+                        "angle": 90,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "close-menu"
+                            },
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+ControlLeft+Escape"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+KeyD",
-                          "delayed": false
-                        },
+                        "type": "button",
                         "name": "Peek at desktop",
                         "icon": "desktop_windows",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 150
+                        "angle": 150,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+KeyD"
+                            },
+                            {
+                              "type": "close-menu"
+                            }
+                          ]
+                        }
                       },
                       {
-                        "type": "hotkey",
-                        "data": {
-                          "hotkey": "MetaLeft+KeyW",
-                          "delayed": false
-                        },
+                        "type": "button",
                         "name": "Window overview",
                         "icon": "window",
                         "iconTheme": "material-symbols-rounded",
-                        "angle": 270
+                        "angle": 270,
+                        "selectWorkflow": {
+                          "actions": [
+                            {
+                              "type": "simulate-hotkey",
+                              "hotkey": "MetaLeft+KeyW"
+                            },
+                            {
+                              "type": "close-menu"
+                            }
+                          ]
+                        }
                       }
                     ],
+                    "activateWorkflow": {
+                      "quickSelectKey": "Backspace",
+                      "actions": [
+                        {
+                          "type": "close-submenu"
+                        }
+                      ]
+                    },
                     "angle": 180
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 270
               }
             ],
+            "activateWorkflow": {
+              "quickSelectKey": "Backspace",
+              "actions": [
+                {
+                  "type": "close-submenu"
+                }
+              ]
+            },
             "angle": 0
           },
           {
             "type": "submenu",
-            "data": {},
             "name": "Other",
             "icon": "hive",
             "iconTheme": "material-symbols-rounded",
             "children": [
               {
                 "type": "submenu",
-                "data": {},
                 "name": "Tools",
                 "icon": "precision_manufacturing",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Period",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "Emoji selector",
                     "icon": "emoji_language",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 90
+                    "angle": 90,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Period"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+KeyV",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "Clipboard menu",
                     "icon": "note_alt",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 270
+                    "angle": 270,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+KeyV"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "command",
-                    "data": {
-                      "command": "kcalc",
-                      "delayed": false
-                    },
+                    "type": "button",
                     "name": "Calculator",
                     "icon": "calculate",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 315
+                    "angle": 315,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "execute-command",
+                          "command": "kcalc",
+                          "detached": true,
+                          "isolated": false
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 0
               },
               {
@@ -257,229 +419,387 @@
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MediaTrackNext",
-                      "delayed": false
-                    },
+                    "type": "button",
                     "name": "Next Track",
                     "icon": "skip_next",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 90
+                    "angle": 90,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MediaTrackNext"
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MediaPlayPause",
-                      "delayed": false
-                    },
+                    "type": "button",
                     "name": "Play / Pause",
                     "icon": "play_pause",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 150
+                    "angle": 150,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MediaPlayPause"
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "AudioVolumeMute",
-                      "delayed": false
-                    },
+                    "type": "button",
                     "name": "Mute",
                     "icon": "music_off",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 210
+                    "angle": 210,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "AudioVolumeMute"
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MediaTrackPrevious",
-                      "delayed": false
-                    },
+                    "type": "button",
                     "name": "Previous Track",
                     "icon": "skip_previous",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 270
+                    "angle": 270,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MediaTrackPrevious"
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 180
               }
             ],
+            "activateWorkflow": {
+              "quickSelectKey": "Backspace",
+              "actions": [
+                {
+                  "type": "close-submenu"
+                }
+              ]
+            },
             "angle": 90
           },
           {
             "type": "submenu",
-            "data": {},
             "name": "Apps",
             "icon": "grain",
             "iconTheme": "material-symbols-rounded",
             "children": [
               {
                 "type": "submenu",
-                "data": {},
                 "name": "Apps 5-9",
                 "icon": "apps",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit5",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 5",
                     "icon": "counter_5",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 0
+                    "angle": 0,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit5"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit6",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 6",
                     "icon": "counter_6",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 45
+                    "angle": 45,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit6"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit7",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 7",
                     "icon": "counter_7",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 135
+                    "angle": 135,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit7"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit8",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 8",
                     "icon": "counter_8",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 180
+                    "angle": 180,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit8"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit9",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 9",
                     "icon": "counter_9",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 225
+                    "angle": 225,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit9"
+                        }
+                      ]
+                    }
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 90
               },
               {
                 "type": "submenu",
-                "data": {},
                 "name": "Apps 1 - 4",
                 "icon": "apps",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit1",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 1",
                     "icon": "counter_1",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 0
+                    "angle": 0,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit1"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit4",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 4",
                     "icon": "counter_4",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 180
+                    "angle": 180,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit4"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit3",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 3",
                     "icon": "counter_3",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 240
+                    "angle": 240,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit3"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "hotkey",
-                    "data": {
-                      "hotkey": "MetaLeft+Digit2",
-                      "delayed": true
-                    },
+                    "type": "button",
                     "name": "App 2",
                     "icon": "counter_2",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 300
+                    "angle": 300,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "close-menu"
+                        },
+                        {
+                          "type": "simulate-hotkey",
+                          "hotkey": "MetaLeft+Digit2"
+                        }
+                      ]
+                    }
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 270
               }
             ],
+            "activateWorkflow": {
+              "quickSelectKey": "Backspace",
+              "actions": [
+                {
+                  "type": "close-submenu"
+                }
+              ]
+            },
             "angle": 180
           },
           {
             "type": "submenu",
-            "data": {},
             "name": "Bookmarks",
             "icon": "bookmark",
             "iconTheme": "material-symbols-rounded",
             "children": [
               {
                 "type": "submenu",
-                "data": {},
                 "name": "Web",
                 "icon": "globe",
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
-                    "type": "uri",
-                    "data": {
-                      "uri": "https://youtube.com"
-                    },
+                    "type": "button",
                     "name": "Youtube",
                     "icon": "youtube",
                     "iconTheme": "simple-icons",
-                    "angle": 30
+                    "angle": 30,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "open-uri",
+                          "uri": "https://youtube.com"
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "uri",
-                    "data": {
-                      "uri": "https://reddit.com"
-                    },
+                    "type": "button",
                     "name": "Reddit",
                     "icon": "reddit",
                     "iconTheme": "simple-icons",
-                    "angle": 90
+                    "angle": 90,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "open-uri",
+                          "uri": "https://reddit.com"
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "uri",
-                    "data": {
-                      "uri": "https://mail.google.com/mail/u/0/#inbox"
-                    },
+                    "type": "button",
                     "name": "Gmail",
                     "icon": "gmail",
                     "iconTheme": "simple-icons",
-                    "angle": 270
+                    "angle": 270,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "open-uri",
+                          "uri": "https://mail.google.com/mail/u/0/#inbox"
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 0
               },
               {
@@ -489,73 +809,159 @@
                 "iconTheme": "material-symbols-rounded",
                 "children": [
                   {
-                    "type": "command",
-                    "data": {
-                      "command": "xdg-open ~/MyDocuments"
-                    },
+                    "type": "button",
                     "name": "Documents",
                     "icon": "text_ad",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 45
+                    "angle": 45,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "execute-command",
+                          "command": "xdg-open ~/MyDocuments",
+                          "detached": true,
+                          "isolated": false
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "command",
-                    "data": {
-                      "command": "xdg-open ~"
-                    },
+                    "type": "button",
                     "name": "Home",
                     "icon": "home",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 90
+                    "angle": 90,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "execute-command",
+                          "command": "xdg-open ~",
+                          "detached": true,
+                          "isolated": false
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "command",
-                    "data": {
-                      "command": "xdg-open \"$(xdg-user-dir DOWNLOAD)\""
-                    },
+                    "type": "button",
                     "name": "Downloads",
                     "icon": "download",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 135
+                    "angle": 135,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "execute-command",
+                          "command": "xdg-open \"$(xdg-user-dir DOWNLOAD)\"",
+                          "detached": true,
+                          "isolated": false
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "command",
-                    "data": {
-                      "command": "xdg-open \"$(xdg-user-dir VIDEOS)\""
-                    },
+                    "type": "button",
                     "name": "Videos",
                     "icon": "video_camera_front",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 225
+                    "angle": 225,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "execute-command",
+                          "command": "xdg-open \"$(xdg-user-dir VIDEOS)\"",
+                          "detached": true,
+                          "isolated": false
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "command",
-                    "data": {
-                      "command": "xdg-open \"$(xdg-user-dir PICTURES)\""
-                    },
+                    "type": "button",
                     "name": "Pictures",
                     "icon": "imagesmode",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 270
+                    "angle": 270,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "execute-command",
+                          "command": "xdg-open \"$(xdg-user-dir PICTURES)\"",
+                          "detached": true,
+                          "isolated": false
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   },
                   {
-                    "type": "command",
-                    "data": {
-                      "command": "xdg-open \"$(xdg-user-dir MUSIC)\""
-                    },
+                    "type": "button",
                     "name": "Music",
                     "icon": "music_note",
                     "iconTheme": "material-symbols-rounded",
-                    "angle": 315
+                    "angle": 315,
+                    "selectWorkflow": {
+                      "actions": [
+                        {
+                          "type": "execute-command",
+                          "command": "xdg-open \"$(xdg-user-dir MUSIC)\"",
+                          "detached": true,
+                          "isolated": false
+                        },
+                        {
+                          "type": "close-menu"
+                        }
+                      ]
+                    }
                   }
                 ],
+                "activateWorkflow": {
+                  "quickSelectKey": "Backspace",
+                  "actions": [
+                    {
+                      "type": "close-submenu"
+                    }
+                  ]
+                },
                 "angle": 180
               }
             ],
+            "activateWorkflow": {
+              "quickSelectKey": "Backspace",
+              "actions": [
+                {
+                  "type": "close-submenu"
+                }
+              ]
+            },
             "angle": 270
           }
         ]
-      }
+      },
+      "shortcut": "Control+Space",
+      "shortcutID": "main-kde",
+      "useFixedPosition": false,
+      "fixedMenuPosition": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "anchored": false,
+      "hoverMode": false,
+      "tags": []
     }
   ],
   "collections": [

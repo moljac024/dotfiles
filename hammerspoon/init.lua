@@ -50,3 +50,12 @@ lib.bindKey({ "cmd", "alt" }, "h", nil)
 
 -- Lock screen keybind
 lib.bindKey({ "cmd", "ctrl", "alt" }, "l", lib.lockScreen)
+
+-- Increase ghostty opacity
+lib.bindKey({ "cmd", "ctrl", "alt" }, "-", function()
+  hs.execute("$HOME/bin/ghostty-opacity down")
+end)
+-- Decrease ghostty opacity
+lib.bindKey({ "cmd", "ctrl", "alt" }, "=", function()
+  hs.execute("$HOME/bin/ghostty-opacity up")
+end)

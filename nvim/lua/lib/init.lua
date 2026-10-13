@@ -1,8 +1,9 @@
 local M = {}
+local base = "lib" .. "."
 
-M.std = require("lib.std")
-M.git = require("lib.git")
-M.command = require("lib.command")
-M.util = require("lib.util")
+M.std = require(base .. "std")
+M.git = require(base .. "git")
+M.command = require(base .. "command")
+M.util = require(base .. "util")
 
 return M
